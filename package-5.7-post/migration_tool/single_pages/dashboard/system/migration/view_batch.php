@@ -2,6 +2,7 @@
 
 <div class="ccm-dashboard-header-buttons btn-group">
     <a href="javascript:void(0)" data-dialog="add-to-batch" data-dialog-title="<?=t('Add Content')?>" class="btn btn-default"><?=t("Add Content to Batch")?></a>
+    <a href="javascript:void(0)" data-dialog="clear-batch" data-dialog-title="<?=t('Clear Batch')?>" class="btn btn-default"><?=t("Clear Batch")?></a>
     <a href="javascript:void(0)" data-dialog="delete-batch" data-dialog-title="<?=t('Delete Batch')?>" class="btn btn-danger"><?=t("Delete Batch")?></a>
 </div>
 
@@ -15,6 +16,18 @@
             <div class="dialog-buttons">
                 <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
                 <button class="btn btn-danger pull-right" onclick="$('#ccm-dialog-delete-batch form').submit()"><?=t('Delete Batch')?></button>
+            </div>
+        </form>
+    </div>
+
+    <div id="ccm-dialog-clear-batch" class="ccm-ui">
+        <form method="post" action="<?=$view->action('clear_batch')?>">
+            <?=Loader::helper("validation/token")->output('clear_batch')?>
+            <input type="hidden" name="id" value="<?=$batch->getID()?>">
+            <p><?=t('Are you sure you remove all content from this import batch? This cannot be undone.')?></p>
+            <div class="dialog-buttons">
+                <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
+                <button class="btn btn-danger pull-right" onclick="$('#ccm-dialog-clear-batch form').submit()"><?=t('Clear Batch')?></button>
             </div>
         </form>
     </div>
@@ -46,6 +59,44 @@
     <? } ?>
 
     <h3><?=t('Records')?></h3>
+    <? if ($batch->hasRecords()) { ?>
+
+        <div class="alert alert-success">
+            <form method="post" action="<?=$view->action('create_content_from_batch')?>">
+                <?=Core::make('token')->output('create_content_from_batch')?>
+                <input type="hidden" name="id" value="<?=$batch->getID()?>">
+                <?=t('No errors found. Click below to build pages for this import batch.')?>
+                <div style="text-align: center">
+                    <button class="btn btn-success" type="submit"><?=t('Create Pages')?></button>
+                </div>
+            </form>
+        </div>
+
+
+        <h4><?=t('Pages')?></h4>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><?=t('Path')?></th>
+                <th><?=t('Name')?></th>
+                <th><?=t('Type')?></th>
+                <th><?=t('Template')?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <? foreach($batch->getPages() as $page) { ?>
+                <tr>
+                    <td><a href=""><?=$page->getBatchPath()?></a></td>
+                    <td width="100%"><?=$page->getName()?></td>
+                    <td><?=$page->getType()?></td>
+                    <td><?=$page->getTemplate()?></td>
+                </tr>
+            <? } ?>
+            </tbody>
+        </table>
+    <? } else { ?>
+        <p><?=t('This content batch is empty.')?></p>
+    <? } ?>
 
 
 

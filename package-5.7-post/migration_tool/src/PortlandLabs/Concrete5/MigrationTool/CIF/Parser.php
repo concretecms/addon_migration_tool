@@ -89,7 +89,7 @@ class Parser
         $block = new Block();
         $block->setType((string) $node['type']);
         $block->setName((string) $node['name']);
-        $block->setDataXml((string) $node->data->asXML());
+        $block->setDataXml((string) $node->asXML());
         return $block;
     }
 

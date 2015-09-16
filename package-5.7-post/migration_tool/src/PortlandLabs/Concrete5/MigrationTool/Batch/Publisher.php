@@ -2,6 +2,8 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch;
 
+use Concrete\Core\Attribute\Key\CollectionKey;
+use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Page\Template;
 use Concrete\Core\Page\Type\Type;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -77,8 +79,28 @@ class Publisher
 
             $data['name'] = $page->getName();
             $data['description'] = $page->getDescription();
-            $parent->add($type, $data);
+            $concretePage = $parent->add($type, $data);
 
+            foreach($page->attributes as $attribute) {
+                $ak = CollectionKey::getByHandle($attribute->getAttribute()->getHandle());
+                if (is_object($ak)) {
+                    $node = simplexml_load_string($attribute->getAttribute()->getValueXml());
+                    print $ak->getController()->importValue($node);
+                    $concretePage->setAttribute($attribute->getAttribute()->getHandle(),
+                        $ak->getController()->importValue($node));
+                }
+            }
+
+            foreach($page->areas as $area) {
+                foreach($area->blocks as $block) {
+                    $bt = BlockType::getByHandle($block->getType());
+                    if (is_object($bt)) {
+                        $btc = $bt->getController();
+                        $bx = simplexml_load_string($block->getDataXml());
+                        $btc->import($concretePage, $area->getName(), $bx);
+                    }
+                }
+            }
         }
 
     }

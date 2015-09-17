@@ -5,7 +5,8 @@ namespace Concrete\Package\MigrationTool;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
 use Page;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTypeTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Validator;
 use SinglePage;
 
 class Controller extends Package
@@ -64,7 +65,9 @@ class Controller extends Package
     public function on_start()
     {
         \Core::bindShared('migration/batch/page/validator', function () {
-            return new Validator();
+            $v = new Validator();
+            $v->registerTask(new ValidatePageTypeTask());
+            return $v;
         });
 
     }

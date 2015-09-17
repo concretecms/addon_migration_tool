@@ -81,6 +81,7 @@
                 <th><?=t('Name')?></th>
                 <th><?=t('Type')?></th>
                 <th><?=t('Template')?></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -92,6 +93,7 @@
                     <td width="100%"><?=$page->getName()?></td>
                     <td><?=$page->getType()?></td>
                     <td><?=$page->getTemplate()?></td>
+                    <td><? print $messages->getFormatter()->outputCollectionStatusIcon()?></td>
                 </tr>
             <? } ?>
             </tbody>

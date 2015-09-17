@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator;
 
 /**
  * @Entity
@@ -271,6 +272,14 @@ class Page
     public function setPosition($position)
     {
         $this->position = $position;
+    }
+
+    /**
+     * @return Validator
+     */
+    public function getValidator()
+    {
+        return \Core::make('migration/batch/page/validator', array($this));
     }
 
 

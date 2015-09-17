@@ -5,13 +5,14 @@ namespace Concrete\Package\MigrationTool;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
 use Page;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator;
 use SinglePage;
 
 class Controller extends Package
 {
 
     protected $pkgHandle = 'migration_tool';
-    protected $appVersionRequired = '5.7.5.2';
+    protected $appVersionRequired = '5.7.5.3a1';
     protected $pkgVersion = '0.5.1';
     protected $pkgAutoloaderMapCoreExtensions = true;
     protected $pkgAutoloaderRegistries = array(
@@ -60,6 +61,13 @@ class Controller extends Package
         }
     }
 
+    public function on_start()
+    {
+        \Core::bindShared('migration/batch/page/validator', function () {
+            return new Validator();
+        });
+
+    }
 
     public function getPackageDescription()
     {

@@ -84,7 +84,9 @@
             </tr>
             </thead>
             <tbody>
-            <? foreach($batch->getPages() as $page) { ?>
+            <? foreach($batch->getPages() as $page) {
+                $validator = $page->getValidator();
+                $messages = $validator->validate($page);?>
                 <tr>
                     <td><a href=""><?=$page->getBatchPath()?></a></td>
                     <td width="100%"><?=$page->getName()?></td>

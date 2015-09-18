@@ -14,5 +14,7 @@ interface MapperInterface
     public function getHandle();
     public function getItems(Batch $batch);
     public function getTargetItems();
+    public function getMatchedTargetItem(ItemInterface $item);
+
 
 }

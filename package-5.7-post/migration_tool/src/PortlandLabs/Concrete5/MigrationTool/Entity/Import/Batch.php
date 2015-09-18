@@ -143,5 +143,22 @@ class Batch
         return $pages;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTargetItems()
+    {
+        return $this->target_items;
+    }
+
+    /**
+     * @param mixed $target_items
+     */
+    public function setTargetItems($target_items)
+    {
+        $this->target_items = $target_items;
+    }
+
+
 
 }

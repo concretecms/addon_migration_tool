@@ -2,8 +2,10 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
+use Concrete\Core\User\Event\UserInfo;
 use Concrete\Core\User\UserList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -38,6 +40,17 @@ class User implements MapperInterface
             $items[] = $item;
         }
         return $items;
+    }
+
+    public function getMatchedTargetItem(ItemInterface $item)
+    {
+        $user = UserInfo::getByUserName($item->getIdentifier());
+        if (is_object($user)) {
+            $targetItem = new TargetItem($this);
+            $targetItem->setItemId($user->getUserID());
+            $targetItem->setItemName($user->getUserDisplayName());
+            return $targetItem;
+        }
     }
 
     public function getTargetItems()

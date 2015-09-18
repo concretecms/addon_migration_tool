@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Page\Type\Type;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -38,6 +39,17 @@ class PageType implements MapperInterface
             $items[] = $item;
         }
         return $items;
+    }
+
+    public function getMatchedTargetItem(ItemInterface $item)
+    {
+        $type = Type::getByHandle($item->getIdentifier());
+        if (is_object($type)) {
+            $targetItem = new TargetItem($this);
+            $targetItem->setItemId($type->getPageTypeID());
+            $targetItem->setItemName($type->getPageTypeDisplayName());
+            return $targetItem;
+        }
     }
 
     public function getTargetItems()

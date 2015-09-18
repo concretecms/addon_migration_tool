@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Attribute\Key\CollectionKey;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -40,6 +41,17 @@ class Attribute implements MapperInterface
             $items[] = $item;
         }
         return $items;
+    }
+
+    public function getMatchedTargetItem(ItemInterface $item)
+    {
+        $ak = CollectionKey::getByHandle($item->getIdentifier());
+        if (is_object($ak)) {
+            $targetItem = new TargetItem($this);
+            $targetItem->setItemId($ak->getAttributeKeyID());
+            $targetItem->setItemName($ak->getAttributeKeyDisplayName());
+            return $targetItem;
+        }
     }
 
     public function getTargetItems()

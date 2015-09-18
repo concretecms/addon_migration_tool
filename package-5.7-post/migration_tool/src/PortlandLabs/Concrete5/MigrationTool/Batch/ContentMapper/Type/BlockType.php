@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -41,6 +42,17 @@ class BlockType implements MapperInterface
             $items[] = $item;
         }
         return $items;
+    }
+
+    public function getMatchedTargetItem(ItemInterface $item)
+    {
+        $bt = \Concrete\Core\Block\BlockType\BlockType::getByHandle($item->getIdentifier());
+        if (is_object($bt)) {
+            $targetItem = new TargetItem($this);
+            $targetItem->setItemId($bt->getBlockTypeID());
+            $targetItem->setItemName($bt->getBlockTypeName());
+            return $targetItem;
+        }
     }
 
     public function getTargetItems()

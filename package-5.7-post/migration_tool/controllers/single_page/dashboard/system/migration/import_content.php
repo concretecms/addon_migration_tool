@@ -5,6 +5,7 @@ use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\MapContentTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Publisher;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -61,6 +62,10 @@ class ImportContent extends DashboardPageController
                     $entity->setBatch(null);
                     $this->entityManager->remove($entity);
                 }
+                foreach($batch->getTargetItems() as $targetItem) {
+                    $targetItem->setBatch(null);
+                    $this->entityManager->remove($targetItem);
+                }
                 $this->entityManager->flush();
                 $this->flash('success', t('Batch cleared successfully.'));
                 $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
@@ -101,6 +106,7 @@ class ImportContent extends DashboardPageController
                 $target = new Target($batch);
                 $processor = new Processor($target);
                 $processor->registerTask(new NormalizePagePathsTask());
+                $processor->registerTask(new MapContentTypesTask());
                 $processor->process();
 
                 $this->entityManager->persist($batch);

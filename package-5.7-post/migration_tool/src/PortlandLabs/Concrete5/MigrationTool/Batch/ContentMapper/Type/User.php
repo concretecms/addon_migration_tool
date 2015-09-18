@@ -2,8 +2,10 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
+use Concrete\Core\User\UserList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
+use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -25,7 +27,7 @@ class User implements MapperInterface
     {
         $users = array();
         foreach($batch->getPages() as $page) {
-            if (!in_array($page->getUser(), $users)) {
+            if ($page->getUser() && !in_array($page->getUser(), $users)) {
                 $users[] = $page->getUser();
             }
         }
@@ -40,7 +42,17 @@ class User implements MapperInterface
 
     public function getTargetItems()
     {
-        return array();
+        $ul = new UserList();
+        $ul->sortByUserName();
+        $users = $ul->getResults();
+        $items = array();
+        foreach($users as $user) {
+            $item = new TargetItem($this);
+            $item->setItemId($user->getUserID());
+            $item->setItemName($user->getUserDisplayName());
+            $items[] = $item;
+        }
+        return $items;
     }
 
 

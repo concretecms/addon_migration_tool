@@ -32,11 +32,11 @@
                 <td>
                     <select name="targetItem[<?=$item->getIdentifier()?>]" class="form-control">
                         <? foreach($targetItemList->getInternalTargetItems() as $targetItem) { ?>
-                            <option <? if ($selectedTargetItem->getItemID() == $targetItem->getItemID()) { ?>selected="selected" <? } ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
+                            <option <? if (is_object($selectedTargetItem) && $selectedTargetItem->getItemID() == $targetItem->getItemID()) { ?>selected="selected" <? } ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
                         <? } ?>
                         <optgroup label="** <?=$mapper->getMappedItemPluralName()?>"></optgroup>
                         <? foreach($targetItemList->getMapperTargetItems() as $targetItem) { ?>
-                            <option <? if ($selectedTargetItem->getItemID() == $targetItem->getItemID()) { ?>selected="selected" <? } ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
+                            <option <? if (is_object($selectedTargetItem) && $selectedTargetItem->getItemID() == $targetItem->getItemID()) { ?>selected="selected" <? } ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
                         <? } ?>
                     </select>
                 </td>

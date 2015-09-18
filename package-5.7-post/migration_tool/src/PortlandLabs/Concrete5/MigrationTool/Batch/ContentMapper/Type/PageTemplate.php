@@ -2,8 +2,10 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
+use Concrete\Core\Page\Template;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
+use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -25,7 +27,7 @@ class PageTemplate implements MapperInterface
     {
         $templates = array();
         foreach($batch->getPages() as $page) {
-            if (!in_array($page->getTemplate(), $templates)) {
+            if ($page->getTemplate() && !in_array($page->getTemplate(), $templates)) {
                 $templates[] = $page->getTemplate();
             }
         }
@@ -40,7 +42,18 @@ class PageTemplate implements MapperInterface
 
     public function getTargetItems()
     {
-        return array();
+        $templates = Template::getList();
+        usort($templates, function($a, $b) {
+            return strcasecmp($a->getPageTemplateName(), $b->getPageTemplateName());
+        });
+        $items = array();
+        foreach($templates as $template) {
+            $item = new TargetItem($this);
+            $item->setItemId($template->getPageTemplateID());
+            $item->setItemName($template->getPageTemplateName());
+            $items[] = $item;
+        }
+        return $items;
     }
 
 

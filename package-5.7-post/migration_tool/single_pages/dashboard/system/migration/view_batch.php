@@ -1,11 +1,25 @@
 <? defined('C5_EXECUTE') or die("Access Denied."); ?>
-
-<div class="ccm-dashboard-header-buttons btn-group">
+<div class="ccm-dashboard-header-buttons">
+<div class="btn-group" role="group" aria-label="...">
     <a href="javascript:void(0)" data-dialog="add-to-batch" data-dialog-title="<?=t('Add Content')?>" class="btn btn-default"><?=t("Add Content to Batch")?></a>
-    <a href="javascript:void(0)" data-dialog="clear-batch" data-dialog-title="<?=t('Clear Batch')?>" class="btn btn-default"><?=t("Clear Batch")?></a>
-    <a href="javascript:void(0)" data-dialog="delete-batch" data-dialog-title="<?=t('Delete Batch')?>" class="btn btn-danger"><?=t("Delete Batch")?></a>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <?=t('Edit Batch')?>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li class="dropdown-header"><?=t('Map Content')?></li>
+            <? foreach($mappers->getDrivers() as $mapper) {?>
+                <li><a href="<?=$view->action('map_content', $batch->getId(), $mapper->getHandle())?>"><?=$mapper->getMappedItemPluralName()?></a></li>
+            <? } ?>
+            <li class="divider"></li>
+            <li><a href="javascript:void(0)" data-dialog="clear-batch" data-dialog-title="<?=t('Clear Batch')?>" class=""><span class="text-danger"><?=t("Clear Batch")?></span></a>
+            </li>
+            <li><a href="javascript:void(0)" data-dialog="delete-batch" data-dialog-title="<?=t('Delete Batch')?>"><span class="text-danger"><?=t("Delete Batch")?></span></a></li>
+        </ul>
+    </div>
 </div>
-
+    </div>
 
 <div style="display: none">
     <div id="ccm-dialog-delete-batch" class="ccm-ui">
@@ -95,6 +109,15 @@
                     <td><?=$page->getTemplate()?></td>
                     <td><? print $messages->getFormatter()->outputCollectionStatusIcon()?></td>
                 </tr>
+                <? if ($messages->count() > 0) { ?>
+                <tr>
+                    <td colspan="5">
+                        <? foreach($messages as $m) { ?>
+                            <div><?=$m->getFormatter()->output()?></div>
+                        <? } ?>
+                    </td>
+                </tr>
+                <? } ?>
             <? } ?>
             </tbody>
         </table>

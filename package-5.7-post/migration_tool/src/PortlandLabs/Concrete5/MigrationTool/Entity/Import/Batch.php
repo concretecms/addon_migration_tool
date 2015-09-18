@@ -33,10 +33,17 @@ class Batch
      **/
     public $pages;
 
+    /**
+     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem", mappedBy="batch", cascade={"persist", "remove"})
+     **/
+    public $target_items;
+
+
     public function __construct()
     {
         $this->date = new \DateTime();
         $this->pages = new ArrayCollection();
+        $this->target_items = new ArrayCollection();
     }
 
     /**

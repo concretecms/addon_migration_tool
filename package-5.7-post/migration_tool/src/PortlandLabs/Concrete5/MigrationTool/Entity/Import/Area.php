@@ -80,5 +80,22 @@ class Area
         $this->blocks = new ArrayCollection();
     }
 
+    /**
+     * @return mixed
+     */
+    public function getBlocks()
+    {
+        return $this->blocks;
+    }
+
+    /**
+     * @param mixed $blocks
+     */
+    public function setBlocks($blocks)
+    {
+        $this->blocks = $blocks;
+    }
+
+
 
 }

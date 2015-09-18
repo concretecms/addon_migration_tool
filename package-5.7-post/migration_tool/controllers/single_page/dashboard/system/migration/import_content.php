@@ -3,11 +3,13 @@ namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\
 
 use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Publisher;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\CIF\Parser;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 
 class ImportContent extends DashboardPageController
 {
@@ -145,9 +147,85 @@ class ImportContent extends DashboardPageController
         if (is_object($batch)) {
             $this->set('batch', $batch);
             $this->set('pageTitle', t('Import Batch'));
+            $this->set('mappers', \Core::make('migration/batch/mapper/manager'));
             $this->render('/dashboard/system/migration/view_batch');
+
         }
         $this->view();
     }
+
+    public function save_mapping()
+    {
+        if (!$this->token->validate('save_mapping')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($this->request->request->get('id'));
+        if (!is_object($batch)) {
+            $this->error->add(t('Invalid batch.'));
+        }
+
+        $mappers = \Core::make('migration/batch/mapper/manager');
+        $mapper = $mappers->driver($this->request->request->get('mapper'));
+        if (!is_object($mapper)) {
+            $this->error->add(t('Invalid mapping type.'));
+        }
+
+        if (!$this->error->has()) {
+            // First, delete all target items for this particular type, since we're going to re-map
+            // them in the post below.
+            $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem');
+            $items = $r->findBy(array(
+                'batch' => $batch
+            ));
+            foreach($items as $item) {
+                if ($item->getTargetItem()->getItemType() == $mapper->getHandle()) {
+                    $this->entityManager->remove($item);
+                }
+            }
+            $this->entityManager->flush();
+
+            $items = $mapper->getItems($batch);
+            $post = $this->request->request->get('targetItem');
+            $targetItemList = new TargetItemList($batch, $mapper);
+
+            foreach($items as $item) {
+                $value = $post[$item->getIdentifier()];
+                $targetItem = $targetItemList->getTargetItem($value);
+                $targetItem->setSourceItemIdentifier($item->getIdentifier());
+
+                $batchTargetItem = new BatchTargetItem();
+                $batchTargetItem->setBatch($batch);
+                $batchTargetItem->setTargetItem($targetItem);
+                $batch->target_items->add($batchTargetItem);
+                $this->entityManager->persist($batchTargetItem);
+            }
+
+            $this->entityManager->flush();
+
+            $this->flash('message', t('Batch mappings updated.'));
+            $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
+        }
+    }
+
+    public function map_content($id = null, $type = null)
+    {
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($id);
+        $mappers = \Core::make('migration/batch/mapper/manager');
+        $mapper = $mappers->driver($type);
+        if (is_object($batch) && is_object($mapper)) {
+            $this->set('batch', $batch);
+            $this->set('pageTitle', t('Map Content'));
+            $this->set('mapper', $mapper);
+            $this->set('items', $mapper->getItems($batch));
+            $this->set('targetItemList', new TargetItemList($batch, $mapper));
+            $this->render('/dashboard/system/migration/map_content');
+
+        }
+        $this->view();
+    }
+
 
 }

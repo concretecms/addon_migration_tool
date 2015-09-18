@@ -5,6 +5,8 @@ namespace Concrete\Package\MigrationTool;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
 use Page;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateBlockTypeTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTypeTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Validator;
 use SinglePage;
@@ -67,9 +69,12 @@ class Controller extends Package
         \Core::bindShared('migration/batch/page/validator', function () {
             $v = new Validator();
             $v->registerTask(new ValidatePageTypeTask());
+            $v->registerTask(new ValidateBlockTypeTask());
             return $v;
         });
-
+        \Core::bindShared('migration/batch/mapper/manager', function () {
+            return new Manager();
+        });
     }
 
     public function getPackageDescription()

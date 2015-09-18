@@ -282,5 +282,38 @@ class Page
         return \Core::make('migration/batch/page/validator', array($this));
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * @param mixed $attributes
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAreas()
+    {
+        return $this->areas;
+    }
+
+    /**
+     * @param mixed $areas
+     */
+    public function setAreas($areas)
+    {
+        $this->areas = $areas;
+    }
+
+
 
 }

@@ -21,13 +21,14 @@ class MapContentTypesTask implements TaskInterface
     {
         $target = $action->getTarget();
         $batch = $target->getBatch();
+
         $targetItems = array();
         $mappers = \Core::make('migration/batch/mapper/manager');
         foreach($mappers->getDrivers() as $mapper) {
+            $targetItemList = new TargetItemList($batch, $mapper);
             foreach($mapper->getItems($batch) as $item) {
-                $targetItem = $mapper->getMatchedTargetItem($item);
+                $targetItem = $targetItemList->getMatchedTargetItem($item);
                 if (is_object($targetItem)) {
-                    $targetItem->setSourceItemIdentifier($item->getIdentifier());
                     $targetItems[] = $targetItem;
                 }
             }

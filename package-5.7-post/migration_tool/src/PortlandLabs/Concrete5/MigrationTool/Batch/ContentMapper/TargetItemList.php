@@ -33,6 +33,16 @@ class TargetItemList
         );
     }
 
+    public function getMatchedTargetItem(ItemInterface $item)
+    {
+        $targetItem = $this->mapper->getMatchedTargetItem($item);
+        if (!is_object($targetItem)) {
+            $targetItem = new UnmappedTargetItem($this->mapper);
+        }
+        $targetItem->setSourceItemIdentifier($item->getIdentifier());
+        return $targetItem;
+    }
+
     public function getSelectedTargetItem(ItemInterface $item)
     {
         $query = $this->entityManager->createQuery(

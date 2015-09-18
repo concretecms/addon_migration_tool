@@ -16,6 +16,11 @@ class Item implements ItemInterface
 
     protected $identifier;
 
+    public function __construct($identifier = null)
+    {
+        $this->identifier = $identifier;
+    }
+
     public function setIdentifier($identifier)
     {
         $this->identifier = $identifier;

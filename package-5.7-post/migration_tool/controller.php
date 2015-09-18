@@ -6,8 +6,11 @@ use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateBlockTypeTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTypeTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateAttributesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateBlockTypesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTemplatesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTypesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateUsersTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Validator;
 use SinglePage;
 
@@ -68,8 +71,11 @@ class Controller extends Package
     {
         \Core::bindShared('migration/batch/page/validator', function () {
             $v = new Validator();
-            $v->registerTask(new ValidatePageTypeTask());
-            $v->registerTask(new ValidateBlockTypeTask());
+            $v->registerTask(new ValidateAttributesTask());
+            $v->registerTask(new ValidatePageTemplatesTask());
+            $v->registerTask(new ValidatePageTypesTask());
+            $v->registerTask(new ValidateUsersTask());
+            $v->registerTask(new ValidateBlockTypesTask());
             return $v;
         });
         \Core::bindShared('migration/batch/mapper/manager', function () {

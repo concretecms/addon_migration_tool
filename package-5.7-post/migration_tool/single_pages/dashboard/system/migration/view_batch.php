@@ -73,18 +73,21 @@
     <? } ?>
 
     <h3><?=t('Records')?></h3>
-    <? if ($batch->hasRecords()) { ?>
+    <? if ($batch->hasRecords()) {
+        $validator = new \PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\BatchValidator($batch);
+        $formatter = $validator->getFormatter();
+        ?>
 
-        <div class="alert alert-success">
-            <form method="post" action="<?=$view->action('create_content_from_batch')?>">
-                <?=Core::make('token')->output('create_content_from_batch')?>
-                <input type="hidden" name="id" value="<?=$batch->getID()?>">
-                <?=t('No errors found. Click below to build pages for this import batch.')?>
-                <div style="text-align: center">
-                    <button class="btn btn-success" type="submit"><?=t('Create Pages')?></button>
-                </div>
-            </form>
+    <form method="post" action="<?=$view->action('create_content_from_batch')?>">
+        <?=Core::make('token')->output('create_content_from_batch')?>
+        <input type="hidden" name="id" value="<?=$batch->getID()?>">
+        <div class="alert <?=$formatter->getAlertClass()?>">
+            <button class="pull-right btn btn-default" type="submit"><?=t('Create Pages')?></button>
+            <?=$formatter->getCreateStatusMessage()?>
+            <div class="clearfix"></div>
+
         </div>
+    </form>
 
 
         <h4><?=t('Pages')?></h4>
@@ -100,8 +103,7 @@
             </thead>
             <tbody>
             <? foreach($batch->getPages() as $page) {
-                $validator = $page->getValidator();
-                $messages = $validator->validate($page);?>
+                $messages = $validator->validatePage($page); ?>
                 <tr>
                     <td><a href=""><?=$page->getBatchPath()?></a></td>
                     <td width="100%"><?=$page->getName()?></td>

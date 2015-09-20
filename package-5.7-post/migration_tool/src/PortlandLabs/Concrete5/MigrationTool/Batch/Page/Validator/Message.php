@@ -14,6 +14,7 @@ class Message
     const E_INFO = 1;
     const E_WARNING = 5;
     const E_DANGER = 10;
+    const E_SUCCESS = 3;
 
     protected $severity;
     protected $text;

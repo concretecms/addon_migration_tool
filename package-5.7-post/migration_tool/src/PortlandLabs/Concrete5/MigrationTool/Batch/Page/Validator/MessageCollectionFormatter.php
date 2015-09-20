@@ -31,7 +31,6 @@ class MessageCollectionFormatter extends MessageFormatter
             }
         }
         return $severity;
-
     }
 
     public function outputCollectionStatusIcon()

@@ -29,7 +29,7 @@ class TargetItem implements TargetItemInterface
     protected $source_item_identifier;
 
     /**
-     * @Column(type="integer")
+     * @Column(type="string")
      */
     protected $item_id;
 

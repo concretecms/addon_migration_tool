@@ -4,7 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task;
 
 use Concrete\Core\Foundation\Processor\ActionInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageTemplate;

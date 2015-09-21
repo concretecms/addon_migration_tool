@@ -3,8 +3,8 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Page\Template;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\ItemInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -53,7 +53,7 @@ class PageTemplate implements MapperInterface
     }
 
 
-    public function getTargetItems()
+    public function getTargetItems(Batch $batch)
     {
         $templates = Template::getList();
         usort($templates, function($a, $b) {

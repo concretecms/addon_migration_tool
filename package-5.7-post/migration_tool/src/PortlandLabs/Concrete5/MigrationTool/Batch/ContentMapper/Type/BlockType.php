@@ -2,8 +2,8 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\ItemInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -55,7 +55,7 @@ class BlockType implements MapperInterface
         }
     }
 
-    public function getTargetItems()
+    public function getTargetItems(Batch $batch)
     {
         $types = \Concrete\Core\Block\BlockType\BlockTypeList::getInstalledList();
         usort($types, function($a, $b) {

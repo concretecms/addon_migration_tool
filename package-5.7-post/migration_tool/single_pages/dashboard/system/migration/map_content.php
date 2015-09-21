@@ -28,7 +28,7 @@
                 $selectedTargetItem = $targetItemList->getSelectedTargetItem($item);
                 ?>
             <tr>
-                <td style="vertical-align: middle"><?=$item->getIdentifier()?></td>
+                <td style="white-space: nowrap; vertical-align: middle"><?=$item->getDisplayName()?></td>
                 <td>
                     <select name="targetItem[<?=$item->getIdentifier()?>]" class="form-control">
                         <? foreach($targetItemList->getInternalTargetItems() as $targetItem) { ?>

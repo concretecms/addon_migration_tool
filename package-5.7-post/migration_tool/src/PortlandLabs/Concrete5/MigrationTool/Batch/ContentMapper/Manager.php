@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper;
 
 use Concrete\Core\Support\Manager as CoreManager;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Area;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\ComposerOutputContent;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageTemplate;
@@ -45,13 +46,19 @@ class Manager extends CoreManager
         return new ComposerOutputContent();
     }
 
+    protected function createAreaDriver()
+    {
+        return new Area();
+    }
+
     public function __construct()
     {
+        $this->driver('area');
         $this->driver('attribute');
+        $this->driver('block_type');
+        $this->driver('composer_output_content');
         $this->driver('page_template');
         $this->driver('page_type');
         $this->driver('user');
-        $this->driver('block_type');
-        $this->driver('composer_output_content');
     }
 }

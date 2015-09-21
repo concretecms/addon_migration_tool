@@ -6,6 +6,7 @@ use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateAreasTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateAttributesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateBlockTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateComposerOutputContentItemsTask;
@@ -77,6 +78,7 @@ class Controller extends Package
             $v->registerTask(new ValidatePageTypesTask());
             $v->registerTask(new ValidateUsersTask());
             $v->registerTask(new ValidateBlockTypesTask());
+            $v->registerTask(new ValidateAreasTask());
             return $v;
         });
         \Core::bindShared('migration/batch/mapper/manager', function () {

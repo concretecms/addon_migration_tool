@@ -8,6 +8,7 @@ use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateAttributesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateBlockTypesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateComposerOutputContentItemsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTemplatesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateUsersTask;

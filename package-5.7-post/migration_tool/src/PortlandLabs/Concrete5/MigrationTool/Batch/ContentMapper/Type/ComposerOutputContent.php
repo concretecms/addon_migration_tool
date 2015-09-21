@@ -25,6 +25,22 @@ class ComposerOutputContent implements MapperInterface
         return 'composer_output_content';
     }
 
+    public function getPageTypeComposerOutputContentItems(Type $type)
+    {
+        $items = array();
+        foreach($type->getPageTypePageTemplateObjects() as $template) {
+            $c = $type->getPageTypePageTemplateDefaultPageObject($template);
+            $blocks = $c->getBlocks();
+            foreach($blocks as $b) {
+                if ($b->getBlockTypeHandle() == BLOCK_HANDLE_PAGE_TYPE_OUTPUT_PROXY) {
+                    $item = new ComposerOutputContentItem($b);
+                    $items[] = $item;
+                }
+            }
+        }
+        return $items;
+    }
+
     public function getItems(Batch $batch)
     {
         // first, loop through all the page types
@@ -45,30 +61,14 @@ class ComposerOutputContent implements MapperInterface
         }
         foreach($ids as $id) {
             $type = Type::getByID($id);
-            foreach($type->getPageTypePageTemplateObjects() as $template) {
-                $c = $type->getPageTypePageTemplateDefaultPageObject($template);
-                $blocks = $c->getBlocks();
-                foreach($blocks as $b) {
-                    if ($b->getBlockTypeHandle() == BLOCK_HANDLE_PAGE_TYPE_OUTPUT_PROXY) {
-                        $item = new ComposerOutputContentItem($b);
-                        $items[] = $item;
-                    }
-                }
-
-            }
+            $items = array_merge($items, $this->getPageTypeComposerOutputContentItems($type));
         }
         return $items;
     }
 
     public function getMatchedTargetItem(ItemInterface $item)
     {
-        $bt = \Concrete\Core\Block\BlockType\BlockType::getByHandle($item->getIdentifier());
-        if (is_object($bt)) {
-            $targetItem = new TargetItem($this);
-            $targetItem->setItemId($bt->getBlockTypeID());
-            $targetItem->setItemName($bt->getBlockTypeName());
-            return $targetItem;
-        }
+        return false;
     }
 
     public function getTargetItems(Batch $batch)

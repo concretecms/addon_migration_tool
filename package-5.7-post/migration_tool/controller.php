@@ -82,8 +82,14 @@ class Controller extends Package
             $v->registerTask(new ValidateAreasTask());
             return $v;
         });
-        \Core::bindShared('migration/batch/mapper/manager', function () {
-            return new Manager();
+        \Core::bindShared('migration/manager/mapping', function ($app) {
+            return new Manager($app);
+        });
+        \Core::bindShared('migration/manager/transforms', function ($app) {
+            return new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Manager($app);
+        });
+        \Core::bindShared('migration/manager/import/attribute', function ($app) {
+            return new \PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Type\Manager($app);
         });
         $al = AssetList::getInstance();
         $al->register(

@@ -1,6 +1,6 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\CIF;
+namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF;
 
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
@@ -8,6 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Type\Manager;
 
 class Parser
 {
@@ -15,10 +16,12 @@ class Parser
     protected $simplexml;
     protected $singlePages = array();
     protected $pages = array();
+    protected $attributeImporter;
 
     public function __construct($file)
     {
         $this->simplexml = simplexml_load_file($file);
+        $this->attributeImporter = \Core::make('migration/manager/import/attribute');
         $i = 0;
         if ($this->simplexml->pages->page) {
             foreach($this->simplexml->pages->page as $node) {
@@ -80,7 +83,8 @@ class Parser
     {
         $attribute = new Attribute();
         $attribute->setHandle((string) $node['handle']);
-        $attribute->setValueXml((string) $node->asXML());
+        $value = $this->attributeImporter->driver('unmapped')->parse($node);
+        $attribute->setAttributeValue($value);
         return $attribute;
     }
 

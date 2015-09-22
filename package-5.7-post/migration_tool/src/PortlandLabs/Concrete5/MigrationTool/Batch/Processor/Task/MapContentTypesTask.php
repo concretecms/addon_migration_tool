@@ -23,7 +23,7 @@ class MapContentTypesTask implements TaskInterface
         $batch = $target->getBatch();
 
         $targetItems = array();
-        $mappers = \Core::make('migration/batch/mapper/manager');
+        $mappers = \Core::make('migration/manager/mapping');
         foreach($mappers->getDrivers() as $mapper) {
             $targetItemList = new TargetItemList($batch, $mapper);
             foreach($mapper->getItems($batch) as $item) {

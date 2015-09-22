@@ -7,9 +7,10 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\MapContentTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\TransformContentTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Publisher;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-use PortlandLabs\Concrete5\MigrationTool\CIF\Parser;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Parser;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 
 class ImportContent extends DashboardPageController
@@ -103,10 +104,12 @@ class ImportContent extends DashboardPageController
                     $batch->pages->add($entity);
                 }
 
+
                 $target = new Target($batch);
                 $processor = new Processor($target);
                 $processor->registerTask(new NormalizePagePathsTask());
                 $processor->registerTask(new MapContentTypesTask());
+                $processor->registerTask(new TransformContentTypesTask());
                 $processor->process();
 
                 $this->entityManager->persist($batch);
@@ -154,7 +157,7 @@ class ImportContent extends DashboardPageController
         if (is_object($batch)) {
             $this->set('batch', $batch);
             $this->set('pageTitle', t('Import Batch'));
-            $this->set('mappers', \Core::make('migration/batch/mapper/manager'));
+            $this->set('mappers', \Core::make('migration/manager/mapping'));
             $this->render('/dashboard/system/migration/view_batch');
 
         }
@@ -180,7 +183,7 @@ class ImportContent extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
 
-        $mappers = \Core::make('migration/batch/mapper/manager');
+        $mappers = \Core::make('migration/manager/mapping');
         $mapper = $mappers->driver($this->request->request->get('mapper'));
         if (!is_object($mapper)) {
             $this->error->add(t('Invalid mapping type.'));
@@ -216,6 +219,11 @@ class ImportContent extends DashboardPageController
                 $this->entityManager->persist($batchTargetItem);
             }
 
+            $target = new Target($batch);
+            $processor = new Processor($target);
+            $processor->registerTask(new TransformContentTypesTask());
+            $processor->process();
+
             $this->entityManager->flush();
 
             $this->flash('message', t('Batch mappings updated.'));
@@ -227,7 +235,7 @@ class ImportContent extends DashboardPageController
     {
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
-        $mappers = \Core::make('migration/batch/mapper/manager');
+        $mappers = \Core::make('migration/manager/mapping');
         $mapper = $mappers->driver($type);
         if (is_object($batch) && is_object($mapper)) {
             $this->set('batch', $batch);

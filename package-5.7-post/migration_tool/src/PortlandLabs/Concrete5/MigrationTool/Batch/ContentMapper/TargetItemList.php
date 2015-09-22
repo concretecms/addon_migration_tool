@@ -55,6 +55,9 @@ class TargetItemList
         $query->setParameter('source_item_identifier', $item->getIdentifier());
         $query->setParameter('type', $this->mapper->getHandle());
         $targetItem = $query->getResult();
+        if (!is_object($targetItem[0])) {
+            return new UnmappedTargetItem($this->mapper);
+        }
         return $targetItem[0];
     }
 

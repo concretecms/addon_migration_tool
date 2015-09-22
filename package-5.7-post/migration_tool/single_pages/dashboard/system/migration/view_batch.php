@@ -118,8 +118,15 @@
                                 <? if ($page->getAttributes()->count()) { ?>
                                     <li data-iconClass="fa fa-cogs"><?=t('Attributes')?>
                                     <ul>
-                                    <? foreach($page->getAttributes() as $attribute) { ?>
-                                        <li data-iconClass="fa fa-cog"><?=$attribute->getAttribute()->getHandle()?></li>
+                                    <? foreach($page->getAttributes() as $attribute) {
+                                        $value = $attribute->getAttribute()->getAttributeValue();
+                                        if (is_object($value)) {
+                                            $attributeFormatter = $value->getFormatter();
+                                            ?>
+                                                <li data-iconClass="<?=$attributeFormatter->getIconClass()?>">
+                                                    <?=$attributeFormatter->getBatchTreeElementObject()?>
+                                                </li>
+                                        <? } ?>
                                     <? } ?>
                                     </ul>
                                     </li>

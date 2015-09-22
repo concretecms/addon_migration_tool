@@ -20,9 +20,10 @@ class Attribute
     protected $handle;
 
     /**
-     * @Column(type="text")
-     */
-    protected $value_xml;
+     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue", inversedBy="attribute", cascade={"persist", "remove"})
+     **/
+    protected $attribute_value;
+
 
     /**
      * @return mixed
@@ -51,18 +52,20 @@ class Attribute
     /**
      * @return mixed
      */
-    public function getValueXml()
+    public function getAttributeValue()
     {
-        return $this->value_xml;
+        return $this->attribute_value;
     }
 
     /**
-     * @param mixed $value_xml
+     * @param mixed $value
      */
-    public function setValueXml($value_xml)
+    public function setAttributeValue($attribute_value)
     {
-        $this->value_xml = $value_xml;
+        $this->attribute_value = $attribute_value;
     }
+
+
 
 
 }

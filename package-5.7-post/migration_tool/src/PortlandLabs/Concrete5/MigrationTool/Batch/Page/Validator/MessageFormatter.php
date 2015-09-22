@@ -19,41 +19,40 @@ class MessageFormatter
         return $this->message->getSeverity();
     }
 
-    protected function getTextClass()
+    public function getLevelClass()
     {
         switch($this->getSeverity()) {
             case Message::E_DANGER:
-                return 'text-danger';
+                return 'danger';
                 break;
             case Message::E_WARNING:
-                return 'text-warning';
+                return 'warning';
                 break;
             default:
-                return 'text-info';
+                return 'info';
                 break;
         }
     }
 
-    protected function getIconClass()
+    public function getIconClass()
     {
         switch($this->getSeverity()) {
             case Message::E_DANGER:
-                return 'fa fa-exclamation-triangle';
+                return 'text-danger fa fa-exclamation-triangle';
                 break;
             case Message::E_WARNING:
-                return 'fa fa-exclamation';
+                return 'text-warning fa fa-exclamation';
                 break;
             default:
-                return 'fa fa-info-circle';
+                return 'text-info fa fa-info-circle';
                 break;
         }
     }
 
     public function output()
     {
-        return sprintf('<span class="%s"><i class="%s"></i> %s</span>',
-            $this->getTextClass(),
-            $this->getIconClass(),
+        return sprintf('<span class="text-%s">%s</span>',
+            $this->getLevelClass(),
             $this->message->getText()
         );
     }

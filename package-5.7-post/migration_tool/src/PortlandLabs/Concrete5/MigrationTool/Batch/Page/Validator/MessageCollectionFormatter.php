@@ -33,15 +33,15 @@ class MessageCollectionFormatter extends MessageFormatter
         return $severity;
     }
 
-    public function outputCollectionStatusIcon()
+    public function getCollectionStatusIconClass()
     {
         if ($this->collection->count() > 0) {
-            return sprintf('<i class="%s %s"></i>',
-                $this->getTextClass(),
+            return sprintf("%s %s",
+                $this->getLevelClass(),
                 $this->getIconClass()
             );
         } else {
-            return '';
+            return 'fa fa-thumbs-up text-success';
         }
     }
 

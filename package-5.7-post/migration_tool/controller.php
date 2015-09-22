@@ -2,6 +2,7 @@
 
 namespace Concrete\Package\MigrationTool;
 
+use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
 use Page;
@@ -84,6 +85,21 @@ class Controller extends Package
         \Core::bindShared('migration/batch/mapper/manager', function () {
             return new Manager();
         });
+        $al = AssetList::getInstance();
+        $al->register(
+            'javascript', 'fancytree', 'assets/jquery.fancytree/dist/jquery.fancytree-all.min.js',
+            array('minify' => false, 'combine' => false), $this
+        );
+        $al->register(
+            'css', 'fancytree/skin/bootstrap', 'assets/jquery.fancytree/dist/skin-bootstrap/ui.fancytree.min.css',
+            array('minify' => false, 'combine' => false), $this
+        );
+        $al->registerGroup('fancytree', array(
+            array('javascript', 'jquery'),
+            array('javascript', 'jquery/ui'),
+            array('javascript', 'fancytree'),
+            array('css', 'fancytree/skin/bootstrap')
+        ));
     }
 
     public function getPackageDescription()

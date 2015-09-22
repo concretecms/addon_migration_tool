@@ -148,6 +148,7 @@ class ImportContent extends DashboardPageController
 
     public function view_batch($id = null)
     {
+        $this->requireAsset('fancytree');
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
         if (is_object($batch)) {
@@ -158,6 +159,13 @@ class ImportContent extends DashboardPageController
 
         }
         $this->view();
+    }
+
+    public function find_and_replace($id = null)
+    {
+        $this->view_batch($id);
+        $this->set('pageTitle', t('Find and Replace'));
+        $this->render('/dashboard/system/migration/find_and_replace');
     }
 
     public function save_mapping()

@@ -7,23 +7,23 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class StandardFormatter implements FormatterInterface
+class StandardFormatter extends ImportedFormatter
 {
-
-    protected $value;
-
-    public function getIconClass()
-    {
-        return 'fa fa-cog';
-    }
 
     public function getBatchTreeElementObject()
     {
-        return new Element('span', $this->value->getAttribute()->getHandle());
+        $content = new Element('span');
+        $content->appendChild(
+            new Element('div', $this->value->getAttribute()->getHandle(), array(
+            'class' => 'migration-tree-page-column migration-tree-attribute-handle'
+            ))
+        );
+        $content->appendChild(
+            new Element('div', h($this->value->getValue()), array(
+                'class' => 'migration-tree-page-column migration-tree-attribute-value'
+            ))
+        );
+        return $content;
     }
 
-    public function __construct(AttributeValue $value)
-    {
-        $this->value = $value;
-    }
 }

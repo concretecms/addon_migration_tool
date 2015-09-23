@@ -109,11 +109,16 @@ class ImportContent extends DashboardPageController
                 $processor = new Processor($target);
                 $processor->registerTask(new NormalizePagePathsTask());
                 $processor->registerTask(new MapContentTypesTask());
-                $processor->registerTask(new TransformContentTypesTask());
                 $processor->process();
 
                 $this->entityManager->persist($batch);
                 $this->entityManager->flush();
+
+                $processor = new Processor($target);
+                $processor->registerTask(new TransformContentTypesTask());
+                $processor->process();
+                $this->entityManager->flush();
+
                 $this->flash('success', t('Content added to batch successfully.'));
                 $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
             } catch(\Exception $e) {

@@ -2,6 +2,7 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Type\ImportedFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Type\StandardFormatter;
 
 /**
@@ -25,7 +26,7 @@ class ImportedAttributeValue extends AttributeValue
 
     public function getFormatter()
     {
-        return new StandardFormatter($this);
+        return new ImportedFormatter($this);
     }
 
 

@@ -55,6 +55,15 @@ abstract class AttributeValue
         $this->attribute = $attribute;
     }
 
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
     abstract public function getFormatter();
     abstract public function getValue();
     abstract public function setValue($value);

@@ -10,5 +10,9 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Type\StandardFormatt
 class StandardAttributeValue extends ImportedAttributeValue
 {
 
+    public function getFormatter()
+    {
+        return new StandardFormatter($this);
+    }
 
 }

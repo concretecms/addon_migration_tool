@@ -272,6 +272,13 @@
         font-weight: bold;
     }
 
+    .migration-tree-attribute-handle {
+        width: 200px;
+    }
+    .migration-tree-attribute-value {
+        width: 200px;
+    }
+
     .migration-tree-page-type {
         width: 200px;
         color: #666;

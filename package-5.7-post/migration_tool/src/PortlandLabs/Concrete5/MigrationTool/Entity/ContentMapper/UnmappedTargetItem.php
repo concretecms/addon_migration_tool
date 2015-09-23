@@ -19,4 +19,11 @@ class UnmappedTargetItem extends TargetItem
         $this->setItemName(t('Unmapped'));
     }
 
+    public function isMapped()
+    {
+        return false;
+    }
+
+
+
 }

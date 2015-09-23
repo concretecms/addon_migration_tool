@@ -17,7 +17,7 @@ class CIFPublisher implements PublisherInterface
     {
         $btc = $bt->getController();
         $bx = simplexml_load_string($value->getValue());
-        $btc->import($page, $area->getName(), $bx);
+        return $btc->import($page, $area->getName(), $bx);
     }
 
 }

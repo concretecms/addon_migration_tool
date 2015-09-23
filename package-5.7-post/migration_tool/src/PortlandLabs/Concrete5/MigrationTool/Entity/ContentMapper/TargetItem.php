@@ -122,6 +122,9 @@ class TargetItem implements TargetItemInterface
         return (string) $this->getItemId() == (string) $targetItem->getItemId();
     }
 
-
+    public function isMapped()
+    {
+        return true;
+    }
 
 }

@@ -19,4 +19,10 @@ class IgnoredTargetItem extends TargetItem
         $this->setItemName(t('Ignored'));
     }
 
+    public function isMapped()
+    {
+        return false;
+    }
+
+
 }

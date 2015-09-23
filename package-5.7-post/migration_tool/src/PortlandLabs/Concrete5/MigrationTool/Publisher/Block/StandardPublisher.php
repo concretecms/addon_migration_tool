@@ -16,7 +16,7 @@ class StandardPublisher implements PublisherInterface
     public function publish(BlockType $bt, Page $page, Area $area, BlockValue $value)
     {
         $data = $value->getData();
-        $page->addBlock($bt, $area->getName(), $data);
+        return $page->addBlock($bt, $area->getName(), $data);
     }
 
 }

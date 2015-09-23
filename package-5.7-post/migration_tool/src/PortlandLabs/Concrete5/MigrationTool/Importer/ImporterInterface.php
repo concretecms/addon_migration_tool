@@ -1,6 +1,6 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Type;
+namespace PortlandLabs\Concrete5\MigrationTool\Importer;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 

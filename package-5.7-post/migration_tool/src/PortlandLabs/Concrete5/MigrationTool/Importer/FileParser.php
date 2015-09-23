@@ -1,6 +1,6 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF;
+namespace PortlandLabs\Concrete5\MigrationTool\Importer;
 
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
@@ -10,7 +10,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Type\Manager;
 
-class Parser
+class FileParser
 {
 
     protected $simplexml;
@@ -22,6 +22,7 @@ class Parser
     {
         $this->simplexml = simplexml_load_file($file);
         $this->attributeImporter = \Core::make('migration/manager/import/attribute');
+        $this->blockImporter = \Core::make('migration/manager/import/block');
         $i = 0;
         if ($this->simplexml->pages->page) {
             foreach($this->simplexml->pages->page as $node) {
@@ -45,14 +46,14 @@ class Parser
     protected function parsePage($node)
     {
         $page = new Page();
-        $page->setName((string) $node['name']);
+        $page->setName((string) html_entity_decode($node['name']));
         $page->setPublicDate((string) $node['public-date']);
         $page->setOriginalPath((string) $node['path']);
         $page->setFilename((string) $node['filename']);
         $page->setTemplate((string) $node['template']);
         $page->setType((string) $node['pagetype']);
         $page->setUser((string) $node['user']);
-        $page->setDescription((string) $node['description']);
+        $page->setDescription((string) html_entity_decode($node['description']));
 
         // Parse attributes
         if ($node->attributes->attributekey) {
@@ -93,7 +94,8 @@ class Parser
         $block = new Block();
         $block->setType((string) $node['type']);
         $block->setName((string) $node['name']);
-        $block->setDataXml((string) $node->asXML());
+        $value = $this->blockImporter->driver('unmapped')->parse($node);
+        $block->setBlockValue($value);
         return $block;
     }
 

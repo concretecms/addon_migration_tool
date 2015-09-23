@@ -8,9 +8,9 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\MapContentTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\TransformContentTypesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Publisher;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Publisher;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Parser;
+use PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 
 class ImportContent extends DashboardPageController
@@ -117,8 +117,8 @@ class ImportContent extends DashboardPageController
                 $processor = new Processor($target);
                 $processor->registerTask(new TransformContentTypesTask());
                 $processor->process();
+                $this->entityManager->persist($batch);
                 $this->entityManager->flush();
-
                 $this->flash('success', t('Content added to batch successfully.'));
                 $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
             } catch(\Exception $e) {

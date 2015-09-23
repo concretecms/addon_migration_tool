@@ -1,6 +1,6 @@
 <?php
 
-use \PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Parser;
+use \PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
 
 class ParserTest extends MigrationToolTestCase
 {

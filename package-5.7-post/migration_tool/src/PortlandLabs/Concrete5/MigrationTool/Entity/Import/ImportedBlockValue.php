@@ -2,13 +2,13 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\ImportedFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\ImportedFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\CIFPublisher;
 
 /**
  * @Entity
  */
-class ImportedAttributeValue extends AttributeValue
+class ImportedBlockValue extends BlockValue
 {
 
     public function getValue()
@@ -31,7 +31,7 @@ class ImportedAttributeValue extends AttributeValue
 
     public function getPublisher()
     {
-        return new StandardPublisher();
+        return new CIFPublisher();
     }
 
 

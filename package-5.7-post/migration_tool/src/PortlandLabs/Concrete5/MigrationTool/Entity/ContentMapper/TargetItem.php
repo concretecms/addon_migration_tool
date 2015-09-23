@@ -117,6 +117,10 @@ class TargetItem implements TargetItemInterface
         $this->source_item_identifier = $source_item_identifier;
     }
 
+    public function matches(TargetItemInterface $targetItem)
+    {
+        return (string) $this->getItemId() == (string) $targetItem->getItemId();
+    }
 
 
 

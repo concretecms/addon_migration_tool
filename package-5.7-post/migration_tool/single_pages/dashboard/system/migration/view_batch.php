@@ -122,10 +122,8 @@
                                         $value = $attribute->getAttribute()->getAttributeValue();
                                         if (is_object($value)) {
                                             $attributeFormatter = $value->getFormatter();
+                                            print $attributeFormatter->getBatchTreeNodeElementObject();
                                             ?>
-                                                <li data-iconClass="<?=$attributeFormatter->getIconClass()?>">
-                                                    <?=$attributeFormatter->getBatchTreeElementObject()?>
-                                                </li>
                                         <? } ?>
                                     <? } ?>
                                     </ul>
@@ -137,8 +135,13 @@
                                             <? foreach($page->getAreas() as $area) { ?>
                                                 <li data-iconClass="fa fa-cubes"><?=$area->getName()?>
                                                     <ul>
-                                                        <? foreach($area->getBlocks() as $block) { ?>
-                                                            <li data-iconClass="fa fa-cube"><?=$block->getType()?></li>
+                                                        <? foreach($area->getBlocks() as $block) {
+                                                            $value = $block->getBlockValue();
+                                                            if (is_object($value)) {
+                                                                $blockFormatter = $value->getFormatter();
+                                                                print $blockFormatter->getBatchTreeNodeElementObject();
+                                                                ?>
+                                                            <? } ?>
                                                         <? } ?>
                                                     </ul>
                                                 </li>
@@ -272,13 +275,6 @@
         font-weight: bold;
     }
 
-    .migration-tree-attribute-handle {
-        width: 200px;
-    }
-    .migration-tree-attribute-value {
-        width: 200px;
-    }
-
     .migration-tree-page-type {
         width: 200px;
         color: #666;
@@ -289,6 +285,12 @@
         color: #666;
     }
 
+    .migration-tree-property-key {
+        width: 200px;
+    }
+    .migration-tree-property-value {
+        width: 200px;
+    }
 
     div#migration-tree .fancytree-container span.fancytree-focused span.fancytree-title {
         border-color: transparent !important;

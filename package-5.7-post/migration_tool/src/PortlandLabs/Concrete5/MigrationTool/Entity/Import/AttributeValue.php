@@ -2,8 +2,6 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
-use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Type\StandardFormatter;
-
 /**
  * @Entity
  * @Table(name="MigrationImportAttributeValues")
@@ -67,5 +65,6 @@ abstract class AttributeValue
     abstract public function getFormatter();
     abstract public function getValue();
     abstract public function setValue($value);
+    abstract public function getPublisher();
 
 }

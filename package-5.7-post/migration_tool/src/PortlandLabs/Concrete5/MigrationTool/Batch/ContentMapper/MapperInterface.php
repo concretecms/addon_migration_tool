@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper;
 
 
+use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 
@@ -16,6 +17,7 @@ interface MapperInterface
     public function getItems(Batch $batch);
     public function getTargetItems(Batch $batch);
     public function getMatchedTargetItem(ItemInterface $item);
+    public function getTargetItemContentObject(TargetItemInterface $targetItem);
 
 
 }

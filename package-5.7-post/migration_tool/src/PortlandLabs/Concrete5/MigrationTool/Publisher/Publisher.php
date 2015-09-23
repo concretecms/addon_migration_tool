@@ -1,11 +1,15 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Batch;
+namespace PortlandLabs\Concrete5\MigrationTool\Publisher;
 
 use Concrete\Core\Attribute\Key\CollectionKey;
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Page\Template;
 use Concrete\Core\Page\Type\Type;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
+use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
+use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -18,6 +22,20 @@ class Publisher
     {
         $this->batch = $batch;
         $this->package = \Package::getByHandle('migration_tool');
+    }
+
+    protected function getTargetItem($mapper, $subject)
+    {
+        if ($subject) {
+            $mappers = \Core::make('migration/manager/mapping');
+            $mapper = $mappers->driver($mapper);
+            $list = new TargetItemList($this->batch, $mapper);
+            $item = new Item($subject);
+            $targetItem = $list->getSelectedTargetItem($item);
+            if (!($targetItem instanceof UnmappedTargetItem || $targetItem instanceof IgnoredTargetItem)) {
+                return $mapper->getTargetItemContentObject($targetItem);
+            }
+        }
     }
 
     public function createInterimPages()
@@ -38,31 +56,24 @@ class Publisher
         foreach($this->batch->getPagesOrderedForImport() as $page) {
 
             $data = array();
-            $user = $page->getUser();
-            if ($user != '') {
-                $ui = \UserInfo::getByUserName($user);
-                if (is_object($ui)) {
-                    $data['uID'] = $ui->getUserID();
-                } else {
-                    $data['uID'] = USER_SUPER_ID;
-                }
+            $ui = $this->getTargetItem('user', $page->getUser());
+            if ($ui != '') {
+                $data['uID'] = $ui->getUserID();
+            } else {
+                $data['uID'] = USER_SUPER_ID;
             }
             $cDatePublic = $page->getPublicDate();
             if ($cDatePublic) {
                 $data['cDatePublic'] = $cDatePublic;
             }
 
-            if ($page->getType()) {
-                $type = Type::getByHandle($page->getType());
-                if (is_object($type)) {
-                    $data['ptID'] = $type->getPageTypeID();
-                }
+            $type = $this->getTargetItem('page_type', $page->getType());
+            if ($type) {
+                $data['ptID'] = $type->getPageTypeID();
             }
-            if ($page->getTemplate()) {
-                $template = Template::getByHandle($page->getTemplate());
-                if (is_object($template)) {
-                    $data['pTemplateID'] = $template->getPageTemplateID();
-                }
+            $template = $this->getTargetItem('page_template', $page->getTemplate());
+            if (is_object($template)) {
+                $data['pTemplateID'] = $template->getPageTemplateID();
             }
             if ($page->getBatchPath() != '') {
                 $lastSlash = strrpos($page->getBatchPath(), '/');
@@ -82,22 +93,21 @@ class Publisher
             $concretePage = $parent->add($type, $data);
 
             foreach($page->attributes as $attribute) {
-                $ak = CollectionKey::getByHandle($attribute->getAttribute()->getHandle());
+                $ak = $this->getTargetItem('attribute', $attribute->getAttribute()->getHandle());
                 if (is_object($ak)) {
-                    $node = simplexml_load_string($attribute->getAttribute()->getValueXml());
-                    print $ak->getController()->importValue($node);
-                    $concretePage->setAttribute($attribute->getAttribute()->getHandle(),
-                        $ak->getController()->importValue($node));
+                    $value = $attribute->getAttribute()->getAttributeValue();
+                    $publisher = $value->getPublisher();
+                    $publisher->publish($ak, $concretePage, $value);
                 }
             }
 
             foreach($page->areas as $area) {
                 foreach($area->blocks as $block) {
-                    $bt = BlockType::getByHandle($block->getType());
+                    $bt = $this->getTargetItem('block_type', $block->getType());
                     if (is_object($bt)) {
-                        $btc = $bt->getController();
-                        $bx = simplexml_load_string($block->getDataXml());
-                        $btc->import($concretePage, $area->getName(), $bx);
+                        $value = $block->getBlockValue();
+                        $publisher = $value->getPublisher();
+                        $publisher->publish($bt, $concretePage, $area, $value);
                     }
                 }
             }

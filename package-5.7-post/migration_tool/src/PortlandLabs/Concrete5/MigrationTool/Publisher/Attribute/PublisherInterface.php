@@ -1,0 +1,17 @@
+<?php
+
+namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute;
+
+use Concrete\Core\Attribute\Key\CollectionKey;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
+use Concrete\Core\Page\Page;
+
+defined('C5_EXECUTE') or die("Access Denied.");
+
+interface PublisherInterface
+{
+
+    public function publish(CollectionKey $ak, Page $page, AttributeValue $value);
+
+
+}

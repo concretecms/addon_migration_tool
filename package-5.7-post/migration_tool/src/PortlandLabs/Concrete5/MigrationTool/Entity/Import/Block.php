@@ -25,9 +25,9 @@ class Block
     protected $name;
 
     /**
-     * @Column(type="text")
-     */
-    protected $data_xml;
+     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue", inversedBy="block", cascade={"persist", "remove"})
+     **/
+    protected $block_value;
 
     /**
      * @Column(type="integer")
@@ -99,22 +99,6 @@ class Block
     /**
      * @return mixed
      */
-    public function getDataXml()
-    {
-        return $this->data_xml;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function setDataXml($data_xml)
-    {
-        $this->data_xml = $data_xml;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getPosition()
     {
         return $this->position;
@@ -127,6 +111,24 @@ class Block
     {
         $this->position = $position;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getBlockValue()
+    {
+        return $this->block_value;
+    }
+
+    /**
+     * @param mixed $block_value
+     */
+    public function setBlockValue($block_value)
+    {
+        $this->block_value = $block_value;
+    }
+
+
 
 
 

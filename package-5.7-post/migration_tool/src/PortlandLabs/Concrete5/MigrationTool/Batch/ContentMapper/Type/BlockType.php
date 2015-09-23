@@ -6,6 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
+use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -69,5 +70,10 @@ class BlockType implements MapperInterface
             $items[] = $item;
         }
         return $items;
+    }
+
+    public function getTargetItemContentObject(TargetItemInterface $targetItem)
+    {
+        return \Concrete\Core\Block\BlockType\BlockType::getByID($targetItem->getItemID());
     }
 }

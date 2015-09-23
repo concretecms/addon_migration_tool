@@ -8,6 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
+use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -61,7 +62,9 @@ class ComposerOutputContent implements MapperInterface
         }
         foreach($ids as $id) {
             $type = Type::getByID($id);
-            $items = array_merge($items, $this->getPageTypeComposerOutputContentItems($type));
+            if (is_object($type)) {
+                $items = array_merge($items, $this->getPageTypeComposerOutputContentItems($type));
+            }
         }
         return $items;
     }
@@ -70,6 +73,12 @@ class ComposerOutputContent implements MapperInterface
     {
         return false;
     }
+
+    public function getTargetItemContentObject(TargetItemInterface $targetItem)
+    {
+        return false;
+    }
+
 
     public function getTargetItems(Batch $batch)
     {

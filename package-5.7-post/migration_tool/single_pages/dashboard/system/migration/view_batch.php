@@ -13,8 +13,12 @@
                 <li><a href="<?=$view->action('map_content', $batch->getId(), $mapper->getHandle())?>"><?=$mapper->getMappedItemPluralName()?></a></li>
             <? } ?>
             <li class="divider"></li>
-            <li><a href="<?=$view->action('find_and_replace', $batch->getID())?>"><?=t("Find and Replace")?></a>
+            <? /*
+            <li><a href="<?=$view->action('find_and_replace', $batch->getID())?>"><?=t("Find and Replace")?></a></li>
+ */ ?>
+            <li><a href="javascript:void(0)" data-dialog="create-content" data-dialog-title="<?=t('Import Batch to Site')?>" class=""><span class="text-primary"><?=t("Import Batch to Site")?></span></a>
             </li>
+
             <li class="divider"></li>
             <li><a href="javascript:void(0)" data-dialog="clear-batch" data-dialog-title="<?=t('Clear Batch')?>" class=""><span class="text-danger"><?=t("Clear Batch")?></span></a>
             </li>
@@ -25,6 +29,19 @@
     </div>
 
 <div style="display: none">
+
+    <div id="ccm-dialog-create-content" class="ccm-ui">
+        <form method="post" action="<?=$view->action('create_content_from_batch')?>">
+            <?=Core::make('token')->output('create_content_from_batch')?>
+            <input type="hidden" name="id" value="<?=$batch->getID()?>">
+            <p><?=t('Create site content from the contents of this batch?')?></p>
+            <div class="dialog-buttons">
+                <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
+                <button class="btn btn-primary pull-right" onclick="$('#ccm-dialog-create-content form').submit()"><?=t('Import Batch')?></button>
+            </div>
+        </form>
+    </div>
+
     <div id="ccm-dialog-delete-batch" class="ccm-ui">
         <form method="post" action="<?=$view->action('delete_batch')?>">
             <?=Loader::helper("validation/token")->output('delete_batch')?>
@@ -75,130 +92,33 @@
         <p><?=$batch->getNotes()?></p>
     <? } ?>
 
-    <h3><?=t('Records')?></h3>
-    <? if ($batch->hasRecords()) {
-        $validator = new \PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\BatchValidator($batch);
-        $formatter = $validator->getFormatter();
-        ?>
-        <form method="post" action="<?=$view->action('create_content_from_batch')?>">
-            <?=Core::make('token')->output('create_content_from_batch')?>
-            <input type="hidden" name="id" value="<?=$batch->getID()?>">
-            <div class="alert <?=$formatter->getAlertClass()?>">
-                <button class="pull-right btn btn-default" type="submit"><?=t('Create Pages')?></button>
-                <?=$formatter->getCreateStatusMessage()?>
-                <div class="clearfix"></div>
+    <? if ($batch->hasRecords()) { ?>
 
-            </div>
-        </form>
-
-
-        <div id="migration-tree">
-            <? $i = 1; ?>
-            <ul id="migration-tree-data" style="display: none">
-                <li id="p0" class="folder expanded migration-tree-category" data-iconClass="fa fa-files-o"><?=t('Pages')?>
-                    <ul>
-                        <? foreach($batch->getPages() as $page) {
-                            $messages = $validator->validatePage($page); ?>
-                            <li class="expanded"><span>
-                                <div class="migration-tree-page-column migration-tree-page-path"><?=$page->getBatchPath()?></div>
-                                <div class="migration-tree-page-column migration-tree-page-name"><?=$page->getName()?></div>
-                                <div class="migration-tree-page-column migration-tree-page-type"><?=$page->getType()?></div>
-                                <div class="migration-tree-page-column migration-tree-page-template"><?=$page->getTemplate()?></div>
-                            </span>
-                                <ul>
-                                <? if ($messages->count() > 0) { ?>
-                                    <li data-iconClass="<?=$messages->getFormatter()->getCollectionStatusIconClass()?>"><span><span class="text-<?=$messages->getFormatter()->getLevelClass()?>"><?=t('Errors')?></span></span>
-                                    <ul>
-                                        <? foreach($messages as $m) { ?>
-                                            <li data-iconClass="<?=$m->getFormatter()->getIconClass()?>"><span><span><?=$m->getFormatter()->output()?></span></li>
-                                        <? } ?>
-                                    </ul>
-                                    </li>
-                                <? } ?>
-                                <? if ($page->getAttributes()->count()) { ?>
-                                    <li data-iconClass="fa fa-cogs"><?=t('Attributes')?>
-                                    <ul>
-                                    <? foreach($page->getAttributes() as $attribute) {
-                                        $value = $attribute->getAttribute()->getAttributeValue();
-                                        if (is_object($value)) {
-                                            $attributeFormatter = $value->getFormatter();
-                                            print $attributeFormatter->getBatchTreeNodeElementObject();
-                                            ?>
-                                        <? } ?>
-                                    <? } ?>
-                                    </ul>
-                                    </li>
-                                <? } ?>
-                                <? if ($page->getAreas()->count()) { ?>
-                                    <li data-iconClass="fa fa-code"><?=t('Areas')?>
-                                        <ul>
-                                            <? foreach($page->getAreas() as $area) { ?>
-                                                <li data-iconClass="fa fa-cubes"><?=$area->getName()?>
-                                                    <ul>
-                                                        <? foreach($area->getBlocks() as $block) {
-                                                            $value = $block->getBlockValue();
-                                                            if (is_object($value)) {
-                                                                $blockFormatter = $value->getFormatter();
-                                                                print $blockFormatter->getBatchTreeNodeElementObject();
-                                                                ?>
-                                                            <? } ?>
-                                                        <? } ?>
-                                                    </ul>
-                                                </li>
-                                                <? } ?>
-                                        </ul>
-                                    </li>
-                                <? } ?>
-                            </ul>
-                            </li>
-                        <? } ?>
-                    </ul>
-                </li>
-            </ul>
+    <h3><?=t('Status')?></h3>
+    <div class="alert alert-info" id="migration-batch-status">
+        <div data-message="status-message">
+            <i class="fa fa-spin fa-refresh"></i> <?=t('Computing Batch Status')?>
         </div>
+    </div>
 
-        <?
-        /*
-        ?>
+    <h3><?=t('Records')?></h3>
 
-
-
-        <h4><?=t('Pages')?></h4>
-        <table class="table">
+        <table id="migration-tree-table" class="table table-bordered table-striped">
+            <colgroup>
+                <col width="300"></col>
+                <col width="*"></col>
+                <col width="120px"></col>
+                <col width="30px"></col>
+            </colgroup>
             <thead>
-            <tr>
-                <th><?=t('Path')?></th>
-                <th><?=t('Name')?></th>
-                <th><?=t('Type')?></th>
-                <th><?=t('Template')?></th>
-                <th></th>
-                <th></th>
-            </tr>
+            <tr> <th><?=t('Page')?></th> <th><?=t('Path')?></th> <th><?=t('Type')?></th> <th> </th> </tr>
             </thead>
             <tbody>
-            <? foreach($batch->getPages() as $page) {
-                $messages = $validator->validatePage($page); ?>
-                <tr class="migration-page-row" data-page="<?=$page->getID()?>">
-                    <td><?=$page->getBatchPath()?></td>
-                    <td width="100%"><?=$page->getName()?></td>
-                    <td><?=$page->getType()?></td>
-                    <td><?=$page->getTemplate()?></td>
-                    <td><? print $messages->getFormatter()->outputCollectionStatusIcon()?></td>
-                    <td><i data-expand="page" class="fa fa-caret-up"></i></td>
-                </tr>
-                <? if ($messages->count() > 0) { ?>
-                <tr>
-                    <td colspan="5">
-                        <? foreach($messages as $m) { ?>
-                            <div><?=$m->getFormatter()->output()?></div>
-                        <? } ?>
-                    </td>
-                </tr>
-                <? } ?>
-            <? } ?>
             </tbody>
         </table>
-    <? */
+
+
+    <?
     } else { ?>
         <p><?=t('This content batch is empty.')?></p>
     <? } ?>
@@ -211,9 +131,56 @@
 
 <script type="text/javascript">
     $(function() {
-        $('#migration-tree').fancytree({
-            extensions: ["glyph"],
+        $('#migration-tree-table').fancytree({
+            extensions: ["glyph","table"],
             toggleEffect: false,
+            source: {
+                url: '<?=$view->action('load_batch_data')?>',
+                data: {'id': '<?=$batch->getID()?>'}
+            },
+            postProcess: function(event, data){
+                data.result = data.response.nodes;
+                if (data.response && data.response.validator) {
+                    if (data.response.validator.alertclass && data.response.validator.message) {
+                        $('#migration-batch-status').removeClass().addClass('alert ' + data.response.validator.alertclass);
+                        $('#migration-batch-status').text(data.response.validator.message);
+                    } else {
+                        $('#migration-batch-status').hide();
+                    }
+                }
+            },
+            table: {
+                checkboxColumnIdx: null,
+                customStatus: false,
+                indentation: 16,         // indent every node level by 16px
+                nodeColumnIdx: 0
+            },
+            lazyLoad: function(event, data) {
+                data.result = {
+                    url: '<?=$view->action('load_batch_page_data')?>',
+                    data: {'id': data.node.data.id}
+                }
+            },
+            renderColumns: function(event, data) {
+                var node = data.node,
+                    $tdList = $(node.tr).find(">td");
+
+                if (node.data.type == 'page') {
+                    $tdList.eq(1).text(node.data.pagePath);
+                    $tdList.eq(2).text(node.data.pageType);
+                    $tdList.eq(3).html('<i class="' + node.data.statusClass + '"></i>');
+                } else if (node.data.itemvalue) {
+                    $tdList.eq(1).html(node.data.itemvalue);
+                    $tdList.eq(1)
+                        .prop("colspan", 3)
+                        .nextAll().remove();
+                } else {
+                    $tdList.eq(0)
+                        .prop("colspan", 4)
+                        .nextAll().remove();
+                }
+
+            },
             clickFolderMode: 2,
             focusOnSelect: false,
             glyph: {
@@ -251,6 +218,17 @@
 
     });
 </script>
+
+<style type="text/css">
+    tr.migration-page .fancytree-node {
+        width: 300px !important;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+</style>
+
+
+<? /*
 
 <style type="text/css">
     div#migration-tree ul.fancytree-container {
@@ -296,6 +274,4 @@
         border-color: transparent !important;
     }
 
-
-
-</style>
+</style>*/ ?>

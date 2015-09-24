@@ -7,6 +7,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 interface TreeContentItemFormatterInterface
 {
 
-    public function getBatchTreeNodeElementObject();
+    public function getBatchTreeNodeJsonObject();
 
 }

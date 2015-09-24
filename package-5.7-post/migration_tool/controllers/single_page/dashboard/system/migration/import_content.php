@@ -4,6 +4,8 @@ namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\
 use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreeJsonFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreePageJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\MapContentTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
@@ -12,6 +14,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Publisher;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ImportContent extends DashboardPageController
 {
@@ -235,6 +238,27 @@ class ImportContent extends DashboardPageController
             $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
         }
     }
+
+    public function load_batch_data()
+    {
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($this->request->get('id'));
+        if (is_object($batch))  {
+            $formatter = new TreeJsonFormatter($batch);
+            return new JsonResponse($formatter);
+        }
+    }
+
+    public function load_batch_page_data()
+    {
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page');
+        $page = $r->findOneById($this->request->get('id'));
+        if (is_object($page))  {
+            $formatter = new TreePageJsonFormatter($page);
+            return new JsonResponse($formatter);
+        }
+    }
+
 
     public function map_content($id = null, $type = null)
     {

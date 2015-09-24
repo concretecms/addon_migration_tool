@@ -125,6 +125,9 @@ class Controller extends Package
 
     public function install()
     {
+        if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+            throw new \Exception(t('This add-on requires PHP 5.4 or greater.'));
+        }
         $pkg = parent::install();
         $this->installSinglePages($pkg);
         $this->installPageTypes($pkg);

@@ -13,23 +13,14 @@ class ImportedFormatter implements TreeContentItemFormatterInterface
 
     protected $value;
 
-    public function getBatchTreeNodeElementObject()
+    public function getBatchTreeNodeJsonObject()
     {
-        $content = new Element('span');
-        $content->appendChild(
-            new Element('div', $this->value->getAttribute()->getHandle(), array(
-                'class' => 'migration-tree-page-column migration-tree-property-key'
-            ))
-        );
-        $content->appendChild(
-            new Element('div', $this->getColumnValue(), array(
-                'class' => 'migration-tree-page-column migration-tree-property-value'
-            ))
-        );
-        $element = new Element('li', $content, array('data-iconClass' => 'fa fa-cog'));
-        return $element;
+        $node = new \stdClass;
+        $node->title = $this->value->getAttribute()->getHandle();
+        $node->itemvalue = (string) $this->getColumnValue();
+        $node->iconclass = 'fa fa-cog';
+        return $node;
     }
-
 
     protected function getColumnValue()
     {

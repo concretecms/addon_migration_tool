@@ -2,7 +2,7 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
-use Concrete\Core\User\Event\UserInfo;
+use Concrete\Core\User\UserInfo;
 use Concrete\Core\User\UserList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;

@@ -2,7 +2,9 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\StandardFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\StandardInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\StandardPublisher;
 
 /**
@@ -12,34 +14,45 @@ class StandardBlockValue extends BlockValue
 {
 
     /**
-     * @Column(type="json_array")
-     */
-    protected $data;
+     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\StandardBlockDataRecord", mappedBy="value", cascade={"persist", "remove"})
+     * @OrderBy({"position" = "ASC"})
+     **/
+    public $records;
 
     public function getFormatter()
     {
         return new StandardFormatter($this);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function setData($data)
-    {
-        $this->data = $data;
-    }
-
     public function getPublisher()
     {
         return new StandardPublisher();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecords()
+    {
+        return $this->records;
+    }
+
+    /**
+     * @param mixed $records
+     */
+    public function setRecords($records)
+    {
+        $this->records = $records;
+    }
+
+    public function getInspector()
+    {
+        return new StandardInspector($this);
+    }
+
+    public function __construct()
+    {
+        $this->records = new ArrayCollection();
     }
 
 }

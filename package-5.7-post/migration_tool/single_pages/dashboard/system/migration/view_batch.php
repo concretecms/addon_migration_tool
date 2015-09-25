@@ -149,6 +149,12 @@
                     }
                 }
             },
+            init: function() {
+                $('[data-editable-property=path]').editable({
+                    container: '#ccm-dashboard-content',
+                    url: '<?=$view->action('update_page_path')?>'
+                });
+            },
             table: {
                 checkboxColumnIdx: null,
                 customStatus: false,
@@ -166,7 +172,7 @@
                     $tdList = $(node.tr).find(">td");
 
                 if (node.data.type == 'page') {
-                    $tdList.eq(1).text(node.data.pagePath);
+                    $tdList.eq(1).html(node.data.pagePath);
                     $tdList.eq(2).text(node.data.pageType);
                     $tdList.eq(3).html('<i class="' + node.data.statusClass + '"></i>');
                 } else if (node.data.itemvalue) {
@@ -215,7 +221,6 @@
                 height: 'auto'
             });
         });
-
     });
 </script>
 
@@ -226,52 +231,3 @@
         overflow: hidden;
     }
 </style>
-
-
-<? /*
-
-<style type="text/css">
-    div#migration-tree ul.fancytree-container {
-        border: 0px;
-    }
-
-    ul.fancytree-container span.migration-tree-category {
-        font-weight: bold;
-    }
-
-    .migration-tree-page-column {
-        float: left;
-        margin-right: 20px;
-        overflow: hidden;
-    }
-
-    .migration-tree-page-path {
-        width: 300px;
-    }
-    .migration-tree-page-name {
-        width: 200px;
-        font-weight: bold;
-    }
-
-    .migration-tree-page-type {
-        width: 200px;
-        color: #666;
-    }
-
-    .migration-tree-page-template {
-        width: 200px;
-        color: #666;
-    }
-
-    .migration-tree-property-key {
-        width: 200px;
-    }
-    .migration-tree-property-value {
-        width: 200px;
-    }
-
-    div#migration-tree .fancytree-container span.fancytree-focused span.fancytree-title {
-        border-color: transparent !important;
-    }
-
-</style>*/ ?>

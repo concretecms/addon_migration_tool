@@ -25,7 +25,7 @@ class ValidateUsersTask implements TaskInterface
         if ($subject->getUser()) {
             $mapper = new User();
             $targetItemList = new TargetItemList($subject->getBatch(), $mapper);
-            $item = new Item($subject->getType());
+            $item = new Item($subject->getUser());
             $targetItem = $targetItemList->getSelectedTargetItem($item);
             if ($targetItem instanceof UnmappedTargetItem) {
                 $action->getTarget()->addMessage(

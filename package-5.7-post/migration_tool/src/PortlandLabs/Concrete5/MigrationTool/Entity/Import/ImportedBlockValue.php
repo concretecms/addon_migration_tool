@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\ImportedFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\CIFInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\CIFPublisher;
 
 /**
@@ -32,6 +33,11 @@ class ImportedBlockValue extends BlockValue
     public function getPublisher()
     {
         return new CIFPublisher();
+    }
+
+    public function getInspector()
+    {
+        return new CIFInspector($this);
     }
 
 

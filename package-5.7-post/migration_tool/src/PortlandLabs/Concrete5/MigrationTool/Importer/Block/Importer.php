@@ -12,7 +12,7 @@ class Importer implements ImporterInterface
     public function parse(\SimpleXMLElement $node)
     {
         $value = new ImportedBlockValue();
-        $value->setValue((string) $node->data->asXML());
+        $value->setValue((string) $node->asXML());
         return $value;
     }
 

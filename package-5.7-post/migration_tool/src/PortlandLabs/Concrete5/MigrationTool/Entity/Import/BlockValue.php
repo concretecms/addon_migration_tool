@@ -56,5 +56,6 @@ abstract class BlockValue
 
     abstract public function getFormatter();
     abstract public function getPublisher();
+    abstract public function getInspector();
 
 }

@@ -160,6 +160,7 @@ class ImportContent extends DashboardPageController
     public function view_batch($id = null)
     {
         $this->requireAsset('fancytree');
+        $this->requireAsset('core/app/editable-fields');
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
         if (is_object($batch)) {
@@ -241,6 +242,7 @@ class ImportContent extends DashboardPageController
 
     public function load_batch_data()
     {
+        session_write_close();
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($this->request->get('id'));
         if (is_object($batch))  {
@@ -251,6 +253,7 @@ class ImportContent extends DashboardPageController
 
     public function load_batch_page_data()
     {
+        session_write_close();
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page');
         $page = $r->findOneById($this->request->get('id'));
         if (is_object($page))  {
@@ -258,6 +261,20 @@ class ImportContent extends DashboardPageController
             return new JsonResponse($formatter);
         }
     }
+
+    public function update_page_path()
+    {
+        session_write_close();
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page');
+        $page = $r->findOneById($this->request->get('pk'));
+        if (is_object($page))  {
+            $page->setBatchPath($this->request->request('value'));
+            $this->entityManager->persist($page);
+            $this->entityManager->flush();
+            return new JsonResponse($page);
+        }
+    }
+
 
 
     public function map_content($id = null, $type = null)

@@ -44,6 +44,12 @@ class Publisher
 
         $db = \Database::connection();
 
+        // Has the batch already been created? If so, we move to trash.
+        $orphaned = \Page::getByPath('/!import_batches/' . $this->batch->getID());
+        if (is_object($orphaned) && !$orphaned->isError()) {
+            $orphaned->moveToTrash();
+        }
+
         // First, create the top level page for the batch.
         $batches = \Page::getByPath('/!import_batches');
         $type = Type::getByHandle('import_batch');

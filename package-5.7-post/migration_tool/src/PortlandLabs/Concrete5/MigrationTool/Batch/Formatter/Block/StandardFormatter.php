@@ -13,13 +13,20 @@ class StandardFormatter extends ImportedFormatter
     {
         $node = new \stdClass;
         $node->title = $this->value->getBlock()->getType();
-        $node->iconclass = 'fa fa-cog';
+        $node->iconclass = 'fa fa-cube';
         $node->children = array();
-        foreach($this->value->getData() as $key => $value) {
-            $child = new \stdClass;
-            $child->title = $key;
-            $child->itemvalue = h($value);
-            $node->children[] = $child;
+        foreach($this->value->getRecords() as $record) {
+            $node2 = new \stdClass;
+            $node2->title = $record->getTable();
+            $node2->iconclass = 'fa fa-database';
+            $node2->children = array();
+            foreach($record->getData() as $key => $value) {
+                $child = new \stdClass;
+                $child->title = $key;
+                $child->itemvalue = h($value);
+                $node2->children[] = $child;
+            }
+            $node->children[] = $node2;
         }
         return $node;
     }

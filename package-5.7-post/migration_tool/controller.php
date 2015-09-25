@@ -10,9 +10,9 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateAreasTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateAttributesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateBlockTypesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateComposerOutputContentItemsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTemplatesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTypesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateReferencedContentItemsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateUsersTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Manager\AttributeManager;
@@ -82,6 +82,7 @@ class Controller extends Package
             $v->registerTask(new ValidateUsersTask());
             $v->registerTask(new ValidateBlockTypesTask());
             $v->registerTask(new ValidateAreasTask());
+            $v->registerTask(new ValidateReferencedContentItemsTask());
             return $v;
         });
         \Core::bindShared('migration/manager/mapping', function ($app) {

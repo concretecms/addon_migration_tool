@@ -13,7 +13,7 @@ class StandardImporter implements ImporterInterface
     public function parse(\SimpleXMLElement $node)
     {
         $value = new StandardAttributeValue();
-        $value->setValue((string) $node);
+        $value->setValue((string) $node->value);
         return $value;
     }
 

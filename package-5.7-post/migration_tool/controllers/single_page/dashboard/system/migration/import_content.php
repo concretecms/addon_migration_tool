@@ -80,6 +80,36 @@ class ImportContent extends DashboardPageController
         $this->view();
     }
 
+    public function delete_files()
+    {
+        if (!$this->token->validate('delete_files')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+        if (!$this->error->has()) {
+            $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+            $batch = $r->findOneById($this->request->request->get('id'));
+            if (is_object($batch)) {
+                foreach($batch->getFiles() as $f) {
+                    $fp = new \Permissions($f);
+                    if ($fp->canDeleteFile()) {
+                        $f->delete();
+                    }
+                }
+                $fs = $batch->getFileSet();
+                if (is_object($fs)) {
+                    $fsp = new \Permissions($fs);
+                    if ($fsp->canDeleteFileSet()) {
+                        $fs->delete();
+                    }
+                }
+                $this->flash('success', t('Batch files deleted successfully.'));
+                $this->redirect('/dashboard/system/migration/import_content', 'batch_files', $batch->getId());
+            }
+        }
+        $this->view();
+    }
+
+
 
     public function add_content_to_batch()
     {
@@ -181,10 +211,10 @@ class ImportContent extends DashboardPageController
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
         if (is_object($batch)) {
+            $this->set('files', $batch->getFiles());
             $this->set('batch', $batch);
             $this->set('pageTitle', t('Files in Batch'));
             $this->render('/dashboard/system/migration/batch_files');
-
         }
         $this->view();
     }
@@ -210,7 +240,7 @@ class ImportContent extends DashboardPageController
                             $file = $response->getFile();
                             $fs = Set::getByName($batch->getID());
                             if (!is_object($fs)) {
-                                $fs = Set::createAndGetSet($batch->getID(), Set::TYPE_PUBLIC);
+                                $fs = Set::createAndGetSet($batch->getID(), Set::TYPE_PRIVATE);
                             }
                             $fs->addFileToSet($file);
                             $files[] = $file;
@@ -220,7 +250,7 @@ class ImportContent extends DashboardPageController
             }
         }
 
-        $this->flash('success', t('File(s) uploaded succesfully'));
+        $this->flash('success', t('File(s) uploaded successfully'));
         $r = new \Concrete\Core\File\EditResponse();
         $r->setFiles($files);
         $r->outputJSON();

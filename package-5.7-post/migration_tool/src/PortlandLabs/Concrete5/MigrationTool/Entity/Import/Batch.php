@@ -2,6 +2,7 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use Concrete\Core\File\Set\Set;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -157,6 +158,21 @@ class Batch
     public function setTargetItems($target_items)
     {
         $this->target_items = $target_items;
+    }
+
+    public function getFileSet()
+    {
+        $fs = Set::getByName($this->getID());
+        return $fs;
+    }
+    public function getFiles()
+    {
+        $fs = $this->getFileSet();
+        if (is_object($fs)) {
+            $files = $fs->getFiles();
+            return $files;
+        }
+        return array();
     }
 
 

@@ -1,6 +1,8 @@
 <?
 namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\Migration;
 
+use Concrete\Core\File\Importer;
+use Concrete\Core\File\Set\Set;
 use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
@@ -172,6 +174,58 @@ class ImportContent extends DashboardPageController
         }
         $this->view();
     }
+
+    public function batch_files($id = null)
+    {
+        $this->requireAsset('core/file-manager');
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($id);
+        if (is_object($batch)) {
+            $this->set('batch', $batch);
+            $this->set('pageTitle', t('Files in Batch'));
+            $this->render('/dashboard/system/migration/batch_files');
+
+        }
+        $this->view();
+    }
+
+    public function upload_files()
+    {
+        $files = array();
+        if ($this->token->validate('upload_files')) {
+            $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+            $batch = $r->findOneById($this->request->request('id'));
+            if (is_object($batch)) {
+                $cf = \Core::make('helper/file');
+                $fp = \FilePermissions::getGlobal();
+                if (isset($_FILES['file']) && (is_uploaded_file($_FILES['file']['tmp_name']))) {
+                    if (!$fp->canAddFileType($cf->getExtension($_FILES['file']['name']))) {
+                        throw new \Exception(Importer::getErrorMessage(Importer::E_FILE_INVALID_EXTENSION));
+                    } else {
+                        $ih = new Importer();
+                        $response = $ih->import($_FILES['file']['tmp_name'], $_FILES['file']['name']);
+                        if (!($response instanceof \Concrete\Core\File\Version)) {
+                            throw new \Exception(Importer::getErrorMessage($response));
+                        } else {
+                            $file = $response->getFile();
+                            $fs = Set::getByName($batch->getID());
+                            if (!is_object($fs)) {
+                                $fs = Set::createAndGetSet($batch->getID(), Set::TYPE_PUBLIC);
+                            }
+                            $fs->addFileToSet($file);
+                            $files[] = $file;
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->flash('success', t('File(s) uploaded succesfully'));
+        $r = new \Concrete\Core\File\EditResponse();
+        $r->setFiles($files);
+        $r->outputJSON();
+    }
+
 
     public function find_and_replace($id = null)
     {

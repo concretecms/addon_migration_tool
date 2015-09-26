@@ -2,6 +2,7 @@
 <div class="ccm-dashboard-header-buttons">
 <div class="btn-group" role="group" aria-label="...">
     <a href="javascript:void(0)" data-dialog="add-to-batch" data-dialog-title="<?=t('Add Content')?>" class="btn btn-default"><?=t("Add Content to Batch")?></a>
+    <a href="<?=$view->action('batch_files', $batch->getID())?>" class="btn btn-default"><?=t('Files')?></a>
     <div class="btn-group" role="group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <?=t('Edit Batch')?>

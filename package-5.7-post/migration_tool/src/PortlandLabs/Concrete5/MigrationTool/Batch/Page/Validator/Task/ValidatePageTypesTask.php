@@ -5,7 +5,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task;
 use Concrete\Core\Foundation\Processor\ActionInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
 use Concrete\Core\Page\Type\Type;
-use DoctrineProxies\__CG__\PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
+use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\ComposerOutputContent;
@@ -34,6 +34,10 @@ class ValidatePageTypesTask implements TaskInterface
                     );
                 } else {
                     $targetPageType = Type::getByID($targetItem->getItemID());
+                    if (!is_object($targetPageType)) {
+                        print_r($targetItem);
+                        exit;
+                    }
                     $composerMapper = new ComposerOutputContent();
                     $composerTargetItemList = new TargetItemList($subject->getBatch(), $composerMapper);
                     $items = $composerMapper->getPageTypeComposerOutputContentItems($targetPageType);

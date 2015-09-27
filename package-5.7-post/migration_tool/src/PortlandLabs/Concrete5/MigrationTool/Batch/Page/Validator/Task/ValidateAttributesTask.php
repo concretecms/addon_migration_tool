@@ -19,8 +19,9 @@ class ValidateAttributesTask implements TaskInterface
     {
         // Grab the target item for the page's page type.
         $subject = $action->getSubject();
+        $target = $action->getTarget();
         $attributeMapper = new Attribute();
-        $targetItemList = new TargetItemList($subject->getBatch(), $attributeMapper);
+        $targetItemList = new TargetItemList($target->getBatch(), $attributeMapper);
         foreach($subject->getAttributes() as $attribute) {
             $item = new Item($attribute->getAttribute()->getHandle());
             $targetItem = $targetItemList->getSelectedTargetItem($item);

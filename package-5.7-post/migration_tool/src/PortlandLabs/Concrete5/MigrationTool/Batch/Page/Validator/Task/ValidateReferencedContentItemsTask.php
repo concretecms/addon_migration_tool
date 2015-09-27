@@ -20,6 +20,7 @@ class ValidateReferencedContentItemsTask implements TaskInterface
     {
         $subject = $action->getSubject();
         $areas = $subject->getAreas();
+        $target = $action->getTarget();
         foreach($areas as $area) {
             $blocks = $area->getBlocks();
             foreach($blocks as $block) {
@@ -28,7 +29,7 @@ class ValidateReferencedContentItemsTask implements TaskInterface
                 foreach($items as $item) {
                     $validatorFactory = new Factory($item);
                     $validator = $validatorFactory->getValidator();
-                    if (!$validator->itemExists($item, $subject->getBatch())) {
+                    if (!$validator->itemExists($item, $target->getBatch())) {
                         $validator->addMissingItemMessage($item, $action->getTarget());
                     }
                 }

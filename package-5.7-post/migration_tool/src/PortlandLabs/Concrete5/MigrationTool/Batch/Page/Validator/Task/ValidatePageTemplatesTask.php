@@ -20,9 +20,10 @@ class ValidatePageTemplatesTask implements TaskInterface
     {
         // Grab the target item for the page's page type.
         $subject = $action->getSubject();
+        $target = $action->getTarget();
         if ($subject->getTemplate()) {
             $mapper = new PageTemplate();
-            $targetItemList = new TargetItemList($subject->getBatch(), $mapper);
+            $targetItemList = new TargetItemList($target->getBatch(), $mapper);
             $item = new Item($subject->getTemplate());
             $targetItem = $targetItemList->getSelectedTargetItem($item);
             if ($targetItem instanceof UnmappedTargetItem) {

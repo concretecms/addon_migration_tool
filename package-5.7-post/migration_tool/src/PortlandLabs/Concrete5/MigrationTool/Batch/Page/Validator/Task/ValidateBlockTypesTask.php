@@ -20,8 +20,9 @@ class ValidateBlockTypesTask implements TaskInterface
     public function execute(ActionInterface $action)
     {
         $subject = $action->getSubject();
+        $target = $action->getTarget();
         $mapper = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType();
-        $targetItemList = new TargetItemList($subject->getBatch(), $mapper);
+        $targetItemList = new TargetItemList($target->getBatch(), $mapper);
         $areas = $subject->getAreas();
         foreach($areas as $area) {
             $blocks = $area->getBlocks();

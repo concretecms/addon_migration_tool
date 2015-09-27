@@ -19,7 +19,7 @@ class BatchValidator
         $this->messageCollection = new MessageCollection();
         foreach($this->batch->getPages() as $page) {
             $validator = $page->getValidator();
-            $messages = $validator->validate($page);
+            $messages = $validator->validate($batch, $page);
             $this->pages[$page->getID()] = $messages;
             foreach($messages as $message) {
                 $this->messageCollection->add($message);

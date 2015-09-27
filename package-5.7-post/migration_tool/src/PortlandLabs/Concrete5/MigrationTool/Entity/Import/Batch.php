@@ -6,7 +6,7 @@ use Concrete\Core\File\Set\Set;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchRepository")
  * @Table(name="MigrationImportBatches")
  */
 class Batch
@@ -29,10 +29,13 @@ class Batch
     protected $notes;
 
     /**
-     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page", mappedBy="batch", cascade={"persist", "remove"})
-     * @OrderBy({"position" = "ASC"})
+     * @ManyToMany(targetEntity="ObjectCollection", cascade={"persist", "remove"}))
+     * @JoinTable(name="MigrationImportBatchObjectCollections",
+     *      joinColumns={@JoinColumn(name="batch_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="collection_id", referencedColumnName="id", unique=true)}
+     *      )
      **/
-    public $pages;
+    public $collections;
 
     /**
      * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem", mappedBy="batch", cascade={"persist", "remove"})
@@ -43,7 +46,7 @@ class Batch
     public function __construct()
     {
         $this->date = new \DateTime();
-        $this->pages = new ArrayCollection();
+        $this->collections = new ArrayCollection();
         $this->target_items = new ArrayCollection();
     }
 
@@ -98,22 +101,37 @@ class Batch
     /**
      * @return mixed
      */
-    public function getPages()
+    public function getCollections()
     {
-        return $this->pages;
+        return $this->collections;
     }
 
     /**
-     * @param mixed $pages
+     * @param mixed $collections
      */
-    public function setPages($pages)
+    public function setCollections($collections)
     {
-        $this->pages = $pages;
+        $this->collections = $collections;
     }
+
 
     public function hasRecords()
     {
-        return $this->pages->count() > 0;
+        return $this->collections->count() > 0;
+    }
+
+    /**
+     * Returns all pages from all page collection objects in the batch.
+     */
+    public function getPages()
+    {
+        $pages = array();
+        foreach($this->getCollections() as $collection) {
+            if ($collection instanceof PageObjectCollection) {
+                $pages = array_merge($pages, $collection->getPages()->toArray());
+            }
+        }
+        return $pages;
     }
 
     public function getPagesOrderedForImport()
@@ -175,6 +193,13 @@ class Batch
         return array();
     }
 
+    /*
+     * This used to work WITHOUT This but something about refactoring into ObjectCollections made this necessary in complex DQL queries.
+     */
+    public function __toString()
+    {
+        return $this->getID();
+    }
 
 
 }

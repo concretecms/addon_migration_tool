@@ -22,9 +22,10 @@ class ValidatePageTypesTask implements TaskInterface
     {
         // Grab the target item for the page's page type.
         $subject = $action->getSubject();
+        $target = $action->getTarget();
         if ($subject->getType()) {
             $mapper = new PageType();
-            $targetItemList = new TargetItemList($subject->getBatch(), $mapper);
+            $targetItemList = new TargetItemList($target->getBatch(), $mapper);
             $item = new Item($subject->getType());
             $targetItem = $targetItemList->getSelectedTargetItem($item);
             if (!($targetItem instanceof IgnoredTargetItem)) {
@@ -39,7 +40,7 @@ class ValidatePageTypesTask implements TaskInterface
                         exit;
                     }
                     $composerMapper = new ComposerOutputContent();
-                    $composerTargetItemList = new TargetItemList($subject->getBatch(), $composerMapper);
+                    $composerTargetItemList = new TargetItemList($target->getBatch(), $composerMapper);
                     $items = $composerMapper->getPageTypeComposerOutputContentItems($targetPageType);
                     foreach($items as $item) {
                         $targetItem = $composerTargetItemList->getSelectedTargetItem($item);

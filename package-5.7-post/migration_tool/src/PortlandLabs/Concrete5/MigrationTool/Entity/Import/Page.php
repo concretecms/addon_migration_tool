@@ -2,8 +2,9 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * @Entity
@@ -80,9 +81,9 @@ class Page
     public $areas;
 
     /**
-     * @ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch")
+     * @ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection")
      **/
-    protected $batch;
+    protected $collection;
 
     public function __construct()
     {
@@ -165,17 +166,17 @@ class Page
     /**
      * @return mixed
      */
-    public function getBatch()
+    public function getCollection()
     {
-        return $this->batch;
+        return $this->collection;
     }
 
     /**
-     * @param mixed $batch
+     * @param mixed $collection
      */
-    public function setBatch($batch)
+    public function setCollection($collection)
     {
-        $this->batch = $batch;
+        $this->collection = $collection;
     }
 
     /**
@@ -279,7 +280,7 @@ class Page
      */
     public function getValidator()
     {
-        return \Core::make('migration/batch/page/validator', array($this));
+        return \Core::make('migration/batch/page/validator');
     }
 
     /**

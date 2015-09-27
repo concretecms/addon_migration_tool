@@ -17,6 +17,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateUsers
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Manager\AttributeManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Manager\BlockManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Manager as ImportManager;
 use SinglePage;
 
 class Controller extends Package
@@ -96,6 +97,9 @@ class Controller extends Package
         });
         \Core::bindShared('migration/manager/import/block', function ($app) {
             return new BlockManager($app);
+        });
+        \Core::bindShared('migration/manager/importer', function ($app) {
+            return new ImportManager($app);
         });
         $al = AssetList::getInstance();
         $al->register(

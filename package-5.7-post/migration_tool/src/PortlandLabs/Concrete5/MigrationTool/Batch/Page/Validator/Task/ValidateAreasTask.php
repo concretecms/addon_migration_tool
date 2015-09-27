@@ -20,8 +20,9 @@ class ValidateAreasTask implements TaskInterface
     {
         // Grab the target item for the page's page type.
         $subject = $action->getSubject();
+        $target = $action->getTarget();
         $areaMapper = new Area();
-        $targetItemList = new TargetItemList($subject->getBatch(), $areaMapper);
+        $targetItemList = new TargetItemList($target->getBatch(), $areaMapper);
         foreach($subject->getAreas() as $area) {
             $item = new Item($area->getName());
             $targetItem = $targetItemList->getSelectedTargetItem($item);

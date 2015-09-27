@@ -10,12 +10,15 @@ class ParserTest extends MigrationToolTestCase
     public function setUp()
     {
         parent::setUp();
+        $pkg = Concrete\Core\Package\Package::getClass('migration_tool');
+        $pkg->on_start();
         $this->parser = new Parser(DIR_TEST_FIXTURES . '/cif1.xml');
     }
 
     public function testParsePages()
     {
-        $entities = $this->parser->getPageEntityObjects();
+        $collections = $this->parser->getContentObjectCollections();
+        $entities = $collections[0]->getPages();
         $this->assertEquals(21, count($entities));
         /** @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page $page */
         $page = $entities[5];
@@ -32,21 +35,10 @@ class ParserTest extends MigrationToolTestCase
         );
     }
 
-    public function testParseSinglePages()
-    {
-        $entities = $this->parser->getSinglePageEntityObjects();
-        $this->assertEquals(1, count($entities));
-        /** @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page $page */
-        $page = $entities[0];
-        $this->assertInstanceOf('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page', $page);
-        $this->assertEquals('Dashboard', $page->getName());
-        $this->assertEquals('/dashboard', $page->getOriginalPath());
-        $this->assertEquals('/dashboard/view.php', $page->getFilename());
-    }
-
     public function testParsePageAttributes()
     {
-        $entities = $this->parser->getPageEntityObjects();
+        $collections = $this->parser->getContentObjectCollections();
+        $entities = $collections[0]->getPages();
         $this->assertEquals(21, count($entities));
         /** @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page $page */
         $page = $entities[2];
@@ -57,13 +49,14 @@ class ParserTest extends MigrationToolTestCase
         /** @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute $page */
         $attribute2 = $page->attributes[4];
         $this->assertEquals('project_topics', $attribute1->getAttribute()->getHandle());
-        $this->assertXmlStringEqualsXmlString('<attributekey handle="project_topics"><topics><topic>/Homework</topic></topics></attributekey>', $attribute1->getAttribute()->getValueXml());
+        $this->assertXmlStringEqualsXmlString('<attributekey handle="project_topics"><topics><topic>/Homework</topic></topics></attributekey>', $attribute1->getAttribute()->getAttributeValue()->getValue());
         $this->assertEquals('project_tasks', $attribute2->getAttribute()->getHandle());
     }
 
     public function testParsePageAreaAndBlocks()
     {
-        $entities = $this->parser->getPageEntityObjects();
+        $collections = $this->parser->getContentObjectCollections();
+        $entities = $collections[0]->getPages();
         /** @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page $page */
         $page = $entities[10];
         $this->assertEquals('Hello World!', $page->getName());
@@ -79,8 +72,8 @@ class ParserTest extends MigrationToolTestCase
         $this->assertEquals(1, count($blocks));
         $this->assertEquals('content', $blocks[0]->getType());
         $this->assertEquals('', $blocks[0]->getName());
-        $data = simplexml_load_string($blocks[0]->getDataXml());
-        $this->assertEquals('btContentLocal', (string) $data['table']);
+        $data = simplexml_load_string($blocks[0]->getBlockValue()->getValue());
+        $this->assertEquals('btContentLocal', (string) $data->data['table']);
     }
 
 }

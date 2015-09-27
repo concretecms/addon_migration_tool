@@ -64,10 +64,10 @@ class ImportContent extends DashboardPageController
             $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
             $batch = $r->findOneById($this->request->request->get('id'));
             if (is_object($batch)) {
-                foreach($batch->getPages() as $entity) {
-                    $entity->setBatch(null);
-                    $this->entityManager->remove($entity);
+                foreach($batch->getCollections() as $collection) {
+                    $this->entityManager->remove($collection);
                 }
+                $batch->setCollections(null);
                 foreach($batch->getTargetItems() as $targetItem) {
                     $targetItem->setBatch(null);
                     $this->entityManager->remove($targetItem);
@@ -134,20 +134,15 @@ class ImportContent extends DashboardPageController
         if (!$this->error->has()) {
             try {
                 $parser = new Parser($_FILES['xml']['tmp_name']);
-                foreach($parser->getPageEntityObjects() as $entity) {
-                    $entity->setBatch($batch);
-                    $batch->pages->add($entity);
+                foreach($parser->getContentObjectCollections() as $collection) {
+                    $batch->getCollections()->add($collection);
                 }
-
 
                 $target = new Target($batch);
                 $processor = new Processor($target);
                 $processor->registerTask(new NormalizePagePathsTask());
                 $processor->registerTask(new MapContentTypesTask());
                 $processor->process();
-
-                $this->entityManager->persist($batch);
-                $this->entityManager->flush();
 
                 $processor = new Processor($target);
                 $processor->registerTask(new TransformContentTypesTask());

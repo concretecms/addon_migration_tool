@@ -17,19 +17,21 @@ class ProcessingTest extends MigrationToolTestCase
             array('Page 9', '/ok/this/about/about/test')
         );
         $batch = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch();
+        $collection = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection();
+
         foreach($data as $r) {
             $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
             $page->setName($r[0]);
             $page->setOriginalPath($r[1]);
-            $page->setBatch($batch);
-            $batch->pages->add($page);
+            $collection->getPages()->add($page);
+            $batch->getCollections()->add($collection);
         }
         return $batch;
     }
     public function testLinkNormalization()
     {
         $batch = $this->getSampleBatch();
-        $this->assertEquals(9, $batch->pages->count());
+        $this->assertEquals(9, $batch->getCollections()->get(0)->getPages()->count());
 
         $target = new \PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target($batch);
         $processor = new \Concrete\Core\Foundation\Processor\Processor($target);

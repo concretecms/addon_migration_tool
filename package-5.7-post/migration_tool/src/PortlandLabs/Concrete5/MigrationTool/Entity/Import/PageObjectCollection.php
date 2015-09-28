@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageFormatter;
 
 /**
  * @Entity
@@ -37,6 +38,20 @@ class PageObjectCollection extends ObjectCollection
         $this->pages = $pages;
     }
 
+    public function getFormatter()
+    {
+        return new PageFormatter($this);
+    }
+
+    public function getType()
+    {
+        return 'page';
+    }
+
+    public function hasRecords()
+    {
+        return count($this->getPages());
+    }
 
 
 }

@@ -29,6 +29,11 @@ abstract class ObjectCollection
         return $this->id;
     }
 
+    abstract public function hasRecords();
+
+    abstract public function getFormatter();
+
+    abstract public function getType();
 
 
 

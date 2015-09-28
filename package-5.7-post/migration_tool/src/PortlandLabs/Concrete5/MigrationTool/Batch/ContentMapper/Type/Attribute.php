@@ -44,7 +44,7 @@ class Attribute implements MapperInterface
         return $items;
     }
 
-    public function getMatchedTargetItem(ItemInterface $item)
+    public function getMatchedTargetItem(Batch $batch, ItemInterface $item)
     {
         $ak = CollectionKey::getByHandle($item->getIdentifier());
         if (is_object($ak)) {
@@ -55,7 +55,12 @@ class Attribute implements MapperInterface
         }
     }
 
-    public function getTargetItems(Batch $batch)
+    public function getBatchTargetItems(Batch $batch)
+    {
+        return array();
+    }
+
+    public function getInstalledTargetItems(Batch $batch)
     {
         $keys = CollectionKey::getList();
         usort($keys, function($a, $b) {

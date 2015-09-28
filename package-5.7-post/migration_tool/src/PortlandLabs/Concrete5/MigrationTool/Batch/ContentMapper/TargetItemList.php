@@ -21,9 +21,14 @@ class TargetItemList
         $this->entityManager = \Package::getByHandle('migration_tool')->getEntityManager();
     }
 
-    public function getMapperTargetItems()
+    public function getMapperInstalledTargetItems()
     {
-        return $this->mapper->getTargetItems($this->batch);
+        return $this->mapper->getInstalledTargetItems($this->batch);
+    }
+
+    public function getMapperBatchTargetItems()
+    {
+        return $this->mapper->getBatchTargetItems($this->batch);
     }
 
     public function getInternalTargetItems()
@@ -36,7 +41,7 @@ class TargetItemList
 
     public function getMatchedTargetItem(ItemInterface $item)
     {
-        $targetItem = $this->mapper->getMatchedTargetItem($item);
+        $targetItem = $this->mapper->getMatchedTargetItem($this->batch, $item);
         if (!is_object($targetItem)) {
             $targetItem = new UnmappedTargetItem($this->mapper);
         }
@@ -63,7 +68,10 @@ class TargetItemList
 
     public function getTargetItem($identifier)
     {
-        $items = array_merge($this->getMapperTargetItems(), $this->getInternalTargetItems());
+        $items = array_merge(
+            $this->getMapperBatchTargetItems(),
+            $this->getMapperInstalledTargetItems(),
+            $this->getInternalTargetItems());
         $item = false;
         foreach($items as $item) {
             if ($item->getItemID() == $identifier) {

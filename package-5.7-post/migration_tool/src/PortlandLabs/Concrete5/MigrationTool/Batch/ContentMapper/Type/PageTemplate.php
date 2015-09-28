@@ -42,7 +42,7 @@ class PageTemplate implements MapperInterface
         return $items;
     }
 
-    public function getMatchedTargetItem(ItemInterface $item)
+    public function getMatchedTargetItem(Batch $batch, ItemInterface $item)
     {
         $template = Template::getByHandle($item->getIdentifier());
         if (is_object($template)) {
@@ -50,11 +50,33 @@ class PageTemplate implements MapperInterface
             $targetItem->setItemId($template->getPageTemplateID());
             $targetItem->setItemName($template->getPageTemplateName());
             return $targetItem;
+        } else { // we check the current batch.
+            $collection = $batch->getCollection('page_template');
+            foreach($collection->getTemplates() as $template) {
+                if ($template->getHandle() == $item->getIdentifier()) {
+                    $targetItem = new TargetItem($this);
+                    $targetItem->setItemId($template->getHandle());
+                    $targetItem->setItemName($template->getName());
+                    return $targetItem;
+                }
+            }
         }
     }
 
+    public function getBatchTargetItems(Batch $batch)
+    {
+        $collection = $batch->getCollection('page_template');
+        $items = array();
+        foreach($collection->getTemplates() as $template) {
+            $item = new TargetItem($this);
+            $item->setItemId($template->getHandle());
+            $item->setItemName($template->getName());
+            $items[] = $item;
+        }
+        return $items;
+    }
 
-    public function getTargetItems(Batch $batch)
+    public function getInstalledTargetItems(Batch $batch)
     {
         $templates = Template::getList();
         usort($templates, function($a, $b) {

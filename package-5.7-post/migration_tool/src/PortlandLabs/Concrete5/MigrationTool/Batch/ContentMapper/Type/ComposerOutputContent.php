@@ -69,7 +69,7 @@ class ComposerOutputContent implements MapperInterface
         return $items;
     }
 
-    public function getMatchedTargetItem(ItemInterface $item)
+    public function getMatchedTargetItem(Batch $batch, ItemInterface $item)
     {
         return false;
     }
@@ -80,7 +80,12 @@ class ComposerOutputContent implements MapperInterface
     }
 
 
-    public function getTargetItems(Batch $batch)
+    public function getBatchTargetItems(Batch $batch)
+    {
+        return array();
+    }
+
+    public function getInstalledTargetItems(Batch $batch)
     {
 
         $db = \Database::connection();
@@ -96,39 +101,6 @@ class ComposerOutputContent implements MapperInterface
             $items[] = $item;
         }
         return $items;
-
-        // We can use this code later when we actually do the mapping
-        /*
-        $items = $this->getItems($batch);
-        $db = \Database::connection();
-        $em = $db->getEntityManager();
-        $rp = $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page');
-        $ra = $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area');
-        $ri = $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem');
-
-        foreach($items as $item) {
-            $c = $item->getBlock()->getBlockCollectionObject();
-            $type = $c->getPageTypeObject();
-            // now that I have page types, I need to find all import records that are mapping
-            // to this page type.
-            $importPageTypes = $ri->findBy(array(
-               'item_id' => $type->getPageTypeID(),
-               'item_type' => 'page_type'
-            ));
-            foreach($importPageTypes as $importPageType) {
-                $importPages = $rp->findByType($importPageType->getSourceItemIdentifier());
-                foreach($importPages as $importPage) {
-                    $areas = $importPage->getAreas();
-                    foreach($areas as $area) {
-                        foreach($area->getBlocks() as $block) {
-                            var_dump_safe($block);
-                        }
-                    }
-                }
-            }
-        }
-
-        */
 
     }
 }

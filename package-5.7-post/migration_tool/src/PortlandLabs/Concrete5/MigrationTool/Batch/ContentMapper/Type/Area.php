@@ -44,7 +44,7 @@ class Area implements MapperInterface
         return $items;
     }
 
-    public function getMatchedTargetItem(ItemInterface $item)
+    public function getMatchedTargetItem(Batch $batch, ItemInterface $item)
     {
         $list = \Concrete\Core\Area\Area::getHandleList();
         if (in_array($item->getIdentifier(), $list)) {
@@ -55,7 +55,12 @@ class Area implements MapperInterface
         }
     }
 
-    public function getTargetItems(Batch $batch)
+    public function getBatchTargetItems(Batch $batch)
+    {
+        return array();
+    }
+
+    public function getInstalledTargetItems(Batch $batch)
     {
         $areas = \Concrete\Core\Area\Area::getHandleList();
         asort($areas);

@@ -46,6 +46,15 @@ class ImportContent extends DashboardPageController
             $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
             $batch = $r->findOneById($this->request->request->get('id'));
             if (is_object($batch)) {
+                foreach($batch->getObjectCollections() as $collection) {
+                    $this->entityManager->remove($collection);
+                }
+                $batch->setObjectCollections(null);
+                foreach($batch->getTargetItems() as $targetItem) {
+                    $targetItem->setBatch(null);
+                    $this->entityManager->remove($targetItem);
+                }
+                $this->entityManager->flush();
                 $this->entityManager->remove($batch);
                 $this->entityManager->flush();
                 $this->flash('success', t('Batch removed successfully.'));
@@ -64,10 +73,10 @@ class ImportContent extends DashboardPageController
             $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
             $batch = $r->findOneById($this->request->request->get('id'));
             if (is_object($batch)) {
-                foreach($batch->getCollections() as $collection) {
+                foreach($batch->getObjectCollections() as $collection) {
                     $this->entityManager->remove($collection);
                 }
-                $batch->setCollections(null);
+                $batch->setObjectCollections(null);
                 foreach($batch->getTargetItems() as $targetItem) {
                     $targetItem->setBatch(null);
                     $this->entityManager->remove($targetItem);
@@ -135,7 +144,7 @@ class ImportContent extends DashboardPageController
             try {
                 $parser = new Parser($_FILES['xml']['tmp_name']);
                 foreach($parser->getContentObjectCollections() as $collection) {
-                    $batch->getCollections()->add($collection);
+                    $batch->getObjectCollections()->add($collection);
                 }
 
                 $target = new Target($batch);

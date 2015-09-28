@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTemplateFormatter;
 
 /**
  * @Entity
@@ -12,7 +13,6 @@ class PageTemplateObjectCollection extends ObjectCollection
 
     /**
      * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageTemplate", mappedBy="collection", cascade={"persist", "remove"})
-     * @OrderBy({"position" = "ASC"})
      **/
     public $templates;
 
@@ -27,6 +27,21 @@ class PageTemplateObjectCollection extends ObjectCollection
     public function getTemplates()
     {
         return $this->templates;
+    }
+
+    public function getFormatter()
+    {
+        return new PageTemplateFormatter($this);
+    }
+
+    public function getType()
+    {
+        return 'page_template';
+    }
+
+    public function hasRecords()
+    {
+        return count($this->getTemplates());
     }
 
 

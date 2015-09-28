@@ -101,7 +101,7 @@ class Batch
     /**
      * @return mixed
      */
-    public function getCollections()
+    public function getObjectCollections()
     {
         return $this->collections;
     }
@@ -109,7 +109,7 @@ class Batch
     /**
      * @param mixed $collections
      */
-    public function setCollections($collections)
+    public function setObjectCollections($collections)
     {
         $this->collections = $collections;
     }
@@ -126,7 +126,7 @@ class Batch
     public function getPages()
     {
         $pages = array();
-        foreach($this->getCollections() as $collection) {
+        foreach($this->getObjectCollections() as $collection) {
             if ($collection instanceof PageObjectCollection) {
                 $pages = array_merge($pages, $collection->getPages()->toArray());
             }
@@ -168,6 +168,15 @@ class Batch
     public function getTargetItems()
     {
         return $this->target_items;
+    }
+
+    public function getCollection($type)
+    {
+        foreach($this->collections as $collection) {
+            if ($collection->getType() == $type) {
+                return $collection;
+            }
+        }
     }
 
     /**

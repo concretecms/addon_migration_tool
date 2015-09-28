@@ -24,14 +24,14 @@ class ProcessingTest extends MigrationToolTestCase
             $page->setName($r[0]);
             $page->setOriginalPath($r[1]);
             $collection->getPages()->add($page);
-            $batch->getCollections()->add($collection);
+            $batch->getObjectCollections()->add($collection);
         }
         return $batch;
     }
     public function testLinkNormalization()
     {
         $batch = $this->getSampleBatch();
-        $this->assertEquals(9, $batch->getCollections()->get(0)->getPages()->count());
+        $this->assertEquals(9, $batch->getObjectCollections()->get(0)->getPages()->count());
 
         $target = new \PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target($batch);
         $processor = new \Concrete\Core\Foundation\Processor\Processor($target);

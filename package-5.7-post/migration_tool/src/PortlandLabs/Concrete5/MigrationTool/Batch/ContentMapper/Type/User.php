@@ -43,7 +43,7 @@ class User implements MapperInterface
         return $items;
     }
 
-    public function getMatchedTargetItem(ItemInterface $item)
+    public function getMatchedTargetItem(Batch $batch, ItemInterface $item)
     {
         $user = UserInfo::getByUserName($item->getIdentifier());
         if (is_object($user)) {
@@ -54,7 +54,12 @@ class User implements MapperInterface
         }
     }
 
-    public function getTargetItems(Batch $batch)
+    public function getBatchTargetItems(Batch $batch)
+    {
+        return array();
+    }
+
+    public function getInstalledTargetItems(Batch $batch)
     {
         $ul = new UserList();
         $ul->sortByUserName();

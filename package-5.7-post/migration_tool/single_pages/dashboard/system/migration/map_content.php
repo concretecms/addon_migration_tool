@@ -34,9 +34,17 @@
                         <? foreach($targetItemList->getInternalTargetItems() as $targetItem) { ?>
                             <option <? if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) { ?>selected="selected" <? } ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
                         <? } ?>
-                        <optgroup label="** <?=$mapper->getMappedItemPluralName()?>"></optgroup>
-                        <? foreach($targetItemList->getMapperTargetItems() as $targetItem) { ?>
-                            <option <? if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) { ?>selected="selected" <? } ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
+                        <? if (count($targetItemList->getMapperInstalledTargetItems())) { ?>
+                            <optgroup label="** <?=t('Installed %s', $mapper->getMappedItemPluralName())?>"></optgroup>
+                            <? foreach($targetItemList->getMapperInstalledTargetItems() as $targetItem) { ?>
+                                <option <? if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) { ?>selected="selected" <? } ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
+                            <? } ?>
+                        <? } ?>
+                        <? if (count($targetItemList->getMapperBatchTargetItems())) { ?>
+                            <optgroup label="** <?=t('Batch %s', $mapper->getMappedItemPluralName())?>"></optgroup>
+                            <? foreach($targetItemList->getMapperBatchTargetItems() as $targetItem) { ?>
+                                <option <? if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) { ?>selected="selected" <? } ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
+                            <? } ?>
                         <? } ?>
                     </select>
                 </td>

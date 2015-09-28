@@ -9,7 +9,9 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  * @DiscriminatorColumn(name="type", type="string")
  * @DiscriminatorMap( {
  * "page" = "PageObjectCollection",
- * "page_template" = "PageTemplateObjectCollection"
+ * "page_template" = "PageTemplateObjectCollection",
+ * "single_page" = "SinglePageObjectCollection",
+ * "block_type" = "BlockTypeObjectCollection"
  * } )
  */
 abstract class ObjectCollection

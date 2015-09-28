@@ -24,7 +24,7 @@ class TreePageJsonFormatter implements \JsonSerializable
         $page = $this->page;
         $collection = $page->getCollection();
         $r = \Database::connection()->getEntityManager()->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
-        $batch = $r->findBatchFromCollection($collection);
+        $batch = $r->findFromCollection($collection);
         $validator = $page->getValidator();
         $messages = $validator->validate($batch, $page);
         if ($messages->count()) {

@@ -134,34 +134,6 @@ class Batch
         return $pages;
     }
 
-    public function getPagesOrderedForImport()
-    {
-        $pages = array();
-        foreach($this->getPages() as $page) {
-            $pages[] = $page;
-        }
-        usort($pages, function($pageA, $pageB) {
-            $pathA = (string) $pageA->getBatchPath();
-            $pathB = (string) $pageB->getBatchPath();
-            $numA = count(explode('/', $pathA));
-            $numB = count(explode('/', $pathB));
-            if ($numA == $numB) {
-                if (intval($pageA->getPosition()) < intval($pageB->getPosition())) {
-                    return -1;
-                } else {
-                    if (intval($pageA->getPosition()) > intval($pageB->getPosition())) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                }
-            } else {
-                return ($numA < $numB) ? -1 : 1;
-            }
-        });
-        return $pages;
-    }
-
     /**
      * @return mixed
      */
@@ -170,7 +142,7 @@ class Batch
         return $this->target_items;
     }
 
-    public function getCollection($type)
+    public function getObjectCollection($type)
     {
         foreach($this->collections as $collection) {
             if ($collection->getType() == $type) {
@@ -178,7 +150,7 @@ class Batch
             }
         }
     }
-
+    
     /**
      * @param mixed $target_items
      */

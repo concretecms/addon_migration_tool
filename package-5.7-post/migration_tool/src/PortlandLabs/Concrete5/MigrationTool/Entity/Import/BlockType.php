@@ -4,14 +4,15 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BlockTypeValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
 
 
 /**
  * @Entity
- * @Table(name="MigrationImportPageTemplates")
+ * @Table(name="MigrationImportBlockTypes")
  */
-class PageTemplate implements PublishableInterface
+class BlockType implements PublishableInterface
 {
 
     /**
@@ -21,7 +22,7 @@ class PageTemplate implements PublishableInterface
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageTemplateObjectCollection")
+     * @ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockTypeObjectCollection")
      **/
     protected $collection;
 
@@ -31,24 +32,10 @@ class PageTemplate implements PublishableInterface
     protected $handle;
 
     /**
-     * @Column(type="string")
-     */
-    protected $name;
-
-    /**
-     * @Column(type="string")
-     */
-    protected $icon;
-
-    /**
      * @Column(type="string", nullable=true)
      */
     protected $package = null;
 
-    /**
-     * @Column(type="boolean")
-     */
-    protected $is_internal = false;
 
     /**
      * @return mixed
@@ -114,57 +101,10 @@ class PageTemplate implements PublishableInterface
         $this->package = $package;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIcon()
-    {
-        return $this->icon;
-    }
-
-    /**
-     * @param mixed $icon
-     */
-    public function setIcon($icon)
-    {
-        $this->icon = $icon;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIsInternal()
-    {
-        return $this->is_internal;
-    }
-
-    /**
-     * @param mixed $is_internal
-     */
-    public function setIsInternal($is_internal)
-    {
-        $this->is_internal = $is_internal;
-    }
 
     public function getPublisherValidator()
     {
-        return new PageTemplateValidator($this);
+        return new BlockTypeValidator($this);
     }
 
 

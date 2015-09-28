@@ -1,4 +1,4 @@
-<table id="migration-page-tree-table" class="table table-bordered table-striped">
+<table id="migration-tree-table-<?=$type?>" class="table table-bordered table-striped">
     <colgroup>
         <col width="300"></col>
         <col width="*"></col>
@@ -14,12 +14,12 @@
 
 <script type="text/javascript">
     $(function() {
-        $('#migration-page-tree-table').fancytree({
+        $('#migration-tree-table-<?=$type?>').fancytree({
             extensions: ["glyph","table"],
             toggleEffect: false,
             source: {
-                url: '<?=$view->action('load_batch_data')?>',
-                data: {'id': '<?=$batch->getID()?>'}
+                url: '<?=$view->action('load_batch_page_collection')?>',
+                data: {'id': '<?=$collection->getID()?>'}
             },
             postProcess: function(event, data){
                 data.result = data.response.nodes;
@@ -68,6 +68,8 @@
                         .prop("colspan", 4)
                         .nextAll().remove();
                 }
+                $('.launch-tooltip').tooltip({'container': '#ccm-tooltip-holder'});
+
 
             },
             clickFolderMode: 2,

@@ -4,13 +4,15 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator;
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageValidator;
 
 
 /**
  * @Entity
  * @Table(name="MigrationImportPages")
  */
-class Page
+class Page implements PublishableInterface
 {
 
     /**
@@ -40,7 +42,7 @@ class Page
     protected $name;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      */
     protected $filename;
 
@@ -68,6 +70,17 @@ class Page
      * @Column(type="integer")
      */
     protected $position;
+
+    /**
+     * @Column(type="string", nullable=true)
+     */
+    protected $package;
+
+
+    /**
+     * @Column(type="boolean")
+     */
+    protected $is_at_root = false;
 
     /**
      * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute", mappedBy="page", cascade={"persist", "remove"})
@@ -314,6 +327,44 @@ class Page
     {
         $this->areas = $areas;
     }
+
+    public function getPublisherValidator()
+    {
+        return new PageValidator($this);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsAtRoot()
+    {
+        return $this->is_at_root;
+    }
+
+    /**
+     * @param mixed $is_at_root
+     */
+    public function setIsAtRoot($is_at_root)
+    {
+        $this->is_at_root = $is_at_root;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPackage()
+    {
+        return $this->package;
+    }
+
+    /**
+     * @param mixed $package
+     */
+    public function setPackage($package)
+    {
+        $this->package = $package;
+    }
+
 
 
 

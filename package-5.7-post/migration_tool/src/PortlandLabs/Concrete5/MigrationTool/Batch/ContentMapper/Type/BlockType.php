@@ -53,14 +53,33 @@ class BlockType implements MapperInterface
             $targetItem->setItemId($bt->getBlockTypeID());
             $targetItem->setItemName($bt->getBlockTypeName());
             return $targetItem;
+        } else { // we check the current batch.
+            $collection = $batch->getObjectCollection('block_type');
+            foreach($collection->getTypes() as $type) {
+                if ($type->getHandle() == $item->getIdentifier()) {
+                    $targetItem = new TargetItem($this);
+                    $targetItem->setItemId($type->getHandle());
+                    $targetItem->setItemName($type->getHandle());
+                    return $targetItem;
+                }
+            }
         }
     }
 
     public function getBatchTargetItems(Batch $batch)
     {
-        return array();
+        $collection = $batch->getObjectCollection('block_type');
+        $items = array();
+        foreach($collection->getTypes() as $type) {
+            if (!$type->getPublisherValidator()->skipItem()) {
+                $item = new TargetItem($this);
+                $item->setItemId($type->getHandle());
+                $item->setItemName($type->getHandle());
+                $items[] = $item;
+            }
+        }
+        return $items;
     }
-
 
     public function getInstalledTargetItems(Batch $batch)
     {

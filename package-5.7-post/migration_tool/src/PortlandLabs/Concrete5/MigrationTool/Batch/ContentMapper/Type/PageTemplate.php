@@ -47,11 +47,11 @@ class PageTemplate implements MapperInterface
         $template = Template::getByHandle($item->getIdentifier());
         if (is_object($template)) {
             $targetItem = new TargetItem($this);
-            $targetItem->setItemId($template->getPageTemplateID());
+            $targetItem->setItemId($template->getPageTemplateHandle());
             $targetItem->setItemName($template->getPageTemplateName());
             return $targetItem;
         } else { // we check the current batch.
-            $collection = $batch->getCollection('page_template');
+            $collection = $batch->getObjectCollection('page_template');
             foreach($collection->getTemplates() as $template) {
                 if ($template->getHandle() == $item->getIdentifier()) {
                     $targetItem = new TargetItem($this);
@@ -65,13 +65,15 @@ class PageTemplate implements MapperInterface
 
     public function getBatchTargetItems(Batch $batch)
     {
-        $collection = $batch->getCollection('page_template');
+        $collection = $batch->getObjectCollection('page_template');
         $items = array();
         foreach($collection->getTemplates() as $template) {
-            $item = new TargetItem($this);
-            $item->setItemId($template->getHandle());
-            $item->setItemName($template->getName());
-            $items[] = $item;
+            if (!$template->getPublisherValidator()->skipItem()) {
+                $item = new TargetItem($this);
+                $item->setItemId($template->getHandle());
+                $item->setItemName($template->getName());
+                $items[] = $item;
+            }
         }
         return $items;
     }
@@ -85,7 +87,7 @@ class PageTemplate implements MapperInterface
         $items = array();
         foreach($templates as $template) {
             $item = new TargetItem($this);
-            $item->setItemId($template->getPageTemplateID());
+            $item->setItemId($template->getPageTemplateHandle());
             $item->setItemName($template->getPageTemplateName());
             $items[] = $item;
         }
@@ -94,7 +96,7 @@ class PageTemplate implements MapperInterface
 
     public function getTargetItemContentObject(TargetItemInterface $targetItem)
     {
-        return Template::getByID($targetItem->getItemID());
+        return Template::getByHandle($targetItem->getItemID());
     }
 
 

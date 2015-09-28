@@ -5,17 +5,19 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class TreeJsonFormatter implements \JsonSerializable
 {
 
-    protected $batch;
-
-    public function __construct(Batch $batch)
+    public function __construct(PageObjectCollection $collection)
     {
-        $this->batch = $batch;
+        $em = \ORM::entityManager('migraton_tool');
+        $r = $em->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $this->collection = $collection;
+        $this->batch = $r->findFromCollection($collection);
         $this->validator = new BatchValidator($this->batch);
         $this->formatter = $this->validator->getFormatter();
     }
@@ -28,7 +30,7 @@ class TreeJsonFormatter implements \JsonSerializable
         $response->validator->message = $this->formatter->getCreateStatusMessage();
         $response->nodes = array();
 
-        foreach($this->batch->getPages() as $page) {
+        foreach($this->collection->getPages() as $page) {
             $messages = $this->validator->validatePage($page);
             $formatter = $messages->getFormatter();
             $node = new \stdClass;

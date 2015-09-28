@@ -8,6 +8,7 @@ interface FormatterInterface
 {
 
     public function getPluralDisplayName();
+    public function getElement();
     public function displayObjectCollection();
 
 }

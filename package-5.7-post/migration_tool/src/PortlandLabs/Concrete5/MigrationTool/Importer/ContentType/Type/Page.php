@@ -17,14 +17,17 @@ class Page implements TypeInterface
     protected $attributeImporter;
     protected $blockImporter;
     protected $simplexml;
-    protected $singlePages = array();
     protected $pages = array();
+
+    public function __construct()
+    {
+        $this->attributeImporter = \Core::make('migration/manager/import/attribute');
+        $this->blockImporter = \Core::make('migration/manager/import/block');
+    }
 
     public function getObjectCollection(\SimpleXMLElement $element)
     {
         $this->simplexml = $element;
-        $this->attributeImporter = \Core::make('migration/manager/import/attribute');
-        $this->blockImporter = \Core::make('migration/manager/import/block');
         $i = 0;
         $collection = new PageObjectCollection();
         if ($this->simplexml->pages->page) {
@@ -46,7 +49,9 @@ class Page implements TypeInterface
         $page->setName((string) html_entity_decode($node['name']));
         $page->setPublicDate((string) $node['public-date']);
         $page->setOriginalPath((string) $node['path']);
-        $page->setFilename((string) $node['filename']);
+        if (isset($node['package'])) {
+            $page->setPackage((string) $node['package']);
+        }
         $page->setTemplate((string) $node['template']);
         $page->setType((string) $node['pagetype']);
         $page->setUser((string) $node['user']);

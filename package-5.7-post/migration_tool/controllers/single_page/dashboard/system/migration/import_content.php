@@ -153,6 +153,8 @@ class ImportContent extends DashboardPageController
                 $processor->registerTask(new MapContentTypesTask());
                 $processor->process();
 
+                $this->entityManager->flush();
+
                 $processor = new Processor($target);
                 $processor->registerTask(new TransformContentTypesTask());
                 $processor->process();
@@ -178,7 +180,7 @@ class ImportContent extends DashboardPageController
             if (is_object($batch)) {
                 // Create a new
                 $publisher = new Publisher($batch);
-                $publisher->createInterimPages();
+                $publisher->publish();
                 $this->flash('success', t('Batch drafts published successfully.'));
                 $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
             }
@@ -328,10 +330,10 @@ class ImportContent extends DashboardPageController
         }
     }
 
-    public function load_batch_data()
+    public function load_batch_page_collection()
     {
         session_write_close();
-        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection');
         $batch = $r->findOneById($this->request->get('id'));
         if (is_object($batch))  {
             $formatter = new TreeJsonFormatter($batch);

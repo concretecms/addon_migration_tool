@@ -7,8 +7,10 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getTemplates() as $template) { ?>
-    <tr>
+    <? foreach($collection->getTemplates() as $template) {
+        $validator = $template->getPublisherValidator();
+    ?>
+    <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
         <td><?=$template->getHandle()?></td>
         <td><?=$template->getName()?></td>
         <td><?=$template->getIcon()?></td>

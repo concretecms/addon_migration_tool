@@ -8,6 +8,7 @@ use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreePageJsonFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\MapContentTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
@@ -327,6 +328,26 @@ class ImportContent extends DashboardPageController
 
             $this->flash('message', t('Batch mappings updated.'));
             $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
+        }
+    }
+
+    public function validate_batch()
+    {
+        session_write_close();
+        if (!$this->token->validate('validate_batch')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+        if (!$this->error->has()) {
+            $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+            $batch = $r->findOneById($this->request->request->get('id'));
+            if (is_object($batch)) {
+                $validator = \Core::make('migration/batch/validator');
+                $messages = $validator->validate($batch);
+                $formatter = $validator->getFormatter($messages);
+                $data['alertclass'] = $formatter->getAlertClass();
+                $data['message'] = $formatter->getCreateStatusMessage();
+                return new JsonResponse($data);
+            }
         }
     }
 

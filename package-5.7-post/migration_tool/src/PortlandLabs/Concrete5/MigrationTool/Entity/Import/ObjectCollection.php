@@ -10,6 +10,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  * @DiscriminatorMap( {
  * "page" = "PageObjectCollection",
  * "page_template" = "PageTemplateObjectCollection",
+ * "attribute_key" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyObjectCollection",
  * "single_page" = "SinglePageObjectCollection",
  * "block_type" = "BlockTypeObjectCollection"
  * } )

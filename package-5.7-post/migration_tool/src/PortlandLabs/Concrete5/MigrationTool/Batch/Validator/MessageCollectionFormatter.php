@@ -1,6 +1,6 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 

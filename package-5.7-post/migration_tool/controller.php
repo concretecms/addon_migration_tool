@@ -9,13 +9,16 @@ use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateAreasTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateAttributesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchPagesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateBlockTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTemplatesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateReferencedContentItemsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateUsersTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Validator;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Manager\AttributeManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value\Manager as AttributeValueManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Key\Manager as AttributeKeyManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Manager\BlockManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Manager as ImportManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherManager;
@@ -88,14 +91,24 @@ class Controller extends Package
             $v->registerTask(new ValidateReferencedContentItemsTask());
             return $v;
         });
+
+        \Core::bindShared('migration/batch/validator', function () {
+            $v = new BatchValidator();
+            $v->registerTask(new ValidateBatchPagesTask());
+            return $v;
+        });
+
         \Core::bindShared('migration/manager/mapping', function ($app) {
             return new Manager($app);
         });
         \Core::bindShared('migration/manager/transforms', function ($app) {
             return new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Manager($app);
         });
-        \Core::bindShared('migration/manager/import/attribute', function ($app) {
-            return new AttributeManager($app);
+        \Core::bindShared('migration/manager/import/attribute/value', function ($app) {
+            return new AttributeValueManager($app);
+        });
+        \Core::bindShared('migration/manager/import/attribute/key', function ($app) {
+            return new AttributeKeyManager($app);
         });
         \Core::bindShared('migration/manager/import/block', function ($app) {
             return new BlockManager($app);

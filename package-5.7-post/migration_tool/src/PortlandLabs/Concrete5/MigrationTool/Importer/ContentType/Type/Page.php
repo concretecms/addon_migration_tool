@@ -21,7 +21,7 @@ class Page implements TypeInterface
 
     public function __construct()
     {
-        $this->attributeImporter = \Core::make('migration/manager/import/attribute');
+        $this->attributeImporter = \Core::make('migration/manager/import/attribute/value');
         $this->blockImporter = \Core::make('migration/manager/import/block');
     }
 

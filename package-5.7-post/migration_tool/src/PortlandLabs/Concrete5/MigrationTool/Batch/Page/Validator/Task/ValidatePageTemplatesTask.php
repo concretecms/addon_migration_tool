@@ -8,7 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageTemplate;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Message;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 
 defined('C5_EXECUTE') or die("Access Denied.");

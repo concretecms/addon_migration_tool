@@ -2,7 +2,7 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Content;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Message;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\ValidatorTarget;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\ItemInterface;

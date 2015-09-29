@@ -102,6 +102,26 @@
         </div>
     </div>
 
+        <script type="text/javascript">
+            $(function() {
+                $.ajax({
+                    dataType: 'json',
+                    type: 'post',
+                    data: {
+                        'ccm_token': '<?=Core::make('token')->generate('validate_batch')?>',
+                        'id': '<?=$batch->getID()?>'},
+                    url: '<?=$view->action('validate_batch')?>',
+                    success: function(r) {
+                        if (r.alertclass && r.message) {
+                            $('#migration-batch-status').removeClass().addClass('alert ' + r.alertclass);
+                            $('#migration-batch-status').text(r.message);
+                        } else {
+                            $('#migration-batch-status').hide();
+                        }
+                    }
+                });
+            });
+        </script>
     <? foreach($batch->getObjectCollections() as $collection) {
         if ($collection->hasRecords()) {
             $formatter = $collection->getFormatter();

@@ -2,7 +2,7 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\BatchValidator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
@@ -18,20 +18,15 @@ class TreeJsonFormatter implements \JsonSerializable
         $r = $em->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $this->collection = $collection;
         $this->batch = $r->findFromCollection($collection);
-        $this->validator = new BatchValidator($this->batch);
-        $this->formatter = $this->validator->getFormatter();
+        $this->validator = \Core::make('migration/batch/page/validator');
     }
 
     public function jsonSerialize()
     {
-        $response = new \stdClass;
-        $response->validator = new \stdClass;
-        $response->validator->alertclass = $this->formatter->getAlertClass();
-        $response->validator->message = $this->formatter->getCreateStatusMessage();
-        $response->nodes = array();
+        $response = array();
 
         foreach($this->collection->getPages() as $page) {
-            $messages = $this->validator->validatePage($page);
+            $messages = $this->validator->validate($this->batch, $page);
             $formatter = $messages->getFormatter();
             $node = new \stdClass;
             $node->title = $page->getName();
@@ -43,7 +38,7 @@ class TreeJsonFormatter implements \JsonSerializable
             $node->pageType = $page->getType();
             $node->pageTemplate = $page->getTemplate();
             $node->statusClass = $formatter->getCollectionStatusIconClass();
-            $response->nodes[] = $node;
+            $response[] = $node;
         }
         return $response;
     }

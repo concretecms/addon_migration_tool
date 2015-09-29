@@ -38,7 +38,7 @@ class Attribute implements TransformerInterface
     {
         $ak = CollectionKey::getByID($targetItem->getItemId());
         if (is_object($ak)) {
-            $manager = \Core::make('migration/manager/import/attribute');
+            $manager = \Core::make('migration/manager/import/attribute/value');
             $driver = $manager->driver($ak->getAttributeKeyType()->getAttributeTypeHandle());
             $xml = simplexml_load_string($entity->getValue());
             $value = $driver->parse($xml);

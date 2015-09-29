@@ -21,17 +21,6 @@
                 url: '<?=$view->action('load_batch_page_collection')?>',
                 data: {'id': '<?=$collection->getID()?>'}
             },
-            postProcess: function(event, data){
-                data.result = data.response.nodes;
-                if (data.response && data.response.validator) {
-                    if (data.response.validator.alertclass && data.response.validator.message) {
-                        $('#migration-batch-status').removeClass().addClass('alert ' + data.response.validator.alertclass);
-                        $('#migration-batch-status').text(data.response.validator.message);
-                    } else {
-                        $('#migration-batch-status').hide();
-                    }
-                }
-            },
             init: function() {
                 $('[data-editable-property=path]').editable({
                     container: '#ccm-dashboard-content',

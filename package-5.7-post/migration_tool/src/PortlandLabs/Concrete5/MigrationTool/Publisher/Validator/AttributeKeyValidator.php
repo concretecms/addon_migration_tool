@@ -16,7 +16,7 @@ class AttributeKeyValidator extends AbstractValidator
             case 'collection':
                 $key = CollectionKey::getByHandle($this->object->getHandle());
                 break;
-            case 'collection':
+            case 'file':
                 $key = FileKey::getByHandle($this->object->getHandle());
                 break;
             case 'user':

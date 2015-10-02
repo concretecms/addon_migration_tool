@@ -119,6 +119,7 @@ class Controller extends Package
         \Core::bindShared('migration/manager/publisher', function ($app) {
             return new PublisherManager($app);
         });
+
         $al = AssetList::getInstance();
         $al->register(
             'javascript', 'fancytree', 'assets/jquery.fancytree/dist/jquery.fancytree-all.min.js',
@@ -128,12 +129,24 @@ class Controller extends Package
             'css', 'fancytree/skin/bootstrap', 'assets/jquery.fancytree/dist/skin-bootstrap/ui.fancytree.min.css',
             array('minify' => false, 'combine' => false), $this
         );
-        $al->registerGroup('fancytree', array(
+        $al->register(
+            'javascript', 'migration/batch-table-tree', 'assets/migration/BatchTableTree.js',
+            array(), $this
+        );
+        $al->register(
+            'css', 'migration/batch-table-tree', 'assets/migration/BatchTableTree.css',
+            array(), $this
+        );
+        $al->registerGroup('migration/view-batch', array(
             array('javascript', 'jquery'),
             array('javascript', 'jquery/ui'),
             array('javascript', 'fancytree'),
-            array('css', 'fancytree/skin/bootstrap')
+            array('javascript', 'migration/batch-table-tree'),
+            array('css', 'fancytree/skin/bootstrap'),
+            array('css', 'migration/batch-table-tree')
         ));
+
+
     }
 
     public function getPackageDescription()

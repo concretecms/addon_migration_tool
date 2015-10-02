@@ -44,5 +44,16 @@ class PageTemplateObjectCollection extends ObjectCollection
         return count($this->getTemplates());
     }
 
+    public function getRecords()
+    {
+        return $this->getTemplates();
+    }
+
+    public function getTreeFormatter()
+    {
+        return false;
+    }
+
+
 
 }

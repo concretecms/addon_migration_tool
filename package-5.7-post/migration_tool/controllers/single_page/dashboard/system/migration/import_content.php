@@ -198,7 +198,7 @@ class ImportContent extends DashboardPageController
 
     public function view_batch($id = null)
     {
-        $this->requireAsset('fancytree');
+        $this->requireAsset('migration/view-batch');
         $this->requireAsset('core/app/editable-fields');
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
@@ -351,13 +351,13 @@ class ImportContent extends DashboardPageController
         }
     }
 
-    public function load_batch_page_collection()
+    public function load_batch_collection()
     {
         session_write_close();
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection');
-        $batch = $r->findOneById($this->request->get('id'));
-        if (is_object($batch))  {
-            $formatter = new TreeJsonFormatter($batch);
+        $collection = $r->findOneById($this->request->get('id'));
+        if (is_object($collection))  {
+            $formatter = $collection->getTreeFormatter();
             return new JsonResponse($formatter);
         }
     }

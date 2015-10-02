@@ -1,0 +1,5 @@
+tr.migration-node-main .fancytree-node {
+	width: 300px !important;
+	white-space: nowrap;
+	overflow: hidden;
+}

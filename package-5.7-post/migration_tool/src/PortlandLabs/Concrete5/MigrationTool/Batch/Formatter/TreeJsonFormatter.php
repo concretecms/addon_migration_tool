@@ -24,7 +24,6 @@ class TreeJsonFormatter implements \JsonSerializable
     public function jsonSerialize()
     {
         $response = array();
-
         foreach($this->collection->getPages() as $page) {
             $messages = $this->validator->validate($this->batch, $page);
             $formatter = $messages->getFormatter();

@@ -45,5 +45,18 @@ class BlockTypeObjectCollection extends ObjectCollection
         return count($this->getTypes());
     }
 
+    public function getRecords()
+    {
+        return $this->getTypes();
+    }
+
+    public function getTreeFormatter()
+    {
+        return false;
+    }
+
+
+
+
 
 }

@@ -14,11 +14,9 @@
 
 <script type="text/javascript">
     $(function() {
-        $('#migration-tree-table-<?=$type?>').fancytree({
-            extensions: ["glyph","table"],
-            toggleEffect: false,
+        $("#migration-tree-table-<?=$type?>").migrationBatchTableTree({
             source: {
-                url: '<?=$view->action('load_batch_page_collection')?>',
+                url: '<?=$view->action('load_batch_collection')?>',
                 data: {'id': '<?=$collection->getID()?>'}
             },
             init: function() {
@@ -26,12 +24,6 @@
                     container: '#ccm-dashboard-content',
                     url: '<?=$view->action('update_page_path')?>'
                 });
-            },
-            table: {
-                checkboxColumnIdx: null,
-                customStatus: false,
-                indentation: 16,         // indent every node level by 16px
-                nodeColumnIdx: 0
             },
             lazyLoad: function(event, data) {
                 data.result = {
@@ -58,40 +50,7 @@
                         .nextAll().remove();
                 }
                 $('.launch-tooltip').tooltip({'container': '#ccm-tooltip-holder'});
-
-
-            },
-            clickFolderMode: 2,
-            focusOnSelect: false,
-            glyph: {
-                map: {
-                    doc: "fa fa-file-o",
-                    docOpen: "fa fa-file-o",
-                    checkbox: "fa fa-square-o",
-                    checkboxSelected: "fa fa-check-square-o",
-                    checkboxUnknown: "fa fa-share-square",
-                    dragHelper: "fa fa-play",
-                    dropMarker: "fa fa-angle-right",
-                    error: "fa fa-warning",
-                    expanderClosed: "fa fa-plus-square-o",
-                    expanderLazy: "fa fa-plus-square-o",  // glyphicon-expand
-                    expanderOpen: "fa fa-minus-square-o",  // glyphicon-collapse-down
-                    folder: "fa fa-folder-o",
-                    folderOpen: "fa fa-folder-open-o",
-                    loading: "fa fa-spin fa-refresh"
-                }
-            },
-            beforeActivate: function(event, data) {
-                return false;
             }
         });
     });
 </script>
-
-<style type="text/css">
-    tr.migration-page .fancytree-node {
-        width: 300px !important;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-</style>

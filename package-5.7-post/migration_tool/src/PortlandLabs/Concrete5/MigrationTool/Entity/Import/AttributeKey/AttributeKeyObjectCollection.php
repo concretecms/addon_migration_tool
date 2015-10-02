@@ -45,5 +45,15 @@ class AttributeKeyObjectCollection extends ObjectCollection
         return count($this->getKeys());
     }
 
+    public function getRecords()
+    {
+        return $this->getKeys();
+    }
+
+    public function getTreeFormatter()
+    {
+        return false;
+    }
+
 
 }

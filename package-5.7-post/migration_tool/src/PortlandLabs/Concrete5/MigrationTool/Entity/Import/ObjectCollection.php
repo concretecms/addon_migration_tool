@@ -36,7 +36,11 @@ abstract class ObjectCollection
 
     abstract public function getFormatter();
 
+    abstract public function getTreeFormatter();
+
     abstract public function getType();
+
+    abstract public function getRecords();
 
 
 

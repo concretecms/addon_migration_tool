@@ -3,8 +3,10 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\AttributeKeyFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeKey\Validator as AttributeKeyValidator;
 
 /**
  * @Entity
@@ -52,7 +54,12 @@ class AttributeKeyObjectCollection extends ObjectCollection
 
     public function getTreeFormatter()
     {
-        return false;
+        return new TreeJsonFormatter($this);
+    }
+
+    public function getRecordValidator()
+    {
+        return new AttributeKeyValidator();
     }
 
 

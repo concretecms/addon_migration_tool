@@ -42,6 +42,8 @@ abstract class ObjectCollection
 
     abstract public function getRecords();
 
+    abstract public function getRecordValidator();
+
 
 
 }

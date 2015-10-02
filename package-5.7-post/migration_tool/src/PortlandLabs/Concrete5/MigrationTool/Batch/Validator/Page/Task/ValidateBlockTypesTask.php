@@ -1,6 +1,6 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
 
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Foundation\Processor\ActionInterface;

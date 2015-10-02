@@ -158,15 +158,3 @@
 
     });
 </script>
-
-
-<style type="text/css">
-    tr.migration-item-skipped td {
-        color: #ddd;
-        text-decoration: line-through;
-    }
-
-    table .launch-tooltip {
-        margin-left: 5px;
-    }
-</style>

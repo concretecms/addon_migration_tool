@@ -1,8 +1,8 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
 
@@ -25,7 +25,7 @@ class TreePageJsonFormatter implements \JsonSerializable
         $collection = $page->getCollection();
         $r = \Database::connection()->getEntityManager()->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findFromCollection($collection);
-        $validator = $page->getValidator();
+        $validator = $collection->getRecordValidator();
         $messages = $validator->validate($batch, $page);
         if ($messages->count()) {
             $messageHolderNode = new \stdClass;

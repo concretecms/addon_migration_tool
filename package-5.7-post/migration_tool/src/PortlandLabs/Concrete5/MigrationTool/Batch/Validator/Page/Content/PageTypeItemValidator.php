@@ -1,13 +1,13 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Content;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content;
 
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageType;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Message;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\ValidatorTarget;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Message;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\ValidatorTarget;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 

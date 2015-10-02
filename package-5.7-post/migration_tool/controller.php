@@ -7,16 +7,16 @@ use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateAreasTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateAttributesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAreasTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAttributesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchPagesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateBlockTypesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTemplatesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidatePageTypesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateReferencedContentItemsTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Task\ValidateUsersTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockTypesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTemplatesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTypesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateReferencedContentItemsTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateUsersTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchRecordsTask;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value\Manager as AttributeValueManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Key\Manager as AttributeKeyManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Manager\BlockManager;
@@ -94,7 +94,7 @@ class Controller extends Package
 
         \Core::bindShared('migration/batch/validator', function () {
             $v = new BatchValidator();
-            $v->registerTask(new ValidateBatchPagesTask());
+            $v->registerTask(new ValidateBatchRecordsTask());
             return $v;
         });
 

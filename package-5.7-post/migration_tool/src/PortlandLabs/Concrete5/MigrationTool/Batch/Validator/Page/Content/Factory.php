@@ -1,6 +1,6 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Content;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content;
 
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\ItemInterface;
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\PageItem;

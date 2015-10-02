@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped">
+<table class="migration-table table table-bordered table-striped">
     <thead>
     <tr>
         <th><?=t('Handle')?></th>

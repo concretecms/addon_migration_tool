@@ -1,5 +1,14 @@
-tr.migration-node-main .fancytree-node {
+table.migration-table tr.migration-node-main .fancytree-node {
 	width: 300px !important;
 	white-space: nowrap;
 	overflow: hidden;
+}
+
+table.migration-table tr.migration-item-skipped td, table.migration-table tr.migration-item-skipped span.fancytree-title {
+	color: #ddd;
+	text-decoration: line-through;
+}
+
+table.migration-table .launch-tooltip {
+	margin-left: 5px;
 }

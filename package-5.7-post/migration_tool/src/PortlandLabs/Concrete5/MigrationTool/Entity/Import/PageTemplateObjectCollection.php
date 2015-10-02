@@ -54,6 +54,11 @@ class PageTemplateObjectCollection extends ObjectCollection
         return false;
     }
 
+    public function getRecordValidator()
+    {
+        return false;
+    }
+
 
 
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
 
@@ -14,11 +14,11 @@ class TreeJsonFormatter implements \JsonSerializable
 
     public function __construct(PageObjectCollection $collection)
     {
-        $em = \ORM::entityManager('migraton_tool');
+        $em = \ORM::entityManager('migration_tool');
         $r = $em->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $this->collection = $collection;
         $this->batch = $r->findFromCollection($collection);
-        $this->validator = \Core::make('migration/batch/page/validator');
+        $this->validator = $collection->getRecordValidator();
     }
 
     public function jsonSerialize()
@@ -31,7 +31,7 @@ class TreeJsonFormatter implements \JsonSerializable
             $node->title = $page->getName();
             $node->lazy = true;
             $node->type = 'page';
-            $node->extraClasses = 'migration-page';
+            $node->extraClasses = 'migration-node-main';
             $node->id = $page->getId();
             $node->pagePath = '<a href="#" data-editable-property="path" data-type="text" data-pk="' . $page->getID() . '" data-title="' . t('Page Path') . '">' . $page->getBatchPath() . '</a>';
             $node->pageType = $page->getType();

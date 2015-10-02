@@ -1,6 +1,6 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page;
 
 use Concrete\Core\Foundation\Processor\TargetInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;

@@ -8,12 +8,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Area;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Message;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Message;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class ValidateBatchPagesTask implements TaskInterface
+class ValidateBatchRecordsTask implements TaskInterface
 {
 
     public function execute(ActionInterface $action)
@@ -21,11 +21,17 @@ class ValidateBatchPagesTask implements TaskInterface
         // Grab the target item for the page's page type.
         $subject = $action->getSubject();
         $target = $action->getTarget();
-        $validator = \Core::make('migration/batch/page/validator');
-        foreach($subject->getPages() as $page) {
-            $messages = $validator->validate($subject, $page);
-            foreach($messages as $message) {
-                $target->addMessage($message);
+        foreach($subject->getObjectCollections() as $collection) {
+            if ($collection->hasRecords()) {
+                $validator = $collection->getRecordValidator();
+                if (is_object($validator)) {
+                    foreach($collection->getRecords() as $record) {
+                        $messages = $validator->validate($subject, $record);
+                        foreach($messages as $message) {
+                            $target->addMessage($message);
+                        }
+                    }
+                }
             }
         }
     }

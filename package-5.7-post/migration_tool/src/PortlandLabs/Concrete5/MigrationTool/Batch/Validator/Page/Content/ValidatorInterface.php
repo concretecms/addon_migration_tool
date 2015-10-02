@@ -1,8 +1,8 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\Content;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator\ValidatorTarget;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\ValidatorTarget;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\ItemInterface;
 

@@ -55,6 +55,11 @@ class BlockTypeObjectCollection extends ObjectCollection
         return false;
     }
 
+    public function getRecordValidator()
+    {
+        return false;
+    }
+
 
 
 

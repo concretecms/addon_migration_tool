@@ -9,6 +9,9 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  * @DiscriminatorColumn(name="type", type="string")
  * @DiscriminatorMap( {
  * "page" = "PageObjectCollection",
+ * "conversation_editor" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\EditorObjectCollection",
+ * "conversation_flag_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\FlagTypeObjectCollection",
+ * "conversation_rating_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\RatingTypeObjectCollection",
  * "page_template" = "PageTemplateObjectCollection",
  * "attribute_key" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyObjectCollection",
  * "single_page" = "SinglePageObjectCollection",

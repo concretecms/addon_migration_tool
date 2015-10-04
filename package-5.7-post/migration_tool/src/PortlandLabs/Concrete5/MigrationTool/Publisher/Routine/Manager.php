@@ -39,9 +39,15 @@ class Manager extends CoreManager
         return new CreateSinglePageStructureRoutine();
     }
 
+    public function createCreateConversationDataDriver()
+    {
+        return new CreateConversationDataRoutine();
+    }
+
     public function __construct()
     {
         $this->driver('clear_batch');
+        $this->driver('create_conversation_data');
         $this->driver('create_block_types');
         $this->driver('create_single_page_structure');
         $this->driver('create_page_templates');

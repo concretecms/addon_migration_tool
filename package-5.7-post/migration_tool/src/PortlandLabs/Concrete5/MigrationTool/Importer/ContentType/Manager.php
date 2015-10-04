@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Importer\ContentType;
 
 use Concrete\Core\Support\Manager as CoreManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeKey;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeKeyCategory;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\BlockType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ConversationEditor;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ConversationFlagType;
@@ -58,8 +59,14 @@ class Manager extends CoreManager
         return new ConversationRatingType();
     }
 
+    public function createAttributeKeyCategoryDriver()
+    {
+        return new AttributeKeyCategory();
+    }
+
     public function __construct()
     {
+        $this->driver('attribute_key_category');
         $this->driver('conversation_editor');
         $this->driver('conversation_flag_type');
         $this->driver('conversation_rating_type');

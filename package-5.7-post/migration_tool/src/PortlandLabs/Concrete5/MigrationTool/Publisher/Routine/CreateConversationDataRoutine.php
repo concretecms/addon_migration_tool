@@ -35,7 +35,7 @@ class CreateConversationDataRoutine extends AbstractPageRoutine
             }
         }
         $types = $batch->getObjectCollection('conversation_flag_type');
-        foreach($types->getTypes() as $type) {
+        foreach($editors->getTypes() as $type) {
             if (!$type->getPublisherValidator()->skipItem()) {
                 $pkg = null;
                 if ($type->getPackage()) {

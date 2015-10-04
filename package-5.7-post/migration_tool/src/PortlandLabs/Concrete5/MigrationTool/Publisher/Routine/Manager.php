@@ -44,10 +44,17 @@ class Manager extends CoreManager
         return new CreateConversationDataRoutine();
     }
 
+    public function createCreateAttributeCategoriesDriver()
+    {
+        return new CreateAttributeCategoriesRoutine();
+    }
+
+
     public function __construct()
     {
         $this->driver('clear_batch');
         $this->driver('create_conversation_data');
+        $this->driver('create_attribute_categories');
         $this->driver('create_block_types');
         $this->driver('create_single_page_structure');
         $this->driver('create_page_templates');

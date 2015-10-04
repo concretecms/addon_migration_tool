@@ -26,6 +26,9 @@ class Manager extends \Concrete\Core\Support\Manager
         $this->extend('boolean', function() {
             return new BooleanImporter();
         });
+        $this->extend('select', function() {
+            return new SelectImporter();
+        });
     }
 
 }

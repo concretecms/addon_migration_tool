@@ -142,30 +142,26 @@ class ImportContent extends DashboardPageController
         }
 
         if (!$this->error->has()) {
-            try {
-                $parser = new Parser($_FILES['xml']['tmp_name']);
-                foreach($parser->getContentObjectCollections() as $collection) {
-                    $batch->getObjectCollections()->add($collection);
-                }
-
-                $target = new Target($batch);
-                $processor = new Processor($target);
-                $processor->registerTask(new NormalizePagePathsTask());
-                $processor->registerTask(new MapContentTypesTask());
-                $processor->process();
-
-                $this->entityManager->flush();
-
-                $processor = new Processor($target);
-                $processor->registerTask(new TransformContentTypesTask());
-                $processor->process();
-                $this->entityManager->persist($batch);
-                $this->entityManager->flush();
-                $this->flash('success', t('Content added to batch successfully.'));
-                $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
-            } catch(\Exception $e) {
-                $this->error->add(t('Unable to parse XML file: %s', $e->getMessage()));
+            $parser = new Parser($_FILES['xml']['tmp_name']);
+            foreach($parser->getContentObjectCollections() as $collection) {
+                $batch->getObjectCollections()->add($collection);
             }
+
+            $target = new Target($batch);
+            $processor = new Processor($target);
+            $processor->registerTask(new NormalizePagePathsTask());
+            $processor->registerTask(new MapContentTypesTask());
+            $processor->process();
+
+            $this->entityManager->flush();
+
+            $processor = new Processor($target);
+            $processor->registerTask(new TransformContentTypesTask());
+            $processor->process();
+            $this->entityManager->persist($batch);
+            $this->entityManager->flush();
+            $this->flash('success', t('Content added to batch successfully.'));
+            $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
         }
         $this->view_batch($this->request->request->get('id'));
     }

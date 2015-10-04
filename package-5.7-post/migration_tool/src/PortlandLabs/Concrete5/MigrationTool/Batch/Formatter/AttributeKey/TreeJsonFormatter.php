@@ -51,6 +51,11 @@ class TreeJsonFormatter implements \JsonSerializable
                 }
                 $node->children[] = $messageHolderNode;
             }
+            $attributeFormatter = $key->getFormatter();
+            $attributeNode = $attributeFormatter->getBatchTreeNodeJsonObject();
+            if ($attributeNode) {
+                $node->children[] = $attributeNode;
+            }
             $response[] = $node;
         }
         return $response;

@@ -2,6 +2,7 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BooleanFormatter;
 
 
 /**
@@ -35,6 +36,11 @@ class BooleanAttributeKey extends AttributeKey
     public function getType()
     {
         return 'boolean';
+    }
+
+    public function getFormatter()
+    {
+        return new BooleanFormatter($this);
     }
 
 }

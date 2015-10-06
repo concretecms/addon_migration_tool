@@ -22,6 +22,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ImportContent extends DashboardPageController
 {
 
+    public function on_start()
+    {
+        ini_set('memory_limit', -1);
+        set_time_limit(0);
+        parent::on_start();
+    }
+
     public function add_batch()
     {
         if (!$this->token->validate('add_batch')) {
@@ -50,7 +57,9 @@ class ImportContent extends DashboardPageController
                 foreach($batch->getObjectCollections() as $collection) {
                     $this->entityManager->remove($collection);
                 }
+                $this->entityManager->flush();
                 $batch->setObjectCollections(null);
+                $this->entityManager->flush();
                 foreach($batch->getTargetItems() as $targetItem) {
                     $targetItem->setBatch(null);
                     $this->entityManager->remove($targetItem);

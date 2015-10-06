@@ -49,13 +49,31 @@ class Manager extends CoreManager
         return new CreateAttributeCategoriesRoutine();
     }
 
+    public function createCreateAttributeTypesDriver()
+    {
+        return new CreateAttributeTypesRoutine();
+    }
+
+    public function createCreateThumbnailTypesDriver()
+    {
+        return new CreateThumbnailTypesRoutine();
+    }
+
+    public function createCreateBlockTypeSetsDriver()
+    {
+        return new CreateBlockTypeSetsRoutine();
+    }
+
 
     public function __construct()
     {
         $this->driver('clear_batch');
+        $this->driver('create_thumbnail_types');
         $this->driver('create_conversation_data');
+        $this->driver('create_attribute_types');
         $this->driver('create_attribute_categories');
         $this->driver('create_block_types');
+        $this->driver('create_block_type_sets');
         $this->driver('create_single_page_structure');
         $this->driver('create_page_templates');
         $this->driver('create_page_structure');

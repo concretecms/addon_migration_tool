@@ -64,11 +64,23 @@ class Manager extends CoreManager
         return new CreateBlockTypeSetsRoutine();
     }
 
+    public function createCreatePageTypePublishTargetTypesDriver()
+    {
+        return new CreatePageTypePublishTargetTypesRoutine();
+    }
+
+
+    public function createCreatePageTypeComposerControlTypesDriver()
+    {
+        return new CreatePageTypeComposerControlTypesRoutine();
+    }
 
     public function __construct()
     {
         $this->driver('clear_batch');
         $this->driver('create_thumbnail_types');
+        $this->driver('create_page_type_publish_target_types');
+        $this->driver('create_page_type_composer_control_types');
         $this->driver('create_conversation_data');
         $this->driver('create_attribute_types');
         $this->driver('create_attribute_categories');

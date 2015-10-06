@@ -10,6 +10,8 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  * @DiscriminatorMap( {
  * "page" = "PageObjectCollection",
  * "thumbnail_type" = "ThumbnailTypeObjectCollection",
+ * "page_type_publish_target_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PublishTargetTypeObjectCollection",
+ * "page_type_composer_control_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\ComposerControlTypeObjectCollection",
  * "conversation_editor" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\EditorObjectCollection",
  * "conversation_flag_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\FlagTypeObjectCollection",
  * "conversation_rating_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\RatingTypeObjectCollection",

@@ -13,6 +13,9 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ConversationF
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ConversationRatingType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Page;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTemplate;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeComposerControlType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeComposerOutputControlType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypePublishTargetType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SinglePage;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ThumbnailType;
 
@@ -82,9 +85,22 @@ class Manager extends CoreManager
         return new BlockTypeSet();
     }
 
+    public function createPageTypePublishTargetTypeDriver()
+    {
+        return new PageTypePublishTargetType();
+    }
+
+    public function createPageTypeComposerControlTypeDriver()
+    {
+        return new PageTypeComposerControlType();
+    }
+
+
     public function __construct()
     {
         $this->driver('thumbnail_type');
+        $this->driver('page_type_publish_target_type');
+        $this->driver('page_type_composer_control_type');
         $this->driver('attribute_type');
         $this->driver('attribute_key_category');
         $this->driver('conversation_editor');

@@ -1,16 +1,17 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyCategoryValidator;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionKeyCategoryValidator;
 
 
 /**
  * @Entity
- * @Table(name="MigrationImportAttributeKeyCategories")
+ * @Table(name="MigrationImportPermissionKeyCategories")
  */
-class AttributeKeyCategory implements PublishableInterface
+class Category implements PublishableInterface
 {
 
     /**
@@ -20,7 +21,7 @@ class AttributeKeyCategory implements PublishableInterface
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyCategoryObjectCollection")
+     * @ManyToOne(targetEntity="CategoryObjectCollection")
      **/
     protected $collection;
 
@@ -28,11 +29,6 @@ class AttributeKeyCategory implements PublishableInterface
      * @Column(type="string")
      */
     protected $handle;
-
-    /**
-     * @Column(type="integer")
-     */
-    protected $allow_sets = false;
 
     /**
      * @Column(type="string", nullable=true)
@@ -90,22 +86,6 @@ class AttributeKeyCategory implements PublishableInterface
     /**
      * @return mixed
      */
-    public function getAllowSets()
-    {
-        return $this->allow_sets;
-    }
-
-    /**
-     * @param mixed $allow_sets
-     */
-    public function setAllowSets($allow_sets)
-    {
-        $this->allow_sets = $allow_sets;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getPackage()
     {
         return $this->package;
@@ -122,7 +102,7 @@ class AttributeKeyCategory implements PublishableInterface
 
     public function getPublisherValidator()
     {
-        return new AttributeKeyCategoryValidator($this);
+        return new PermissionKeyCategoryValidator($this);
     }
 
 

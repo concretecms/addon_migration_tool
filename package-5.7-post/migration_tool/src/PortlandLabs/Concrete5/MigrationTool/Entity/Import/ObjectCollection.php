@@ -18,6 +18,8 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  * "workflow_progress_category" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow\ProgressCategoryObjectCollection",
  * "workflow_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow\TypeObjectCollection",
  * "page_template" = "PageTemplateObjectCollection",
+ * "permission_category" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission\CategoryObjectCollection",
+ * "permission_access_entity_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission\AccessEntityTypeObjectCollection",
  * "attribute_key_category" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyCategoryObjectCollection",
  * "attribute_key" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyObjectCollection",
  * "banned_word" = "BannedWordObjectCollection",

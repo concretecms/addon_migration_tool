@@ -1,16 +1,15 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyCategoryValidator;
-
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEntityTypeValidator;
 
 /**
  * @Entity
- * @Table(name="MigrationImportAttributeKeyCategories")
+ * @Table(name="MigrationImportPermissionAccessEntityTypes")
  */
-class AttributeKeyCategory implements PublishableInterface
+class AccessEntityType implements PublishableInterface
 {
 
     /**
@@ -20,7 +19,7 @@ class AttributeKeyCategory implements PublishableInterface
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyCategoryObjectCollection")
+     * @ManyToOne(targetEntity="AccessEntityTypeObjectCollection")
      **/
     protected $collection;
 
@@ -30,14 +29,19 @@ class AttributeKeyCategory implements PublishableInterface
     protected $handle;
 
     /**
-     * @Column(type="integer")
+     * @Column(type="string")
      */
-    protected $allow_sets = false;
+    protected $name;
 
     /**
      * @Column(type="string", nullable=true)
      */
     protected $package = null;
+
+    /**
+     * @Column(type="json_array")
+     */
+    protected $categories;
 
     /**
      * @return mixed
@@ -90,17 +94,17 @@ class AttributeKeyCategory implements PublishableInterface
     /**
      * @return mixed
      */
-    public function getAllowSets()
+    public function getName()
     {
-        return $this->allow_sets;
+        return $this->name;
     }
 
     /**
-     * @param mixed $allow_sets
+     * @param mixed $name
      */
-    public function setAllowSets($allow_sets)
+    public function setName($name)
     {
-        $this->allow_sets = $allow_sets;
+        $this->name = $name;
     }
 
     /**
@@ -119,11 +123,30 @@ class AttributeKeyCategory implements PublishableInterface
         $this->package = $package;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param mixed $types
+     */
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
+    }
 
     public function getPublisherValidator()
     {
-        return new AttributeKeyCategoryValidator($this);
+        return new PermissionAccessEntityTypeValidator($this);
     }
+
+
+
+
 
 
 

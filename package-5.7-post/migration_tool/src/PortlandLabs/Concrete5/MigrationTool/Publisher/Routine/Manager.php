@@ -105,6 +105,16 @@ class Manager extends CoreManager
         return new CreateBannedWordsRoutine();
     }
 
+    public function createCreatePermissionAccessEntityTypesDriver()
+    {
+        return new CreatePermissionCategoriesRoutine();
+    }
+
+    public function createCreatePermissionCategoriesDriver()
+    {
+        return new CreatePermissionAccessEntityTypesRoutine();
+    }
+
     public function __construct()
     {
         $this->driver('clear_batch');
@@ -118,6 +128,8 @@ class Manager extends CoreManager
         $this->driver('create_page_type_publish_target_types');
         $this->driver('create_page_type_composer_control_types');
         $this->driver('create_conversation_data');
+        $this->driver('create_permission_categories');
+        $this->driver('create_permission_access_entity_types');
         $this->driver('create_attribute_types');
         $this->driver('create_attribute_categories');
         $this->driver('create_block_types');

@@ -19,6 +19,8 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTemplate;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeComposerControlType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeComposerOutputControlType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypePublishTargetType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PermissionAccessEntityType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PermissionKeyCategory;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SinglePage;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SocialLink;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Theme;
@@ -132,11 +134,23 @@ class Manager extends CoreManager
         return new Theme();
     }
 
+    public function createPermissionKeyCategoryDriver()
+    {
+        return new PermissionKeyCategory();
+    }
+
+    public function createPermissionAccessEntityTypeDriver()
+    {
+        return new PermissionAccessEntityType();
+    }
+
     public function __construct()
     {
         $this->driver('thumbnail_type');
         $this->driver('banned_word');
         $this->driver('social_link');
+        $this->driver('permission_key_category');
+        $this->driver('permission_access_entity_type');
         $this->driver('captcha');
         $this->driver('theme');
         $this->driver('workflow_type');

@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\ContentType;
 
 use Concrete\Core\Support\Manager as CoreManager;
+
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeKeyCategory;
@@ -18,6 +19,8 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeCompo
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypePublishTargetType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SinglePage;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ThumbnailType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\WorkflowProgressCategory;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\WorkflowType;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -95,10 +98,21 @@ class Manager extends CoreManager
         return new PageTypeComposerControlType();
     }
 
+    public function createWorkflowTypeDriver()
+    {
+        return new WorkflowType();
+    }
+
+    public function createWorkflowProgressCategoryDriver()
+    {
+        return new WorkflowProgressCategory();
+    }
 
     public function __construct()
     {
         $this->driver('thumbnail_type');
+        $this->driver('workflow_type');
+        $this->driver('workflow_progress_category');
         $this->driver('page_type_publish_target_type');
         $this->driver('page_type_composer_control_type');
         $this->driver('attribute_type');

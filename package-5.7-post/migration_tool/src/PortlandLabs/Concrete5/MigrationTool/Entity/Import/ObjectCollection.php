@@ -15,6 +15,8 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  * "conversation_editor" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\EditorObjectCollection",
  * "conversation_flag_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\FlagTypeObjectCollection",
  * "conversation_rating_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\RatingTypeObjectCollection",
+ * "workflow_progress_category" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow\ProgressCategoryObjectCollection",
+ * "workflow_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow\TypeObjectCollection",
  * "page_template" = "PageTemplateObjectCollection",
  * "attribute_key_category" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyCategoryObjectCollection",
  * "attribute_key" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyObjectCollection",

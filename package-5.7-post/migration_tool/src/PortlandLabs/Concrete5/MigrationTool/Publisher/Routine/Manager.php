@@ -75,9 +75,21 @@ class Manager extends CoreManager
         return new CreatePageTypeComposerControlTypesRoutine();
     }
 
+    public function createCreateWorkflowTypesDriver()
+    {
+        return new CreateWorkflowTypesRoutine();
+    }
+
+    public function createCreateWorkflowProgressCategoriesDriver()
+    {
+        return new CreateWorkflowProgressCategoriesRoutine();
+    }
+
     public function __construct()
     {
         $this->driver('clear_batch');
+        $this->driver('create_workflow_types');
+        $this->driver('create_workflow_progress_categories');
         $this->driver('create_thumbnail_types');
         $this->driver('create_page_type_publish_target_types');
         $this->driver('create_page_type_composer_control_types');

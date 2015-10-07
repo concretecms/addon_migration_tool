@@ -7,8 +7,10 @@ use Concrete\Core\Support\Manager as CoreManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeKeyCategory;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\BannedWord;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\BlockType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\BlockTypeSet;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Captcha;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ConversationEditor;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ConversationFlagType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ConversationRatingType;
@@ -18,6 +20,8 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeCompo
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeComposerOutputControlType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypePublishTargetType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SinglePage;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SocialLink;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Theme;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ThumbnailType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\WorkflowProgressCategory;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\WorkflowType;
@@ -108,9 +112,33 @@ class Manager extends CoreManager
         return new WorkflowProgressCategory();
     }
 
+    public function createBannedWordDriver()
+    {
+        return new BannedWord();
+    }
+
+    public function createSocialLinkDriver()
+    {
+        return new SocialLink();
+    }
+
+    public function createCaptchaDriver()
+    {
+        return new Captcha();
+    }
+
+    public function createThemeDriver()
+    {
+        return new Theme();
+    }
+
     public function __construct()
     {
         $this->driver('thumbnail_type');
+        $this->driver('banned_word');
+        $this->driver('social_link');
+        $this->driver('captcha');
+        $this->driver('theme');
         $this->driver('workflow_type');
         $this->driver('workflow_progress_category');
         $this->driver('page_type_publish_target_type');

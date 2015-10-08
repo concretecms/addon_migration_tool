@@ -1,0 +1,64 @@
+<?php
+
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageFeedFormatter;
+
+/**
+ * @Entity
+ */
+class PageFeedObjectCollection extends ObjectCollection
+{
+
+    /**
+     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageFeed", mappedBy="collection", cascade={"persist", "remove"})
+     **/
+    public $feeds;
+
+    public function __construct()
+    {
+        $this->feeds = new ArrayCollection();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFeeds()
+    {
+        return $this->feeds;
+    }
+
+    public function getFormatter()
+    {
+        return new PageFeedFormatter($this);
+    }
+
+    public function getType()
+    {
+        return 'page_feed';
+    }
+
+    public function hasRecords()
+    {
+        return count($this->getFeeds());
+    }
+
+    public function getRecords()
+    {
+        return $this->getFeeds();
+    }
+
+    public function getTreeFormatter()
+    {
+        return false;
+    }
+
+    public function getRecordValidator()
+    {
+        return false;
+    }
+
+
+
+}

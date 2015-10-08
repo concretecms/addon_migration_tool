@@ -1,9 +1,10 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BlockTypeSet;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeSet;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ItemValidatorInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageCollection;
@@ -19,14 +20,14 @@ class Validator implements ItemValidatorInterface
     public function validate(Batch $batch, $set)
     {
         $messages = new MessageCollection();
-        $mapper = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType();
+        $mapper = new Attribute();
         $targetItemList = new TargetItemList($batch, $mapper);
-        foreach($set->getTypes() as $type) {
-            $item = new Item($type);
+        foreach($set->getAttributes() as $attribute) {
+            $item = new Item($attribute);
             $targetItem = $targetItemList->getSelectedTargetItem($item);
             if ($targetItem instanceof UnmappedTargetItem) {
                 $messages->add(
-                    new Message(t('Block type <strong>%s</strong> does not exist.', $item->getIdentifier()), Message::E_WARNING)
+                    new Message(t('Attribute <strong>%s</strong> does not exist.', $item->getIdentifier()), Message::E_WARNING)
                 );
             }
         }

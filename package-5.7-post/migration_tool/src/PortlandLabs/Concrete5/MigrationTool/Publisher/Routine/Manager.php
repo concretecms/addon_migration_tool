@@ -115,16 +115,56 @@ class Manager extends CoreManager
         return new CreatePermissionAccessEntityTypesRoutine();
     }
 
+    public function createCreateJobsDriver()
+    {
+        return new CreateJobsRoutine();
+    }
+
+    public function createCreateJobSetsDriver()
+    {
+        return new CreateJobSetsRoutine();
+    }
+
+    public function createCreateConfigValuesDriver()
+    {
+        return new CreateConfigValuesRoutine();
+    }
+
+    public function createPageFeedsDriver()
+    {
+        return new CreatePageFeedsRoutine();
+    }
+
+    public function createAttributeSetsDriver()
+    {
+        return new CreateAttributeSetsRoutine();
+    }
+
+    public function createContentEditorSnippetsDriver()
+    {
+        return new CreateContentEditorSnippetsRoutine();
+    }
+
+    public function createPackagesDriver()
+    {
+        return new CreatePackagesRoutine();
+    }
+
     public function __construct()
     {
         $this->driver('clear_batch');
         $this->driver('create_workflow_types');
+        $this->driver('create_content_editor_snippets');
         $this->driver('create_workflow_progress_categories');
         $this->driver('create_banned_words');
+        $this->driver('create_config_values');
         $this->driver('create_captcha_libraries');
         $this->driver('create_themes');
         $this->driver('create_social_links');
         $this->driver('create_thumbnail_types');
+        $this->driver('create_jobs');
+        $this->driver('create_job_sets');
+        $this->driver('create_packages');
         $this->driver('create_page_type_publish_target_types');
         $this->driver('create_page_type_composer_control_types');
         $this->driver('create_conversation_data');
@@ -132,11 +172,13 @@ class Manager extends CoreManager
         $this->driver('create_permission_access_entity_types');
         $this->driver('create_attribute_types');
         $this->driver('create_attribute_categories');
+        $this->driver('create_attribute_sets');
         $this->driver('create_block_types');
         $this->driver('create_block_type_sets');
         $this->driver('create_single_page_structure');
         $this->driver('create_page_templates');
         $this->driver('create_page_structure');
+        $this->driver('create_page_feeds');
         $this->driver('publish_page_content');
     }
 }

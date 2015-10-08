@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Importer\ContentType;
 
 use Concrete\Core\Support\Manager as CoreManager;
 
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeSet;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\AttributeKeyCategory;
@@ -11,10 +12,16 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\BannedWord;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\BlockType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\BlockTypeSet;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Captcha;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ConfigValue;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ContentEditorSnippet;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ConversationEditor;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ConversationFlagType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ConversationRatingType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Job;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\JobSet;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Package;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Page;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageFeed;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTemplate;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeComposerControlType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeComposerOutputControlType;
@@ -144,6 +151,41 @@ class Manager extends CoreManager
         return new PermissionAccessEntityType();
     }
 
+    public function createJobDriver()
+    {
+        return new Job();
+    }
+
+    public function createJobSetDriver()
+    {
+        return new JobSet();
+    }
+
+    public function createAttributeSetDriver()
+    {
+        return new AttributeSet();
+    }
+
+    public function createPageFeedDriver()
+    {
+        return new PageFeed();
+    }
+
+    public function createPackageDriver()
+    {
+        return new Package();
+    }
+
+    public function createContentEditorSnippetDriver()
+    {
+        return new ContentEditorSnippet();
+    }
+
+    public function createConfigValueDriver()
+    {
+        return new ConfigValue();
+    }
+
     public function __construct()
     {
         $this->driver('thumbnail_type');
@@ -163,10 +205,17 @@ class Manager extends CoreManager
         $this->driver('conversation_flag_type');
         $this->driver('conversation_rating_type');
         $this->driver('attribute_key');
+        $this->driver('attribute_set');
+        $this->driver('job');
+        $this->driver('job_set');
         $this->driver('block_type');
         $this->driver('block_type_set');
         $this->driver('single_page');
         $this->driver('page');
         $this->driver('page_template');
+        $this->driver('page_feed');
+        $this->driver('package');
+        $this->driver('config_value');
+        $this->driver('content_editor_snippet');
     }
 }

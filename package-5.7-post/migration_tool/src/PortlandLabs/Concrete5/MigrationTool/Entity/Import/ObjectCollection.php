@@ -27,7 +27,14 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  * "social_link" = "SocialLinkObjectCollection",
  * "theme" = "ThemeObjectCollection",
  * "single_page" = "SinglePageObjectCollection",
+ * "job" = "JobObjectCollection",
+ * "config_value" = "ConfigValueObjectCollection",
+ * "content_editor_snippet" = "ContentEditorSnippetObjectCollection",
+ * "package" = "PackageObjectCollection",
+ * "page_feed" = "PageFeedObjectCollection",
+ * "job_set" = "JobSetObjectCollection",
  * "block_type_set" = "BlockTypeSetObjectCollection",
+ * "attribute_set" = "AttributeSetObjectCollection",
  * "attribute_type" = "AttributeTypeObjectCollection",
  * "block_type" = "BlockTypeObjectCollection"
  * } )

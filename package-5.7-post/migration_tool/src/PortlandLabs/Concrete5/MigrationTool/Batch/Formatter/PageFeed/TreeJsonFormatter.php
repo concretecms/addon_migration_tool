@@ -1,6 +1,6 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageFeed;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AbstractTreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
@@ -16,19 +16,18 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
     public function jsonSerialize()
     {
         $response = array();
-        foreach($this->collection->getPages() as $page) {
-            $messages = $this->validator->validate($this->batch, $page);
+        foreach($this->collection->getFeeds() as $feed) {
+            $messages = $this->validator->validate($this->batch, $feed);
             $formatter = $messages->getFormatter();
             $node = new \stdClass;
-            $node->title = $page->getName();
-            $node->lazy = true;
-            $node->nodetype = 'page';
+            $node->title = $feed->getTitle();
+            $node->handle = $feed->getHandle();
+            $node->nodetype = 'page_feed';
+            $node->exists = $feed->getPublisherValidator()->skipItem();
             $node->extraClasses = 'migration-node-main';
-            $node->id = $page->getId();
-            $node->pagePath = '<a href="#" data-editable-property="path" data-type="text" data-pk="' . $page->getID() . '" data-title="' . t('Page Path') . '">' . $page->getBatchPath() . '</a>';
-            $node->pageType = $page->getType();
-            $node->pageTemplate = $page->getTemplate();
+            $node->id = $feed->getId();
             $node->statusClass = $formatter->getCollectionStatusIconClass();
+            $this->addMessagesNode($node, $messages);
             $response[] = $node;
         }
         return $response;

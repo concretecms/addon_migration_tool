@@ -130,22 +130,22 @@ class Manager extends CoreManager
         return new CreateConfigValuesRoutine();
     }
 
-    public function createPageFeedsDriver()
+    public function createCreatePageFeedsDriver()
     {
         return new CreatePageFeedsRoutine();
     }
 
-    public function createAttributeSetsDriver()
+    public function createCreateAttributeSetsDriver()
     {
         return new CreateAttributeSetsRoutine();
     }
 
-    public function createContentEditorSnippetsDriver()
+    public function createCreateContentEditorSnippetsDriver()
     {
         return new CreateContentEditorSnippetsRoutine();
     }
 
-    public function createPackagesDriver()
+    public function createCreatePackagesDriver()
     {
         return new CreatePackagesRoutine();
     }

@@ -17,7 +17,7 @@ class CreateAttributeTypesRoutine implements RoutineInterface
     {
 
         $types = $batch->getObjectCollection('attribute_key_category');
-        foreach($types->getTypes() as $type) {
+        foreach($types->getCategories() as $type) {
             if (!$type->getPublisherValidator()->skipItem()) {
                 $pkg = null;
                 if ($type->getPackage()) {

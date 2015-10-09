@@ -1,4 +1,4 @@
-<table id="migration-tree-table-<?=$type?>" class="table table-bordered table-striped">
+<table id="migration-tree-table-<?=$type?>" class="migration-table table table-bordered table-striped">
     <colgroup>
         <col width="*"></col>
         <col width="*"></col>
@@ -17,31 +17,20 @@
     </tbody>
 </table>
 
+
 <script type="text/javascript">
     $(function() {
         $("#migration-tree-table-<?=$type?>").migrationBatchTableTree({
+            columnKey: 'block_type_set',
+            renderInitialColumnData: function(cells, data) {
+                var node = data.node;
+                cells.eq(1).html(node.data.handle);
+                cells.eq(2).text(node.data.blockTypes);
+                cells.eq(3).html('<i class="' + node.data.statusClass + '"></i>');
+            },
             source: {
                 url: '<?=$view->action('load_batch_collection')?>',
                 data: {'id': '<?=$collection->getID()?>'}
-            },
-            renderColumns: function(event, data) {
-                var node = data.node,
-                    $tdList = $(node.tr).find(">td");
-
-                if (node.data.nodetype == 'block_type_set') {
-                    $tdList.eq(1).html(node.data.handle);
-                    $tdList.eq(2).text(node.data.blockTypes);
-                    $tdList.eq(3).html('<i class="' + node.data.statusClass + '"></i>');
-                } else if (node.data.itemvalue) {
-                    $tdList.eq(1).html(node.data.itemvalue);
-                    $tdList.eq(1)
-                        .prop("colspan", 3)
-                        .nextAll().remove();
-                } else {
-                    $tdList.eq(0)
-                        .prop("colspan", 4)
-                        .nextAll().remove();
-                }
             }
         });
     });

@@ -5,8 +5,8 @@ table.migration-table tr.migration-node-main .fancytree-node {
 }
 
 table.migration-table tr.migration-item-skipped td, table.migration-table tr.migration-item-skipped span.fancytree-title {
-	color: #ddd;
-	text-decoration: line-through;
+	color: #ddd !important;
+	text-decoration: line-through !important;
 }
 
 table.migration-table .launch-tooltip {

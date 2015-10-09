@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content;
 
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\ValidatorTarget;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
@@ -24,9 +25,9 @@ class PageItemValidator implements ValidatorInterface
         }
     }
 
-    public function addMissingItemMessage(ItemInterface $item, ValidatorTarget $target)
+    public function addMissingItemMessage(ItemInterface $item, MessageCollection $messages)
     {
-        $target->addMessage(
+        $messages->add(
             new Message(t('Referenced page at path %s cannot be found in the site or in the current content batch.', $item->getReference()))
         );
     }

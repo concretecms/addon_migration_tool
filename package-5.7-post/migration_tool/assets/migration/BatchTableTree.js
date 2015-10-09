@@ -7,9 +7,14 @@
 			source: {},
 			init: false,
 			lazyLoad: false,
-			renderColumns: false
+			columnKey: false,
+			renderInitialColumnData: false,
+			renderColumns: function(event, data) {
+				my.renderColumns(event, data);
+			}
 		}, options);
 		my.$table = $table;
+		my.options = options;
 		my.$table.fancytree({
 			extensions: ["glyph","table"],
 			toggleEffect: false,
@@ -47,6 +52,27 @@
 				return false;
 			}
 		});
+	}
+
+	MigrationBatchTableTree.prototype.renderColumns = function(event, data) {
+		var my = this,
+			node = data.node,
+			cells = $(node.tr).find(">td");
+
+		if (node.data.exists) {
+			$(node.tr).addClass('migration-item-skipped');
+		}
+		if (node.data.nodetype == my.options.columnKey) {
+			my.options.renderInitialColumnData(cells, data);
+		} else if (node.data.itemvalue) {
+			var colspan = cells.length - 1;
+			cells.eq(1).html(node.data.itemvalue);
+			cells.eq(1).prop("colspan", colspan).nextAll().remove();
+		} else {
+			var colspan = cells.length;
+			cells.eq(0).prop("colspan", colspan).nextAll().remove();
+		}
+		$('.launch-tooltip').tooltip({'container': '#ccm-tooltip-holder'});
 	}
 
 	// jQuery Plugin

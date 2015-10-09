@@ -29,7 +29,7 @@ class ValidateReferencedContentItemsTask implements TaskInterface
                     $validatorFactory = new Factory($item);
                     $validator = $validatorFactory->getValidator();
                     if (!$validator->itemExists($item, $target->getBatch())) {
-                        $validator->addMissingItemMessage($item, $action->getTarget());
+                        $validator->addMissingItemMessage($item, $action->getTarget()->getMessages());
                     }
                 }
             }

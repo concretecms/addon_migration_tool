@@ -32,6 +32,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SinglePage;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SocialLink;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Theme;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ThumbnailType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Tree;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\WorkflowProgressCategory;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\WorkflowType;
 
@@ -186,6 +187,10 @@ class Manager extends CoreManager
         return new ConfigValue();
     }
 
+    public function createTreeDriver()
+    {
+        return new Tree();
+    }
     public function __construct()
     {
         $this->driver('thumbnail_type');
@@ -215,6 +220,7 @@ class Manager extends CoreManager
         $this->driver('page_template');
         $this->driver('page_feed');
         $this->driver('package');
+        $this->driver('tree');
         $this->driver('config_value');
         $this->driver('content_editor_snippet');
     }

@@ -5,6 +5,7 @@ namespace Concrete\Package\MigrationTool;
 use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
+use Concrete\Package\MigrationTool\Database\EntityManagerFactory;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAreasTask;
@@ -80,6 +81,7 @@ class Controller extends Package
 
     public function on_start()
     {
+
         \Core::bindShared('migration/batch/page/validator', function () {
             $v = new Validator();
             $v->registerTask(new ValidateAttributesTask());
@@ -145,9 +147,8 @@ class Controller extends Package
             array('css', 'fancytree/skin/bootstrap'),
             array('css', 'migration/batch-table-tree')
         ));
-
-
     }
+
 
     public function getPackageDescription()
     {

@@ -28,6 +28,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  * "theme" = "ThemeObjectCollection",
  * "single_page" = "SinglePageObjectCollection",
  * "job" = "JobObjectCollection",
+ * "tree" = "TreeObjectCollection",
  * "config_value" = "ConfigValueObjectCollection",
  * "content_editor_snippet" = "ContentEditorSnippetObjectCollection",
  * "package" = "PackageObjectCollection",

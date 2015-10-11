@@ -150,6 +150,11 @@ class Manager extends CoreManager
         return new CreatePackagesRoutine();
     }
 
+    public function createCreateTreesDriver()
+    {
+        return new CreateTreesRoutine();
+    }
+
     public function __construct()
     {
         $this->driver('clear_batch');
@@ -160,6 +165,7 @@ class Manager extends CoreManager
         $this->driver('create_config_values');
         $this->driver('create_captcha_libraries');
         $this->driver('create_themes');
+        $this->driver('create_trees');
         $this->driver('create_social_links');
         $this->driver('create_thumbnail_types');
         $this->driver('create_jobs');

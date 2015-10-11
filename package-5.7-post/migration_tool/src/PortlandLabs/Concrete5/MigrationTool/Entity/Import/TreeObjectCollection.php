@@ -3,7 +3,9 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Tree\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\ThumbnailTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\TreeFormatter;
 
 /**
  * @Entity
@@ -31,7 +33,7 @@ class TreeObjectCollection extends ObjectCollection
 
     public function getFormatter()
     {
-        return new ThumbnailTypeFormatter($this);
+        return new TreeFormatter($this);
     }
 
     public function getType()
@@ -51,7 +53,7 @@ class TreeObjectCollection extends ObjectCollection
 
     public function getTreeFormatter()
     {
-        return false;
+        return new TreeJsonFormatter($this);
     }
 
     public function getRecordValidator()

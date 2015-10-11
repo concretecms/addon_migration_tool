@@ -1,4 +1,4 @@
-<table id="migration-tree-table-<?=$type?>" class="table table-bordered table-striped">
+<table id="migration-tree-table-<?=$type?>" class="migration-table table table-bordered table-striped">
     <colgroup>
         <col width="300"></col>
         <col width="*"></col>

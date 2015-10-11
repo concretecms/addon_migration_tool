@@ -3,9 +3,11 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThumbnailTypeValidator;
 use Gedmo\Mapping\Annotation as Gedmo;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\TreeValidator;
 
 
 /**
@@ -30,6 +32,11 @@ class Tree implements PublishableInterface
      * @Column(type="string")
      */
     protected $type;
+
+    /**
+     * @Column(type="string")
+     */
+    protected $name;
 
     /**
      * @OneToMany(targetEntity="TreeNode", mappedBy="tree", cascade={"persist", "remove"})
@@ -109,8 +116,31 @@ class Tree implements PublishableInterface
 
     public function getPublisherValidator()
     {
-        return new ThumbnailTypeValidator($this);
+        return new TreeValidator($this);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getRootNodes()
+    {
+        $criteria = Criteria::create()->where(Criteria::expr()->eq("parent", null));
+        return $this->nodes->matching($criteria);
+    }
+
 
 
 

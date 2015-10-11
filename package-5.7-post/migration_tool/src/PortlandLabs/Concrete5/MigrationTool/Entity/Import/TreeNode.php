@@ -31,7 +31,12 @@ class TreeNode
     protected $title;
 
     /**
-     * @ManyToOne(targetEntity="TreeNode", inversedBy="children")
+     * @Column(type="string")
+     */
+    protected $type;
+
+    /**
+     * @ManyToOne(targetEntity="TreeNode", inversedBy="children", cascade={"persist", "remove"})
      * @JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $parent;
@@ -90,6 +95,39 @@ class TreeNode
     {
         $this->parent = $parent;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
 
 
 

@@ -22,6 +22,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  * "permission_access_entity_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission\AccessEntityTypeObjectCollection",
  * "attribute_key_category" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyCategoryObjectCollection",
  * "attribute_key" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyObjectCollection",
+ * "permission_key" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission\KeyObjectCollection",
  * "banned_word" = "BannedWordObjectCollection",
  * "captcha" = "CaptchaObjectCollection",
  * "social_link" = "SocialLinkObjectCollection",

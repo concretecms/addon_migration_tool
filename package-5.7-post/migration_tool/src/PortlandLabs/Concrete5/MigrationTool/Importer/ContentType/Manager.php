@@ -27,6 +27,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeCompo
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeComposerOutputControlType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypePublishTargetType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PermissionAccessEntityType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PermissionKey;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PermissionKeyCategory;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SinglePage;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SocialLink;
@@ -191,6 +192,12 @@ class Manager extends CoreManager
     {
         return new Tree();
     }
+
+    public function createPermissionKeyDriver()
+    {
+        return new PermissionKey();
+    }
+
     public function __construct()
     {
         $this->driver('thumbnail_type');
@@ -198,6 +205,7 @@ class Manager extends CoreManager
         $this->driver('social_link');
         $this->driver('permission_key_category');
         $this->driver('permission_access_entity_type');
+        $this->driver('permission_key');
         $this->driver('captcha');
         $this->driver('theme');
         $this->driver('workflow_type');

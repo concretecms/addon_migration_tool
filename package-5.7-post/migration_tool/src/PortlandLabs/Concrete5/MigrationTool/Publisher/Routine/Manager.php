@@ -155,6 +155,11 @@ class Manager extends CoreManager
         return new CreateTreesRoutine();
     }
 
+    public function createCreatePermissionsDriver()
+    {
+        return new CreatePermissionsRoutine();
+    }
+
     public function __construct()
     {
         $this->driver('clear_batch');
@@ -176,6 +181,7 @@ class Manager extends CoreManager
         $this->driver('create_conversation_data');
         $this->driver('create_permission_categories');
         $this->driver('create_permission_access_entity_types');
+        $this->driver('create_permissions');
         $this->driver('create_attribute_types');
         $this->driver('create_attribute_categories');
         $this->driver('create_attribute_sets');

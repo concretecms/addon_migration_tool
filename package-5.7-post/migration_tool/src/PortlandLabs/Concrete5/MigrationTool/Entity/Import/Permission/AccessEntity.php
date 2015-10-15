@@ -6,6 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\AccessEnt
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\AccessEntityValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Permission\AccessEntityPublisher;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEntityTypeValidator;
 
 /**
@@ -94,9 +95,9 @@ class AccessEntity
         return new AccessEntityFormatter($this);
     }
 
-    public function getRecordValidator()
+    public function getRecordValidator(Batch $batch)
     {
-        return new AccessEntityValidator();
+        return new AccessEntityValidator(Batch $batch);
     }
 
     public function getPublisher()

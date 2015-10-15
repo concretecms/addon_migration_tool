@@ -23,10 +23,10 @@ class ValidateBatchRecordsTask implements TaskInterface
         $target = $action->getTarget();
         foreach($subject->getObjectCollections() as $collection) {
             if ($collection->hasRecords()) {
-                $validator = $collection->getRecordValidator();
+                $validator = $collection->getRecordValidator($subject);
                 if (is_object($validator)) {
                     foreach($collection->getRecords() as $record) {
-                        $messages = $validator->validate($subject, $record);
+                        $messages = $validator->validate($record);
                         foreach($messages as $message) {
                             $target->addMessage($message);
                         }

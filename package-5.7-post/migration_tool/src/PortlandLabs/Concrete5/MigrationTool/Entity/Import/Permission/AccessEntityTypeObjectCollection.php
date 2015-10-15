@@ -9,6 +9,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\BlockTyp
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\ConversationEditorFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTemplateFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PermissionAccessEntityTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
@@ -68,7 +69,7 @@ class AccessEntityTypeObjectCollection extends ObjectCollection
         return false;
     }
 
-    public function getRecordValidator()
+    public function getRecordValidator(Batch $batch)
     {
         return false;
     }

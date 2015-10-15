@@ -5,6 +5,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTypeComposerControlTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
@@ -55,7 +56,7 @@ class ComposerControlTypeObjectCollection extends ObjectCollection
         return false;
     }
 
-    public function getRecordValidator()
+    public function getRecordValidator(Batch $batch)
     {
         return false;
     }

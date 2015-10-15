@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\AttributeTypeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\BlockTypeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTemplateFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
@@ -56,7 +57,7 @@ class AttributeTypeObjectCollection extends ObjectCollection
         return false;
     }
 
-    public function getRecordValidator()
+    public function getRecordValidator(Batch $batch)
     {
         return false;
     }

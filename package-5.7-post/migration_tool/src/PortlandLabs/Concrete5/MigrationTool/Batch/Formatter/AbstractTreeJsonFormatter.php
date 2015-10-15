@@ -20,7 +20,7 @@ abstract class AbstractTreeJsonFormatter implements \JsonSerializable
         $r = $em->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $this->collection = $collection;
         $this->batch = $r->findFromCollection($collection);
-        $this->validator = $collection->getRecordValidator();
+        $this->validator = $collection->getRecordValidator($this->batch);
     }
 
     protected function addMessagesNode(\stdClass $node, MessageCollection $messages)

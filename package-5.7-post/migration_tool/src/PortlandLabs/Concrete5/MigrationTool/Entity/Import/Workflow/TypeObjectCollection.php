@@ -8,6 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\BlockTyp
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\ConversationRatingTypeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTemplateFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\WorkflowTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
@@ -58,7 +59,7 @@ class TypeObjectCollection extends ObjectCollection
         return false;
     }
 
-    public function getRecordValidator()
+    public function getRecordValidator(Batch $batch)
     {
         return false;
     }

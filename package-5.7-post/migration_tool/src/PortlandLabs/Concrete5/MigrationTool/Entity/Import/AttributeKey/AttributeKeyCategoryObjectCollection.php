@@ -8,6 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\Attribut
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\BlockTypeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\ConversationEditorFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTemplateFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
@@ -63,7 +64,7 @@ class AttributeKeyCategoryObjectCollection extends ObjectCollection
         return false;
     }
 
-    public function getRecordValidator()
+    public function getRecordValidator(Batch $batch)
     {
         return false;
     }

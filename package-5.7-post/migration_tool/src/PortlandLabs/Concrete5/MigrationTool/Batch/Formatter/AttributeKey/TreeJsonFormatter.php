@@ -18,7 +18,7 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
     {
         $response = array();
         foreach($this->collection->getRecords() as $key) {
-            $messages = $this->validator->validate($this->batch, $key);
+            $messages = $this->validator->validate($key);
             $formatter = $messages->getFormatter();
             $node = new \stdClass;
             $node->title = $key->getName();

@@ -7,6 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TreeJsonFo
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\AttributeKeyFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeKey\Validator as AttributeKeyValidator;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
@@ -57,9 +58,9 @@ class AttributeKeyObjectCollection extends ObjectCollection
         return new TreeJsonFormatter($this);
     }
 
-    public function getRecordValidator()
+    public function getRecordValidator(Batch $batch)
     {
-        return new AttributeKeyValidator();
+        return new AttributeKeyValidator($batch);
     }
 
 

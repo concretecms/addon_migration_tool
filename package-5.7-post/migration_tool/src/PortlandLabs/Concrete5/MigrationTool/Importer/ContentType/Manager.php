@@ -31,6 +31,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PermissionKey
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PermissionKeyCategory;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SinglePage;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\SocialLink;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Stack;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Theme;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\ThumbnailType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Tree;
@@ -198,6 +199,11 @@ class Manager extends CoreManager
         return new PermissionKey();
     }
 
+    public function createStackDriver()
+    {
+        return new Stack();
+    }
+
     public function __construct()
     {
         $this->driver('thumbnail_type');
@@ -223,6 +229,7 @@ class Manager extends CoreManager
         $this->driver('job_set');
         $this->driver('block_type');
         $this->driver('block_type_set');
+        $this->driver('stack');
         $this->driver('single_page');
         $this->driver('page');
         $this->driver('page_template');

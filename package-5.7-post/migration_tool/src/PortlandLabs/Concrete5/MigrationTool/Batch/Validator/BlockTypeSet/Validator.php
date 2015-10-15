@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BlockTypeSet;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AbstractValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ItemValidatorInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageCollection;
@@ -13,14 +14,14 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class Validator implements ItemValidatorInterface
+class Validator extends AbstractValidator
 {
 
-    public function validate(Batch $batch, $set)
+    public function validate($set)
     {
         $messages = new MessageCollection();
         $mapper = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType();
-        $targetItemList = new TargetItemList($batch, $mapper);
+        $targetItemList = new TargetItemList($this->getBatch(), $mapper);
         foreach($set->getTypes() as $type) {
             $item = new Item($type);
             $targetItem = $targetItemList->getSelectedTargetItem($item);

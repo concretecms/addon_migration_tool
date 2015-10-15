@@ -7,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class ValidatorTarget implements TargetInterface
+class ValidatorTarget implements ValidatorTargetInterface
 {
 
     protected $messages;

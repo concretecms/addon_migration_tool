@@ -8,9 +8,11 @@ use Concrete\Core\Page\Type\Type;
 use Concrete\Package\MigrationTool\Database\EntityManagerFactory;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Block\CollectionValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAreasTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAttributesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlocksTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTemplatesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTypesTask;
@@ -83,15 +85,14 @@ class Controller extends Package
     public function on_start()
     {
 
-        \Core::bindShared('migration/batch/page/validator', function () {
-            $v = new Validator();
+        \Core::bind('migration/batch/page/validator', function ($app, $batch) {
+            $v = new Validator($batch[0]);
             $v->registerTask(new ValidateAttributesTask());
             $v->registerTask(new ValidatePageTemplatesTask());
             $v->registerTask(new ValidatePageTypesTask());
             $v->registerTask(new ValidateUsersTask());
-            $v->registerTask(new ValidateBlockTypesTask());
+            $v->registerTask(new ValidateBlocksTask());
             $v->registerTask(new ValidateAreasTask());
-            $v->registerTask(new ValidateReferencedContentItemsTask());
             return $v;
         });
 
@@ -100,6 +101,14 @@ class Controller extends Package
             $v->registerTask(new ValidateBatchRecordsTask());
             return $v;
         });
+
+        \Core::bind('migration/batch/block/validator', function ($app, $batch) {
+            $v = new CollectionValidator($batch[0]);
+            $v->registerTask(new ValidateBlockTypesTask());
+            $v->registerTask(new ValidateReferencedContentItemsTask());
+            return $v;
+        });
+
 
         \Core::bindShared('migration/manager/mapping', function ($app) {
             return new Manager($app);

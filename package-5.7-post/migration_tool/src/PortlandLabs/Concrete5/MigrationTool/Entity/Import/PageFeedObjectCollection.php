@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageFeed\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageFeed\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageFeedFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
@@ -56,9 +57,9 @@ class PageFeedObjectCollection extends ObjectCollection
         return new TreeJsonFormatter($this);
     }
 
-    public function getRecordValidator()
+    public function getRecordValidator(Batch $batch)
     {
-        return new Validator();
+        return new Validator($batch);
     }
 
 

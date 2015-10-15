@@ -19,21 +19,17 @@ class ValidateBlockTypesTask implements TaskInterface
 
     public function execute(ActionInterface $action)
     {
-        $subject = $action->getSubject();
+        $blocks = $action->getSubject();
         $target = $action->getTarget();
         $mapper = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType();
         $targetItemList = new TargetItemList($target->getBatch(), $mapper);
-        $areas = $subject->getAreas();
-        foreach($areas as $area) {
-            $blocks = $area->getBlocks();
-            foreach($blocks as $block) {
-                $item = new Item($block->getType());
-                $targetItem = $targetItemList->getSelectedTargetItem($item);
-                if ($targetItem instanceof UnmappedTargetItem) {
-                    $action->getTarget()->addMessage(
-                        new Message(t('Block type <strong>%s</strong> does not exist.', $item->getIdentifier()))
-                    );
-                }
+        foreach($blocks as $block) {
+            $item = new Item($block->getType());
+            $targetItem = $targetItemList->getSelectedTargetItem($item);
+            if ($targetItem instanceof UnmappedTargetItem) {
+                $action->getTarget()->addMessage(
+                    new Message(t('Block type <strong>%s</strong> does not exist.', $item->getIdentifier()))
+                );
             }
         }
     }

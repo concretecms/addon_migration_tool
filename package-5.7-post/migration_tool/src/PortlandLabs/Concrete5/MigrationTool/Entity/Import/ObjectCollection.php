@@ -2,6 +2,8 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+
 /**
  * @Entity
  * @Table(name="MigrationImportObjectCollections")
@@ -24,6 +26,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  * "attribute_key" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyObjectCollection",
  * "permission_key" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission\KeyObjectCollection",
  * "banned_word" = "BannedWordObjectCollection",
+ * "stack" = "StackObjectCollection",
  * "captcha" = "CaptchaObjectCollection",
  * "social_link" = "SocialLinkObjectCollection",
  * "theme" = "ThemeObjectCollection",
@@ -68,7 +71,7 @@ abstract class ObjectCollection
 
     abstract public function getRecords();
 
-    abstract public function getRecordValidator();
+    abstract public function getRecordValidator(Batch $batch);
 
 
 

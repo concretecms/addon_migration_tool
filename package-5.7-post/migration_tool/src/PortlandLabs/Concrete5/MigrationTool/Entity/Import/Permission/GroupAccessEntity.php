@@ -6,6 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\GroupAcce
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\GroupAccessEntityValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEntityTypeValidator;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
@@ -63,9 +64,9 @@ class GroupAccessEntity extends AccessEntity
         return new GroupAccessEntityFormatter($this);
     }
 
-    public function getRecordValidator()
+    public function getRecordValidator(Batch $batch)
     {
-        return new GroupAccessEntityValidator();
+        return new GroupAccessEntityValidator($batch);
     }
 
 

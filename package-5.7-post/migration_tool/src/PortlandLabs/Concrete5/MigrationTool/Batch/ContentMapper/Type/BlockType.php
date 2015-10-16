@@ -36,6 +36,14 @@ class BlockType implements MapperInterface
                 }
             }
         }
+        $stacks = $batch->getObjectCollection('stack');
+        foreach($stacks->getStacks() as $stack) {
+            $blocks = $stack->getBlocks();
+            foreach($blocks as $block) {
+                $types[] = $block->getType();
+            }
+        }
+
         $items = array();
         foreach($types as $type) {
             $item = new Item();

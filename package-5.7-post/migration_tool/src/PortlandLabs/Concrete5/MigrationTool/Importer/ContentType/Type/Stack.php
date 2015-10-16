@@ -42,9 +42,9 @@ class Stack implements TypeInterface
                     foreach($blocks as $blockNode) {
                         if ($blockNode['type']) {
                             $block = new StackBlock();
-                            $block->setType((string) $node['type']);
-                            $block->setName((string) $node['name']);
-                            $value = $this->blockImporter->driver('unmapped')->parse($node);
+                            $block->setType((string) $blockNode['type']);
+                            $block->setName((string) $blockNode['name']);
+                            $value = $this->blockImporter->driver('unmapped')->parse($blockNode);
                             $block->setBlockValue($value);
                             $block->setPosition($i);
                             $stack->getBlocks()->add($block);

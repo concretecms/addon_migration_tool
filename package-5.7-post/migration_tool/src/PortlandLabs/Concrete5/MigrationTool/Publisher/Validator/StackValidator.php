@@ -9,8 +9,7 @@ class StackValidator extends AbstractValidator
 
     public function skipItem()
     {
-        $stack = Stack::getByName($this->object->getName());
-        return is_object($stack);
+        return false;
     }
 
 }

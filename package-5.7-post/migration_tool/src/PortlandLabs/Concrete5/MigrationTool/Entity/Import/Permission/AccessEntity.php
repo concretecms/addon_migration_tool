@@ -97,7 +97,7 @@ class AccessEntity
 
     public function getRecordValidator(Batch $batch)
     {
-        return new AccessEntityValidator(Batch $batch);
+        return new AccessEntityValidator($batch);
     }
 
     public function getPublisher()

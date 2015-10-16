@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Stack\TreeJsonFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Stack\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\StackFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
@@ -58,7 +59,7 @@ class StackObjectCollection extends ObjectCollection
 
     public function getRecordValidator(Batch $batch)
     {
-        return false;
+        return new Validator($batch);
     }
 
 

@@ -28,7 +28,7 @@ class CreatePageStructureRoutine extends AbstractPageRoutine
         ));
 
         // Now loop through all pages, and build them
-        foreach($this->getPagesOrderedForImport($batch->getObjectCollection('page')) as $page) {
+        foreach($this->getPagesOrderedForImport($batch) as $page) {
 
             $data = array();
             $ui = $this->getTargetItem('user', $page->getUser());

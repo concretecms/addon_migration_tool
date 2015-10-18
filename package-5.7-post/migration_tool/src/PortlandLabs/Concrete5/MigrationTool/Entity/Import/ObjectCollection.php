@@ -11,6 +11,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  * @DiscriminatorColumn(name="type", type="string")
  * @DiscriminatorMap( {
  * "page" = "PageObjectCollection",
+ * "page_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageTypeObjectCollection",
  * "thumbnail_type" = "ThumbnailTypeObjectCollection",
  * "page_type_publish_target_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PublishTargetTypeObjectCollection",
  * "page_type_composer_control_type" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\ComposerControlTypeObjectCollection",

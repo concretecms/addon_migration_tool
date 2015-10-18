@@ -15,12 +15,18 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreateSinglePageStructureRoutine extends AbstractPageRoutine
 {
+
+    public function getPageCollection(Batch $batch)
+    {
+        return $batch->getObjectCollection('single_page');
+    }
+
     public function execute(Batch $batch)
     {
         $this->batch = $batch;
 
         // Now loop through all pages, and build them
-        foreach($this->getPagesOrderedForImport($batch->getObjectCollection('single_page')) as $page) {
+        foreach($this->getPagesOrderedForImport($batch) as $page) {
 
             $pkg = null;
             if ($page->getPackage()) {

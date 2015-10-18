@@ -29,6 +29,11 @@ class Manager extends CoreManager
         return new PublishPageContentRoutine();
     }
 
+    public function createPublishSinglePageContentDriver()
+    {
+        return new PublishSinglePageContentRoutine();
+    }
+
     public function createCreatePageStructureDriver()
     {
         return new CreatePageStructureRoutine();
@@ -204,6 +209,7 @@ class Manager extends CoreManager
         $this->driver('create_page_structure');
         $this->driver('create_page_feeds');
         $this->driver('publish_stack_content');
+        $this->driver('publish_single_page_content');
         $this->driver('publish_page_content');
     }
 }

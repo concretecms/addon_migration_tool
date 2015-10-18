@@ -20,8 +20,16 @@ abstract class AbstractPageRoutine implements RoutineInterface
         return \Page::getByPath('/!import_batches/' . $batch->getID() . $path, 'RECENT');
     }
 
-    public function getPagesOrderedForImport(PageObjectCollection $collection)
+    public function getPageCollection(Batch $batch)
     {
+        return $batch->getObjectCollection('page');
+    }
+
+    public function getPagesOrderedForImport(Batch $batch)
+    {
+
+        $collection = $this->getPageCollection($batch);
+
         $pages = array();
         foreach($collection->getPages() as $page) {
             $pages[] = $page;

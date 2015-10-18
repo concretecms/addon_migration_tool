@@ -23,6 +23,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Package;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\Page;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageFeed;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTemplate;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeComposerControlType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypeComposerOutputControlType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Type\PageTypePublishTargetType;
@@ -204,6 +205,11 @@ class Manager extends CoreManager
         return new Stack();
     }
 
+    public function createPageTypeDriver()
+    {
+        return new PageType();
+    }
+
     public function __construct()
     {
         $this->driver('thumbnail_type');
@@ -231,6 +237,7 @@ class Manager extends CoreManager
         $this->driver('block_type_set');
         $this->driver('stack');
         $this->driver('single_page');
+        $this->driver('page_type');
         $this->driver('page');
         $this->driver('page_template');
         $this->driver('page_feed');

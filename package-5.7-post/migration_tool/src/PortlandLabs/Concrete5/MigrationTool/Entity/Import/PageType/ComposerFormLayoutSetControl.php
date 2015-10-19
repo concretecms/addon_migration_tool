@@ -42,11 +42,6 @@ abstract class ComposerFormLayoutSetControl
     protected $custom_label;
 
     /**
-     * @Column(type="string")
-     */
-    protected $handle;
-
-    /**
      * @Column(type="string", nullable=true)
      */
     protected $description;
@@ -65,6 +60,11 @@ abstract class ComposerFormLayoutSetControl
      * @Column(type="string", nullable=true)
      */
     protected $output_control_id;
+
+    /**
+     * @Column(type="string", nullable=true)
+     */
+    protected $item_identifier;
 
     /**
      * @return mixed
@@ -115,11 +115,19 @@ abstract class ComposerFormLayoutSetControl
     }
 
     /**
-     * @param mixed $handle
+     * @return mixed
      */
-    public function setHandle($handle)
+    public function getItemIdentifier()
     {
-        $this->handle = $handle;
+        return $this->item_identifier;
+    }
+
+    /**
+     * @param mixed $item_identifier
+     */
+    public function setItemIdentifier($item_identifier)
+    {
+        $this->item_identifier = $item_identifier;
     }
 
     /**
@@ -205,8 +213,12 @@ abstract class ComposerFormLayoutSetControl
 
     abstract public function getHandle();
 
-    public function __construct()
+    public function getLabel()
     {
-        $this->handle = $this->getHandle();
+        if ($this->getCustomLabel()) {
+            return $this->getCustomLabel();
+        } else {
+            return $this->getItemIdentifier();
+        }
     }
 }

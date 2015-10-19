@@ -36,6 +36,7 @@ class PageType implements TypeInterface
     public function getObjectCollection(\SimpleXMLElement $element)
     {
         $collection = new PageTypeObjectCollection();
+        $targets = \Core::make('migration/manager/import/page_type/publish_target');
         if ($element->pagetypes->pagetype) {
             foreach($element->pagetypes->pagetype as $node) {
                 $type = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageType();
@@ -63,6 +64,10 @@ class PageType implements TypeInterface
                 $type->setIsInternal((bool) $node['internal']);
                 $type->setLaunchInComposer((bool) $node['launch-in-composer']);
                 $type->setIsFrequentlyAdded((bool) $node['is-frequently-added']);
+                $target = $targets->driver((string) $node->target['handle']);
+                $targetEntity = $target->getEntity();
+                $target->loadFromXml($targetEntity, $node->target);
+                $type->setPublishTarget($targetEntity);
 
                 if (isset($node->composer->formlayout->set)) {
                     $i = 0;
@@ -77,6 +82,7 @@ class PageType implements TypeInterface
                             foreach ($setNode->control as $controlNode) {
                                 $control = $this->getComposerControlEntityObject((string) $controlNode['type']);
                                 $control->setIsRequired((bool) $controlNode['required']);
+                                $control->setItemIdentifier((string) $controlNode['handle']);
                                 $control->setCustomLabel($controlNode['custom-label']);
                                 $control->setCustomTemplate($controlNode['custom-template']);
                                 $control->setDescription($controlNode['description']);

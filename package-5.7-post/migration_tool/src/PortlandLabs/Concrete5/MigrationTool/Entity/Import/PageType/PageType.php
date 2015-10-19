@@ -26,6 +26,11 @@ class PageType implements PublishableInterface
     protected $collection;
 
     /**
+     * @OneToOne(targetEntity="PublishTarget", inversedBy="type", cascade={"persist", "remove"})
+     **/
+    protected $publish_target;
+
+    /**
      * @Column(type="string")
      */
     protected $handle;
@@ -281,6 +286,21 @@ class PageType implements PublishableInterface
         $this->layout_sets = $layout_sets;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPublishTarget()
+    {
+        return $this->publish_target;
+    }
+
+    /**
+     * @param mixed $publish_target
+     */
+    public function setPublishTarget($publish_target)
+    {
+        $this->publish_target = $publish_target;
+    }
 
 
 

@@ -27,12 +27,19 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $node->extraClasses = 'migration-node-main';
             $node->id = $type->getId();
             $node->statusClass = $formatter->getCollectionStatusIconClass();
+
             $this->addMessagesNode($node, $messages);
             $targetFormatter = $type->getPublishTarget()->getFormatter();
             $targetNode = $targetFormatter->getBatchTreeNodeJsonObject();
             if ($targetNode) {
                 $node->children[] = $targetNode;
             }
+
+            $composerFormHolderNode = new \stdClass;
+            $composerFormHolderNode->title = t('Compose Form');
+            $composerFormHolderNode->iconclass = 'fa fa-list-alt';
+            $composerFormHolderNode->children = array();
+
             foreach($type->getLayoutSets() as $set) {
                 $setNode = new \stdClass;
                 $setNode->title = $set->getName();
@@ -41,8 +48,28 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
                     $controlNode->title = $control->getLabel();
                     $setNode->children[] = $controlNode;
                 }
-                $node->children[] = $setNode;
+                $composerFormHolderNode->children[] = $setNode;
             }
+
+            $node->children[] = $composerFormHolderNode;
+
+            $defaultsHolderNode = new \stdClass;
+            $defaultsHolderNode->iconclass = 'fa fa-font';
+            $defaultsHolderNode->title = t('Page Defaults');
+            $defaultsHolderNode->children = array();
+
+            $defaultPages = $type->getDefaultPageCollection();
+            foreach($defaultPages->getPages() as $page) {
+                $pageFormatter = $messages->getFormatter();
+                $pageNode = new \stdClass;
+                $pageNode->title = t('Template: %s', $page->getTemplate());
+                $pageNode->lazy = true;
+                $pageNode->nodetype = 'page';
+                $pageNode->id = $page->getId();
+//                $pageNode->statusClass = $pageFormatter->getCollectionStatusIconClass();
+                $defaultsHolderNode->children[] = $pageNode;
+            }
+            $node->children[] = $defaultsHolderNode;
             $response[] = $node;
         }
         return $response;

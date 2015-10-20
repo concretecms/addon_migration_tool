@@ -34,6 +34,17 @@ class User implements MapperInterface
                 $users[] = $page->getUser();
             }
         }
+
+        $pageTypes = $batch->getObjectCollection('page_type');
+        foreach($pageTypes->getTypes() as $type) {
+            $defaults = $type->getDefaultPageCollection();
+            foreach($defaults->getPages() as $page) {
+                if ($page->getUser() && !in_array($page->getUser(), $users)) {
+                    $users[] = $page->getUser();
+                }
+            }
+        }
+
         $items = array();
         foreach($users as $user) {
             $item = new Item();

@@ -35,22 +35,20 @@ class ValidatePageTypesTask implements TaskInterface
                     );
                 } else {
                     $targetPageType = Type::getByID($targetItem->getItemID());
-                    if (!is_object($targetPageType)) {
-                        print_r($targetItem);
-                        exit;
-                    }
-                    $composerMapper = new ComposerOutputContent();
-                    $composerTargetItemList = new TargetItemList($target->getBatch(), $composerMapper);
-                    $items = $composerMapper->getPageTypeComposerOutputContentItems($targetPageType);
-                    foreach($items as $item) {
-                        $targetItem = $composerTargetItemList->getSelectedTargetItem($item);
-                        if ($targetItem instanceof UnmappedTargetItem) {
-                            $action->getTarget()->addMessage(
-                                new Message(t('Mapped page type %s contains unmapped composer output block in %s area.',
-                                    $targetPageType->getPageTypeDisplayName(),
-                                    $item->getBlock()->getAreaHandle()
-                                ))
-                            );
+                    if (is_object($targetPageType)) {
+                        $composerMapper = new ComposerOutputContent();
+                        $composerTargetItemList = new TargetItemList($target->getBatch(), $composerMapper);
+                        $items = $composerMapper->getPageTypeComposerOutputContentItems($targetPageType);
+                        foreach($items as $item) {
+                            $targetItem = $composerTargetItemList->getSelectedTargetItem($item);
+                            if ($targetItem instanceof UnmappedTargetItem) {
+                                $action->getTarget()->addMessage(
+                                    new Message(t('Mapped page type %s contains unmapped composer output block in %s area.',
+                                        $targetPageType->getPageTypeDisplayName(),
+                                        $item->getBlock()->getAreaHandle()
+                                    ))
+                                );
+                            }
                         }
                     }
                 }

@@ -62,4 +62,9 @@ class Message
         return new MessageFormatter($this);
     }
 
+    public function __toString()
+    {
+        return $this->text;
+    }
+
 }

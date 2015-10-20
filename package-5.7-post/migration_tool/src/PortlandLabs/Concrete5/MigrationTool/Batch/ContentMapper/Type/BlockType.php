@@ -44,6 +44,20 @@ class BlockType implements MapperInterface
             }
         }
 
+        $pageTypes = $batch->getObjectCollection('page_type');
+        foreach($pageTypes->getTypes() as $type) {
+            $defaults = $type->getDefaultPageCollection();
+            foreach($defaults->getPages() as $page) {
+                foreach($page->getAreas() as $area) {
+                    foreach($area->getBlocks() as $block) {
+                        if (!in_array($block->getType(), $types)) {
+                            $types[] = $block->getType();
+                        }
+                    }
+                }
+            }
+        }
+
         $items = array();
         foreach($types as $type) {
             $item = new Item();

@@ -21,6 +21,12 @@
                 cells.eq(1).text(node.data.handle);
                 cells.eq(2).html('<i class="' + node.data.statusClass + '"></i>');
             },
+            lazyLoad: function(event, data) {
+                data.result = {
+                    url: '<?=$view->action('load_batch_page_data')?>',
+                    data: {'id': data.node.data.id}
+                }
+            },
             source: {
                 url: '<?=$view->action('load_batch_collection')?>',
                 data: {'id': '<?=$collection->getID()?>'}

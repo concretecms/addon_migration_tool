@@ -64,12 +64,33 @@ class PageType implements MapperInterface
             $targetItem->setItemId($type->getPageTypeID());
             $targetItem->setItemName($type->getPageTypeDisplayName());
             return $targetItem;
+        } else {
+            $collection = $batch->getObjectCollection('page_type');
+            foreach($collection->getTypes() as $type) {
+                if ($type->getHandle() == $item->getIdentifier()) {
+                    $targetItem = new TargetItem($this);
+                    $targetItem->setItemId($type->getHandle());
+                    $targetItem->setItemName($type->getHandle());
+                    return $targetItem;
+                }
+            }
+
         }
     }
 
     public function getBatchTargetItems(Batch $batch)
     {
-        return array();
+        $collection = $batch->getObjectCollection('page_type');
+        $items = array();
+        foreach($collection->getTypes() as $type) {
+            if (!$type->getPublisherValidator()->skipItem()) {
+                $item = new TargetItem($this);
+                $item->setItemId($type->getHandle());
+                $item->setItemName($type->getName());
+                $items[] = $item;
+            }
+        }
+        return $items;
     }
 
 

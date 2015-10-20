@@ -99,6 +99,14 @@ class PageType implements TypeInterface
                     }
                 }
 
+                if (isset($node->composer->output->pagetemplate)) {
+                    $pi = new PageTypeDefaultPage($type);
+                    foreach ($node->composer->output->pagetemplate as $pagetemplate) {
+                        $pageCollection = $pi->getObjectCollection($pagetemplate);
+                        $type->setDefaultPageCollection($pageCollection);
+                    }
+                }
+
                 $collection->getTypes()->add($type);
                 $type->setCollection($collection);
             }

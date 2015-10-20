@@ -71,6 +71,10 @@ class PageType implements PublishableInterface
      **/
     public $layout_sets;
 
+    /**
+     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection", cascade={"persist", "remove"})
+     **/
+    public $default_page_collection;
 
     /**
      * @Column(type="string")
@@ -89,6 +93,7 @@ class PageType implements PublishableInterface
     public function __construct()
     {
         $this->layout_sets = new ArrayCollection();
+        $this->default_page_collection = new ArrayCollection();
     }
 
     public function getId()
@@ -301,6 +306,23 @@ class PageType implements PublishableInterface
     {
         $this->publish_target = $publish_target;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultPageCollection()
+    {
+        return $this->default_page_collection;
+    }
+
+    /**
+     * @param mixed $default_page_collection
+     */
+    public function setDefaultPageCollection($default_page_collection)
+    {
+        $this->default_page_collection = $default_page_collection;
+    }
+
 
 
 

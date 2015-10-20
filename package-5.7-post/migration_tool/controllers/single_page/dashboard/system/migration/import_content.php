@@ -156,6 +156,8 @@ class ImportContent extends DashboardPageController
                 $batch->getObjectCollections()->add($collection);
             }
 
+            $this->entityManager->flush();
+
             $target = new Target($batch);
             $processor = new Processor($target);
             $processor->registerTask(new NormalizePagePathsTask());

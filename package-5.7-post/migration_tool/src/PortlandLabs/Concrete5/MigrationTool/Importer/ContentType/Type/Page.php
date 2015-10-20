@@ -25,13 +25,23 @@ class Page implements TypeInterface
         $this->blockImporter = \Core::make('migration/manager/import/block');
     }
 
+    public function hasPageNodes()
+    {
+        return isset($this->simplexml->pages->page);
+    }
+
+    public function getPageNodes()
+    {
+       return $this->simplexml->pages->page;
+    }
+
     public function getObjectCollection(\SimpleXMLElement $element)
     {
         $this->simplexml = $element;
         $i = 0;
         $collection = new PageObjectCollection();
-        if ($this->simplexml->pages->page) {
-            foreach($this->simplexml->pages->page as $node) {
+        if ($this->hasPageNodes()) {
+            foreach($this->getPageNodes() as $node) {
                 $page = $this->parsePage($node);
                 $page->setPosition($i);
                 $i++;

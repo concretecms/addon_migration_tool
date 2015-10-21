@@ -8,6 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\BlockComposerFormLayoutSetControl;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -46,6 +47,15 @@ class BlockType implements MapperInterface
 
         $pageTypes = $batch->getObjectCollection('page_type');
         foreach($pageTypes->getTypes() as $type) {
+            foreach($type->getLayoutSets() as $set) {
+                foreach($set->getControls() as $control) {
+                    if ($control instanceof BlockComposerFormLayoutSetControl) {
+                        if (!in_array($control->getItemIdentifier(), $types)) {
+                            $types[] = $control->getItemIdentifier();
+                        }
+                    }
+                }
+            }
             $defaults = $type->getDefaultPageCollection();
             foreach($defaults->getPages() as $page) {
                 foreach($page->getAreas() as $area) {

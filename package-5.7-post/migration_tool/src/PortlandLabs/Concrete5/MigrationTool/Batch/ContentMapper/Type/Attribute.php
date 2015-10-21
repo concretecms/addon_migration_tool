@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Attribute\Key\CollectionKey;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\CollectionAttributeComposerFormLayoutSetControl;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
@@ -35,6 +36,28 @@ class Attribute implements MapperInterface
                 }
             }
         }
+
+        $pageTypes = $batch->getObjectCollection('page_type');
+        foreach($pageTypes->getTypes() as $type) {
+            foreach($type->getLayoutSets() as $set) {
+                foreach($set->getControls() as $control) {
+                    if ($control instanceof CollectionAttributeComposerFormLayoutSetControl) {
+                        if (!in_array($control->getItemIdentifier(), $handles)) {
+                            $handles[] = $control->getItemIdentifier();
+                        }
+                    }
+                }
+            }
+            $defaults = $type->getDefaultPageCollection();
+            foreach($defaults->getPages() as $page) {
+                foreach($page->getAttributes() as $attribute) {
+                    if (!in_array($attribute->getAttribute()->getHandle(), $handles)) {
+                        $handles[] = $attribute->getAttribute()->getHandle();
+                    }
+                }
+            }
+        }
+
         $items = array();
         foreach($handles as $handle) {
             $item = new Item();
@@ -52,12 +75,32 @@ class Attribute implements MapperInterface
             $targetItem->setItemId($ak->getAttributeKeyID());
             $targetItem->setItemName($ak->getAttributeKeyDisplayName());
             return $targetItem;
+        } else { // we check the current batch.
+            $collection = $batch->getObjectCollection('attribute_key');
+            foreach($collection->getKeys() as $key) {
+                if ($key->getHandle() == $item->getIdentifier()) {
+                    $targetItem = new TargetItem($this);
+                    $targetItem->setItemId($key->getHandle());
+                    $targetItem->setItemName($key->getHandle());
+                    return $targetItem;
+                }
+            }
         }
     }
 
     public function getBatchTargetItems(Batch $batch)
     {
-        return array();
+        $collection = $batch->getObjectCollection('attribute_key');
+        $items = array();
+        foreach($collection->getKeys() as $key) {
+            if (!$key->getPublisherValidator()->skipItem()) {
+                $item = new TargetItem($this);
+                $item->setItemId($key->getHandle());
+                $item->setItemName($key->getHandle());
+                $items[] = $item;
+            }
+        }
+        return $items;
     }
 
     public function getInstalledTargetItems(Batch $batch)

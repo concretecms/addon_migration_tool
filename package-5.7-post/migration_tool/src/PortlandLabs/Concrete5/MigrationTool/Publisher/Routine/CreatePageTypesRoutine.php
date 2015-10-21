@@ -1,0 +1,72 @@
+<?php
+
+namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
+
+use Concrete\Core\Attribute\Key\Category;
+use Concrete\Core\Attribute\Type;
+use Concrete\Core\Block\BlockType\BlockType;
+use Concrete\Core\Block\BlockType\Set;
+use Concrete\Core\Page\Template;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\ComposerFormLayoutSetControl;
+
+defined('C5_EXECUTE') or die("Access Denied.");
+
+class CreatePageTypesRoutine implements RoutineInterface
+{
+
+    public function execute(Batch $batch)
+    {
+
+        $types = $batch->getObjectCollection('page_type');
+        /**
+         * @var $type \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageType
+         */
+        foreach($types->getTypes() as $type) {
+            if (!$type->getPublisherValidator()->skipItem()) {
+                $pkg = null;
+                if ($type->getPackage()) {
+                    $pkg = \Package::getByHandle($type->getPackage());
+                }
+                $defaultTemplate = Template::getByHandle($type->getDefaultTemplate());
+                $templates = array();
+                if ($type->getAllowedTemplates() == 'C' || $type->getAllowedTemplates() == 'X') {
+                    foreach($type->getTemplates() as $templateHandle) {
+                        $templates[] = Template::getByHandle($templateHandle);
+                    }
+                }
+                $data = array(
+                    'handle' => $type->getHandle(),
+                    'name' => $type->getName(),
+                    'defaultTemplate' => $defaultTemplate,
+                    'allowedtempates' => $type->getAllowedTemplates(),
+                    'internal' => $type->getIsInternal(),
+                    'ptLaunchInComposer' => $type->getLaunchInComposer(),
+                    'ptIsFrequentlyAdded' => $type->getIsFrequentlyAdded(),
+                    'templates' => $templates
+                );
+
+                $pageType = \Concrete\Core\Page\Type\Type::add($data, $pkg);
+
+                foreach($type->getLayoutSets() as $set) {
+                    $layoutSet = $pageType->addPageTypeComposerFormLayoutSet($set->getName(),
+                        $set->getDescription()
+                    );
+
+                    /**
+                     * @var $controlEntity \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\ComposerFormLayoutSetControl
+                     */
+                    foreach($set->getControls() as $controlEntity) {
+                        $controlType = \Concrete\Core\Page\Type\Composer\Control\Type\Type::getByHandle($controlEntity->getHandle());
+                        $control = $controlType->configureFromImportHandle($controlEntity->getItemIdentifier());
+                        $setControl = $control->addToPageTypeComposerFormLayoutSet($layoutSet, true);
+                        $setControl->updateFormLayoutSetControlRequired($controlEntity->getIsRequired());
+                        $setControl->updateFormLayoutSetControlCustomTemplate($controlEntity->getCustomTemplate());
+                        $setControl->updateFormLayoutSetControlCustomTemplate($controlEntity->getCustomLabel());
+                        $setControl->updateFormLayoutSetControlDescription($controlEntity->getDescription());
+                    }
+                }
+            }
+        }
+    }
+}

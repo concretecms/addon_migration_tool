@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 
 /**
@@ -221,4 +222,7 @@ abstract class ComposerFormLayoutSetControl
             return $this->getItemIdentifier();
         }
     }
+
+    abstract public function getRecordValidator(Batch $batch);
+
 }

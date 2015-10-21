@@ -5,6 +5,7 @@ use Concrete\Core\File\Importer;
 use Concrete\Core\File\Set\Set;
 use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
+use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
@@ -74,6 +75,19 @@ class ImportContent extends DashboardPageController
         $this->view();
     }
 
+    protected function clearContent($batch)
+    {
+        foreach($batch->getObjectCollections() as $collection) {
+            $this->entityManager->remove($collection);
+        }
+        $batch->setObjectCollections(new ArrayCollection());
+        foreach($batch->getTargetItems() as $targetItem) {
+            $targetItem->setBatch(null);
+            $this->entityManager->remove($targetItem);
+        }
+        $this->entityManager->flush();
+    }
+
     public function clear_batch()
     {
         if (!$this->token->validate('clear_batch')) {
@@ -83,15 +97,7 @@ class ImportContent extends DashboardPageController
             $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
             $batch = $r->findOneById($this->request->request->get('id'));
             if (is_object($batch)) {
-                foreach($batch->getObjectCollections() as $collection) {
-                    $this->entityManager->remove($collection);
-                }
-                $batch->setObjectCollections(null);
-                foreach($batch->getTargetItems() as $targetItem) {
-                    $targetItem->setBatch(null);
-                    $this->entityManager->remove($targetItem);
-                }
-                $this->entityManager->flush();
+                $this->clearContent($batch);
                 $this->flash('success', t('Batch cleared successfully.'));
                 $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
             }
@@ -151,6 +157,11 @@ class ImportContent extends DashboardPageController
         }
 
         if (!$this->error->has()) {
+
+            if ($this->request->request->get('importMethod') == 'replace') {
+                $this->clearContent($batch);
+            }
+
             $parser = new Parser($_FILES['xml']['tmp_name']);
             foreach($parser->getContentObjectCollections() as $collection) {
                 $batch->getObjectCollections()->add($collection);

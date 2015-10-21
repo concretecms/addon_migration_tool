@@ -3,7 +3,8 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\UnknownFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyValidator;
 
@@ -15,6 +16,8 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyValidat
  * @DiscriminatorMap({
  * "unknown" = "UnknownAttributeKey",
  * "select" = "SelectAttributeKey",
+ * "text" = "TextAttributeKey",
+ * "text_area" = "TextAreaAttributeKey",
  * "boolean" = "BooleanAttributeKey"
  * })
  * @Table(name="MigrationImportAttributeKeys")
@@ -203,8 +206,13 @@ abstract class AttributeKey implements PublishableInterface
 
     public function getFormatter()
     {
-        return new UnknownFormatter($this);
+        return new BlankFormatter($this);
     }
 
+
+    public function getRecordValidator(Batch $batch)
+    {
+        return false;
+    }
 
 }

@@ -3,6 +3,8 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType\CollectionAttributeComposerFormLayoutSetControlValidator;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 
 /**
@@ -15,5 +17,12 @@ class CollectionAttributeComposerFormLayoutSetControl extends ComposerFormLayout
     {
         return 'collection_attribute';
     }
+
+    public function getRecordValidator(Batch $batch)
+    {
+        return new CollectionAttributeComposerFormLayoutSetControlValidator($batch);
+    }
+
+
 
 }

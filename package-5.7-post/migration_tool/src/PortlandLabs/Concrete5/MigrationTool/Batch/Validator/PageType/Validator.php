@@ -20,21 +20,31 @@ class Validator extends AbstractValidator
 {
 
     /**
-     * @param \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageType
+     * @param $type \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageType
      * @return MessageCollection
      */
     public function validate($type)
     {
         $collection = new MessageCollection();
-        $target = $type->getPublishTarget();
-        $validator = $target->getRecordValidator($this->getBatch());
-        $messages = $validator->validate($target);
-        if (is_object($messages) && count($messages)) {
-            foreach($messages as $msg) {
-                $collection->add($msg);
+
+        // Validate the composer form controls
+        foreach($type->getLayoutSets() as $set) {
+            foreach($set->getControls() as $control) {
+                $validator = $control->getRecordValidator($this->getBatch());
+                if (is_object($validator)) {
+                    $messages = $validator->validate($control);
+                    $collection->addMessages($messages);
+                }
             }
         }
 
+        // Validate the page publish targets
+        $target = $type->getPublishTarget();
+        $validator = $target->getRecordValidator($this->getBatch());
+        $messages = $validator->validate($target);
+        $collection->addMessages($messages);
+
+        // Validate the page templates
         $templates = array();
         if ($template = $type->getDefaultTemplate()) {
             $templates[] = $template;
@@ -61,9 +71,7 @@ class Validator extends AbstractValidator
         foreach($defaultPages->getPages() as $page) {
             $pageMessages = $pageValidator->validate($page);
             if (is_object($pageMessages)) {
-                $collection = new MessageCollection(array_unique(
-                    array_merge($collection->toArray(), $pageMessages->toArray())
-                ));
+                $collection->addMessages($pageMessages);
             }
         }
 

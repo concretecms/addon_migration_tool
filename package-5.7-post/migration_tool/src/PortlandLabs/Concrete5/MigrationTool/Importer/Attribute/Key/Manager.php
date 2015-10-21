@@ -29,6 +29,18 @@ class Manager extends \Concrete\Core\Support\Manager
         $this->extend('select', function() {
             return new SelectImporter();
         });
+        $this->extend('text', function() {
+            return new TextImporter();
+        });
+        $this->extend('textarea', function() {
+            return new TextAreaImporter();
+        });
+        $this->extend('image_file', function() {
+            return new ImageFileImporter();
+        });
+        $this->extend('topics', function() {
+            return new TopicsImporter();
+        });
     }
 
 }

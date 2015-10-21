@@ -175,6 +175,11 @@ class Manager extends CoreManager
         return new PublishStackContentRoutine();
     }
 
+    public function createCreatePageTypesDriver()
+    {
+        return new CreatePageTypesRoutine();
+    }
+
 
     public function __construct()
     {
@@ -203,11 +208,14 @@ class Manager extends CoreManager
         $this->driver('create_attribute_sets');
         $this->driver('create_block_types');
         $this->driver('create_block_type_sets');
-        $this->driver('create_single_page_structure');
         $this->driver('create_page_templates');
+        $this->driver('create_page_types');
         $this->driver('create_stack_structure');
+        $this->driver('create_single_page_structure');
         $this->driver('create_page_structure');
+        //$this->driver('create_page_type_targets');
         $this->driver('create_page_feeds');
+        //$this->driver('publish_page_type_content');
         $this->driver('publish_stack_content');
         $this->driver('publish_single_page_content');
         $this->driver('publish_page_content');

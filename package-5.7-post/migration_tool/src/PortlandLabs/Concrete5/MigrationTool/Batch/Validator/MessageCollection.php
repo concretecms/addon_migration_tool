@@ -14,4 +14,16 @@ class MessageCollection extends ArrayCollection
         return new MessageCollectionFormatter($this);
     }
 
+    public function addMessages(MessageCollection $collection = null)
+    {
+        if (is_object($collection) && count($collection)) {
+            foreach($collection as $message) {
+                if (!in_array($message, $this->getValues())) {
+                    $this->add($message);
+                }
+            }
+        }
+    }
+
+
 }

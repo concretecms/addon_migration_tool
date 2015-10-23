@@ -180,6 +180,10 @@ class Manager extends CoreManager
         return new CreatePageTypesRoutine();
     }
 
+    public function createCreateAttriubtesRoutine()
+    {
+        return new CreateAttributesRoutine();
+    }
 
     public function __construct()
     {
@@ -205,6 +209,7 @@ class Manager extends CoreManager
         $this->driver('create_permissions');
         $this->driver('create_attribute_types');
         $this->driver('create_attribute_categories');
+        $this->driver('create_attributes');
         $this->driver('create_attribute_sets');
         $this->driver('create_block_types');
         $this->driver('create_block_type_sets');

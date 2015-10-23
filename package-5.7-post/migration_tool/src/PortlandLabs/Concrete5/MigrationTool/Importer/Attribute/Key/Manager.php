@@ -41,6 +41,23 @@ class Manager extends \Concrete\Core\Support\Manager
         $this->extend('topics', function() {
             return new TopicsImporter();
         });
+        $this->extend('rating', function() {
+            return new RatingImporter();
+        });
+        $this->extend('number', function() {
+            return new NumberImporter();
+        });
+        $this->extend('social_links', function() {
+            return new SocialLinksImporter();
+        });
+        $this->extend('date_time', function() {
+            return new DateTimeImporter();
+        });
+        $this->extend('address', function() {
+            return new AddressImporter();
+        });
+
+
     }
 
 }

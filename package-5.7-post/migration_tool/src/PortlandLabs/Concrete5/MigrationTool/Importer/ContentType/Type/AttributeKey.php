@@ -13,6 +13,7 @@ class AttributeKey implements TypeInterface
     public function getObjectCollection(\SimpleXMLElement $element)
     {
         $manager = \Core::make('migration/manager/import/attribute/key');
+        $categoryManager = \Core::make('migration/manager/import/attribute/category');
         $collection = new AttributeKeyObjectCollection();
         if ($element->attributekeys->attributekey) {
             foreach($element->attributekeys->attributekey as $node) {
@@ -21,7 +22,10 @@ class AttributeKey implements TypeInterface
                 $key->setHandle((string) $node['handle']);
                 $key->setName((string) $node['name']);
                 $key->setPackage((string) $node['package']);
-                $key->setCategory((string) $node['category']);
+                $categoryImporter = $categoryManager->driver((string) $node['category']);
+                $category = $categoryImporter->getEntity();
+                $categoryImporter->loadFromXml($category, $node);
+                $key->setCategory($category);
                 if ((string) $node['indexed'] == 1) {
                     $key->setIsIndexed(true);
                 }

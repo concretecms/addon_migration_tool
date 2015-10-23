@@ -28,9 +28,16 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $node->id = $key->getId();
             $node->handle = $key->getHandle();
             $node->type = $key->getType();
-            $node->category = $key->getCategory();
+            $node->category = (string) $key->getCategory();
             $node->statusClass = $formatter->getCollectionStatusIconClass();
             $this->addMessagesNode($node, $messages);
+            $attributeCategoryFormatter = $key->getCategory()->getFormatter();
+            if (is_object($attributeCategoryFormatter)) {
+                $attributeCategoryNode = $attributeCategoryFormatter->getBatchTreeNodeJsonObject();
+                if ($attributeCategoryNode) {
+                    $node->children[] = $attributeCategoryNode;
+                }
+            }
             $attributeFormatter = $key->getFormatter();
             $attributeNode = $attributeFormatter->getBatchTreeNodeJsonObject();
             if ($attributeNode) {

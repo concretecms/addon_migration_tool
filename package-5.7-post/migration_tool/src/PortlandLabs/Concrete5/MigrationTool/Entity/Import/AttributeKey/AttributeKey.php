@@ -17,7 +17,14 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyValidat
  * "unknown" = "UnknownAttributeKey",
  * "select" = "SelectAttributeKey",
  * "text" = "TextAttributeKey",
+ * "image_file" = "ImageFileAttributeKey",
+ * "topics" = "TopicsAttributeKey",
  * "text_area" = "TextAreaAttributeKey",
+ * "rating" = "RatingAttributeKey",
+ * "number" = "NumberAttributeKey",
+ * "social_links" = "SocialLinksAttributeKey",
+ * "address" = "AddressAttributeKey",
+ * "date_time" = "DateTimeAttributeKey",
  * "boolean" = "BooleanAttributeKey"
  * })
  * @Table(name="MigrationImportAttributeKeys")
@@ -42,7 +49,7 @@ abstract class AttributeKey implements PublishableInterface
     protected $handle;
 
     /**
-     * @Column(type="string")
+     * @OneToOne(targetEntity="AttributeKeyCategoryInstance", inversedBy="key", cascade={"persist", "remove"})
      */
     protected $category;
 
@@ -140,7 +147,7 @@ abstract class AttributeKey implements PublishableInterface
     abstract public function getType();
 
     /**
-     * @return mixed
+     * @return AttributeKeyCategoryInstance
      */
     public function getCategory()
     {
@@ -211,6 +218,14 @@ abstract class AttributeKey implements PublishableInterface
 
 
     public function getRecordValidator(Batch $batch)
+    {
+        return false;
+    }
+
+    /**
+     * @return \PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\PublisherInterface | bool
+     */
+    public function getTypePublisher()
     {
         return false;
     }

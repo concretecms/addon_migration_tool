@@ -180,7 +180,7 @@ class Manager extends CoreManager
         return new CreatePageTypesRoutine();
     }
 
-    public function createCreateAttriubtesRoutine()
+    public function createCreateAttributesDriver()
     {
         return new CreateAttributesRoutine();
     }

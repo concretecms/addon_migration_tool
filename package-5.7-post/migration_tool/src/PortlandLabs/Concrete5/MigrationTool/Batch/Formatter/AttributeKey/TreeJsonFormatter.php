@@ -22,7 +22,7 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $formatter = $messages->getFormatter();
             $node = new \stdClass;
             $node->title = $key->getName();
-            $node->skipped = $key->getPublisherValidator()->skipItem();
+            $node->exists = $key->getPublisherValidator()->skipItem();
             $node->nodetype = 'attribute_key';
             $node->extraClasses = 'migration-node-main';
             $node->id = $key->getId();

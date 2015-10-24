@@ -29,6 +29,9 @@ class AttributeKey implements TypeInterface
                 if ((string) $node['indexed'] == 1) {
                     $key->setIsIndexed(true);
                 }
+                if ((string) $node['internal'] == 1) {
+                    $key->setIsInternal(true);
+                }
                 if ((string) $node['searchable'] == 1) {
                     $key->setIsSearchable(true);
                 }

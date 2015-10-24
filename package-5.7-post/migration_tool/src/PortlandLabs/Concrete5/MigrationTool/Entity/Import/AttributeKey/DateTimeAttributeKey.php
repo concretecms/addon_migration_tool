@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\DateTimeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TextAreaFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\DateTimePublisher;
 
 
 /**
@@ -43,6 +44,11 @@ class DateTimeAttributeKey extends AttributeKey
     public function getFormatter()
     {
         return new DateTimeFormatter($this);
+    }
+
+    public function getTypePublisher()
+    {
+        return new DateTimePublisher();
     }
 
 }

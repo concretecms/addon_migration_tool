@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BooleanFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\BooleanPublisher;
 
 
 /**
@@ -42,5 +43,13 @@ class BooleanAttributeKey extends AttributeKey
     {
         return new BooleanFormatter($this);
     }
+
+    public function getTypePublisher()
+    {
+        return new BooleanPublisher();
+    }
+
+
+
 
 }

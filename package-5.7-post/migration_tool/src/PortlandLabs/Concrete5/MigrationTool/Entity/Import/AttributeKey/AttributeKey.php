@@ -66,6 +66,11 @@ abstract class AttributeKey implements PublishableInterface
     /**
      * @Column(type="boolean")
      */
+    protected $is_internal = false;
+
+    /**
+     * @Column(type="boolean")
+     */
     protected $is_indexed = false;
 
     /**
@@ -138,6 +143,21 @@ abstract class AttributeKey implements PublishableInterface
         $this->package = $package;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getIsInternal()
+    {
+        return $this->is_internal;
+    }
+
+    /**
+     * @param mixed $is_internal
+     */
+    public function setIsInternal($is_internal)
+    {
+        $this->is_internal = $is_internal;
+    }
 
     public function getPublisherValidator()
     {

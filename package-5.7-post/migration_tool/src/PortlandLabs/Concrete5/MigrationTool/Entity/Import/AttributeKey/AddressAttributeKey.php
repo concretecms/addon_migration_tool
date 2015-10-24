@@ -5,6 +5,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\AddressFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\DateTimeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TextAreaFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\AddressPublisher;
 
 
 /**
@@ -86,5 +87,11 @@ class AddressAttributeKey extends AttributeKey
     {
         return new AddressFormatter($this);
     }
+
+    public function getTypePublisher()
+    {
+        return new AddressPublisher();
+    }
+
 
 }

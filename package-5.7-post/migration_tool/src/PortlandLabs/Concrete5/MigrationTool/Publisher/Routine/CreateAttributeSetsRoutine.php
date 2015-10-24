@@ -24,14 +24,18 @@ class CreateAttributeSetsRoutine implements RoutineInterface
                 if ($set->getPackage()) {
                     $pkg = \Package::getByHandle($set->getPackage());
                 }
-                $set = $akc->addSet($set->getHandle(), $set->getName(), $pkg, $set->getIsLocked());
+                $setObject = $akc->addSet($set->getHandle(), $set->getName(), $pkg, intval($set->getIsLocked()));
+            } else {
+                $setObject = \Concrete\Core\Attribute\Set::getByHandle($set->getHandle());
             }
 
-            $attributes = $set->getAttributes();
-            foreach($attributes as $handle) {
-                $ak = $akc->getAttributeKeyByHandle($handle);
-                if (is_object($ak)) {
-                    $set->addKey($ak);
+            if (is_object($setObject)) {
+                $attributes = $set->getAttributes();
+                foreach($attributes as $handle) {
+                    $ak = $akc->getAttributeKeyByHandle($handle);
+                    if (is_object($ak)) {
+                        $setObject->addKey($ak);
+                    }
                 }
             }
         }

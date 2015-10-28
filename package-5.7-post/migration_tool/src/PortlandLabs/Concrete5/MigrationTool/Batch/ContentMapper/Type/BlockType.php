@@ -2,6 +2,7 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\BlockItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
@@ -31,7 +32,7 @@ class BlockType implements MapperInterface
         foreach($batch->getPages() as $page) {
             foreach($page->getAreas() as $area) {
                 foreach($area->getBlocks() as $block) {
-                    if (!in_array($block->getType(), $types)) {
+                    if ($block->getType() && !in_array($block->getType(), $types)) {
                         $types[] = $block->getType();
                     }
                 }
@@ -70,8 +71,7 @@ class BlockType implements MapperInterface
 
         $items = array();
         foreach($types as $type) {
-            $item = new Item();
-            $item->setIdentifier($type);
+            $item = new Item($type);
             $items[] = $item;
         }
         return $items;

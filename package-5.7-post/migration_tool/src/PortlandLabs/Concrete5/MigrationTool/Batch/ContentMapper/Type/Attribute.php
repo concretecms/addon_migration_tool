@@ -72,7 +72,7 @@ class Attribute implements MapperInterface
         $ak = CollectionKey::getByHandle($item->getIdentifier());
         if (is_object($ak)) {
             $targetItem = new TargetItem($this);
-            $targetItem->setItemId($ak->getAttributeKeyID());
+            $targetItem->setItemId($ak->getAttributeKeyHandle());
             $targetItem->setItemName($ak->getAttributeKeyDisplayName());
             return $targetItem;
         } else { // we check the current batch.
@@ -112,7 +112,7 @@ class Attribute implements MapperInterface
         $items = array();
         foreach($keys as $ak) {
             $item = new TargetItem($this);
-            $item->setItemId($ak->getAttributeKeyID());
+            $item->setItemId($ak->getAttributeKeyHandle());
             $item->setItemName($ak->getAttributeKeyDisplayName());
             $items[] = $item;
         }
@@ -121,7 +121,7 @@ class Attribute implements MapperInterface
 
     public function getTargetItemContentObject(TargetItemInterface $targetItem)
     {
-        return CollectionKey::getByID($targetItem->getItemID());
+        return CollectionKey::getByHandle($targetItem->getItemID());
     }
 
 

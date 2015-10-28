@@ -20,13 +20,16 @@ class ValidateReferencedContentItemsTask implements TaskInterface
         $blocks = $action->getSubject();
         $target = $action->getTarget();
         foreach($blocks as $block) {
-            $inspector = $block->getBlockValue()->getInspector();
-            $items = $inspector->getMatchedItems();
-            foreach($items as $item) {
-                $validatorFactory = new Factory($item);
-                $validator = $validatorFactory->getValidator();
-                if (!$validator->itemExists($item, $target->getBatch())) {
-                    $validator->addMissingItemMessage($item, $action->getTarget()->getMessages());
+            $value = $block->getBlockValue();
+            if (is_object($value)) {
+                $inspector = $value->getInspector();
+                $items = $inspector->getMatchedItems();
+                foreach($items as $item) {
+                    $validatorFactory = new Factory($item);
+                    $validator = $validatorFactory->getValidator();
+                    if (!$validator->itemExists($item, $target->getBatch())) {
+                        $validator->addMissingItemMessage($item, $action->getTarget()->getMessages());
+                    }
                 }
             }
         }

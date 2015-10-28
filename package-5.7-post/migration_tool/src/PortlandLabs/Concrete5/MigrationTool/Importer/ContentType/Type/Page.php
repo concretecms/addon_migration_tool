@@ -96,7 +96,7 @@ class Page implements TypeInterface
     {
         $attribute = new Attribute();
         $attribute->setHandle((string) $node['handle']);
-        $value = $this->attributeImporter->driver('unmapped')->parse($node);
+        $value = $this->attributeImporter->driver()->parse($node);
         $attribute->setAttributeValue($value);
         return $attribute;
     }
@@ -106,6 +106,7 @@ class Page implements TypeInterface
         $block = new Block();
         $block->setType((string) $node['type']);
         $block->setName((string) $node['name']);
+        $block->setDefaultsOutputIdentifier((string) $node['mc-block-id']);
         $value = $this->blockImporter->driver('unmapped')->parse($node);
         $block->setBlockValue($value);
         return $block;
@@ -131,6 +132,11 @@ class Page implements TypeInterface
             foreach($nodes as $blockNode) {
                 if ($blockNode['type']) {
                     $block = $this->parseBlock($blockNode);
+                } else if ($blockNode['mc-block-id'] != '') {
+                    $block = new Block();
+                    $block->setDefaultsOutputIdentifier((string) $blockNode['mc-block-id']);
+                }
+                if (isset($block)) {
                     $block->setPosition($i);
                     $block->setArea($area);
                     $area->blocks->add($block);

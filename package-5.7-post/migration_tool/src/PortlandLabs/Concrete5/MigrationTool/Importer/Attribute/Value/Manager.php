@@ -10,26 +10,41 @@ defined('C5_EXECUTE') or die("Access Denied.");
 class Manager extends \Concrete\Core\Support\Manager
 {
 
-    public function driver($driver = null)
+    public function createImporterDriver()
     {
-        // If a custom driver is not registered for our page type validator, we return the default.
-        if (!isset($this->customCreators[$driver])) {
-            return $this->getDefaultDriver();
-        }
-        return parent::driver($driver);
+        return new Importer();
     }
 
-    protected function getDefaultDriver()
+    public function getDefaultDriver()
+    {
+        return 'importer';
+    }
+
+    public function createTextDriver()
     {
         return new StandardImporter();
     }
 
-    public function __construct($app)
+    public function createTextAreaDriver()
     {
-        parent::__construct($app);
-        $this->extend('unmapped', function() {
-            return new Importer();
-        });
+        return new StandardImporter();
     }
+
+    public function createBooleanDriver()
+    {
+        return new StandardImporter();
+    }
+
+    public function createDateTimeDriver()
+    {
+        return new StandardImporter();
+    }
+
+    public function createRatingDriver()
+    {
+        return new StandardImporter();
+    }
+
+
 
 }

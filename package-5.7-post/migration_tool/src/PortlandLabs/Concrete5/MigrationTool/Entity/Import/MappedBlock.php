@@ -12,12 +12,12 @@ class MappedBlock
     protected $id;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      */
-    protected $type;
+    protected $type = null;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", nullable=true)
      */
     protected $name;
 
@@ -124,6 +124,30 @@ class MappedBlock
     {
         $this->block_value = $block_value;
     }
+
+
+    /**
+     * @Column(type="string", nullable=true)
+     */
+    protected $defaults_output_identifier = null;
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultsOutputIdentifier()
+    {
+        return $this->defaults_output_identifier;
+    }
+
+    /**
+     * @param mixed $defaults_output_identifier
+     */
+    public function setDefaultsOutputIdentifier($defaults_output_identifier)
+    {
+        $this->defaults_output_identifier = $defaults_output_identifier;
+    }
+
+
 
 
 

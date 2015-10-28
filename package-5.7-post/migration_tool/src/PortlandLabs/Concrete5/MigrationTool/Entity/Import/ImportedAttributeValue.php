@@ -8,9 +8,15 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
 
 /**
  * @Entity
+ * @Table(name="MigrationImportAttributeStandardValues")
  */
 class ImportedAttributeValue extends AttributeValue
 {
+
+    /**
+     * @Column(type="text")
+     */
+    protected $value;
 
     public function getValue()
     {

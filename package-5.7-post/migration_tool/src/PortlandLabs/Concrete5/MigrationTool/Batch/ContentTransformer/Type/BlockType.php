@@ -2,10 +2,13 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type;
 
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\BlockItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use Concrete\Core\Block\BlockType\BlockType as CoreBlockType;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -23,8 +26,8 @@ class BlockType implements TransformerInterface
     public function getItem($block_value)
     {
         if ($block_value && $block_value->getBlock()) {
-            $handle = $block_value->getBlock()->getType();
-            $item = new Item($handle);
+            $block = $block_value->getBlock();
+            $item = new BlockItem($block);
             return $item;
         }
     }
@@ -34,7 +37,7 @@ class BlockType implements TransformerInterface
         return new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType();
     }
 
-    public function transform($entity, Item $item, TargetItem $targetItem)
+    public function transform($entity, ItemInterface $item, TargetItem $targetItem, Batch $batch)
     {
         $bt = CoreBlockType::getByID($targetItem->getItemId());
         if (is_object($bt)) {

@@ -24,7 +24,7 @@ class Attribute implements TransformerInterface
     public function getUntransformedEntityObjects()
     {
         $em = \ORM::entityManager('migration_tool');
-        $query = $em->createQuery('select v from \PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue v where v instance of \PortlandLabs\Concrete5\MigrationTool\Entity\Import\ImportedAttributeValue');
+        $query = $em->createQuery('select v from \PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue v where v instance of \PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\ImportedAttributeValue');
         $results = $query->getResult();
         return $results;
     }

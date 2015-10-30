@@ -1,16 +1,15 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\ImportedFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\CIFPublisher;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\StandardFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
 
 /**
  * @Entity
  * @Table(name="MigrationImportAttributeStandardValues")
  */
-class ImportedAttributeValue extends AttributeValue
+class StandardAttributeValue extends AttributeValue
 {
 
     /**
@@ -33,12 +32,12 @@ class ImportedAttributeValue extends AttributeValue
 
     public function getFormatter()
     {
-        return new ImportedFormatter($this);
+        return new StandardFormatter($this);
     }
 
     public function getPublisher()
     {
-        return new CIFPublisher();
+        return new StandardPublisher();
     }
 
 

@@ -20,7 +20,7 @@ class Attribute
     protected $handle;
 
     /**
-     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue", inversedBy="attribute", cascade={"persist", "remove"})
+     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue", inversedBy="attribute", cascade={"persist", "remove"})
      **/
     protected $attribute_value;
 

@@ -9,6 +9,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\ImportedAttributeValue;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -29,6 +30,23 @@ class ValidateAttributesTask implements TaskInterface
                 $action->getTarget()->addMessage(
                     new Message(t('Attribute <strong>%s</strong> does not exist.', $item->getIdentifier()), Message::E_WARNING)
                 );
+            }
+
+            $value = $attribute->getAttribute()->getAttributeValue();
+            if ($value instanceof ImportedAttributeValue) {
+                $action->getTarget()->addMessage(
+                    new Message(t('Attribute <strong>%s</strong> could not be mapped to a known attribute type. It may not be fully imported.', $item->getIdentifier()), Message::E_WARNING)
+                );
+            }
+
+            $validator = $value->getRecordValidator($target->getBatch());
+            if (is_object($validator)) {
+                $r = $validator->validate($value);
+                if (is_object($r)) {
+                    foreach($r as $message) {
+                        $action->getTarget()->addMessage($message);
+                    }
+                }
             }
         }
     }

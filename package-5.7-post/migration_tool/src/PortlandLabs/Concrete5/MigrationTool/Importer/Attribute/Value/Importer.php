@@ -2,7 +2,7 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value;
 
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ImportedAttributeValue;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\ImportedAttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ImporterInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");

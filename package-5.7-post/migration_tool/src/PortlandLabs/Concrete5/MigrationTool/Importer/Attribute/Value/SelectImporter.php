@@ -3,17 +3,24 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\SelectAttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\StandardAttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ImporterInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class StandardImporter implements ImporterInterface
+class SelectImporter implements ImporterInterface
 {
     public function parse(\SimpleXMLElement $node)
     {
-        $value = new StandardAttributeValue();
-        $value->setValue((string) $node->value);
+        $value = new SelectAttributeValue();
+        $options = array();
+        if ($node->value->option) {
+            foreach($node->value->option as $option) {
+                $options[] = (string) $option;
+            }
+        }
+        $value->setValues($options);
         return $value;
     }
 

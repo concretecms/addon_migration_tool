@@ -2,6 +2,7 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value;
 
+use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value\SelectImporter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value\Importer;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value\StandardImporter;
 
@@ -43,6 +44,11 @@ class Manager extends \Concrete\Core\Support\Manager
     public function createRatingDriver()
     {
         return new StandardImporter();
+    }
+
+    public function createSelectDriver()
+    {
+        return new SelectImporter();
     }
 
 

@@ -6,7 +6,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKeyCategory;
 use Concrete\Core\Attribute\Key\UserKey;
 use Concrete\Core\Package\Package;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\UserAttributeKeyCategoryInstance;
 
 defined('C5_EXECUTE') or die("Access Denied.");

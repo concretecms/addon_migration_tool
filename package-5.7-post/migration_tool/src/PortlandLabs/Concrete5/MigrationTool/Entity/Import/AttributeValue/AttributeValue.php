@@ -1,13 +1,18 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
+
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
  * @Table(name="MigrationImportAttributeValues")
- * @InheritanceType("SINGLE_TABLE")
+ * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="value_type", type="string")
- * @DiscriminatorMap( {"standard" = "StandardAttributeValue", "imported" = "ImportedAttributeValue"} )
+ * @DiscriminatorMap( {
+ * "standard" = "StandardAttributeValue",
+ * "select" = "SelectAttributeValue",
+ * "imported" = "ImportedAttributeValue"} )
  */
 abstract class AttributeValue
 {
@@ -23,12 +28,7 @@ abstract class AttributeValue
      * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute", mappedBy="attribute_value")
      **/
     protected $attribute;
-
-    /**
-     * @Column(type="text")
-     */
-    protected $value;
-
+    
     /**
      * @return mixed
      */
@@ -63,8 +63,12 @@ abstract class AttributeValue
 
 
     abstract public function getFormatter();
-    abstract public function getValue();
-    abstract public function setValue($value);
     abstract public function getPublisher();
+
+    public function getRecordValidator(Batch $batch)
+    {
+        return false;
+    }
+
 
 }

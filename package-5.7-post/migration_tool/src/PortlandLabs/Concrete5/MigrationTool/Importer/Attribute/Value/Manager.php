@@ -51,6 +51,10 @@ class Manager extends \Concrete\Core\Support\Manager
         return new SelectImporter();
     }
 
+    public function createImageFileDriver()
+    {
+        return new ImageFileImporter();
+    }
 
 
 }

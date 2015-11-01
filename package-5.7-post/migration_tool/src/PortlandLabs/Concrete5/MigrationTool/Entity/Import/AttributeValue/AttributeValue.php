@@ -11,6 +11,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  * @DiscriminatorColumn(name="value_type", type="string")
  * @DiscriminatorMap( {
  * "standard" = "StandardAttributeValue",
+ * "image_file" = "ImageFileAttributeValue",
  * "select" = "SelectAttributeValue",
  * "imported" = "ImportedAttributeValue"} )
  */
@@ -64,6 +65,11 @@ abstract class AttributeValue
 
     abstract public function getFormatter();
     abstract public function getPublisher();
+
+    public function getInspector()
+    {
+        return false;
+    }
 
     public function getRecordValidator(Batch $batch)
     {

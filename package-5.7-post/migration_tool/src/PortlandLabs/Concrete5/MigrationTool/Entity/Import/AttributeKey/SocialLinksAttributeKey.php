@@ -14,7 +14,7 @@ class SocialLinksAttributeKey extends AttributeKey
 
     public function getType()
     {
-        return 'number';
+        return 'social_links';
     }
 
     public function getFormatter()

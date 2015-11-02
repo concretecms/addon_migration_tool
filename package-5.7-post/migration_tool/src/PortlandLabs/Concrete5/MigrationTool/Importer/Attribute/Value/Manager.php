@@ -2,6 +2,7 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value;
 
+use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value\TopicsImporter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value\SelectImporter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value\Importer;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value\StandardImporter;
@@ -55,6 +56,22 @@ class Manager extends \Concrete\Core\Support\Manager
     {
         return new ImageFileImporter();
     }
+
+    public function createSocialLinksDriver()
+    {
+        return new SocialLinksImporter();
+    }
+
+    public function createTopicsDriver()
+    {
+        return new TopicsImporter();
+    }
+
+    public function createAddressDriver()
+    {
+        return new AddressImporter();
+    }
+
 
 
 }

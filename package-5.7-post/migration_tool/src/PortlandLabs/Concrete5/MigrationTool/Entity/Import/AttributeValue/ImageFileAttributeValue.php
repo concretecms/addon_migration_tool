@@ -8,6 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\ImageFileVali
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\StandardValidator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Attribute\StandardInspector;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\ImageFilePublisher;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
 
 /**
@@ -42,7 +43,7 @@ class ImageFileAttributeValue extends AttributeValue
 
     public function getPublisher()
     {
-        return new StandardPublisher();
+        return new ImageFilePublisher();
     }
 
     public function getRecordValidator(Batch $batch)

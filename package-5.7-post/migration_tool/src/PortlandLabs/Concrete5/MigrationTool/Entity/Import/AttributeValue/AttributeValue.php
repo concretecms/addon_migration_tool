@@ -13,6 +13,9 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  * "standard" = "StandardAttributeValue",
  * "image_file" = "ImageFileAttributeValue",
  * "select" = "SelectAttributeValue",
+ * "social_links" = "SocialLinksAttributeValue",
+ * "address" = "AddressAttributeValue",
+ * "topics" = "TopicsAttributeValue",
  * "imported" = "ImportedAttributeValue"} )
  */
 abstract class AttributeValue

@@ -1,0 +1,83 @@
+<?php
+
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
+
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+
+/**
+ * @Entity
+ * @Table(name="MigrationImportAttributeValues")
+ * @InheritanceType("JOINED")
+ * @DiscriminatorColumn(name="value_type", type="string")
+ * @DiscriminatorMap( {
+ * "standard" = "StandardAttributeValue",
+ * "image_file" = "ImageFileAttributeValue",
+ * "select" = "SelectAttributeValue",
+ * "social_links" = "SocialLinksAttributeValue",
+ * "address" = "AddressAttributeValue",
+ * "topics" = "TopicsAttributeValue",
+ * "imported" = "ImportedAttributeValue"} )
+ */
+abstract class AttributeValue
+{
+
+    /**
+     * @Id @Column(type="guid")
+     * @GeneratedValue(strategy="UUID")
+     */
+    protected $id;
+
+
+    /**
+     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute", mappedBy="attribute_value")
+     **/
+    protected $attribute;
+    
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAttribute()
+    {
+        return $this->attribute;
+    }
+
+    /**
+     * @param mixed $attribute
+     */
+    public function setAttribute($attribute)
+    {
+        $this->attribute = $attribute;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
+    abstract public function getFormatter();
+    abstract public function getPublisher();
+
+    public function getInspector()
+    {
+        return false;
+    }
+
+    public function getRecordValidator(Batch $batch)
+    {
+        return false;
+    }
+
+
+}

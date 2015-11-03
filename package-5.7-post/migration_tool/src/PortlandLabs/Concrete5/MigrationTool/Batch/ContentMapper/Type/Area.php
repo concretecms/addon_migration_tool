@@ -35,6 +35,19 @@ class Area implements MapperInterface
                 }
             }
         }
+
+        $pageTypes = $batch->getObjectCollection('page_type');
+        foreach($pageTypes->getTypes() as $type) {
+            $defaults = $type->getDefaultPageCollection();
+            foreach($defaults->getPages() as $page) {
+                foreach($page->getAreas() as $area) {
+                    if ($area->getName() && !in_array($area->getName(), $areas)) {
+                        $areas[] = $area->getName();
+                    }
+                }
+            }
+        }
+
         $items = array();
         foreach($areas as $area) {
             $item = new Item();

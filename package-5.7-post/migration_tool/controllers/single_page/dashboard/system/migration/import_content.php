@@ -5,9 +5,11 @@ use Concrete\Core\File\Importer;
 use Concrete\Core\File\Set\Set;
 use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
+use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreeJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreePageJsonFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreeJsonFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\MapContentTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
@@ -20,6 +22,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ImportContent extends DashboardPageController
 {
+
+    public function on_start()
+    {
+        ini_set('memory_limit', -1);
+        set_time_limit(0);
+        parent::on_start();
+    }
 
     public function add_batch()
     {
@@ -49,7 +58,7 @@ class ImportContent extends DashboardPageController
                 foreach($batch->getObjectCollections() as $collection) {
                     $this->entityManager->remove($collection);
                 }
-                $batch->setObjectCollections(null);
+                $batch->setObjectCollections(new ArrayCollection());
                 foreach($batch->getTargetItems() as $targetItem) {
                     $targetItem->setBatch(null);
                     $this->entityManager->remove($targetItem);
@@ -64,6 +73,19 @@ class ImportContent extends DashboardPageController
         $this->view();
     }
 
+    protected function clearContent($batch)
+    {
+        foreach($batch->getObjectCollections() as $collection) {
+            $this->entityManager->remove($collection);
+        }
+        $batch->setObjectCollections(new ArrayCollection());
+        foreach($batch->getTargetItems() as $targetItem) {
+            $targetItem->setBatch(null);
+            $this->entityManager->remove($targetItem);
+        }
+        $this->entityManager->flush();
+    }
+
     public function clear_batch()
     {
         if (!$this->token->validate('clear_batch')) {
@@ -73,15 +95,7 @@ class ImportContent extends DashboardPageController
             $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
             $batch = $r->findOneById($this->request->request->get('id'));
             if (is_object($batch)) {
-                foreach($batch->getObjectCollections() as $collection) {
-                    $this->entityManager->remove($collection);
-                }
-                $batch->setObjectCollections(null);
-                foreach($batch->getTargetItems() as $targetItem) {
-                    $targetItem->setBatch(null);
-                    $this->entityManager->remove($targetItem);
-                }
-                $this->entityManager->flush();
+                $this->clearContent($batch);
                 $this->flash('success', t('Batch cleared successfully.'));
                 $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
             }
@@ -141,30 +155,33 @@ class ImportContent extends DashboardPageController
         }
 
         if (!$this->error->has()) {
-            try {
-                $parser = new Parser($_FILES['xml']['tmp_name']);
-                foreach($parser->getContentObjectCollections() as $collection) {
-                    $batch->getObjectCollections()->add($collection);
-                }
 
-                $target = new Target($batch);
-                $processor = new Processor($target);
-                $processor->registerTask(new NormalizePagePathsTask());
-                $processor->registerTask(new MapContentTypesTask());
-                $processor->process();
-
-                $this->entityManager->flush();
-
-                $processor = new Processor($target);
-                $processor->registerTask(new TransformContentTypesTask());
-                $processor->process();
-                $this->entityManager->persist($batch);
-                $this->entityManager->flush();
-                $this->flash('success', t('Content added to batch successfully.'));
-                $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
-            } catch(\Exception $e) {
-                $this->error->add(t('Unable to parse XML file: %s', $e->getMessage()));
+            if ($this->request->request->get('importMethod') == 'replace') {
+                $this->clearContent($batch);
             }
+
+            $parser = new Parser($_FILES['xml']['tmp_name']);
+            foreach($parser->getContentObjectCollections() as $collection) {
+                $batch->getObjectCollections()->add($collection);
+            }
+
+            $this->entityManager->flush();
+
+            $target = new Target($batch);
+            $processor = new Processor($target);
+            $processor->registerTask(new NormalizePagePathsTask());
+            $processor->registerTask(new MapContentTypesTask());
+            $processor->process();
+
+            $this->entityManager->flush();
+
+            $processor = new Processor($target);
+            $processor->registerTask(new TransformContentTypesTask());
+            $processor->process();
+            $this->entityManager->persist($batch);
+            $this->entityManager->flush();
+            $this->flash('success', t('Content added to batch successfully.'));
+            $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
         }
         $this->view_batch($this->request->request->get('id'));
     }
@@ -197,7 +214,7 @@ class ImportContent extends DashboardPageController
 
     public function view_batch($id = null)
     {
-        $this->requireAsset('fancytree');
+        $this->requireAsset('migration/view-batch');
         $this->requireAsset('core/app/editable-fields');
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
@@ -330,13 +347,33 @@ class ImportContent extends DashboardPageController
         }
     }
 
-    public function load_batch_page_collection()
+    public function validate_batch()
+    {
+        session_write_close();
+        if (!$this->token->validate('validate_batch')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+        if (!$this->error->has()) {
+            $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+            $batch = $r->findOneById($this->request->request->get('id'));
+            if (is_object($batch)) {
+                $validator = \Core::make('migration/batch/validator');
+                $messages = $validator->validate($batch);
+                $formatter = $validator->getFormatter($messages);
+                $data['alertclass'] = $formatter->getAlertClass();
+                $data['message'] = $formatter->getCreateStatusMessage();
+                return new JsonResponse($data);
+            }
+        }
+    }
+
+    public function load_batch_collection()
     {
         session_write_close();
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection');
-        $batch = $r->findOneById($this->request->get('id'));
-        if (is_object($batch))  {
-            $formatter = new TreeJsonFormatter($batch);
+        $collection = $r->findOneById($this->request->get('id'));
+        if (is_object($collection))  {
+            $formatter = $collection->getTreeFormatter();
             return new JsonResponse($formatter);
         }
     }

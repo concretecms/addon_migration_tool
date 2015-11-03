@@ -9,6 +9,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageTypePublishTarget;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -33,6 +34,19 @@ class PageType implements MapperInterface
                 $types[] = $page->getType();
             }
         }
+
+        foreach($batch->getObjectCollection('page_type')->getTypes() as $pageType) {
+            if (!in_array($pageType->getHandle(), $types)) {
+                $types[] = $pageType->getHandle();
+            }
+            $target = $pageType->getPublishTarget();
+            if ($target instanceof PageTypePublishTarget) {
+                if (!in_array($target->getPageType(), $types)) {
+                    $types[] = $target->getPageType();
+                }
+            }
+        }
+
         $items = array();
         foreach($types as $type) {
             $item = new Item();
@@ -50,12 +64,33 @@ class PageType implements MapperInterface
             $targetItem->setItemId($type->getPageTypeID());
             $targetItem->setItemName($type->getPageTypeDisplayName());
             return $targetItem;
+        } else {
+            $collection = $batch->getObjectCollection('page_type');
+            foreach($collection->getTypes() as $type) {
+                if ($type->getHandle() == $item->getIdentifier()) {
+                    $targetItem = new TargetItem($this);
+                    $targetItem->setItemId($type->getHandle());
+                    $targetItem->setItemName($type->getHandle());
+                    return $targetItem;
+                }
+            }
+
         }
     }
 
     public function getBatchTargetItems(Batch $batch)
     {
-        return array();
+        $collection = $batch->getObjectCollection('page_type');
+        $items = array();
+        foreach($collection->getTypes() as $type) {
+            if (!$type->getPublisherValidator()->skipItem()) {
+                $item = new TargetItem($this);
+                $item->setItemId($type->getHandle());
+                $item->setItemName($type->getName());
+                $items[] = $item;
+            }
+        }
+        return $items;
     }
 
 

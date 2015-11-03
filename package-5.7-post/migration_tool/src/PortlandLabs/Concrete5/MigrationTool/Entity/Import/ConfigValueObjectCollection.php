@@ -1,0 +1,67 @@
+<?php
+
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\ConfigValueFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+
+/**
+ * @Entity
+ */
+class ConfigValueObjectCollection extends ObjectCollection
+{
+
+    /**
+     * @OneToMany(targetEntity="ConfigValue", mappedBy="collection", cascade={"persist", "remove"})
+     **/
+    public $values;
+
+    public function __construct()
+    {
+        $this->values = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
+
+    public function getFormatter()
+    {
+        return new ConfigValueFormatter($this);
+    }
+
+    public function getType()
+    {
+        return 'config_value';
+    }
+
+    public function hasRecords()
+    {
+        return count($this->getValues());
+    }
+
+    public function getRecords()
+    {
+        return $this->getValues();
+    }
+
+    public function getTreeFormatter()
+    {
+        return false;
+    }
+
+    public function getRecordValidator(Batch $batch)
+    {
+        return false;
+    }
+
+
+
+
+
+}

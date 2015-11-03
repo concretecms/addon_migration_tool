@@ -21,8 +21,18 @@ class Page implements TypeInterface
 
     public function __construct()
     {
-        $this->attributeImporter = \Core::make('migration/manager/import/attribute');
+        $this->attributeImporter = \Core::make('migration/manager/import/attribute/value');
         $this->blockImporter = \Core::make('migration/manager/import/block');
+    }
+
+    public function hasPageNodes()
+    {
+        return isset($this->simplexml->pages->page);
+    }
+
+    public function getPageNodes()
+    {
+       return $this->simplexml->pages->page;
     }
 
     public function getObjectCollection(\SimpleXMLElement $element)
@@ -30,8 +40,8 @@ class Page implements TypeInterface
         $this->simplexml = $element;
         $i = 0;
         $collection = new PageObjectCollection();
-        if ($this->simplexml->pages->page) {
-            foreach($this->simplexml->pages->page as $node) {
+        if ($this->hasPageNodes()) {
+            foreach($this->getPageNodes() as $node) {
                 $page = $this->parsePage($node);
                 $page->setPosition($i);
                 $i++;
@@ -86,7 +96,7 @@ class Page implements TypeInterface
     {
         $attribute = new Attribute();
         $attribute->setHandle((string) $node['handle']);
-        $value = $this->attributeImporter->driver('unmapped')->parse($node);
+        $value = $this->attributeImporter->driver()->parse($node);
         $attribute->setAttributeValue($value);
         return $attribute;
     }
@@ -96,6 +106,7 @@ class Page implements TypeInterface
         $block = new Block();
         $block->setType((string) $node['type']);
         $block->setName((string) $node['name']);
+        $block->setDefaultsOutputIdentifier((string) $node['mc-block-id']);
         $value = $this->blockImporter->driver('unmapped')->parse($node);
         $block->setBlockValue($value);
         return $block;
@@ -121,6 +132,11 @@ class Page implements TypeInterface
             foreach($nodes as $blockNode) {
                 if ($blockNode['type']) {
                     $block = $this->parseBlock($blockNode);
+                } else if ($blockNode['mc-block-id'] != '') {
+                    $block = new Block();
+                    $block->setDefaultsOutputIdentifier((string) $blockNode['mc-block-id']);
+                }
+                if (isset($block)) {
                     $block->setPosition($i);
                     $block->setArea($area);
                     $area->blocks->add($block);

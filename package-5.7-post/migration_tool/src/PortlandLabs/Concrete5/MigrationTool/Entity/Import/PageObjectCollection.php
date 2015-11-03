@@ -3,7 +3,9 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
@@ -53,5 +55,20 @@ class PageObjectCollection extends ObjectCollection
         return count($this->getPages());
     }
 
+    public function getRecords()
+    {
+        return $this->getPages();
+    }
+
+
+    public function getTreeFormatter()
+    {
+        return new TreeJsonFormatter($this);
+    }
+
+    public function getRecordValidator(Batch $batch)
+    {
+        return \Core::make('migration/batch/page/validator', array($batch));
+    }
 
 }

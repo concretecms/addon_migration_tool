@@ -2,7 +2,6 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Page\Validator;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageValidator;
@@ -286,14 +285,6 @@ class Page implements PublishableInterface
     public function setPosition($position)
     {
         $this->position = $position;
-    }
-
-    /**
-     * @return Validator
-     */
-    public function getValidator()
-    {
-        return \Core::make('migration/batch/page/validator');
     }
 
     /**

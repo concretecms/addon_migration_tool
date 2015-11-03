@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTemplateFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
@@ -43,6 +44,22 @@ class PageTemplateObjectCollection extends ObjectCollection
     {
         return count($this->getTemplates());
     }
+
+    public function getRecords()
+    {
+        return $this->getTemplates();
+    }
+
+    public function getTreeFormatter()
+    {
+        return false;
+    }
+
+    public function getRecordValidator(Batch $batch)
+    {
+        return false;
+    }
+
 
 
 }

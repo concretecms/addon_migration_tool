@@ -75,6 +75,15 @@
                 <?=Loader::helper("form")->label('xml', t('XML File'))?>
                 <?=Loader::helper('form')->file('xml')?>
             </div>
+            <div class="form-group">
+                <?=Loader::helper("form")->label('method', t('Records'))?>
+                <div class="radio">
+                    <label><input type="radio" name="importMethod" value="replace" checked> <?=t('Replace all batch content.')?></label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="importMethod" value="append"> <?=t('Add content to batch.')?></label>
+                </div>
+            </div>
         </form>
         <div class="dialog-buttons">
             <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
@@ -102,6 +111,26 @@
         </div>
     </div>
 
+        <script type="text/javascript">
+            $(function() {
+                $.ajax({
+                    dataType: 'json',
+                    type: 'post',
+                    data: {
+                        'ccm_token': '<?=Core::make('token')->generate('validate_batch')?>',
+                        'id': '<?=$batch->getID()?>'},
+                    url: '<?=$view->action('validate_batch')?>',
+                    success: function(r) {
+                        if (r.alertclass && r.message) {
+                            $('#migration-batch-status').removeClass().addClass('alert ' + r.alertclass);
+                            $('#migration-batch-status').text(r.message);
+                        } else {
+                            $('#migration-batch-status').hide();
+                        }
+                    }
+                });
+            });
+        </script>
     <? foreach($batch->getObjectCollections() as $collection) {
         if ($collection->hasRecords()) {
             $formatter = $collection->getFormatter();
@@ -138,15 +167,3 @@
 
     });
 </script>
-
-
-<style type="text/css">
-    tr.migration-item-skipped td {
-        color: #ddd;
-        text-decoration: line-through;
-    }
-
-    table .launch-tooltip {
-        margin-left: 5px;
-    }
-</style>

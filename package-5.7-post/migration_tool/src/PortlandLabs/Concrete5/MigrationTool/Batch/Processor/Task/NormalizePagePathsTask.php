@@ -34,7 +34,7 @@ class NormalizePagePathsTask implements TaskInterface
         }
         $common = substr($this->paths[0], 0, $pl);
         $pages = $target->getBatch()->getPages();
-        if ($common) {
+        if ($common && count($pages) > 1) {
             $common = '/' . trim($common, '/');
             foreach($pages as $page) {
                 $newPath = substr($page->getOriginalPath(), strlen($common));

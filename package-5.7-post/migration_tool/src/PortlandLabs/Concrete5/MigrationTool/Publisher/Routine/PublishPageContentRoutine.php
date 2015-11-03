@@ -17,7 +17,7 @@ class PublishPageContentRoutine extends AbstractPageRoutine
     public function execute(Batch $batch)
     {
         $this->batch = $batch;
-        foreach($this->getPagesOrderedForImport($batch->getObjectCollection('page')) as $page) {
+        foreach($this->getPagesOrderedForImport($batch) as $page) {
 
             $concretePage = $this->getPageByPath($batch, $page->getBatchPath());
 

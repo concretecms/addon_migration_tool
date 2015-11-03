@@ -34,7 +34,7 @@ class BlockItem implements ItemInterface
 
     public function getIdentifier()
     {
-        return $this->block->getDefaultsOutputIdentifier() ? $this->block->getDefaultsOutputIdentifier() : $this->block->getType();
+        return $this->block->getType() ? $this->block->getType() : $this->block->getDefaultsOutputIdentifier();
     }
 
 }

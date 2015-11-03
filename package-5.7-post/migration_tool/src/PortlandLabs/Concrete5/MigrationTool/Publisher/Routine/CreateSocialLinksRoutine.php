@@ -16,7 +16,7 @@ class CreateSocialLinksRoutine implements RoutineInterface
         foreach($links->getLinks() as $link) {
             if (!$link->getPublisherValidator()->skipItem()) {
                 $l = new Link();
-                $l->setServiceHandle($link->getHandle());
+                $l->setServiceHandle($link->getService());
                 $l->setURL($link->getURL());
                 $l->save();
             }

@@ -3,6 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content;
 
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\ItemInterface;
+use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\PageFeedItem;
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\PageItem;
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\PageTypeItem;
 
@@ -19,6 +20,11 @@ class Factory
         if ($item instanceof PageItem) {
             $this->validator = new PageItemValidator();
         }
+
+        if ($item instanceof PageFeedItem) {
+            $this->validator = new PageFeedItemValidator();
+        }
+
 
         if ($item instanceof PageTypeItem) {
             $this->validator = new PageTypeItemValidator();

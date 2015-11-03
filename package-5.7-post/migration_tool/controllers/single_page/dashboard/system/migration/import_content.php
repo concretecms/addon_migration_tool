@@ -58,9 +58,7 @@ class ImportContent extends DashboardPageController
                 foreach($batch->getObjectCollections() as $collection) {
                     $this->entityManager->remove($collection);
                 }
-                $this->entityManager->flush();
-                $batch->setObjectCollections(null);
-                $this->entityManager->flush();
+                $batch->setObjectCollections(new ArrayCollection());
                 foreach($batch->getTargetItems() as $targetItem) {
                     $targetItem->setBatch(null);
                     $this->entityManager->remove($targetItem);

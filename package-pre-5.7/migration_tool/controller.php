@@ -7,7 +7,7 @@ class MigrationToolPackage extends Package
 
     protected $pkgHandle = 'migration_tool';
     protected $appVersionRequired = '5.5.0';
-    protected $pkgVersion = '0.5';
+    protected $pkgVersion = '0.6.1';
 
     public function getPackageDescription()
     {
@@ -23,7 +23,10 @@ class MigrationToolPackage extends Package
     {
         $pkg = parent::install();
         Loader::model('single_page');
-        $p = SinglePage::add('/dashboard/migrate', $pkg);
+        SinglePage::add('/dashboard/migration', $pkg);
+        SinglePage::add('/dashboard/migration/batches', $pkg);
+        SinglePage::add('/dashboard/migration/batches/add_pages', $pkg);
+        SinglePage::add('/dashboard/migration/batches/export', $pkg);
     }
 
 }

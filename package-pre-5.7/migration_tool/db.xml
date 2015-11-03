@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+
+	<table name="MigrationBatches">
+	
+		<field name="id" type="I">
+			<autoincrement />
+			<key />
+			<unsigned />
+		</field>
+
+		<field name="timestamp" type="T"></field>
+		<field name="description"  type="X"></field>
+		
+	</table>
+
+	<table name="MigrationBatchPages">
+
+		<field name="batchID" type="I">
+			<key />
+			<unsigned />
+		</field>
+
+		<field name="cID" type="I">
+			<key />
+			<unsigned />
+		</field>
+
+
+	</table>
+
+</schema>

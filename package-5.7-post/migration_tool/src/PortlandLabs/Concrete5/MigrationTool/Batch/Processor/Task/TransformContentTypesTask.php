@@ -30,7 +30,7 @@ class TransformContentTypesTask implements TaskInterface
             foreach($items as $entity) {
                 $item = $transformer->getItem($entity);
                 if (is_object($item)) {
-                    $targetItem = $targetItemList->getMatchedTargetItem($item);
+                    $targetItem = $targetItemList->getSelectedTargetItem($item);
                     if (is_object($targetItem)) {
                         if (!($targetItem instanceof UnmappedTargetItem || $target instanceof IgnoredTargetItem)) {
                             $transformer->transform($entity, $item, $targetItem, $batch);

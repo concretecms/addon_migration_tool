@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
 
 use Concrete\Core\Foundation\Processor\ActionInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
+use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute;
@@ -26,25 +27,27 @@ class ValidateAttributesTask implements TaskInterface
         foreach($subject->getAttributes() as $attribute) {
             $item = new Item($attribute->getAttribute()->getHandle());
             $targetItem = $targetItemList->getSelectedTargetItem($item);
-            if ($targetItem instanceof UnmappedTargetItem) {
-                $action->getTarget()->addMessage(
-                    new Message(t('Attribute <strong>%s</strong> does not exist.', $item->getIdentifier()), Message::E_WARNING)
-                );
-            }
+            if (!($targetItem instanceof IgnoredTargetItem)) {
+                if ($targetItem instanceof UnmappedTargetItem) {
+                    $action->getTarget()->addMessage(
+                        new Message(t('Attribute <strong>%s</strong> does not exist.', $item->getIdentifier()), Message::E_WARNING)
+                    );
+                }
 
-            $value = $attribute->getAttribute()->getAttributeValue();
-            if ($value instanceof ImportedAttributeValue) {
-                $action->getTarget()->addMessage(
-                    new Message(t('Attribute <strong>%s</strong> could not be mapped to a known attribute type. It may not be fully imported.', $item->getIdentifier()), Message::E_WARNING)
-                );
-            }
+                $value = $attribute->getAttribute()->getAttributeValue();
+                if ($value instanceof ImportedAttributeValue) {
+                    $action->getTarget()->addMessage(
+                        new Message(t('Attribute <strong>%s</strong> could not be mapped to a known attribute type. It may not be fully imported.', $item->getIdentifier()), Message::E_WARNING)
+                    );
+                }
 
-            $validator = $value->getRecordValidator($target->getBatch());
-            if (is_object($validator)) {
-                $r = $validator->validate($value);
-                if (is_object($r)) {
-                    foreach($r as $message) {
-                        $action->getTarget()->addMessage($message);
+                $validator = $value->getRecordValidator($target->getBatch());
+                if (is_object($validator)) {
+                    $r = $validator->validate($value);
+                    if (is_object($r)) {
+                        foreach($r as $message) {
+                            $action->getTarget()->addMessage($message);
+                        }
                     }
                 }
             }

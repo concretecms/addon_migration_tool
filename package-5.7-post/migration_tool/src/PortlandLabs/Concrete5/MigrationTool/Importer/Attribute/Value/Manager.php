@@ -47,6 +47,11 @@ class Manager extends \Concrete\Core\Support\Manager
         return new StandardImporter();
     }
 
+    public function createNumberDriver()
+    {
+        return new StandardImporter();
+    }
+
     public function createSelectDriver()
     {
         return new SelectImporter();

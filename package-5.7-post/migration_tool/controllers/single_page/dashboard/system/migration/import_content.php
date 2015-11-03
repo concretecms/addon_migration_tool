@@ -335,6 +335,8 @@ class ImportContent extends DashboardPageController
                 $this->entityManager->persist($batchTargetItem);
             }
 
+            $this->entityManager->flush();
+
             $target = new Target($batch);
             $processor = new Processor($target);
             $processor->registerTask(new TransformContentTypesTask());

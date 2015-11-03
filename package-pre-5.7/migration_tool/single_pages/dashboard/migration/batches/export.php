@@ -6,6 +6,8 @@ $form = Loader::helper('form');
 
 <?=Loader::helper('concrete/dashboard')->getDashboardPaneHeaderWrapper(t('Export Batch'))?>
 
+    <a href="<?=View::url('/dashboard/migration/batches', 'view_batch', $batch->getID())?>">&lt; <?=t('Back to Batch')?></a>
+
 <? if (count($files)) { ?>
 
     <script type="text/javascript">

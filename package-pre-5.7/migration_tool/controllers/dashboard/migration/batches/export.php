@@ -29,7 +29,8 @@ class DashboardMigrationBatchesExportController extends DashboardBaseController
 
             $exporter = $batch->getExporter();
             $xml = $exporter->getContentXML();
-            header('Content-Type: text/xml');
+            header('Content-disposition: attachment; filename="export.xml"');
+            header('Content-type: "text/xml"; charset="utf8"');
             print $xml;
             exit;
         } else {

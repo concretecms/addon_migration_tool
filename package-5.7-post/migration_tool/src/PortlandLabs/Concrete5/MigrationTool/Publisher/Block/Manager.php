@@ -1,6 +1,6 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Importer\Block;
+namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Block;
 
 use Concrete\Core\Support\Manager as CoreManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Block\Importer;
@@ -22,18 +22,23 @@ class Manager extends CoreManager
 
     public function getDefaultDriver()
     {
-        return 'unmapped';
-    }
-
-    public function createUnmappedDriver()
-    {
-        return new Importer();
+        return 'standard';
     }
 
     public function createStandardDriver()
     {
-        return new StandardImporter();
+        return new StandardPublisher();
     }
+
+    public function __construct($app)
+    {
+        parent::__construct($app);
+        $this->extend('content', function() {
+            return new ContentPublisher();
+        });
+    }
+
+
 
 
 }

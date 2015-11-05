@@ -8,7 +8,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="value_type", type="string")
  * @DiscriminatorMap( {
- * "content" = "ContentBlockValue",
  * "standard" = "StandardBlockValue",
  * "imported" = "ImportedBlockValue"} )
  */

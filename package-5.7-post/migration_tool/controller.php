@@ -28,6 +28,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\PageType\PublishTarget\Manager
 use PortlandLabs\Concrete5\MigrationTool\Importer\Block\Manager as BlockManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Manager as ImportManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherManager;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager as BlockPublisherManager;
 
 use SinglePage;
 
@@ -144,6 +145,10 @@ class Controller extends Package
         \Core::bindShared('migration/manager/publisher', function ($app) {
             return new PublisherManager($app);
         });
+        \Core::bindShared('migration/manager/publisher/block', function ($app) {
+            return new BlockPublisherManager($app);
+        });
+
 
         $al = AssetList::getInstance();
         $al->register(

@@ -11,7 +11,9 @@ class BatchRepository extends EntityRepository
     {
         $query = $this->getEntityManager()->createQuery('select b from \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch b inner join PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection o where o.id = :id');
         $query->setParameter('id', $collection->getID());
-        return $query->getSingleResult();
+        // I don't know why this is returning multiple results. Something off about the join.
+        $r = $query->getResult();
+        return $r[0];
     }
 
 

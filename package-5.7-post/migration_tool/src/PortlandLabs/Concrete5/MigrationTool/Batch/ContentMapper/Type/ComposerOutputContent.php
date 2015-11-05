@@ -54,14 +54,14 @@ class ComposerOutputContent implements MapperInterface
         ));
 
         $items = array();
-        $ids = array();
+        $handles = array();
         foreach($types as $type) {
-            if (!in_array($type->getItemID(), $ids)) {
-                $ids[] = $type->getItemID();
+            if (!in_array($type->getItemID(), $handles)) {
+                $handles[] = $type->getItemID();
             }
         }
-        foreach($ids as $id) {
-            $type = Type::getByID($id);
+        foreach($handles as $handle) {
+            $type = Type::getByHandle($handle);
             if (is_object($type)) {
                 $items = array_merge($items, $this->getPageTypeComposerOutputContentItems($type));
             }

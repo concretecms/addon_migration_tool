@@ -5,6 +5,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\StandardFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\StandardInspector;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\StandardPublisher;
 
 /**
@@ -26,7 +27,9 @@ class StandardBlockValue extends BlockValue
 
     public function getPublisher()
     {
-        return new StandardPublisher();
+        $manager = \Core::make('migration/manager/publisher/block');
+        $type = $this->getBlock()->getType();
+        return $manager->driver($type);
     }
 
     /**

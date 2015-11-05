@@ -61,7 +61,7 @@ class PageType implements MapperInterface
         $type = Type::getByHandle($item->getIdentifier());
         if (is_object($type)) {
             $targetItem = new TargetItem($this);
-            $targetItem->setItemId($type->getPageTypeID());
+            $targetItem->setItemId($type->getPageTypeHandle());
             $targetItem->setItemName($type->getPageTypeDisplayName());
             return $targetItem;
         } else {
@@ -103,7 +103,7 @@ class PageType implements MapperInterface
         $items = array();
         foreach($types as $type) {
             $item = new TargetItem($this);
-            $item->setItemId($type->getPageTypeID());
+            $item->setItemId($type->getPageTypeHandle());
             $item->setItemName($type->getPageTypeDisplayName());
             $items[] = $item;
         }
@@ -112,7 +112,7 @@ class PageType implements MapperInterface
 
     public function getTargetItemContentObject(TargetItemInterface $targetItem)
     {
-        return Type::getByID($targetItem->getItemID());
+        return Type::getByHandle($targetItem->getItemID());
     }
 
 

@@ -21,7 +21,9 @@ class StandardPublisher implements PublisherInterface
         if (count($records) == 1) {
             $data = array();
             foreach($records[0]->getData() as $key => $value) {
-                $data[$key] = ContentImporter::getValue($value);
+                $inspector = new ContentImporter\ValueInspector\ValueInspector($value);
+                $data[$key] = $inspector->getReplacedValue();
+                unset($inspector);
             }
             $b = $page->addBlock($bt, $area->getName(), $data);
         } else if (count($records) > 1) {
@@ -42,7 +44,9 @@ class StandardPublisher implements PublisherInterface
                     $aar = new BlockRecord($record->getTable());
                     $aar->bID = $b->getBlockID();
                     foreach ($record->getData() as $key => $value) {
-                        $aar->{$key} = ContentImporter::getValue($value);
+                        $inspector = new ContentImporter\ValueInspector\ValueInspector($value);
+                        $aar->{$key} = $inspector->getReplacedValue();
+                        unset($inspector);
                     }
                     $aar->Save();
                 }

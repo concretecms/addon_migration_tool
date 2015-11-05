@@ -12,6 +12,11 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\CIFPublisher;
 class ImportedBlockValue extends BlockValue
 {
 
+    /**
+     * @Column(type="text", nullable=true)
+     */
+    protected $value;
+
     public function getValue()
     {
         return $this->value;

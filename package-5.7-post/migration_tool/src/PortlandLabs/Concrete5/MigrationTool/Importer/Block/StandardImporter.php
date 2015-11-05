@@ -10,9 +10,14 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class StandardImporter implements ImporterInterface
 {
+    public function createBlockValueObject()
+    {
+        return new StandardBlockValue();
+    }
+
     public function parse(\SimpleXMLElement $node)
     {
-        $value = new StandardBlockValue();
+        $value = $this->createBlockValueObject();
         $position = 0;
         foreach ($node->data as $data) {
             foreach($data->record as $record) {

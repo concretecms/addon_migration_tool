@@ -25,7 +25,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Key\Manager as Attri
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Category\Manager as AttributeCategoryManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Permission\AccessEntity\Manager as AccessEntityManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\PageType\PublishTarget\Manager as PublishTargetManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Manager\BlockManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Block\Manager as BlockManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Manager as ImportManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherManager;
 

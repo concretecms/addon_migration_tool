@@ -52,13 +52,26 @@ class Page implements TypeInterface
         return $collection;
     }
 
+    protected function convertPath($path)
+    {
+        $parts = explode('/', $path);
+        $full = '';
+        foreach($parts as $part) {
+            $txt = \Core::make('helper/text');
+            $part = $txt->slugSafeString($part);
+            $part = str_replace('-', \Config::get('concrete.seo.page_path_separator'), $part);
+            $full .= $part . '/';
+        }
+
+        return rtrim($full, '/');
+    }
 
     protected function parsePage($node)
     {
         $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
         $page->setName((string) html_entity_decode($node['name']));
         $page->setPublicDate((string) $node['public-date']);
-        $page->setOriginalPath((string) $node['path']);
+        $page->setOriginalPath($this->convertPath((string) $node['path']));
         if (isset($node['package'])) {
             $page->setPackage((string) $node['package']);
         }
@@ -107,7 +120,7 @@ class Page implements TypeInterface
         $block->setType((string) $node['type']);
         $block->setName((string) $node['name']);
         $block->setDefaultsOutputIdentifier((string) $node['mc-block-id']);
-        $value = $this->blockImporter->driver('unmapped')->parse($node);
+        $value = $this->blockImporter->driver()->parse($node);
         $block->setBlockValue($value);
         return $block;
     }

@@ -29,7 +29,7 @@ class AddressPublisher implements PublisherInterface
         $value->country = $address->getCountry();
         $value->state_province = $address->getStateProvince();
         $value->postal_code = $address->getPostalCode();
-        $page->setAttribute($address->getAttribute()->getHandle(), $value);
+        $page->setAttribute($ak->getAttributeKeyHandle(), $value);
     }
 
 }

@@ -19,7 +19,7 @@ class SocialLinksPublisher implements PublisherInterface
         foreach($links as $link) {
             $r[$link['service']] = $link['detail'];
         }
-        $page->setAttribute($value->getAttribute()->getHandle(), $r);
+        $page->setAttribute($ak->getAttributeKeyHandle(), $r);
     }
 
 }

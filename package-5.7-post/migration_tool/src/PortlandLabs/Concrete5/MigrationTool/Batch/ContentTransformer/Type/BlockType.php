@@ -39,21 +39,41 @@ class BlockType implements TransformerInterface
 
     public function transform($entity, ItemInterface $item, TargetItem $targetItem, Batch $batch)
     {
-        $bt = CoreBlockType::getByID($targetItem->getItemId());
+        $mapper = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType();
+        $bt = $mapper->getTargetItemContentObject($targetItem);
         if (is_object($bt)) {
-            $manager = \Core::make('migration/manager/import/block');
-            $driver = $manager->driver($bt->getBlockTypeHandle());
-            $value = null;
-            if ($entity->getValue()) {
-                $xml = simplexml_load_string($entity->getValue());
-                $value = $driver->parse($xml);
+            $type = $bt->getBlockTypeHandle();
+        } else {
+            $collection = $batch->getObjectCollection('block_type');
+            foreach($collection->getTypes() as $blockType) {
+                if ($blockType->getHandle() == $item->getIdentifier()) {
+                    $type = $blockType->getType();
+                    break;
+                }
             }
-            $block = $entity->getBlock();
-            $block->setBlockValue($value);
-            $manager = \ORM::entityManager('migration_tools');
-            $manager->persist($block);
-            $manager->remove($entity);
-            $manager->flush();
+        }
+
+        if (isset($type)) {
+            $manager = \Core::make('migration/manager/import/block');
+            try {
+                $driver = $manager->driver($type);
+            } catch(\Exception $e) {
+
+            }
+
+            if (isset($driver)) {
+                $value = null;
+                if ($entity->getValue()) {
+                    $xml = simplexml_load_string($entity->getValue());
+                    $value = $driver->parse($xml);
+                }
+                $block = $entity->getBlock();
+                $block->setBlockValue($value);
+                $manager = \ORM::entityManager('migration_tools');
+                $manager->persist($block);
+                $manager->remove($entity);
+                $manager->flush();
+            }
         }
     }
 

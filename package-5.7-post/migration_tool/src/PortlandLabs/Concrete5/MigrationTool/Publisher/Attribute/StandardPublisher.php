@@ -17,7 +17,7 @@ class StandardPublisher implements PublisherInterface
     {
         $inspector = new ValueInspector($value->getValue());
         $content = $inspector->getReplacedContent();
-        $page->setAttribute($value->getAttribute()->getHandle(), $content);
+        $page->setAttribute($ak->getAttributeKeyHandle(), $content);
     }
 
 }

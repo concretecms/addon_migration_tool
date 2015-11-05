@@ -15,7 +15,7 @@ class CIFPublisher implements PublisherInterface
     public function publish(CollectionKey $ak, Page $page, AttributeValue $value)
     {
         $node = simplexml_load_string($value->getValue());
-        $page->setAttribute($value->getAttribute()->getHandle(), $ak->getController()->importValue($node));
+        $page->setAttribute($ak->getAttributeKeyHandle(), $ak->getController()->importValue($node));
     }
 
 }

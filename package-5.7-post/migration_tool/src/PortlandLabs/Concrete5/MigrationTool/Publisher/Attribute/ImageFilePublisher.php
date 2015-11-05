@@ -20,7 +20,7 @@ class ImageFilePublisher implements PublisherInterface
         $content = $inspector->getMatchedItem(); // file object
         if (is_object($content) && $content instanceof FileItem) {
             $file = $content->getContentObject();
-            $page->setAttribute($value->getAttribute()->getHandle(), $file);
+            $page->setAttribute($ak->getAttributeKeyHandle(), $file);
         }
     }
 

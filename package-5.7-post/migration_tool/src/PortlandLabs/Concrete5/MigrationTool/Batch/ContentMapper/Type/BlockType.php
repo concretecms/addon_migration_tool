@@ -83,7 +83,7 @@ class BlockType implements MapperInterface
         $bt = \Concrete\Core\Block\BlockType\BlockType::getByHandle($item->getIdentifier());
         if (is_object($bt)) {
             $targetItem = new TargetItem($this);
-            $targetItem->setItemId($bt->getBlockTypeID());
+            $targetItem->setItemId($bt->getBlockTypeHandle());
             $targetItem->setItemName($bt->getBlockTypeName());
             return $targetItem;
         } else { // we check the current batch.
@@ -125,7 +125,7 @@ class BlockType implements MapperInterface
         $items = array();
         foreach($types as $type) {
             $item = new TargetItem($this);
-            $item->setItemId($type->getBlockTypeID());
+            $item->setItemId($type->getBlockTypeHandle());
             $item->setItemName($type->getBlockTypeName());
             $items[] = $item;
         }
@@ -134,6 +134,6 @@ class BlockType implements MapperInterface
 
     public function getTargetItemContentObject(TargetItemInterface $targetItem)
     {
-        return \Concrete\Core\Block\BlockType\BlockType::getByID($targetItem->getItemID());
+        return \Concrete\Core\Block\BlockType\BlockType::getByHandle($targetItem->getItemID());
     }
 }

@@ -102,6 +102,7 @@
         <p><?=$batch->getNotes()?></p>
     <? } ?>
 
+
     <? if ($batch->hasRecords()) { ?>
 
     <h3><?=t('Status')?></h3>
@@ -124,6 +125,21 @@
                         if (r.alertclass && r.message) {
                             $('#migration-batch-status').removeClass().addClass('alert ' + r.alertclass);
                             $('#migration-batch-status').text(r.message);
+                            var tab = $('#ccm-tab-content-errors');
+                            if (r.messages && r.messages.length) {
+                                var html = '<ul id="ccm-migration-batch-bulk-errors" class="list-unstyled">';
+                                for (i = 0; i < r.messages.length; i++) {
+                                    var message = r.messages[i];
+                                    html += '<li class="text-' + message.levelClass + '">';
+                                    html += '<i class="' + message.iconClass + '"></i> ';
+                                    html += message.text;
+                                    html += '</li>';
+                                }
+                                html += '</ul>';
+                                tab.html(html);
+                            } else {
+                                tab.html('<p><?=t('None')?></p>');
+                            }
                         } else {
                             $('#migration-batch-status').hide();
                         }
@@ -131,6 +147,15 @@
                 });
             });
         </script>
+
+        <?=Core::make('helper/concrete/ui')->tabs(array(
+            array('batch-content', t('Content'), true),
+            array('errors', t('Errors'))
+        ))?>
+
+
+        <div class="ccm-tab-content" id="ccm-tab-content-batch-content">
+
     <? foreach($batch->getObjectCollections() as $collection) {
         if ($collection->hasRecords()) {
             $formatter = $collection->getFormatter();
@@ -141,10 +166,20 @@
         <? } ?>
     <? } ?>
 
+        </div>
+
+        <div class="ccm-tab-content" id="ccm-tab-content-errors">
+            <i class="fa fa-spin fa-refresh"></i>
+            <?=t('Loading Errors...')?>
+        </div>
+
+
     <?
     } else { ?>
         <p><?=t('This content batch is empty.')?></p>
     <? } ?>
+
+
 
 
 
@@ -167,3 +202,20 @@
 
     });
 </script>
+
+<style type="text/css">
+    div#ccm-tab-content-batch-content {
+        padding-top: 0px;
+    }
+    #ccm-migration-batch-bulk-errors li {
+        position: relative;
+        padding-left: 35px
+    }
+    #ccm-migration-batch-bulk-errors li i {
+        position: absolute;
+        top: 5px;
+        left: 0px;
+        width: 30px;
+        text-align: center;
+    }
+</style>

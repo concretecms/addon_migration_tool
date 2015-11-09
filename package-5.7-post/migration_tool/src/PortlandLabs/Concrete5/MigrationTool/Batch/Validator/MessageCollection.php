@@ -6,12 +6,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class MessageCollection extends ArrayCollection
+class MessageCollection extends ArrayCollection implements \JsonSerializable
 {
 
     public function getFormatter()
     {
         return new MessageCollectionFormatter($this);
+    }
+
+    public function jsonSerialize()
+    {
+        $result = array();
+        foreach($this as $message) {
+            $result[] = $message;
+        }
+        return $result;
     }
 
     public function addMessages(MessageCollection $collection = null)

@@ -364,6 +364,11 @@ class ImportContent extends DashboardPageController
                 $formatter = $validator->getFormatter($messages);
                 $data['alertclass'] = $formatter->getAlertClass();
                 $data['message'] = $formatter->getCreateStatusMessage();
+                $messageObjects = array();
+                foreach(array_unique($messages->toArray()) as $message) {
+                    $messageObjects[] = $message;
+                }
+                $data['messages'] = $messageObjects;
                 return new JsonResponse($data);
             }
         }

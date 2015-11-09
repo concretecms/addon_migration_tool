@@ -8,7 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class Message
+class Message implements \JsonSerializable
 {
 
     const E_INFO = 1;
@@ -65,6 +65,12 @@ class Message
     public function __toString()
     {
         return $this->text;
+    }
+
+    public function jsonSerialize()
+    {
+        $formatter = new MessageJsonFormatter($this);
+        return $formatter->jsonSerialize();
     }
 
 }

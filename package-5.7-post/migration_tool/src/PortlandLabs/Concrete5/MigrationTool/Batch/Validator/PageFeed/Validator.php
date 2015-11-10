@@ -2,7 +2,6 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageFeed;
 
-use Concrete\Core\Backup\ContentImporter\ValueInspector\ValueInspector;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AbstractValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ItemValidatorInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;

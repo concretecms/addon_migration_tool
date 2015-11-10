@@ -16,10 +16,12 @@ class ImageFilePublisher implements PublisherInterface
 
     public function publish(CollectionKey $ak, Page $page, AttributeValue $value)
     {
-        $inspector = new ValueInspector($value->getValue());
-        $content = $inspector->getMatchedItem(); // file object
-        if (is_object($content) && $content instanceof FileItem) {
-            $file = $content->getContentObject();
+        $inspector = \Core::make('import/value_inspector');
+        $result = $inspector->inspect($value->getValue());
+        $items = $result->getMatchedItems();
+
+        if (isset($items[0]) && $items[0] instanceof FileItem) {
+            $file = $items[0]->getContentObject();
             $page->setAttribute($ak->getAttributeKeyHandle(), $file);
         }
     }

@@ -27,6 +27,8 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\Permission\AccessEntity\Manage
 use PortlandLabs\Concrete5\MigrationTool\Importer\PageType\PublishTarget\Manager as PublishTargetManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Block\Manager as BlockManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Manager as ImportManager;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspector\InspectionRoutine\BatchPageRoutine;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspector\ValueInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager as BlockPublisherManager;
 
@@ -147,6 +149,12 @@ class Controller extends Package
         });
         \Core::bindShared('migration/manager/publisher/block', function ($app) {
             return new BlockPublisherManager($app);
+        });
+
+        \Core::bind('migration/import/value_inspector', function($app, $args) {
+            $inspector = $app->make('import/value_inspector');
+            $inspector->registerInspectionRoutine(new BatchPageRoutine($args[0]));
+            return $inspector;
         });
 
 

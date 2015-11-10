@@ -46,7 +46,7 @@ class PublishPageContentRoutine extends AbstractPageRoutine
                     if (is_object($bt)) {
                         $value = $block->getBlockValue();
                         $publisher = $value->getPublisher();
-                        $b = $publisher->publish($bt, $concretePage, $area, $value);
+                        $b = $publisher->publish($batch, $bt, $concretePage, $area, $value);
                         if (in_array($bt->getBlockTypeHandle(), $controlHandles)) {
                             $blockSubstitutes[$bt->getBlockTypeHandle()] = $b;
                         }

@@ -30,7 +30,7 @@ class PublishStackContentRoutine extends AbstractPageRoutine
                             $publisher = $value->getPublisher();
                             $area = new Area();
                             $area->setName(STACKS_AREA_NAME);
-                            $publisher->publish($bt, $s, $area, $value);
+                            $publisher->publish($batch, $bt, $s, $area, $value);
                         }
                     }
                 }

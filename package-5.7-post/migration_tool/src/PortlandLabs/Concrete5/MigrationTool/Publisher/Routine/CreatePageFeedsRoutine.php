@@ -14,13 +14,13 @@ class CreatePageFeedsRoutine implements RoutineInterface
 
     public function execute(Batch $batch)
     {
-
+        $inspector = \Core::make('import/value_inspector');
         $feeds = $batch->getObjectCollection('page_feed');
         foreach($feeds->getFeeds() as $feed) {
             if (!$feed->getPublisherValidator()->skipItem()) {
                 $f = new Feed();
-                $parentID = intval(id(new ValueInspector($feed->getParent()))->getReplacedContent());
-                $pageType = intval(id(new ValueInspector($feed->getPageType()))->getReplacedContent());
+                $parentID = intval($inspector->inspect($feed->getParent())->getReplacedValue());
+                $pageType = intval($inspector->inspect($feed->getPageType())->getReplacedValue());
                 $f->setTitle($feed->getTitle());
                 $f->setHandle($feed->getHandle());
                 $f->setDescription($feed->getDescription());

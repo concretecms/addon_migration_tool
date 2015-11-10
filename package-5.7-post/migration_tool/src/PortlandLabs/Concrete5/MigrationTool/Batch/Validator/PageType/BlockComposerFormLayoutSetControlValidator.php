@@ -2,7 +2,6 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType;
 
-use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\PageTypeItem;
 use Concrete\Core\User\Group\Group;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;

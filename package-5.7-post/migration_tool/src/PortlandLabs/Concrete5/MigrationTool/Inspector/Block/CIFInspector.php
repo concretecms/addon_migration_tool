@@ -21,9 +21,11 @@ class CIFInspector implements InspectorInterface
 
     public function getMatchedItems()
     {
-        $content = $this->value->getValue();
-        $inspector = new ValueInspector($content);
-        return $inspector->getMatchedItems();
+        $value = $this->value->getValue();
+        $inspector = \Core::make('import/value_inspector');
+        $result = $inspector->inspect($value);
+        $items = $result->getMatchedItems();
+        return $items;
     }
 
 }

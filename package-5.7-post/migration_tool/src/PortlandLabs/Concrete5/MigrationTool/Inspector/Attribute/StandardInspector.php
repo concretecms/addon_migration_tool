@@ -22,8 +22,9 @@ class StandardInspector implements InspectorInterface
     public function getMatchedItems()
     {
         $value = $this->value->getValue();
-        $inspector = new ValueInspector($value);
-        $items = $inspector->getMatchedItems();
+        $inspector = \Core::make('import/value_inspector');
+        $result = $inspector->inspect($value);
+        $items = $result->getMatchedItems();
         return $items;
     }
 }

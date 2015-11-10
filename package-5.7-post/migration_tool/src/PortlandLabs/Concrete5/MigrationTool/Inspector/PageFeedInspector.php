@@ -19,12 +19,11 @@ class PageFeedInspector implements InspectorInterface
 
     public function getMatchedItems()
     {
-        $inspector = new ValueInspector($this->feed->getPageType());
-        $items = array();
-        $items = array_merge($items, $inspector->getMatchedItems());
-
-        $inspector = new ValueInspector($this->feed->getParent());
-        $items = array_merge($items, $inspector->getMatchedItems());
+        $inspector = \Core::make('import/value_inspector');
+        $result = $inspector->inspect($this->feed->getPageType());
+        $items = $result->getMatchedItems();
+        $result = $inspector->inspect($this->feed->getParent());
+        $items = array_merge($items, $result->getMatchedItems());
 
         return $items;
     }

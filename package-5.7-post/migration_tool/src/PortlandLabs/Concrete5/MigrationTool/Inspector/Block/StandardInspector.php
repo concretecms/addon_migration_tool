@@ -20,13 +20,14 @@ class StandardInspector implements InspectorInterface
 
     public function getMatchedItems()
     {
+        $inspector = \Core::make('import/value_inspector');
         $content = $this->value->getRecords();
         $items = array();
         foreach($content as $record) {
             $data = $record->getData();
             foreach($data as $value) {
-                $inspector = new ValueInspector($value);
-                $items = array_merge($items, $inspector->getMatchedItems());
+                $result = $inspector->inspect($value);
+                $items = array_merge($items, $result->getMatchedItems());
             }
         }
         return $items;

@@ -15,8 +15,9 @@ class StandardPublisher implements PublisherInterface
 
     public function publish(CollectionKey $ak, Page $page, AttributeValue $value)
     {
-        $inspector = new ValueInspector($value->getValue());
-        $content = $inspector->getReplacedContent();
+        $inspector = \Core::make('import/value_inspector');
+        $result = $inspector->inspect($value->getValue());
+        $content = $result->getReplacedContent();
         $page->setAttribute($ak->getAttributeKeyHandle(), $content);
     }
 

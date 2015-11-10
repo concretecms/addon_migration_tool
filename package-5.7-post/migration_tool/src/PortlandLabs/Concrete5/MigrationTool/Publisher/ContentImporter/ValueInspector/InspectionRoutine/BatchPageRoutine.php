@@ -18,7 +18,14 @@ class BatchPageRoutine extends PageRoutine
 
     public function getItem($identifier)
     {
-        return new PageItem($identifier);
+        $item = new PageItem($identifier);
+        if ($item->getContentObject()) {
+            return $item;
+        }
+
+        $path = '/!import_batches/' . $this->batch->getID() . $identifier;
+        $item = new PageItem($path);
+        return $item;
     }
 
 

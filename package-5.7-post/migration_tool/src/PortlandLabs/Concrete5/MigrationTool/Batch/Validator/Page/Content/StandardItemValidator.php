@@ -21,7 +21,7 @@ class StandardItemValidator implements ValidatorInterface
     public function addMissingItemMessage(ItemInterface $item, MessageCollection $messages)
     {
         $messages->add(
-            new Message(t('%s content item %s cannot be found', $item->getDisplayName(), $item->getReference()))
+            new Message(t('%s content item %s cannot be found', $item->getDisplayName(), $item->getReference()), Message::E_WARNING)
         );
     }
 

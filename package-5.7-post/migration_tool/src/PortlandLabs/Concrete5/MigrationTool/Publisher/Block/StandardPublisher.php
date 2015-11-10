@@ -27,7 +27,6 @@ class StandardPublisher implements PublisherInterface
             }
             $b = $page->addBlock($bt, $area->getName(), $data);
         } else if (count($records) > 1) {
-            $objectRecord = false;
             foreach($records as $record) {
                 if (strcasecmp($record->getTable(), $bt->getController()->getBlockTypeDatabaseTable()) == 0) {
                     // This is the data record.

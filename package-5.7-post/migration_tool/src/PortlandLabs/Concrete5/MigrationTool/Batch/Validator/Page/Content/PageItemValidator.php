@@ -19,7 +19,7 @@ class PageItemValidator implements ValidatorInterface
         }
 
         foreach($batch->getPages() as $page) {
-            if ($page->getBatchPath() == $item->getFieldValue()) {
+            if ($page->getBatchPath() == $item->getReference()) {
                 return true;
             }
         }
@@ -28,7 +28,7 @@ class PageItemValidator implements ValidatorInterface
     public function addMissingItemMessage(ItemInterface $item, MessageCollection $messages)
     {
         $messages->add(
-            new Message(t('Referenced page at path %s cannot be found in the site or in the current content batch.', $item->getReference()))
+            new Message(t('Referenced page at path %s cannot be found in the site or in the current content batch.', $item->getReference()), Message::E_WARNING)
         );
     }
 

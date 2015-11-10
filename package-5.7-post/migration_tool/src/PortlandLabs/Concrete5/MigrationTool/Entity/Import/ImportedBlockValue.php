@@ -45,5 +45,4 @@ class ImportedBlockValue extends BlockValue
         return new CIFInspector($this);
     }
 
-
 }

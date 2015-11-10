@@ -4,6 +4,8 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task;
 
 use Concrete\Core\Foundation\Processor\ActionInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
+use Doctrine\DBAL\Logging\EchoSQLLogger;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ImportedBlockValue;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -21,6 +23,7 @@ class NormalizePagePathsTask implements TaskInterface
 
     public function finish(ActionInterface $action)
     {
+        $entityManager = \ORM::entityManager();
         $target = $action->getTarget();
         $pl = 0;
         $n = count($this->paths);
@@ -34,11 +37,33 @@ class NormalizePagePathsTask implements TaskInterface
         }
         $common = substr($this->paths[0], 0, $pl);
         $pages = $target->getBatch()->getPages();
+
+       // $entityManager->getConnection()->getConfiguration()->setSQLLogger(new EchoSQLLogger());
+
         if ($common && count($pages) > 1) {
             $common = '/' . trim($common, '/');
+            $contentSearchURL = "/\{ccm:export:page:" . preg_quote($common, '/') . "(.*?)\}/i";
+            $contentReplaceURL = "{ccm:export:page:$1}";
             foreach($pages as $page) {
-                $newPath = substr($page->getOriginalPath(), strlen($common));
+                $originalPath = $page->getOriginalPath();
+                $newPath = substr($originalPath, strlen($common));
                 $page->setBatchPath($newPath);
+
+                $areas = $page->getAreas();
+                foreach($areas as $area) {
+                    $blocks = $area->getBlocks();
+                    foreach($blocks as $block) {
+                        $value = $block->getBlockValue();
+                        if ($value instanceof ImportedBlockValue) {
+                            $content = preg_replace($contentSearchURL, $contentReplaceURL, $value->getValue());
+                            $query = $entityManager->createQuery("update \PortlandLabs\Concrete5\MigrationTool\Entity\Import\ImportedBlockValue v
+                            set v.value = :value where v.id = :primary");
+                            $query->setParameter('primary', $value->getID());
+                            $query->setParameter('value', $content);
+                            $query->execute();
+                        }
+                    }
+                }
             }
         } else {
             foreach($pages as $page) {

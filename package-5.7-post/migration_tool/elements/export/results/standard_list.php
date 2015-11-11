@@ -1,6 +1,8 @@
 <?
 defined('C5_EXECUTE') or die(_("Access Denied."));
 ?>
+<? if (count($results)) { ?>
+
 <table class="migration-table table table-bordered table-striped">
     <thead>
     <tr>
@@ -24,3 +26,9 @@ defined('C5_EXECUTE') or die(_("Access Denied."));
     <? } ?>
     </tbody>
 </table>
+
+<? } else { ?>
+
+    <p><?=t('No results found.')?></p>
+
+<? } ?>

@@ -44,6 +44,11 @@ class Manager extends CoreManager
         return new PageType();
     }
 
+    protected function createPageDriver()
+    {
+        return new Page();
+    }
+
     public function __construct()
     {
         $this->driver('attribute_key');
@@ -52,6 +57,7 @@ class Manager extends CoreManager
         $this->driver('single_page');
         $this->driver('page_type');
         $this->driver('page_template');
+        $this->driver('page');
         $this->driver('theme');
     }
 }

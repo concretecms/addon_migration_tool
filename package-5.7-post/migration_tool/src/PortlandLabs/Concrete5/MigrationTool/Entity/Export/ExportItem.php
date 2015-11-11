@@ -18,6 +18,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidat
  * "job" = "Job",
  * "single_page" = "SinglePage",
  * "theme" = "Theme",
+ * "page" = "Page",
  * "page_type" = "PageType",
  * "page_template" = "PageTemplate",
  * })

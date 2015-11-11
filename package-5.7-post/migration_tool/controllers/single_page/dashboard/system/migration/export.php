@@ -6,6 +6,7 @@ use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection;
+use PortlandLabs\Concrete5\MigrationTool\Exporter\Exporter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Export extends DashboardPageController
@@ -72,6 +73,39 @@ class Export extends DashboardPageController
             $this->view();
         }
     }
+
+    public function export_batch($id = null)
+    {
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch');
+        $batch = $r->findOneById($id);
+        if (is_object($batch)) {
+            $this->set('batch', $batch);
+            $this->set('pageTitle', t('Export Batch'));
+            $this->render('/dashboard/system/migration/finalize_export_batch');
+        } else {
+            $this->view();
+        }
+    }
+
+    public function export_batch_xml($id = null)
+    {
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch');
+        $batch = $r->findOneById($id);
+        if (is_object($batch)) {
+            $exporter = new Exporter($batch);
+            if ($this->request->request->get('download')) {
+                header('Content-disposition: attachment; filename="export.xml"');
+                header('Content-type: "text/xml"; charset="utf8"');
+            } else {
+                header('Content-type: text/xml');
+            }
+            print $exporter->getElement()->asXML();
+            exit;
+        } else {
+            $this->view();
+        }
+    }
+
 
     public function add_items_to_batch()
     {

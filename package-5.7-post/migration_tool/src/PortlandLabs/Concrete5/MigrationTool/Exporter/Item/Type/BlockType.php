@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use Concrete\Core\Block\BlockType\BlockTypeList;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection;
 use Symfony\Component\HttpFoundation\Request;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -20,6 +21,19 @@ class BlockType extends AbstractType
     {
         $bt = \Concrete\Core\Block\BlockType\BlockType::getByID($exportItem->getItemIdentifier());
         return array($bt->getBlockTypeName());
+    }
+
+    public function exportCollection(ObjectCollection $collection, \SimpleXMLElement $element)
+    {
+        $node = $element->addChild('blocktypes');
+        foreach($collection->getItems() as $type) {
+            $bt = \Concrete\Core\Block\BlockType\BlockType::getByID($type->getItemIdentifier());
+            if (is_object($bt)) {
+                $nodeType = $node->addChild('blocktype');
+                $nodeType->addAttribute('handle', $bt->getBlockTypeHandle());
+                $nodeType->addAttribute('package', $bt->getPackageHandle());
+            }
+        }
     }
 
     public function getItemsFromRequest($array)

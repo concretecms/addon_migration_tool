@@ -6,6 +6,7 @@ use Concrete\Core\Attribute\Key\Category;
 use Concrete\Core\Attribute\Key\Key;
 use Concrete\Core\Block\BlockType\BlockTypeList;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection;
 use Symfony\Component\HttpFoundation\Request;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -16,6 +17,17 @@ class AttributeKey extends AbstractType
     public function getHeaders()
     {
         return array(t('Name'));
+    }
+
+    public function exportCollection(ObjectCollection $collection, \SimpleXMLElement $element)
+    {
+        $node = $element->addChild('attributekeys');
+        foreach($collection->getItems() as $key) {
+            $ak = Key::getInstanceByID($key->getItemIdentifier());
+            if (is_object($ak)) {
+                $ak->export($node);
+            }
+        }
     }
 
     public function getResultColumns(ExportItem $exportItem)

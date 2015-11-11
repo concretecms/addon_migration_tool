@@ -19,9 +19,39 @@ class Manager extends CoreManager
         return new AttributeKey();
     }
 
+    protected function createJobDriver()
+    {
+        return new Job();
+    }
+
+    protected function createSinglePageDriver()
+    {
+        return new SinglePage();
+    }
+
+    protected function createThemeDriver()
+    {
+        return new Theme();
+    }
+
+    protected function createPageTemplateDriver()
+    {
+        return new PageTemplate();
+    }
+
+    protected function createPageTypeDriver()
+    {
+        return new PageType();
+    }
+
     public function __construct()
     {
         $this->driver('attribute_key');
         $this->driver('block_type');
+        $this->driver('job');
+        $this->driver('single_page');
+        $this->driver('page_type');
+        $this->driver('page_template');
+        $this->driver('theme');
     }
 }

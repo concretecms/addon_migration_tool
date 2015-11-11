@@ -15,6 +15,11 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidat
  * @DiscriminatorMap({
  * "attribute_key" = "AttributeKey",
  * "block_type" = "BlockType",
+ * "job" = "Job",
+ * "single_page" = "SinglePage",
+ * "theme" = "Theme",
+ * "page_type" = "PageType",
+ * "page_template" = "PageTemplate",
  * })
  * @Entity
  * @Table(name="MigrationExportItems")

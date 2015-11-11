@@ -20,15 +20,8 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class ImportContent extends DashboardPageController
+class Import extends DashboardPageController
 {
-
-    public function on_start()
-    {
-        ini_set('memory_limit', -1);
-        set_time_limit(0);
-        parent::on_start();
-    }
 
     public function add_batch()
     {
@@ -41,7 +34,7 @@ class ImportContent extends DashboardPageController
             $this->entityManager->persist($batch);
             $this->entityManager->flush();
             $this->flash('success', t('Batch added successfully.'));
-            $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
+            $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
         }
         $this->view();
     }
@@ -97,7 +90,7 @@ class ImportContent extends DashboardPageController
             if (is_object($batch)) {
                 $this->clearContent($batch);
                 $this->flash('success', t('Batch cleared successfully.'));
-                $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
+                $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
             }
         }
         $this->view();
@@ -126,7 +119,7 @@ class ImportContent extends DashboardPageController
                     }
                 }
                 $this->flash('success', t('Batch files deleted successfully.'));
-                $this->redirect('/dashboard/system/migration/import_content', 'batch_files', $batch->getId());
+                $this->redirect('/dashboard/system/migration/import', 'batch_files', $batch->getId());
             }
         }
         $this->view();
@@ -181,7 +174,7 @@ class ImportContent extends DashboardPageController
             $this->entityManager->persist($batch);
             $this->entityManager->flush();
             $this->flash('success', t('Content added to batch successfully.'));
-            $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
+            $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
         }
         $this->view_batch($this->request->request->get('id'));
     }
@@ -199,7 +192,7 @@ class ImportContent extends DashboardPageController
                 $publisher = new Publisher($batch);
                 $publisher->publish();
                 $this->flash('success', t('Batch drafts published successfully.'));
-                $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
+                $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
             }
         }
         $this->view();
@@ -210,6 +203,8 @@ class ImportContent extends DashboardPageController
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batches = $r->findAll(array(), array('date' => 'desc'));
         $this->set('batches', $batches);
+        $this->set('batchEmptyMessage', t('You have not created any import batches. Create a batch and add content records to it.'));
+        $this->render('/dashboard/system/migration/view_batches');
     }
 
     public function view_batch($id = null)
@@ -223,9 +218,9 @@ class ImportContent extends DashboardPageController
             $this->set('pageTitle', t('Import Batch'));
             $this->set('mappers', \Core::make('migration/manager/mapping'));
             $this->render('/dashboard/system/migration/view_batch');
-
+        } else {
+            $this->view();
         }
-        $this->view();
     }
 
     public function batch_files($id = null)
@@ -238,8 +233,9 @@ class ImportContent extends DashboardPageController
             $this->set('batch', $batch);
             $this->set('pageTitle', t('Files in Batch'));
             $this->render('/dashboard/system/migration/batch_files');
+        } else {
+            $this->view();
         }
-        $this->view();
     }
 
     public function upload_files()
@@ -345,7 +341,7 @@ class ImportContent extends DashboardPageController
             $this->entityManager->flush();
 
             $this->flash('message', t('Batch mappings updated.'));
-            $this->redirect('/dashboard/system/migration/import_content', 'view_batch', $batch->getId());
+            $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
         }
     }
 
@@ -424,9 +420,9 @@ class ImportContent extends DashboardPageController
             $this->set('items', $mapper->getItems($batch));
             $this->set('targetItemList', new TargetItemList($batch, $mapper));
             $this->render('/dashboard/system/migration/map_content');
-
+        } else {
+            $this->view();
         }
-        $this->view();
     }
 
 

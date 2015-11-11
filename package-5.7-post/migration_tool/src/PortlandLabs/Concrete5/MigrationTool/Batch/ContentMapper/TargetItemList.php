@@ -54,7 +54,7 @@ class TargetItemList
         $query = $this->entityManager->createQuery(
             "select ti from PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem bti
             join PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem ti
-            where bti.batch = :batch and ti.item_type = :type and ti.source_item_identifier = :source_item_identifier"
+            where bti.batch = :batch and bti.target_item = ti and ti.item_type = :type and ti.source_item_identifier = :source_item_identifier"
         );
         $query->setParameter('batch', $this->batch);
         $query->setParameter('source_item_identifier', $item->getIdentifier());

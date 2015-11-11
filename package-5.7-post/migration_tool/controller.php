@@ -31,6 +31,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspecto
 use PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspector\ValueInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager as BlockPublisherManager;
+use PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type\Manager as ExporterItemTypeManager;
 
 use SinglePage;
 
@@ -39,7 +40,7 @@ class Controller extends Package
 
     protected $pkgHandle = 'migration_tool';
     protected $appVersionRequired = '5.7.5.3a1';
-    protected $pkgVersion = '0.5.3';
+    protected $pkgVersion = '0.5.4';
     protected $pkgAutoloaderMapCoreExtensions = true;
     protected $pkgAutoloaderRegistries = array(
         'src/PortlandLabs/Concrete5/MigrationTool' => '\PortlandLabs\Concrete5\MigrationTool'
@@ -47,14 +48,17 @@ class Controller extends Package
 
     protected $singlePages = array(
         '/dashboard/system/migration',
-        '/dashboard/system/migration/import_content'
+        '/dashboard/system/migration/import',
+        '/dashboard/system/migration/export'
     );
 
     protected $singlePagesToExclude = array(
     );
 
     protected $singlePageTitles = array(
-        '/dashboard/system/migration' => 'Migration Tool'
+        '/dashboard/system/migration' => 'Migration Tool',
+        '/dashboard/system/migration/import' => 'Import Content',
+        '/dashboard/system/migration/export' => 'Export Content'
     );
 
     protected function installSinglePages($pkg)
@@ -156,6 +160,11 @@ class Controller extends Package
             $inspector->registerInspectionRoutine(new BatchPageRoutine($args[0]));
             return $inspector;
         });
+
+        \Core::bindShared('migration/manager/exporters', function ($app) {
+            return new ExporterItemTypeManager($app);
+        });
+
 
 
         $al = AssetList::getInstance();

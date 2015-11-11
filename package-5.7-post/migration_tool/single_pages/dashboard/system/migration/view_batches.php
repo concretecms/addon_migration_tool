@@ -25,7 +25,7 @@
 
 
 <? } else { ?>
-    <p><?=t('You have not created any import batches. Create a batch and add content records to it.')?></p>
+    <p><?=$batchEmptyMessage?></p>
 <? } ?>
 
 <div style="display: none">

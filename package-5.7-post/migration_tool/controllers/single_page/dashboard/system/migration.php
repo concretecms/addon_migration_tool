@@ -8,7 +8,7 @@ class Migration extends DashboardPageController
 
     public function view()
     {
-        $this->redirect('/dashboard/system/migration/import_content');
+        $this->redirect('/dashboard/system/migration/import');
     }
 
 }

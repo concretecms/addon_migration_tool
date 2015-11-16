@@ -18,7 +18,7 @@ class BlockType implements TransformerInterface
     public function getUntransformedEntityObjects()
     {
         $em = \ORM::entityManager('migration_tool');
-        $query = $em->createQuery('select v from \PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue v where v instance of \PortlandLabs\Concrete5\MigrationTool\Entity\Import\ImportedBlockValue');
+        $query = $em->createQuery('select v from \PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue v where v instance of \PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ImportedBlockValue');
         $results = $query->getResult();
         return $results;
     }

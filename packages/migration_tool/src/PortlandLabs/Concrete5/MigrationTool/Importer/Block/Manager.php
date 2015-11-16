@@ -13,8 +13,9 @@ class Manager extends CoreManager
 
     public function driver($driver = null)
     {
+        $method = 'create'.camelcase($driver).'Driver';
         // If a custom driver is not registered, we use unmapped
-        if ($driver && !isset($this->customCreators[$driver])) {
+        if ($driver && !isset($this->customCreators[$driver]) && !method_exists($this, $method)) {
             return $this->createStandardDriver();
         }
         return parent::driver($driver);
@@ -35,5 +36,9 @@ class Manager extends CoreManager
         return new StandardImporter();
     }
 
+    public function createCoreAreaLayoutDriver()
+    {
+        return new AreaLayoutImporter();
+    }
 
 }

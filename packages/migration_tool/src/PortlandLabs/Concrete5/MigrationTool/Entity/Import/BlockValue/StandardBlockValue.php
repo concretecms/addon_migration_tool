@@ -1,6 +1,6 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\StandardFormatter;
@@ -9,13 +9,14 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\StandardPublisher;
 
 /**
+ * @Table(name="MigrationImportStandardBlockValues")
  * @Entity
  */
 class StandardBlockValue extends BlockValue
 {
 
     /**
-     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\StandardBlockDataRecord", mappedBy="value", cascade={"persist", "remove"})
+     * @OneToMany(targetEntity="StandardBlockDataRecord", mappedBy="value", cascade={"persist", "remove"})
      * @OrderBy({"position" = "ASC"})
      **/
     public $records;

@@ -4,7 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Inspector\Attribute;
 
 use Concrete\Core\Backup\ContentImporter\ValueInspector\ValueInspector;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\InspectorInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");

@@ -1,12 +1,13 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\ImportedFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\CIFInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\CIFPublisher;
 
 /**
+ * @Table(name="MigrationImportImportedBlockValues")
  * @Entity
  */
 class ImportedBlockValue extends BlockValue

@@ -4,7 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Block;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue;
 use Concrete\Core\Page\Page;
 use Concrete\Core\Block\BlockType\BlockType;
 

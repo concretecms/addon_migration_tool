@@ -22,7 +22,7 @@ class MappedBlock
     protected $name;
 
     /**
-     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue", inversedBy="block", cascade={"persist", "remove"})
+     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue", inversedBy="block", cascade={"persist", "remove"})
      **/
     protected $block_value;
 

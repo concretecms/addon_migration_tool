@@ -5,7 +5,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task;
 use Concrete\Core\Foundation\Processor\ActionInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
 use Doctrine\DBAL\Logging\EchoSQLLogger;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ImportedBlockValue;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ImportedBlockValue;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -56,7 +56,7 @@ class NormalizePagePathsTask implements TaskInterface
                         $value = $block->getBlockValue();
                         if ($value instanceof ImportedBlockValue) {
                             $content = preg_replace($contentSearchURL, $contentReplaceURL, $value->getValue());
-                            $query = $entityManager->createQuery("update \PortlandLabs\Concrete5\MigrationTool\Entity\Import\ImportedBlockValue v
+                            $query = $entityManager->createQuery("update \PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ImportedBlockValue v
                             set v.value = :value where v.id = :primary");
                             $query->setParameter('primary', $value->getID());
                             $query->setParameter('value', $content);

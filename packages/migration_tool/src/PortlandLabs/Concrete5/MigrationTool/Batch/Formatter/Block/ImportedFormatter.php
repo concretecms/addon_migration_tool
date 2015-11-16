@@ -3,7 +3,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block;
 
 use HtmlObject\Element;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreeContentItemFormatterInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");

@@ -117,10 +117,11 @@ class Page implements TypeInterface
     protected function parseBlock($node)
     {
         $block = new Block();
-        $block->setType((string) $node['type']);
+        $type = (string) $node['type'];
+        $block->setType($type);
         $block->setName((string) $node['name']);
         $block->setDefaultsOutputIdentifier((string) $node['mc-block-id']);
-        $value = $this->blockImporter->driver()->parse($node);
+        $value = $this->blockImporter->driver($type)->parse($node);
         $block->setBlockValue($value);
         return $block;
     }

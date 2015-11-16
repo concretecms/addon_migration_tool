@@ -1,14 +1,15 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 
 /**
  * @Entity
  * @Table(name="MigrationImportBlockValues")
- * @InheritanceType("SINGLE_TABLE")
+ * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="value_type", type="string")
  * @DiscriminatorMap( {
  * "standard" = "StandardBlockValue",
+ * "area_layout" = "AreaLayoutBlockValue",
  * "imported" = "ImportedBlockValue"} )
  */
 abstract class BlockValue

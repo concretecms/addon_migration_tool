@@ -1,6 +1,6 @@
 <?php
 
-namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 
 /**
  * @Entity

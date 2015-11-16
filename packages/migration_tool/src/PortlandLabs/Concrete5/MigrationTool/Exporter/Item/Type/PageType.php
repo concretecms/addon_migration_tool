@@ -30,7 +30,11 @@ class PageType extends AbstractType
     public function getResultColumns(ExportItem $exportItem)
     {
         $t = \Concrete\Core\Page\Type\Type::getByID($exportItem->getItemIdentifier());
-        return array($t->getPageTypeDisplayName());
+        $return = array();
+        if (is_object($t)) {
+            $return[] = $t->getPageTypeDisplayName();
+        }
+        return $return;
     }
 
     public function getItemsFromRequest($array)

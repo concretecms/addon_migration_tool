@@ -51,6 +51,8 @@ class StandardPublisher implements PublisherInterface
                     $aar->Save();
                 }
             }
+        } else {
+            $b = $page->addBlock($bt, $area->getName(), array());
         }
         return $b;
 

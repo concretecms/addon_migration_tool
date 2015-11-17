@@ -15,6 +15,22 @@ abstract class AbstractPageRoutine implements RoutineInterface
 {
     protected $batch;
 
+    /**
+     * @return mixed
+     */
+    public function getBatch()
+    {
+        return $this->batch;
+    }
+
+    /**
+     * @param mixed $batch
+     */
+    public function setBatch($batch)
+    {
+        $this->batch = $batch;
+    }
+
     protected function getPageByPath(Batch $batch, $path)
     {
         return \Page::getByPath('/!import_batches/' . $batch->getID() . $path, 'RECENT');
@@ -57,7 +73,7 @@ abstract class AbstractPageRoutine implements RoutineInterface
     }
 
 
-    protected function getTargetItem($mapper, $subject)
+    public function getTargetItem($mapper, $subject)
     {
         if ($subject) {
             $mappers = \Core::make('migration/manager/mapping');

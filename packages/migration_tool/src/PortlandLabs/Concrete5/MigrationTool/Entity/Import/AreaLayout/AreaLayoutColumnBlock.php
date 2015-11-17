@@ -2,13 +2,12 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout;
 
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\MappedBlock;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AbstractBlock;
 
 /**
  * @Entity
- * @Table(name="MigrationImportAreaLayoutColumnBlocks")
  */
-class AreaLayoutColumnBlock extends MappedBlock
+class AreaLayoutColumnBlock extends AbstractBlock
 {
     protected $area = null;
 

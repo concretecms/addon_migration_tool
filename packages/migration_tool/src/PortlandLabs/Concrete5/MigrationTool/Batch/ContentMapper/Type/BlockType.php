@@ -36,6 +36,20 @@ class BlockType implements MapperInterface
                     if ($block->getType() && !in_array($block->getType(), $types)) {
                         $types[] = $block->getType();
                     }
+                    if ($block->getType() == 'core_area_layout') {
+                        // Note: we REALLY need a way to publish new provider drivers
+                        // so that area layout, stack, page type, etc.. can all say they provide
+                        // block types, and this routine is a bloated, procedural mess.
+                        $columns = $block->getBlockValue()->getAreaLayout()->getColumns();
+                        foreach($columns as $column) {
+                            $columnBlocks = $column->getBlocks();
+                            foreach($columnBlocks as $columnBlock) {
+                                if ($columnBlock->getType() && !in_array($columnBlock->getType(), $types)) {
+                                    $types[] = $columnBlock->getType();
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -43,7 +57,9 @@ class BlockType implements MapperInterface
         foreach($stacks->getStacks() as $stack) {
             $blocks = $stack->getBlocks();
             foreach($blocks as $block) {
-                $types[] = $block->getType();
+                if ($block->getType() && !in_array($block->getType(), $types)) {
+                    $types[] = $block->getType();
+                }
             }
         }
 

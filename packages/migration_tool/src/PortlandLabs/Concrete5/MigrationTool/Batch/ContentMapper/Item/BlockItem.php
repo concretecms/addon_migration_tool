@@ -8,8 +8,8 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageTemplate;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageType;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\User;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AbstractBlock;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\MappedBlock;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -18,7 +18,7 @@ class BlockItem implements ItemInterface
 
     protected $block;
 
-    public function __construct(MappedBlock $block)
+    public function __construct(AbstractBlock $block)
     {
         $this->block = $block;
     }

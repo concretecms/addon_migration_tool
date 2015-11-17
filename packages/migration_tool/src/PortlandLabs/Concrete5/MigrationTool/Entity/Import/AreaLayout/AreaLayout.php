@@ -54,7 +54,7 @@ abstract class AreaLayout
     }
 
     /**
-     * @return mixed
+     * @return AreaLayoutColumn[]
      */
     public function getColumns()
     {
@@ -73,5 +73,10 @@ abstract class AreaLayout
     {
         $this->columns = new ArrayCollection();
     }
+
+    /**
+     * @return \PortlandLabs\Concrete5\MigrationTool\Publisher\AreaLayout\PublisherInterface
+     */
+    abstract public function getPublisher();
 
 }

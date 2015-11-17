@@ -23,7 +23,7 @@ abstract class BlockValue
 
 
     /**
-     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block", mappedBy="block_value")
+     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AbstractBlock", mappedBy="block_value")
      **/
     protected $block;
 

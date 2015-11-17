@@ -1,8 +1,17 @@
 <?php
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
-/** @MappedSuperclass */
-class MappedBlock
+/**
+ * @Entity
+ * @Table(name="MigrationImportBlocks")
+ * @InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="value_type", type="string")
+ * @DiscriminatorMap( {
+ * "block" = "Block",
+ * "stack_block" = "StackBlock",
+ * "area_layout_column_block" = "\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayoutColumnBlock"} )
+ */
+class AbstractBlock
 {
 
     /**

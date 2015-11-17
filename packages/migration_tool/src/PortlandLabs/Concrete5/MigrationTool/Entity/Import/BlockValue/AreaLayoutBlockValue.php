@@ -2,8 +2,11 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\AreaLayoutFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\StandardFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\AreaLayoutInspector;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\StandardInspector;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\AreaLayoutPublisher;
 
 /**
  * @Table(name="MigrationImportAreaLayoutBlockValues")
@@ -19,7 +22,7 @@ class AreaLayoutBlockValue extends BlockValue
 
 
     /**
-     * @return mixed
+     * @return \PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayout
      */
     public function getAreaLayout()
     {
@@ -36,17 +39,17 @@ class AreaLayoutBlockValue extends BlockValue
 
     public function getInspector()
     {
-        return new StandardInspector($this);
+        return new AreaLayoutInspector($this);
     }
 
     public function getFormatter()
     {
-        return new StandardFormatter($this);
+        return new AreaLayoutFormatter($this);
     }
 
     public function getPublisher()
     {
-        return new AreaLayoutBlockPublisher();
+        return new AreaLayoutPublisher();
     }
 
 

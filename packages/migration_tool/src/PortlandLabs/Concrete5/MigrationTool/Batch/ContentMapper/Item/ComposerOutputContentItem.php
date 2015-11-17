@@ -19,21 +19,23 @@ class ComposerOutputContentItem extends Item
         $type = $c->getPageTypeObject();
         $template = $c->getPageTemplateObject();
         $control = $block->getController()->getComposerOutputControlObject();
-        $control = FormLayoutSetControl::getByID($control->getPageTypeComposerFormLayoutSetControlID());
-        $label = $control->getPageTypeComposerFormLayoutSetControlCustomLabel();
-        if (!$label) {
-            $cc = $control->getPageTypeComposerControlObject();
-            $label = $cc->getPageTypeComposerControlDisplayName();
+        if (is_object($control)) {
+            $control = FormLayoutSetControl::getByID($control->getPageTypeComposerFormLayoutSetControlID());
+            $label = $control->getPageTypeComposerFormLayoutSetControlCustomLabel();
+            if (!$label) {
+                $cc = $control->getPageTypeComposerControlObject();
+                $label = $cc->getPageTypeComposerControlDisplayName();
+            }
+            $components = array(
+                $type->getPageTypeDisplayName(),
+                $template->getPageTemplateDisplayName(),
+                $block->getAreaHandle(),
+                $label
+            );
+            $this->block = $block;
+            $this->setIdentifier($block->getBlockID());
+            $this->setDisplayName(implode(' &gt; ', $components));
         }
-        $components = array(
-            $type->getPageTypeDisplayName(),
-            $template->getPageTemplateDisplayName(),
-            $block->getAreaHandle(),
-            $label
-        );
-        $this->block = $block;
-        $this->setIdentifier($block->getBlockID());
-        $this->setDisplayName(implode(' &gt; ', $components));
     }
 
     public function getBlock()

@@ -35,7 +35,9 @@ class ComposerOutputContent implements MapperInterface
             foreach($blocks as $b) {
                 if ($b->getBlockTypeHandle() == BLOCK_HANDLE_PAGE_TYPE_OUTPUT_PROXY) {
                     $item = new ComposerOutputContentItem($b);
-                    $items[] = $item;
+                    if ($item->getBlock()) {
+                        $items[] = $item;
+                    }
                 }
             }
         }
@@ -48,10 +50,14 @@ class ComposerOutputContent implements MapperInterface
         // that are mapped in the current content batch
         $db = \Database::connection();
         $em = $db->getEntityManager();
-        $r = $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem');
-        $types = $r->findBy(array(
-            'item_type' => 'page_type'
-        ));
+        $query = $em->createQuery(
+            "select ti from PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem bti
+            join PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem ti
+            where bti.batch = :batch and bti.target_item = ti and ti.item_type = :type"
+        );
+        $query->setParameter('batch', $batch);
+        $query->setParameter('type', 'page_type');
+        $types = $query->getResult();
 
         $items = array();
         $handles = array();

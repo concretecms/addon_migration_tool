@@ -10,11 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  * @Entity
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="type", type="string")
- * @DiscriminatorMap({
- * "core_page_property" = "CorePagePropertyComposerFormLayoutSetControl",
- * "block" = "BlockComposerFormLayoutSetControl",
- * "collection_attribute" = "CollectionAttributeComposerFormLayoutSetControl"
- * })
  * @Table(name="MigrationImportPageTypeComposerFormLayoutSetControls")
  */
 abstract class ComposerFormLayoutSetControl

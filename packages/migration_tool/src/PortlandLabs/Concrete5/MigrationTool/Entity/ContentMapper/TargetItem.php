@@ -11,7 +11,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
  * @Table(name="MigrationContentMapperTargetItems")
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="entity_type", type="string")
- * @DiscriminatorMap( {"target_item" = "TargetItem", "unmapped" = "UnmappedTargetItem", "ignored"="IgnoredTargetItem"} )
  */
 class TargetItem implements TargetItemInterface
 {

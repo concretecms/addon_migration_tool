@@ -13,20 +13,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyValidat
  * @Entity
  * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="type", type="string")
- * @DiscriminatorMap({
- * "unknown" = "UnknownAttributeKey",
- * "select" = "SelectAttributeKey",
- * "text" = "TextAttributeKey",
- * "image_file" = "ImageFileAttributeKey",
- * "topics" = "TopicsAttributeKey",
- * "text_area" = "TextAreaAttributeKey",
- * "rating" = "RatingAttributeKey",
- * "number" = "NumberAttributeKey",
- * "social_links" = "SocialLinksAttributeKey",
- * "address" = "AddressAttributeKey",
- * "date_time" = "DateTimeAttributeKey",
- * "boolean" = "BooleanAttributeKey"
- * })
  * @Table(name="MigrationImportAttributeKeys")
  */
 abstract class AttributeKey implements PublishableInterface

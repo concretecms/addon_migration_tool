@@ -8,11 +8,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  * @Entity
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="type", type="string")
- * @DiscriminatorMap({
- * "all_pages" = "AllPagesPublishTarget",
- * "page_type" = "PageTypePublishTarget",
- * "parent_page" = "ParentPagePublishTarget"
- * })
  * @Table(name="MigrationImportPageTypePublishTargets")
  */
 abstract class PublishTarget

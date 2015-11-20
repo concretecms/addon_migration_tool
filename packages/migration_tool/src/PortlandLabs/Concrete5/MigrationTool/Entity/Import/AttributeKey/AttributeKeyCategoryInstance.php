@@ -11,11 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyCategor
  * @Entity
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="type", type="string")
- * @DiscriminatorMap({
- * "file" = "FileAttributeKeyCategoryInstance",
- * "user" = "UserAttributeKeyCategoryInstance",
- * "collection" = "CollectionAttributeKeyCategoryInstance"
- * })
  * @Table(name="MigrationImportAttributeKeyCategoryInstances")
  */
 abstract class AttributeKeyCategoryInstance

@@ -13,10 +13,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\StandardPublisher;
  * @Table(name="MigrationImportAreaLayouts")
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="type", type="string")
- * @DiscriminatorMap( {
- * "preset" = "PresetAreaLayout",
- * "custom" = "CustomAreaLayout",
- * "theme_grid" = "ThemeGridAreaLayout"} )
  */
 abstract class AreaLayout
 {

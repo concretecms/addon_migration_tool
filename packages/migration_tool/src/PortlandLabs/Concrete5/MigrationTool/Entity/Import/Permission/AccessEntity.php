@@ -13,11 +13,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEnt
  * @Entity
  * @InheritanceType("JOINED")
  * @DiscriminatorColumn(name="type", type="string")
- * @DiscriminatorMap({
- * "basic" = "AccessEntity",
- * "user" = "UserAccessEntity",
- * "group" = "GroupAccessEntity"
- * })
  * @Table(name="MigrationImportPermissionAccessEntities")
  */
 class AccessEntity

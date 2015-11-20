@@ -35,18 +35,21 @@ class PageType implements MapperInterface
             }
         }
 
-        foreach($batch->getObjectCollection('page_type')->getTypes() as $pageType) {
-            if (!in_array($pageType->getHandle(), $types)) {
-                $types[] = $pageType->getHandle();
-            }
-            $target = $pageType->getPublishTarget();
-            if ($target instanceof PageTypePublishTarget) {
-                if (!in_array($target->getPageType(), $types)) {
-                    $types[] = $target->getPageType();
+        $pageTypes = $batch->getObjectCollection('page_type');
+        if (is_object($pageTypes)) {
+            foreach($pageTypes->getTypes() as $pageType) {
+                if (!in_array($pageType->getHandle(), $types)) {
+                    $types[] = $pageType->getHandle();
+                }
+                $target = $pageType->getPublishTarget();
+                if ($target instanceof PageTypePublishTarget) {
+                    if (!in_array($target->getPageType(), $types)) {
+                        $types[] = $target->getPageType();
+                    }
                 }
             }
         }
-
+        
         $items = array();
         foreach($types as $type) {
             $item = new Item();

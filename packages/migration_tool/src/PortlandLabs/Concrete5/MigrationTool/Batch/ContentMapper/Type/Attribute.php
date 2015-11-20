@@ -38,21 +38,23 @@ class Attribute implements MapperInterface
         }
 
         $pageTypes = $batch->getObjectCollection('page_type');
-        foreach($pageTypes->getTypes() as $type) {
-            foreach($type->getLayoutSets() as $set) {
-                foreach($set->getControls() as $control) {
-                    if ($control instanceof CollectionAttributeComposerFormLayoutSetControl) {
-                        if (!in_array($control->getItemIdentifier(), $handles)) {
-                            $handles[] = $control->getItemIdentifier();
+        if (is_object($pageTypes)) {
+            foreach($pageTypes->getTypes() as $type) {
+                foreach($type->getLayoutSets() as $set) {
+                    foreach($set->getControls() as $control) {
+                        if ($control instanceof CollectionAttributeComposerFormLayoutSetControl) {
+                            if (!in_array($control->getItemIdentifier(), $handles)) {
+                                $handles[] = $control->getItemIdentifier();
+                            }
                         }
                     }
                 }
-            }
-            $defaults = $type->getDefaultPageCollection();
-            foreach($defaults->getPages() as $page) {
-                foreach($page->getAttributes() as $attribute) {
-                    if (!in_array($attribute->getAttribute()->getHandle(), $handles)) {
-                        $handles[] = $attribute->getAttribute()->getHandle();
+                $defaults = $type->getDefaultPageCollection();
+                foreach($defaults->getPages() as $page) {
+                    foreach($page->getAttributes() as $attribute) {
+                        if (!in_array($attribute->getAttribute()->getHandle(), $handles)) {
+                            $handles[] = $attribute->getAttribute()->getHandle();
+                        }
                     }
                 }
             }

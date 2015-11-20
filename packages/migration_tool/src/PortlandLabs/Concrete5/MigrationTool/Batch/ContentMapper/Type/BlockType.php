@@ -54,32 +54,36 @@ class BlockType implements MapperInterface
             }
         }
         $stacks = $batch->getObjectCollection('stack');
-        foreach($stacks->getStacks() as $stack) {
-            $blocks = $stack->getBlocks();
-            foreach($blocks as $block) {
-                if ($block->getType() && !in_array($block->getType(), $types)) {
-                    $types[] = $block->getType();
+        if (is_object($stacks)) {
+            foreach($stacks->getStacks() as $stack) {
+                $blocks = $stack->getBlocks();
+                foreach($blocks as $block) {
+                    if ($block->getType() && !in_array($block->getType(), $types)) {
+                        $types[] = $block->getType();
+                    }
                 }
             }
         }
 
         $pageTypes = $batch->getObjectCollection('page_type');
-        foreach($pageTypes->getTypes() as $type) {
-            foreach($type->getLayoutSets() as $set) {
-                foreach($set->getControls() as $control) {
-                    if ($control instanceof BlockComposerFormLayoutSetControl) {
-                        if (!in_array($control->getItemIdentifier(), $types)) {
-                            $types[] = $control->getItemIdentifier();
+        if (is_object($pageTypes)) {
+            foreach($pageTypes->getTypes() as $type) {
+                foreach($type->getLayoutSets() as $set) {
+                    foreach($set->getControls() as $control) {
+                        if ($control instanceof BlockComposerFormLayoutSetControl) {
+                            if (!in_array($control->getItemIdentifier(), $types)) {
+                                $types[] = $control->getItemIdentifier();
+                            }
                         }
                     }
                 }
-            }
-            $defaults = $type->getDefaultPageCollection();
-            foreach($defaults->getPages() as $page) {
-                foreach($page->getAreas() as $area) {
-                    foreach($area->getBlocks() as $block) {
-                        if (!in_array($block->getType(), $types)) {
-                            $types[] = $block->getType();
+                $defaults = $type->getDefaultPageCollection();
+                foreach($defaults->getPages() as $page) {
+                    foreach($page->getAreas() as $area) {
+                        foreach($area->getBlocks() as $block) {
+                            if (!in_array($block->getType(), $types)) {
+                                $types[] = $block->getType();
+                            }
                         }
                     }
                 }

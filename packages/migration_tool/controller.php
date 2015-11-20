@@ -23,6 +23,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchRecor
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value\Manager as AttributeValueManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Key\Manager as AttributeKeyManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Category\Manager as AttributeCategoryManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\FormatManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Permission\AccessEntity\Manager as AccessEntityManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\PageType\PublishTarget\Manager as PublishTargetManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Block\Manager as BlockManager;
@@ -145,7 +146,10 @@ class Controller extends Package
         \Core::bindShared('migration/manager/import/block', function ($app) {
             return new BlockManager($app);
         });
-        \Core::bindShared('migration/manager/importer', function ($app) {
+        \Core::bindShared('migration/manager/importer/format', function ($app) {
+            return new FormatManager($app);
+        });
+        \Core::bindShared('migration/manager/importer/cif', function ($app) {
             return new ImportManager($app);
         });
         \Core::bindShared('migration/manager/publisher', function ($app) {

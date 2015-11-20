@@ -133,12 +133,12 @@ class Import extends DashboardPageController
             $this->error->add($this->token->getErrorMessage());
         }
 
-        if (!is_uploaded_file($_FILES['xml']['tmp_name'])) {
+        $importer = \Core::make('migration/manager/importer/format')->driver($this->request->request('format'));
+
+        if (!is_uploaded_file($_FILES['file']['tmp_name'])) {
             $this->error->add(t('Invalid XML file.'));
         } else {
-            if ($_FILES['xml']['type'] != 'text/xml') {
-                $this->error->add(t('File does not appear to be an XML file.'));
-            }
+            $importer->validateUploadedFile($_FILES['file'], $this->error);
         }
 
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
@@ -153,8 +153,7 @@ class Import extends DashboardPageController
                 $this->clearContent($batch);
             }
 
-            $parser = new Parser($_FILES['xml']['tmp_name']);
-            foreach($parser->getContentObjectCollections() as $collection) {
+            foreach($importer->getContentObjectCollections($_FILES['file']['tmp_name']) as $collection) {
                 $batch->getObjectCollections()->add($collection);
             }
 
@@ -214,9 +213,15 @@ class Import extends DashboardPageController
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
         if (is_object($batch)) {
+            $formats = array();
+            $drivers = \Core::make('migration/manager/importer/format')->getDrivers();
+            foreach($drivers as $driver) {
+                $formats[$driver->getDriver()] = $driver->getName();
+            }
             $this->set('batch', $batch);
             $this->set('pageTitle', t('Import Batch'));
             $this->set('mappers', \Core::make('migration/manager/mapping'));
+            $this->set('formats', $formats);
             $this->render('/dashboard/system/migration/view_batch');
         } else {
             $this->view();

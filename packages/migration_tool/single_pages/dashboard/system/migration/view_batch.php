@@ -72,8 +72,12 @@
             <?=Loader::helper("validation/token")->output('add_content_to_batch')?>
             <input type="hidden" name="id" value="<?=$batch->getID()?>">
             <div class="form-group">
-                <?=Loader::helper("form")->label('xml', t('XML File'))?>
-                <?=Loader::helper('form')->file('xml')?>
+                <?=Loader::helper("form")->label('file', t('Content File'))?>
+                <?=Loader::helper('form')->file('file')?>
+            </div>
+            <div class="form-group">
+                <?=Loader::helper("form")->label('format', t('File Format'))?>
+                <?=Loader::helper('form')->select('format', $formats)?>
             </div>
             <div class="form-group">
                 <?=Loader::helper("form")->label('method', t('Records'))?>

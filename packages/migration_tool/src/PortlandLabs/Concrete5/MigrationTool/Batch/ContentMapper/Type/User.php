@@ -36,11 +36,13 @@ class User implements MapperInterface
         }
 
         $pageTypes = $batch->getObjectCollection('page_type');
-        foreach($pageTypes->getTypes() as $type) {
-            $defaults = $type->getDefaultPageCollection();
-            foreach($defaults->getPages() as $page) {
-                if ($page->getUser() && !in_array($page->getUser(), $users)) {
-                    $users[] = $page->getUser();
+        if (is_object($pageTypes)) {
+            foreach($pageTypes->getTypes() as $type) {
+                $defaults = $type->getDefaultPageCollection();
+                foreach($defaults->getPages() as $page) {
+                    if ($page->getUser() && !in_array($page->getUser(), $users)) {
+                        $users[] = $page->getUser();
+                    }
                 }
             }
         }

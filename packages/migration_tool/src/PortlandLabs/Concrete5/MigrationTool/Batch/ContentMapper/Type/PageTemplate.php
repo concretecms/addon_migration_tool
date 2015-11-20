@@ -34,22 +34,28 @@ class PageTemplate implements MapperInterface
             }
         }
 
-        foreach($batch->getObjectCollection('page_template')->getTemplates() as $pageTemplate) {
-            if (!in_array($pageTemplate->getHandle(), $templates)) {
-                $templates[] = $pageTemplate->getHandle();
+        $pageTemplates = $batch->getObjectCollection('page_template');
+        if (is_object($pageTemplates)) {
+            foreach($pageTemplates->getTemplates() as $pageTemplate) {
+                if (!in_array($pageTemplate->getHandle(), $templates)) {
+                    $templates[] = $pageTemplate->getHandle();
+                }
             }
         }
 
-        foreach($batch->getObjectCollection('page_type')->getTypes() as $pageType) {
-            if ($template = $pageType->getDefaultTemplate()) {
-                if (!in_array($template, $templates)) {
-                    $templates[] = $template;
-                }
-            }
-            if ($pageType->getAllowedTemplates() == 'C') {
-                foreach($pageType->getTemplates() as $template) {
+        $pageTypes = $batch->getObjectCollection('page_type');
+        if (is_object($pageTypes)) {
+            foreach($pageTypes->getTypes() as $pageType) {
+                if ($template = $pageType->getDefaultTemplate()) {
                     if (!in_array($template, $templates)) {
                         $templates[] = $template;
+                    }
+                }
+                if ($pageType->getAllowedTemplates() == 'C') {
+                    foreach($pageType->getTemplates() as $template) {
+                        if (!in_array($template, $templates)) {
+                            $templates[] = $template;
+                        }
                     }
                 }
             }

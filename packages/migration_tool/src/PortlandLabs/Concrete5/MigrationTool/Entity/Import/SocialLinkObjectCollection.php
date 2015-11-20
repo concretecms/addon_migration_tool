@@ -3,10 +3,10 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\AttributeTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\BlockTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PageTemplateFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\SocialLinkFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\AttributeTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\BlockTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTemplateFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\SocialLinkFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**

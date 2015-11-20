@@ -4,8 +4,8 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Tree\TreeJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\ThumbnailTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\TreeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\ThumbnailTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\TreeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**

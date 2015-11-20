@@ -4,10 +4,10 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\BlockTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\ConversationFlagTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PageTemplateFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\WorkflowProgressCategoryFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\BlockTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\ConversationFlagTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTemplateFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\WorkflowProgressCategoryFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**

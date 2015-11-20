@@ -3,8 +3,8 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PageFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\SinglePageFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\SinglePageFormatter;
 
 /**
  * @Entity

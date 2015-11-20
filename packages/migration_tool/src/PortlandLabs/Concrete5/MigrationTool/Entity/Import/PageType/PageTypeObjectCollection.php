@@ -7,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageType\TreeJsonFormat
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PageTypeFormatter;
 
 /**
  * @Entity

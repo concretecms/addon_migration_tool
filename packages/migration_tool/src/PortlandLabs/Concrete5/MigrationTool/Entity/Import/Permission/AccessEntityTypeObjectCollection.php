@@ -4,11 +4,11 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\AttributeKeyCategoryFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\BlockTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\ConversationEditorFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTemplateFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PermissionAccessEntityTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\AttributeKeyCategoryFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\BlockTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\ConversationEditorFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PageTemplateFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PermissionAccessEntityTypeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**

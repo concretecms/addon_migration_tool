@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\Validator as PermissionKeyValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PermissionKeyFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PermissionKeyFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**

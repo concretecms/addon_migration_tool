@@ -3,8 +3,8 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Block;
 
 use Concrete\Core\Support\Manager as CoreManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Block\Importer;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Block\StandardImporter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Parser\CIF\Block\Importer;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Parser\CIF\Block\StandardImporter;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 

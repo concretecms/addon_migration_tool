@@ -20,14 +20,14 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateRefer
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateUsersTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchRecordsTask;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Value\Manager as AttributeValueManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Key\Manager as AttributeKeyManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Attribute\Category\Manager as AttributeCategoryManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\FormatManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Permission\AccessEntity\Manager as AccessEntityManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\PageType\PublishTarget\Manager as PublishTargetManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Block\Manager as BlockManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Manager as ImportManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Parser\CIF\Attribute\Value\Manager as AttributeValueManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Parser\CIF\Attribute\Key\Manager as AttributeKeyManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Parser\CIF\Attribute\Category\Manager as AttributeCategoryManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Parser\ParserManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Parser\CIF\Permission\AccessEntity\Manager as AccessEntityManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Parser\CIF\PageType\PublishTarget\Manager as PublishTargetManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Parser\CIF\Block\Manager as BlockManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Parser\CIF\Manager as ImportManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspector\InspectionRoutine\BatchPageRoutine;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspector\ValueInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherManager;
@@ -146,8 +146,8 @@ class Controller extends Package
         \Core::bindShared('migration/manager/import/block', function ($app) {
             return new BlockManager($app);
         });
-        \Core::bindShared('migration/manager/importer/format', function ($app) {
-            return new FormatManager($app);
+        \Core::bindShared('migration/manager/importer/parser', function ($app) {
+            return new ParserManager($app);
         });
         \Core::bindShared('migration/manager/importer/cif', function ($app) {
             return new ImportManager($app);

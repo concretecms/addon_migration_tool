@@ -3,8 +3,8 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\JobFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PackageFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\JobFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PackageFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**

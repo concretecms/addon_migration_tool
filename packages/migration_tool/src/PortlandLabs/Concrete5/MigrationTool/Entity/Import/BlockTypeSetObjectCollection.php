@@ -5,10 +5,10 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\BlockTypeSet\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BlockTypeSet\Validator;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\AttributeTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\BlockTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\BlockTypeSetFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTemplateFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\AttributeTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\BlockTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\BlockTypeSetFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PageTemplateFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**

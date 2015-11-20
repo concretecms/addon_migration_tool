@@ -4,9 +4,9 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\BlockTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\ConversationFlagTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTemplateFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\BlockTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\ConversationFlagTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PageTemplateFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**

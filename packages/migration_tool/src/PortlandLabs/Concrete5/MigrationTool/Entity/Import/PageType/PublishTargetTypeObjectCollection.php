@@ -4,8 +4,8 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTemplateFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Importer\ContentType\Formatter\PageTypePublishTargetTypeFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PageTemplateFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Formatter\PageTypePublishTargetTypeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**

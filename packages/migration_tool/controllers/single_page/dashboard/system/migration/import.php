@@ -133,7 +133,7 @@ class Import extends DashboardPageController
             $this->error->add($this->token->getErrorMessage());
         }
 
-        $importer = \Core::make('migration/manager/importer/format')->driver($this->request->request('format'));
+        $importer = \Core::make('migration/manager/importer/parser')->driver($this->request->request('format'));
 
         if (!is_uploaded_file($_FILES['file']['tmp_name'])) {
             $this->error->add(t('Invalid XML file.'));
@@ -214,7 +214,7 @@ class Import extends DashboardPageController
         $batch = $r->findOneById($id);
         if (is_object($batch)) {
             $formats = array();
-            $drivers = \Core::make('migration/manager/importer/format')->getDrivers();
+            $drivers = \Core::make('migration/manager/importer/parser')->getDrivers();
             foreach($drivers as $driver) {
                 $formats[$driver->getDriver()] = $driver->getName();
             }

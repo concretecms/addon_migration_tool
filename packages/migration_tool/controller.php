@@ -40,7 +40,7 @@ class Controller extends Package
 {
 
     protected $pkgHandle = 'migration_tool';
-    protected $appVersionRequired = '5.7.5.3a1';
+    protected $appVersionRequired = '5.7.6a1';
     protected $pkgVersion = '0.5.4';
     protected $pkgAutoloaderMapCoreExtensions = true;
     protected $pkgAutoloaderRegistries = array(

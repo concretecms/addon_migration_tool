@@ -46,6 +46,10 @@ class Stack implements ElementParserInterface
                             $block->setType((string) $blockNode['type']);
                             $block->setName((string) $blockNode['name']);
                             $value = $this->blockImporter->driver('unmapped')->parse($blockNode);
+                            if (isset($blockNode->style)) {
+                                $styleSet = $this->styleSetImporter->import($blockNode->style);
+                                $block->setStyleSet($styleSet);
+                            }
                             $block->setBlockValue($value);
                             $block->setPosition($i);
                             $stack->getBlocks()->add($block);

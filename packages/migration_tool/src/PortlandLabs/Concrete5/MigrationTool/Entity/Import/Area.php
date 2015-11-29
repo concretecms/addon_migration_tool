@@ -28,6 +28,10 @@ class Area
      **/
     protected $page;
 
+    /**
+     * @OneToOne(targetEntity="StyleSet", cascade={"persist", "remove"})
+     **/
+    protected $style_set;
 
     /**
      * @Column(type="string")
@@ -95,6 +99,24 @@ class Area
     {
         $this->blocks = $blocks;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getStyleSet()
+    {
+        return $this->style_set;
+    }
+
+    /**
+     * @param mixed $style_set
+     */
+    public function setStyleSet($style_set)
+    {
+        $this->style_set = $style_set;
+    }
+
+
 
 
 

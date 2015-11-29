@@ -2,6 +2,7 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page;
 
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\StyleSet\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
@@ -64,13 +65,23 @@ class TreePageJsonFormatter implements \JsonSerializable
                 $areaNode = new \stdClass;
                 $areaNode->iconclass = 'fa fa-cubes';
                 $areaNode->title = $area->getName();
+                if ($styleSet = $area->getStyleSet()) {
+                    $styleSetFormatter = new TreeJsonFormatter($styleSet);
+                    $areaNode->children[] = $styleSetFormatter->getBatchTreeNodeJsonObject();
+                }
                 foreach($area->getBlocks() as $block) {
                     $value = $block->getBlockValue();
                     if (is_object($value)) {
                         $blockFormatter = $value->getFormatter();
                         $blockNode = $blockFormatter->getBatchTreeNodeJsonObject();
+                        if ($styleSet = $block->getStyleSet()) {
+                            $styleSetFormatter = new TreeJsonFormatter($styleSet);
+                            $blockNode->children[] = $styleSetFormatter->getBatchTreeNodeJsonObject();
+                        }
+
                         $areaNode->children[] = $blockNode;
                     }
+
                 }
                 $areaHolderNode->children[] = $areaNode;
             }

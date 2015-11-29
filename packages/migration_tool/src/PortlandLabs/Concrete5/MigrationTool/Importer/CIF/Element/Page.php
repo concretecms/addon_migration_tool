@@ -7,6 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\StyleSet;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementInterface;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 
@@ -24,6 +25,7 @@ class Page implements ElementParserInterface
     {
         $this->attributeImporter = \Core::make('migration/manager/import/attribute/value');
         $this->blockImporter = \Core::make('migration/manager/import/block');
+        $this->styleSetImporter = new StyleSet();
     }
 
     public function hasPageNodes()
@@ -122,16 +124,24 @@ class Page implements ElementParserInterface
         $block->setType($type);
         $block->setName((string) $node['name']);
         $block->setDefaultsOutputIdentifier((string) $node['mc-block-id']);
+        if (isset($node->style)) {
+            $styleSet = $this->styleSetImporter->import($node->style);
+            $block->setStyleSet($styleSet);
+        }
         $value = $this->blockImporter->driver($type)->parse($node);
         $block->setBlockValue($value);
         return $block;
     }
 
-
     protected function parseArea($node)
     {
         $area = new Area();
         $area->setName((string) $node['name']);
+
+        if (isset($node->style)) {
+            $styleSet = $this->styleSetImporter->import($node->style);
+            $area->setStyleSet($styleSet);
+        }
 
         // Parse areas
         $nodes = false;

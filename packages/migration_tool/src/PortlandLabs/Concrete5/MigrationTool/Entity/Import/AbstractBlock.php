@@ -32,6 +32,11 @@ class AbstractBlock
     protected $block_value;
 
     /**
+     * @OneToOne(targetEntity="StyleSet", cascade={"persist", "remove"})
+     **/
+    protected $style_set;
+
+    /**
      * @Column(type="integer")
      */
     protected $position = 0;
@@ -152,9 +157,21 @@ class AbstractBlock
         $this->defaults_output_identifier = $defaults_output_identifier;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getStyleSet()
+    {
+        return $this->style_set;
+    }
 
-
-
+    /**
+     * @param mixed $style_set
+     */
+    public function setStyleSet($style_set)
+    {
+        $this->style_set = $style_set;
+    }
 
 
 

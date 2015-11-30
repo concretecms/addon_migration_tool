@@ -25,7 +25,7 @@ class SocialLinksPublisher implements PublisherInterface
         $records = $value->getRecords();
         foreach($records as $record) {
             $value = $record->getData();
-            $value = $value[0]; // because it comes out as an array
+            $value = $value['service']; // because it comes out as an array
             $socialLink = Link::getByServiceHandle($value);
             if (is_object($socialLink)) {
                 $data['slID'][] = $socialLink->getID();

@@ -30,7 +30,9 @@ class SocialLinksImporter implements ImporterInterface
         foreach ($node->link as $linkNode) {
             $service = (string) $linkNode['service'];
             $record = new StandardBlockDataRecord();
-            $record->setData($service);
+            $recordData = array();
+            $recordData['service'] = $service;
+            $record->setData($recordData);
             $record->setPosition($i);
             $record->setValue($value);
             $value->getRecords()->add($record);

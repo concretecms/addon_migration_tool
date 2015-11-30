@@ -25,10 +25,6 @@ class StandardInspector implements InspectorInterface
         $items = array();
         foreach($content as $record) {
             $data = $record->getData();
-            if (!is_array($data)) {
-                var_dump($data);
-                exit;
-            }
             foreach($data as $value) {
                 $result = $inspector->inspect($value);
                 $items = array_merge($items, $result->getMatchedItems());

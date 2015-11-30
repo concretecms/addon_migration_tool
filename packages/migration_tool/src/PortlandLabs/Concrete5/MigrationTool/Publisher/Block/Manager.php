@@ -36,6 +36,9 @@ class Manager extends CoreManager
         $this->extend('content', function() {
             return new ContentPublisher();
         });
+        $this->extend('social_links', function() {
+            return new SocialLinksPublisher();
+        });
     }
 
 

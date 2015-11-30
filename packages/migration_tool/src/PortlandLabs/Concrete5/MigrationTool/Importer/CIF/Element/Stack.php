@@ -52,6 +52,7 @@ class Stack implements ElementParserInterface
                             }
                             $block->setBlockValue($value);
                             $block->setPosition($i);
+                            $block->setStack($stack);
                             $stack->getBlocks()->add($block);
                             $i++;
                         }

@@ -41,12 +41,26 @@ class PublishPageContentRoutine extends AbstractPageRoutine
             // need to be replaced by another block.
 
             foreach($page->areas as $area) {
+                $styleSet = $area->getStyleSet();
+                if (is_object($styleSet)) {
+                    $styleSetPublisher = $styleSet->getPublisher();
+                    $publishedStyleSet = $styleSetPublisher->publish();
+                    $concreteArea = \Area::getOrCreate($concretePage, $area->getName());
+                    $concretePage->setCustomStyleSet($concreteArea, $publishedStyleSet);
+                }
                 foreach($area->blocks as $block) {
                     $bt = $this->getTargetItem('block_type', $block->getType());
                     if (is_object($bt)) {
                         $value = $block->getBlockValue();
                         $publisher = $value->getPublisher();
                         $b = $publisher->publish($batch, $bt, $concretePage, $area, $value);
+                        $styleSet = $block->getStyleSet();
+                        if (is_object($styleSet)) {
+                            $styleSetPublisher = $styleSet->getPublisher();
+                            $publishedStyleSet = $styleSetPublisher->publish();
+                            $b->setCustomStyleSet($publishedStyleSet);
+                        }
+
                         if (in_array($bt->getBlockTypeHandle(), $controlHandles)) {
                             $blockSubstitutes[$bt->getBlockTypeHandle()] = $b;
                         }

@@ -31,7 +31,7 @@ class Stack implements PublishableInterface
     protected $collection;
 
     /**
-     * @ManyToMany(targetEntity="StackBlock", cascade={"persist", "remove"})
+     * @OneToMany(targetEntity="StackBlock", mappedBy="stack", cascade={"persist", "remove"})
      */
     protected $blocks;
 

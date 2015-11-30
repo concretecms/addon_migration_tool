@@ -41,4 +41,9 @@ class Manager extends CoreManager
         return new AreaLayoutImporter();
     }
 
+    public function createSocialLinksDriver()
+    {
+        return new SocialLinksImporter();
+    }
+
 }

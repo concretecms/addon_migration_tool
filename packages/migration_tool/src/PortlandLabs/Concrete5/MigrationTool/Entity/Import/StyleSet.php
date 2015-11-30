@@ -2,6 +2,8 @@
 
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\StyleSet\StyleSetPublisher;
+
 /**
  * @Entity
  * @Table(name="MigrationImportStyleSets")
@@ -659,6 +661,11 @@ class StyleSet
     public function setHideOnLargeDevice($hideOnLargeDevice)
     {
         $this->hideOnLargeDevice = $hideOnLargeDevice;
+    }
+
+    public function getPublisher()
+    {
+        return new StyleSetPublisher($this);
     }
 
 

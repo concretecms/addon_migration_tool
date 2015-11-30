@@ -60,6 +60,9 @@ class PublishPageContentRoutine extends AbstractPageRoutine
                             $publishedStyleSet = $styleSetPublisher->publish();
                             $b->setCustomStyleSet($publishedStyleSet);
                         }
+                        if ($block->getCustomTemplate()) {
+                            $b->setCustomTemplate($block->getCustomTemplate());
+                        }
 
                         if (in_array($bt->getBlockTypeHandle(), $controlHandles)) {
                             $blockSubstitutes[$bt->getBlockTypeHandle()] = $b;

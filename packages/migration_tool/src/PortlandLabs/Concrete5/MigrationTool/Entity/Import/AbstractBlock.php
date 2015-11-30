@@ -27,6 +27,11 @@ class AbstractBlock
     protected $name;
 
     /**
+     * @Column(type="string", nullable=true)
+     */
+    protected $custom_template;
+
+    /**
      * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue", inversedBy="block", cascade={"persist", "remove"})
      **/
     protected $block_value;
@@ -172,6 +177,24 @@ class AbstractBlock
     {
         $this->style_set = $style_set;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCustomTemplate()
+    {
+        return $this->custom_template;
+    }
+
+    /**
+     * @param mixed $custom_template
+     */
+    public function setCustomTemplate($custom_template)
+    {
+        $this->custom_template = $custom_template;
+    }
+
+    
 
 
 

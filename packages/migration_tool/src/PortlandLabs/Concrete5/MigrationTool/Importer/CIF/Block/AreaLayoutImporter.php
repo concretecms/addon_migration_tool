@@ -15,6 +15,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\PresetAreaLayo
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\StandardBlockDataRecord;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\StandardBlockValue;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ThemeGridAreaLayoutBlockValue;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\StyleSet;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ImporterInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayout;
 
@@ -74,6 +75,7 @@ class AreaLayoutImporter implements ImporterInterface
     {
 
         $blockImporter = \Core::make('migration/manager/import/block');
+        $styleSetImporter = new StyleSet();
 
         $value = new AreaLayoutBlockValue();
         $type = (string) $node->arealayout['type'];
@@ -88,6 +90,15 @@ class AreaLayoutImporter implements ImporterInterface
                     $block->setColumn($column);
                     $block->setType((string) $blockNode['type']);
                     $block->setName((string) $blockNode['name']);
+                    $bFilename = (string) $blockNode['custom-template'];
+                    if ($bFilename) {
+                        $block->setCustomTemplate($bFilename);
+                    }
+                    $block->setDefaultsOutputIdentifier((string) $node['mc-block-id']);
+                    if (isset($blockNode->style)) {
+                        $styleSet = $styleSetImporter->import($blockNode->style);
+                        $block->setStyleSet($styleSet);
+                    }
                     $blockValue = $blockImporter->driver((string) $blockNode['type'])->parse($blockNode);
                     $block->setBlockValue($blockValue);
                     $block->setPosition($i);

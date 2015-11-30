@@ -45,6 +45,10 @@ class Stack implements ElementParserInterface
                             $block = new StackBlock();
                             $block->setType((string) $blockNode['type']);
                             $block->setName((string) $blockNode['name']);
+                            $bFilename = (string) $blockNode['custom-template'];
+                            if ($bFilename) {
+                                $block->setCustomTemplate($bFilename);
+                            }
                             $value = $this->blockImporter->driver('unmapped')->parse($blockNode);
                             if (isset($blockNode->style)) {
                                 $styleSet = $this->styleSetImporter->import($blockNode->style);

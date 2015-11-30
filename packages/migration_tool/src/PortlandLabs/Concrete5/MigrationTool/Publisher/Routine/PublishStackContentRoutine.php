@@ -30,7 +30,17 @@ class PublishStackContentRoutine extends AbstractPageRoutine
                             $publisher = $value->getPublisher();
                             $area = new Area();
                             $area->setName(STACKS_AREA_NAME);
-                            $publisher->publish($batch, $bt, $s, $area, $value);
+                            $b = $publisher->publish($batch, $bt, $s, $area, $value);
+                            $styleSet = $block->getStyleSet();
+                            if (is_object($styleSet)) {
+                                $styleSetPublisher = $styleSet->getPublisher();
+                                $publishedStyleSet = $styleSetPublisher->publish();
+                                $b->setCustomStyleSet($publishedStyleSet);
+                            }
+                            if ($block->getCustomTemplate()) {
+                                $b->setCustomTemplate($block->getCustomTemplate());
+                            }
+
                         }
                     }
                 }

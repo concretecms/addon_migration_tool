@@ -123,6 +123,10 @@ class Page implements ElementParserInterface
         $type = (string) $node['type'];
         $block->setType($type);
         $block->setName((string) $node['name']);
+        $bFilename = (string) $node['custom-template'];
+        if ($bFilename) {
+            $block->setCustomTemplate($bFilename);
+        }
         $block->setDefaultsOutputIdentifier((string) $node['mc-block-id']);
         if (isset($node->style)) {
             $styleSet = $this->styleSetImporter->import($node->style);

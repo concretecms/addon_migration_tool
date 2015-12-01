@@ -1,6 +1,6 @@
 <? defined('C5_EXECUTE') or die("Access Denied."); ?>
 <div class="ccm-dashboard-header-buttons btn-group">
-    <a href="<?=$view->action('view_batch', $batch->getID())?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?=t('Batch to Batch')?></a>
+    <a href="<?=$view->action('view_batch', $batch->getID())?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?=t('Back to Batch')?></a>
     <button data-dialog="delete-files" type="button" data-dialog-title="<?=t('Delete Files')?>" class="btn btn-danger"><?=t('Delete Files')?></button>
     <span data-upload-action="<?=$view->action('upload_files')?>" class="fileinput-button btn btn-primary">
         <input style="visibility: hidden" type="file" name="file" multiple />

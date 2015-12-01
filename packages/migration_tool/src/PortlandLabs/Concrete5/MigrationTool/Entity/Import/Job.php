@@ -1,10 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\JobValidator;
-
 
 /**
  * @Entity
@@ -12,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\JobValidator;
  */
 class Job implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -33,7 +30,6 @@ class Job implements PublishableInterface
      * @Column(type="string", nullable=true)
      */
     protected $package = null;
-
 
     /**
      * @return mixed
@@ -99,12 +95,8 @@ class Job implements PublishableInterface
         $this->package = $package;
     }
 
-
     public function getPublisherValidator()
     {
         return new JobValidator($this);
     }
-
-
-
 }

@@ -1,17 +1,14 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\JobSetFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
  */
 class JobSetObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="JobSet", mappedBy="collection", cascade={"persist", "remove"})
      **/

@@ -1,14 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BlockTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ConversationFlagTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\WorkflowTypeValidator;
-
 
 /**
  * @Entity
@@ -16,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\WorkflowTypeValidat
  */
 class Type implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -38,12 +31,10 @@ class Type implements PublishableInterface
      */
     protected $name;
 
-
     /**
      * @Column(type="string", nullable=true)
      */
     protected $package = null;
-
 
     /**
      * @return mixed
@@ -125,12 +116,8 @@ class Type implements PublishableInterface
         $this->name = $name;
     }
 
-
     public function getPublisherValidator()
     {
         return new WorkflowTypeValidator($this);
     }
-
-
-
 }

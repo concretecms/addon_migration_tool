@@ -1,13 +1,12 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+
 /**
  * @Entity
  * @Table(name="MigrationImportBatchTargetItems")
  */
 class BatchTargetItem
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -18,7 +17,6 @@ class BatchTargetItem
      * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem", cascade={"persist", "remove"})
      **/
     protected $target_item;
-
 
     /**
      * @ManyToOne(targetEntity="Batch")
@@ -64,6 +62,4 @@ class BatchTargetItem
     {
         $this->batch = $batch;
     }
-
-
 }

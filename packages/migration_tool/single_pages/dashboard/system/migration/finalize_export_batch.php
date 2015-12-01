@@ -1,9 +1,10 @@
-<? defined('C5_EXECUTE') or die("Access Denied."); ?>
+<?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 <div class="ccm-dashboard-header-buttons">
     <a href="<?=$view->action('view_batch', $batch->getID())?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?=t('Batch to Batch')?></a>
 </div>
 
-<? if (count($files)) { ?>
+<?php if (count($files)) {
+    ?>
 
     <script type="text/javascript">
         $(function() {
@@ -42,20 +43,26 @@
             </tr>
             </thead>
             <tbody>
-            <? foreach($files as $file) { ?>
+            <?php foreach ($files as $file) {
+    ?>
                 <tr>
                     <td><input type="checkbox" data-checkbox="batch-file" name="batchFileID[]" value="<?=$file->getFileID()?>"></td>
                     <td><?=$file->getFileID()?></td>
                     <td><?=$file->getFileName()?></td>
                 </tr>
-            <? } ?>
+            <?php 
+}
+    ?>
             </tbody>
         </table>
     </form>
-<? } else { ?>
+<?php 
+} else {
+    ?>
     <h3><?=t('Files')?></h3>
     <p><?=t('No referenced files found.')?></p>
-<? } ?>
+<?php 
+} ?>
 
 <h3><?=t('Content XML')?></h3>
 <form method="post" action="<?=$view->action('export_batch_xml', $batch->getID())?>">

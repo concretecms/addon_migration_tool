@@ -1,17 +1,13 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AddressAttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\BooleanAttributeKey;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\DateTimeAttributeKey;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class AddressImporter implements ImporterInterface
 {
-
     public function getEntity()
     {
         return new AddressAttributeKey();
@@ -29,11 +25,10 @@ class AddressImporter implements ImporterInterface
         $key->setDefaultCountry((string) $element->type['default-country']);
         $countries = array();
         if (isset($element->type->countries->country)) {
-            foreach($element->type->countries->country as $country) {
+            foreach ($element->type->countries->country as $country) {
                 $countries[] = (string) $country;
             }
         }
         $key->setCustomCountries($countries);
     }
-
 }

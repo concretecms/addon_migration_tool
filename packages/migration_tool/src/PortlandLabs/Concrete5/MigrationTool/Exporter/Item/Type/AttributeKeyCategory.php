@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use Concrete\Core\Attribute\Key\Category;
@@ -11,7 +10,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class AttributeKeyCategory extends AbstractType
 {
-
     public function getHeaders()
     {
         return array(t('Name'));
@@ -20,7 +18,7 @@ class AttributeKeyCategory extends AbstractType
     public function exportCollection(ObjectCollection $collection, \SimpleXMLElement $element)
     {
         $node = $element->addChild('attributecategories');
-        foreach($collection->getItems() as $category) {
+        foreach ($collection->getItems() as $category) {
             $category = Category::getByID($category->getItemIdentifier());
             if (is_object($category)) {
                 $cat = $node->addChild('category');
@@ -31,17 +29,17 @@ class AttributeKeyCategory extends AbstractType
         }
     }
 
-
     public function getResultColumns(ExportItem $exportItem)
     {
         $t = Category::getByID($exportItem->getItemIdentifier());
+
         return array($t->getAttributeKeyCategoryHandle());
     }
 
     public function getItemsFromRequest($array)
     {
         $items = array();
-        foreach($array as $id) {
+        foreach ($array as $id) {
             $t = Category::getByID($id);
             if (is_object($t)) {
                 $category = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\AttributeKeyCategory();
@@ -49,6 +47,7 @@ class AttributeKeyCategory extends AbstractType
                 $items[] = $category;
             }
         }
+
         return $items;
     }
 
@@ -56,11 +55,12 @@ class AttributeKeyCategory extends AbstractType
     {
         $list = Category::getList();
         $items = array();
-        foreach($list as $t) {
+        foreach ($list as $t) {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\AttributeKeyCategory();
             $item->setItemId($t->getAttributeKeyCategoryID());
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -73,5 +73,4 @@ class AttributeKeyCategory extends AbstractType
     {
         return t('Attribute Categories');
     }
-
 }

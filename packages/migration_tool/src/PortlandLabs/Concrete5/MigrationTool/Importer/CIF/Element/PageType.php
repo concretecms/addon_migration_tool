@@ -1,21 +1,12 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockTypeObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockType as CoreBlockType;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageTemplateObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\BlockComposerFormLayoutSetControl;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\CollectionAttributeComposerFormLayoutSetControl;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\ComposerFormLayoutSet;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\CorePagePropertyComposerFormLayoutSetControl;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageTypeObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementInterface;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -24,7 +15,7 @@ class PageType implements ElementParserInterface
 {
     protected function getComposerControlEntityObject($type)
     {
-        switch($type) {
+        switch ($type) {
             case 'core_page_property':
                 return new CorePagePropertyComposerFormLayoutSetControl();
             case 'collection_attribute':
@@ -39,7 +30,7 @@ class PageType implements ElementParserInterface
         $collection = new PageTypeObjectCollection();
         $targets = \Core::make('migration/manager/import/page_type/publish_target');
         if ($element->pagetypes->pagetype) {
-            foreach($element->pagetypes->pagetype as $node) {
+            foreach ($element->pagetypes->pagetype as $node) {
                 $type = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageType();
                 $type->setHandle((string) $node['handle']);
                 $type->setName((string) $node['name']);
@@ -91,12 +82,12 @@ class PageType implements ElementParserInterface
                                 $control->setPosition($j);
                                 $layoutSet->getControls()->add($control);
                                 $control->setComposerFormLayoutSet($layoutSet);
-                                $j++;
+                                ++$j;
                             }
                         }
                         $type->getLayoutSets()->add($layoutSet);
                         $layoutSet->setType($type);
-                        $i++;
+                        ++$i;
                     }
                 }
 
@@ -112,7 +103,7 @@ class PageType implements ElementParserInterface
                 $type->setCollection($collection);
             }
         }
+
         return $collection;
     }
-
 }

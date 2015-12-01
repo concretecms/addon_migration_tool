@@ -5,12 +5,16 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getLibraries() as $library) {
-        $validator = $library->getPublisherValidator();
-        ?>
-        <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <?php foreach ($collection->getLibraries() as $library) {
+    $validator = $library->getPublisherValidator();
+    ?>
+        <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
             <td><?=$library->getHandle()?></td>
         </tr>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>

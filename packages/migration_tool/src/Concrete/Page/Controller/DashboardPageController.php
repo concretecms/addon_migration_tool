@@ -1,11 +1,10 @@
 <?php
-
 namespace Concrete\Package\MigrationTool\Page\Controller;
+
 use Concrete\Core\Package\Package;
 
 class DashboardPageController extends \Concrete\Core\Page\Controller\DashboardPageController
 {
-
     public function on_start()
     {
         parent::on_start();
@@ -13,5 +12,4 @@ class DashboardPageController extends \Concrete\Core\Page\Controller\DashboardPa
         ini_set('memory_limit', -1);
         set_time_limit(0);
     }
-
 }

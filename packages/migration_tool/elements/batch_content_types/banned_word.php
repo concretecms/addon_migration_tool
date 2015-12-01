@@ -5,12 +5,16 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getWords() as $word) {
-        $validator = $word->getPublisherValidator();
-        ?>
-        <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <?php foreach ($collection->getWords() as $word) {
+    $validator = $word->getPublisherValidator();
+    ?>
+        <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
             <td><?=$word->getWord()?></td>
         </tr>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>

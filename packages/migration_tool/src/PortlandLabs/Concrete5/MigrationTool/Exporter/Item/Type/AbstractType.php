@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch;
@@ -10,10 +9,8 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 abstract class AbstractType implements TypeInterface, StandardFormatterTypeInterface
 {
-
     public function getResultsFormatter(Batch $batch)
     {
         return new StandardFormatter($this, $batch);
     }
-
 }

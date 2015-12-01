@@ -1,7 +1,5 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
-
 
 /**
  * @Entity
@@ -9,7 +7,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
  */
 class UnknownAttributeKey extends AttributeKey
 {
-
     /**
      * @Column(type="text")
      */
@@ -31,10 +28,8 @@ class UnknownAttributeKey extends AttributeKey
         $this->options_xml = $options_xml;
     }
 
-
     public function getType()
     {
         return 'unknown';
     }
-
 }

@@ -1,12 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class MessageJsonFormatter implements \JsonSerializable
 {
-
     protected $message;
     protected $formatter;
 
@@ -22,8 +20,7 @@ class MessageJsonFormatter implements \JsonSerializable
             'severity' => $this->message->getSeverity(),
             'text' => $this->message->getText(),
             'levelClass' => $this->formatter->getLevelClass(),
-            'iconClass' => $this->formatter->getIconClass()
+            'iconClass' => $this->formatter->getIconClass(),
         );
     }
-
 }

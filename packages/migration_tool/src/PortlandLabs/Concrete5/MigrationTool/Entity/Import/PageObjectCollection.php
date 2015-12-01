@@ -1,18 +1,15 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
  */
 class PageObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page", mappedBy="collection", cascade={"persist", "remove"})
      * @OrderBy({"position" = "ASC"})
@@ -60,7 +57,6 @@ class PageObjectCollection extends ObjectCollection
         return $this->getPages();
     }
 
-
     public function getTreeFormatter()
     {
         return new TreeJsonFormatter($this);
@@ -70,5 +66,4 @@ class PageObjectCollection extends ObjectCollection
     {
         return \Core::make('migration/batch/page/validator', array($batch));
     }
-
 }

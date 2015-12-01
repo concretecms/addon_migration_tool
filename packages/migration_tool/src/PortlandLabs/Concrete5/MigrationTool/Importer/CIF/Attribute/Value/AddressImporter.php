@@ -1,12 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Value;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AddressAttributeValue;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\ImageFileAttributeValue;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\SelectAttributeValue;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\StandardAttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ImporterInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -23,7 +18,7 @@ class AddressImporter implements ImporterInterface
         $value->setStateProvince((string) $node->value['state-province']);
         $value->setPostalCode((string) $node->value['postal-code']);
         $value->setCountry((string) $node->value['country']);
+
         return $value;
     }
-
 }

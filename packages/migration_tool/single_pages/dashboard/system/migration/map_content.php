@@ -1,4 +1,4 @@
-<? defined('C5_EXECUTE') or die("Access Denied."); ?>
+<?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 <div class="ccm-dashboard-header-buttons">
     <a href="<?=$view->action('view_batch', $batch->getID())?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?=t('Batch to Batch')?></a>
 </div>
@@ -9,7 +9,8 @@
 
 <h3><?=$mapper->getMappedItemPluralName()?></h3>
 
-<? if (count($items)) { ?>
+<?php if (count($items)) {
+    ?>
 
     <form method="post" action="<?=$view->action('save_mapping')?>">
         <?=$token->output('save_mapping')?>
@@ -24,32 +25,58 @@
         </tr>
         </thead>
         <tbody>
-            <? foreach($items as $item) {
-                $selectedTargetItem = $targetItemList->getSelectedTargetItem($item);
-                ?>
+            <?php foreach ($items as $item) {
+    $selectedTargetItem = $targetItemList->getSelectedTargetItem($item);
+    ?>
             <tr>
                 <td style="white-space: nowrap; vertical-align: middle"><?=$item->getDisplayName()?></td>
                 <td>
                     <select name="targetItem[<?=$item->getIdentifier()?>]" class="form-control">
-                        <? foreach($targetItemList->getInternalTargetItems() as $targetItem) { ?>
-                            <option <? if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) { ?>selected="selected" <? } ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
-                        <? } ?>
-                        <? if (count($targetItemList->getMapperInstalledTargetItems())) { ?>
+                        <?php foreach ($targetItemList->getInternalTargetItems() as $targetItem) {
+    ?>
+                            <option <?php if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) {
+    ?>selected="selected" <?php 
+}
+    ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
+                        <?php 
+}
+    ?>
+                        <?php if (count($targetItemList->getMapperInstalledTargetItems())) {
+    ?>
                             <optgroup label="** <?=t('Installed %s', $mapper->getMappedItemPluralName())?>"></optgroup>
-                            <? foreach($targetItemList->getMapperInstalledTargetItems() as $targetItem) { ?>
-                                <option <? if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) { ?>selected="selected" <? } ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
-                            <? } ?>
-                        <? } ?>
-                        <? if (count($targetItemList->getMapperBatchTargetItems())) { ?>
+                            <?php foreach ($targetItemList->getMapperInstalledTargetItems() as $targetItem) {
+    ?>
+                                <option <?php if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) {
+    ?>selected="selected" <?php 
+}
+    ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
+                            <?php 
+}
+    ?>
+                        <?php 
+}
+    ?>
+                        <?php if (count($targetItemList->getMapperBatchTargetItems())) {
+    ?>
                             <optgroup label="** <?=t('Batch %s', $mapper->getMappedItemPluralName())?>"></optgroup>
-                            <? foreach($targetItemList->getMapperBatchTargetItems() as $targetItem) { ?>
-                                <option <? if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) { ?>selected="selected" <? } ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
-                            <? } ?>
-                        <? } ?>
+                            <?php foreach ($targetItemList->getMapperBatchTargetItems() as $targetItem) {
+    ?>
+                                <option <?php if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) {
+    ?>selected="selected" <?php 
+}
+    ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
+                            <?php 
+}
+    ?>
+                        <?php 
+}
+    ?>
                     </select>
                 </td>
             </tr>
-            <? } ?>
+            <?php 
+}
+    ?>
         </tbody>
         </table>
         <div class="ccm-dashboard-form-actions-wrapper">
@@ -60,6 +87,9 @@
         </div>
     </form>
 
-<? } else { ?>
+<?php 
+} else {
+    ?>
     <p><?=t('No items of the selected type found in the batch.')?></p>
-<? } ?>
+<?php 
+} ?>

@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Concrete\Core\File\Set\Set;
@@ -11,7 +10,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Batch
 {
-
     /**
      * @Id @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
@@ -41,7 +39,6 @@ class Batch
      * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem", mappedBy="batch", cascade={"persist", "remove"})
      **/
     public $target_items;
-
 
     public function __construct()
     {
@@ -114,7 +111,6 @@ class Batch
         $this->collections = $collections;
     }
 
-
     public function hasRecords()
     {
         return $this->collections->count() > 0;
@@ -126,11 +122,12 @@ class Batch
     public function getPages()
     {
         $pages = array();
-        foreach($this->getObjectCollections() as $collection) {
+        foreach ($this->getObjectCollections() as $collection) {
             if ($collection instanceof PageObjectCollection) {
                 $pages = array_merge($pages, $collection->getPages()->toArray());
             }
         }
+
         return $pages;
     }
 
@@ -144,13 +141,13 @@ class Batch
 
     public function getObjectCollection($type)
     {
-        foreach($this->collections as $collection) {
+        foreach ($this->collections as $collection) {
             if ($collection->getType() == $type) {
                 return $collection;
             }
         }
     }
-    
+
     /**
      * @param mixed $target_items
      */
@@ -162,6 +159,7 @@ class Batch
     public function getFileSet()
     {
         $fs = Set::getByName($this->getID());
+
         return $fs;
     }
     public function getFiles()
@@ -169,8 +167,10 @@ class Batch
         $fs = $this->getFileSet();
         if (is_object($fs)) {
             $files = $fs->getFiles();
+
             return $files;
         }
+
         return array();
     }
 
@@ -181,6 +181,4 @@ class Batch
     {
         return $this->getID();
     }
-
-
 }

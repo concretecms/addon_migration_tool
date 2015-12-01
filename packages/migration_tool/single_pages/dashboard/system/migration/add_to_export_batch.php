@@ -1,4 +1,4 @@
-<? defined('C5_EXECUTE') or die("Access Denied."); ?>
+<?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 
     <div class="ccm-dashboard-header-buttons">
         <a href="<?=$view->action('view_batch', $batch->getID())?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?=t('Batch to Batch')?></a>
@@ -11,10 +11,15 @@
         <div style="padding-right: 50px; position: relative"">
         <select name="item_type" class="form-control">
             <option value=""><?=t('** Select Item')?></option>
-            <? foreach($exporters->getDrivers() as $itemType) { ?>
+            <?php foreach ($exporters->getDrivers() as $itemType) {
+    ?>
                 <option value="<?=$itemType->getHandle()?>"
-                    <? if (isset($selectedItemType) && $selectedItemType->getHandle() == $itemType->getHandle()) { ?>selected<? } ?>><?=$itemType->getPluralDisplayName()?></option>
-            <? } ?>
+                    <?php if (isset($selectedItemType) && $selectedItemType->getHandle() == $itemType->getHandle()) {
+    ?>selected<?php 
+}
+    ?>><?=$itemType->getPluralDisplayName()?></option>
+            <?php 
+} ?>
         </select>
         <button type="submit" style="position: absolute; top: 0px; right: 0px"name="submit" class="btn btn-primary"><?=t('Go')?></button>
         </div>
@@ -22,28 +27,38 @@
 </form>
 
 
-<? if (isset($selectedItemType)) { ?>
+<?php if (isset($selectedItemType)) {
+    ?>
 
 
-    <? $formatter = $selectedItemType->getResultsFormatter($batch); ?>
+    <?php $formatter = $selectedItemType->getResultsFormatter($batch);
+    ?>
 
-    <? if ($formatter->hasSearchForm()) { ?>
+    <?php if ($formatter->hasSearchForm()) {
+    ?>
 
         <form method="get" action="<?=$view->action('add_to_batch', $batch->getID())?>" class="clearfix">
             <?=$form->hidden('item_type', $selectedItemType->getHandle())?>
             <?=$form->hidden('search_form_submit', 1)?>
 
-            <?=$formatter->displaySearchForm();?>
+            <?=$formatter->displaySearchForm();
+    ?>
             <div class="form-actions">
                 <button type="submit" name="submit" class="btn pull-right btn-default"><?=t('Search')?></button>
             </div>
         </form>
-    <? } ?>
+    <?php 
+}
+    ?>
 
-    <? if ($formatter->hasSearchResults($request)) { ?>
-        <? if ($formatter->hasSearchForm()) { ?>
+    <?php if ($formatter->hasSearchResults($request)) {
+    ?>
+        <?php if ($formatter->hasSearchForm()) {
+    ?>
             <hr/>
-        <? } ?>
+        <?php 
+}
+    ?>
 
         <h3><?=$selectedItemType->getPluralDisplayName()?></h3>
 
@@ -55,9 +70,12 @@
         </div>
 
 
-        <? print $formatter->displaySearchResults();?>
+        <?php print $formatter->displaySearchResults();
+    ?>
 
-    <? } ?>
+    <?php 
+}
+    ?>
 
     <script type="text/javascript">
         $(function() {
@@ -99,4 +117,5 @@
         });
     </script>
 
-<? } ?>
+<?php 
+} ?>

@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -8,12 +7,10 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreateWorkflowProgressCategoriesRoutine implements RoutineInterface
 {
-
     public function execute(Batch $batch)
     {
-
         $types = $batch->getObjectCollection('workflow_progress_category');
-        foreach($types->getCategories() as $category) {
+        foreach ($types->getCategories() as $category) {
             if (!$category->getPublisherValidator()->skipItem()) {
                 $pkg = null;
                 if ($category->getPackage()) {
@@ -23,5 +20,4 @@ class CreateWorkflowProgressCategoriesRoutine implements RoutineInterface
             }
         }
     }
-
 }

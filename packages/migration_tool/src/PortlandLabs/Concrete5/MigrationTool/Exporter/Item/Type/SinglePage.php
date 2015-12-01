@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem;
@@ -10,19 +9,18 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class SinglePage extends AbstractType
 {
-
     public function getHeaders()
     {
         return array(
             t('Path'),
-            t('Name')
+            t('Name'),
         );
     }
 
     public function exportCollection(ObjectCollection $collection, \SimpleXMLElement $element)
     {
         $node = $element->addChild('singlepages');
-        foreach($collection->getItems() as $page) {
+        foreach ($collection->getItems() as $page) {
             $c = \Page::getByID($page->getItemIdentifier());
             if (is_object($c) && !$c->isError()) {
                 $c->export($node);
@@ -33,16 +31,17 @@ class SinglePage extends AbstractType
     public function getResultColumns(ExportItem $exportItem)
     {
         $c = \Page::getByID($exportItem->getItemIdentifier());
+
         return array(
             $c->getCollectionPath(),
-            $c->getCollectionName()
+            $c->getCollectionName(),
         );
     }
 
     public function getItemsFromRequest($array)
     {
         $items = array();
-        foreach($array as $id) {
+        foreach ($array as $id) {
             $c = \Page::getByID($id);
             if (is_object($c) && !$c->isError()) {
                 $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\SinglePage();
@@ -50,6 +49,7 @@ class SinglePage extends AbstractType
                 $items[] = $page;
             }
         }
+
         return $items;
     }
 
@@ -76,5 +76,4 @@ class SinglePage extends AbstractType
     {
         return t('Single Pages');
     }
-
 }

@@ -1,10 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-
 
 /**
  * @Entity
@@ -14,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 abstract class ComposerFormLayoutSetControl
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -25,7 +21,6 @@ abstract class ComposerFormLayoutSetControl
      * @Column(type="integer")
      */
     protected $position = 0;
-
 
     /**
      * @ManyToOne(targetEntity="ComposerFormLayoutSet")
@@ -206,7 +201,6 @@ abstract class ComposerFormLayoutSetControl
         $this->position = $position;
     }
 
-
     abstract public function getHandle();
 
     public function getLabel()
@@ -219,5 +213,4 @@ abstract class ComposerFormLayoutSetControl
     }
 
     abstract public function getRecordValidator(Batch $batch);
-
 }

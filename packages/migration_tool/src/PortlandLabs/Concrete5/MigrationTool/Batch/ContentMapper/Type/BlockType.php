@@ -1,9 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Block\BlockType\BlockTypeList;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\BlockItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
@@ -16,7 +14,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class BlockType implements MapperInterface
 {
-
     public function getMappedItemPluralName()
     {
         return t('Block Types');
@@ -30,9 +27,9 @@ class BlockType implements MapperInterface
     public function getItems(Batch $batch)
     {
         $types = array();
-        foreach($batch->getPages() as $page) {
-            foreach($page->getAreas() as $area) {
-                foreach($area->getBlocks() as $block) {
+        foreach ($batch->getPages() as $page) {
+            foreach ($page->getAreas() as $area) {
+                foreach ($area->getBlocks() as $block) {
                     if ($block->getType() && !in_array($block->getType(), $types)) {
                         $types[] = $block->getType();
                     }
@@ -41,9 +38,9 @@ class BlockType implements MapperInterface
                         // so that area layout, stack, page type, etc.. can all say they provide
                         // block types, and this routine is a bloated, procedural mess.
                         $columns = $block->getBlockValue()->getAreaLayout()->getColumns();
-                        foreach($columns as $column) {
+                        foreach ($columns as $column) {
                             $columnBlocks = $column->getBlocks();
-                            foreach($columnBlocks as $columnBlock) {
+                            foreach ($columnBlocks as $columnBlock) {
                                 if ($columnBlock->getType() && !in_array($columnBlock->getType(), $types)) {
                                     $types[] = $columnBlock->getType();
                                 }
@@ -55,9 +52,9 @@ class BlockType implements MapperInterface
         }
         $stacks = $batch->getObjectCollection('stack');
         if (is_object($stacks)) {
-            foreach($stacks->getStacks() as $stack) {
+            foreach ($stacks->getStacks() as $stack) {
                 $blocks = $stack->getBlocks();
-                foreach($blocks as $block) {
+                foreach ($blocks as $block) {
                     if ($block->getType() && !in_array($block->getType(), $types)) {
                         $types[] = $block->getType();
                     }
@@ -67,9 +64,9 @@ class BlockType implements MapperInterface
 
         $pageTypes = $batch->getObjectCollection('page_type');
         if (is_object($pageTypes)) {
-            foreach($pageTypes->getTypes() as $type) {
-                foreach($type->getLayoutSets() as $set) {
-                    foreach($set->getControls() as $control) {
+            foreach ($pageTypes->getTypes() as $type) {
+                foreach ($type->getLayoutSets() as $set) {
+                    foreach ($set->getControls() as $control) {
                         if ($control instanceof BlockComposerFormLayoutSetControl) {
                             if (!in_array($control->getItemIdentifier(), $types)) {
                                 $types[] = $control->getItemIdentifier();
@@ -78,9 +75,9 @@ class BlockType implements MapperInterface
                     }
                 }
                 $defaults = $type->getDefaultPageCollection();
-                foreach($defaults->getPages() as $page) {
-                    foreach($page->getAreas() as $area) {
-                        foreach($area->getBlocks() as $block) {
+                foreach ($defaults->getPages() as $page) {
+                    foreach ($page->getAreas() as $area) {
+                        foreach ($area->getBlocks() as $block) {
                             if (!in_array($block->getType(), $types)) {
                                 $types[] = $block->getType();
                             }
@@ -91,10 +88,11 @@ class BlockType implements MapperInterface
         }
 
         $items = array();
-        foreach($types as $type) {
+        foreach ($types as $type) {
             $item = new Item($type);
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -105,14 +103,16 @@ class BlockType implements MapperInterface
             $targetItem = new TargetItem($this);
             $targetItem->setItemId($bt->getBlockTypeHandle());
             $targetItem->setItemName($bt->getBlockTypeName());
+
             return $targetItem;
         } else { // we check the current batch.
             $collection = $batch->getObjectCollection('block_type');
-            foreach($collection->getTypes() as $type) {
+            foreach ($collection->getTypes() as $type) {
                 if ($type->getHandle() == $item->getIdentifier()) {
                     $targetItem = new TargetItem($this);
                     $targetItem->setItemId($type->getHandle());
                     $targetItem->setItemName($type->getHandle());
+
                     return $targetItem;
                 }
             }
@@ -123,7 +123,7 @@ class BlockType implements MapperInterface
     {
         $collection = $batch->getObjectCollection('block_type');
         $items = array();
-        foreach($collection->getTypes() as $type) {
+        foreach ($collection->getTypes() as $type) {
             if (!$type->getPublisherValidator()->skipItem()) {
                 $item = new TargetItem($this);
                 $item->setItemId($type->getHandle());
@@ -131,6 +131,7 @@ class BlockType implements MapperInterface
                 $items[] = $item;
             }
         }
+
         return $items;
     }
 
@@ -139,16 +140,17 @@ class BlockType implements MapperInterface
         $list = new BlockTypeList();
         $list->includeInternalBlockTypes();
         $types = $list->get();
-        usort($types, function($a, $b) {
+        usort($types, function ($a, $b) {
             return strcasecmp($a->getBlockTypeName(), $b->getBlockTypeName());
         });
         $items = array();
-        foreach($types as $type) {
+        foreach ($types as $type) {
             $item = new TargetItem($this);
             $item->setItemId($type->getBlockTypeHandle());
             $item->setItemName($type->getBlockTypeName());
             $items[] = $item;
         }
+
         return $items;
     }
 

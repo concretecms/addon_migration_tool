@@ -1,16 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
-
-use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BlockTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
-
 
 abstract class StandardExportItem extends ExportItem
 {
-
     /**
      * @Column(type="integer", nullable=false)
      */
@@ -36,5 +28,4 @@ abstract class StandardExportItem extends ExportItem
     {
         return $this->getItemId();
     }
-
 }

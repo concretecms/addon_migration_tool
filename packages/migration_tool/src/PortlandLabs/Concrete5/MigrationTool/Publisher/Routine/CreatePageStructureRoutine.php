@@ -1,13 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Page\Type\Type;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
-use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
-use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -24,12 +18,11 @@ class CreatePageStructureRoutine extends AbstractPageRoutine
         $batchParent = $batches->add($type, array(
             'cName' => $batch->getID(),
             'cHandle' => $batch->getID(),
-            'pkgID' => \Package::getByHandle('migration_tool')->getPackageID()
+            'pkgID' => \Package::getByHandle('migration_tool')->getPackageID(),
         ));
 
         // Now loop through all pages, and build them
-        foreach($this->getPagesOrderedForImport($batch) as $page) {
-
+        foreach ($this->getPagesOrderedForImport($batch) as $page) {
             $data = array();
             $ui = $this->getTargetItem('user', $page->getUser());
             if ($ui != '') {
@@ -74,7 +67,5 @@ class CreatePageStructureRoutine extends AbstractPageRoutine
             $data['cDescription'] = $page->getDescription();
             $parent->add($type, $data);
         }
-
     }
-
 }

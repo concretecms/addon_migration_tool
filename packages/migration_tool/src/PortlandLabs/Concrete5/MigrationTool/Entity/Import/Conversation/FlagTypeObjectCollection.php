@@ -1,12 +1,9 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\BlockTypeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\ConversationFlagTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTemplateFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
@@ -14,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 class FlagTypeObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\FlagType", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -62,9 +58,4 @@ class FlagTypeObjectCollection extends ObjectCollection
     {
         return false;
     }
-
-
-
-
-
 }

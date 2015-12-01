@@ -1,25 +1,20 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AbstractTreeJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class TreeJsonFormatter extends AbstractTreeJsonFormatter
 {
-
     public function jsonSerialize()
     {
         $response = array();
-        foreach($this->collection->getPages() as $page) {
+        foreach ($this->collection->getPages() as $page) {
             $messages = $this->validator->validate($page);
             $formatter = $messages->getFormatter();
-            $node = new \stdClass;
+            $node = new \stdClass();
             $node->title = $page->getName();
             $node->lazy = true;
             $node->nodetype = 'page';
@@ -31,6 +26,7 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $node->statusClass = $formatter->getCollectionStatusIconClass();
             $response[] = $node;
         }
+
         return $response;
     }
 }

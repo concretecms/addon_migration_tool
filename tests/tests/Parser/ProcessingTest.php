@@ -2,7 +2,6 @@
 
 class ProcessingTest extends MigrationToolTestCase
 {
-
     protected function getSampleBatch()
     {
         $data = array(
@@ -14,18 +13,19 @@ class ProcessingTest extends MigrationToolTestCase
             array('Page 6', '/ok/this/more/time'),
             array('Page 7', '/ok/this/abba/test'),
             array('Page 8', '/ok/this/dorp/test'),
-            array('Page 9', '/ok/this/about/about/test')
+            array('Page 9', '/ok/this/about/about/test'),
         );
         $batch = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch();
         $collection = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection();
 
-        foreach($data as $r) {
+        foreach ($data as $r) {
             $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
             $page->setName($r[0]);
             $page->setOriginalPath($r[1]);
             $collection->getPages()->add($page);
             $batch->getObjectCollections()->add($collection);
         }
+
         return $batch;
     }
     public function testLinkNormalization()
@@ -45,9 +45,5 @@ class ProcessingTest extends MigrationToolTestCase
         $this->assertEquals('/more/time', $pages[5]->getBatchPath());
         $this->assertEquals('/abba/test', $pages[6]->getBatchPath());
         $this->assertEquals('/about/about/test', $pages[8]->getBatchPath());
-
     }
-
 }
-
-

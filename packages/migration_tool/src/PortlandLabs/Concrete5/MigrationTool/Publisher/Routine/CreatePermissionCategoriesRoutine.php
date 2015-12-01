@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Permission\Category;
@@ -9,11 +8,10 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreatePermissionCategoriesRoutine implements RoutineInterface
 {
-
     public function execute(Batch $batch)
     {
         $categories = $batch->getObjectCollection('permission_key_category');
-        foreach($categories->getCategories() as $category) {
+        foreach ($categories->getCategories() as $category) {
             if (!$category->getPublisherValidator()->skipItem()) {
                 $pkg = null;
                 if ($category->getPackage()) {
@@ -23,5 +21,4 @@ class CreatePermissionCategoriesRoutine implements RoutineInterface
             }
         }
     }
-
 }

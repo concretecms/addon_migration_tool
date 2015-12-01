@@ -1,14 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThumbnailTypeValidator;
-use Gedmo\Mapping\Annotation as Gedmo;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\TreeValidator;
-
 
 /**
  * @Entity
@@ -16,7 +12,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\TreeValidator;
  */
 class Tree implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -112,8 +107,6 @@ class Tree implements PublishableInterface
         $this->collection = $collection;
     }
 
-
-
     public function getPublisherValidator()
     {
         return new TreeValidator($this);
@@ -138,10 +131,7 @@ class Tree implements PublishableInterface
     public function getRootNodes()
     {
         $criteria = Criteria::create()->where(Criteria::expr()->eq("parent", null));
+
         return $this->nodes->matching($criteria);
     }
-
-
-
-
 }

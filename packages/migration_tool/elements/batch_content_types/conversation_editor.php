@@ -7,14 +7,18 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getEditors() as $editor) {
-        $validator = $editor->getPublisherValidator();
-        ?>
-        <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <?php foreach ($collection->getEditors() as $editor) {
+    $validator = $editor->getPublisherValidator();
+    ?>
+        <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
             <td><?=$editor->getHandle()?></td>
             <td><?=$editor->getName()?></td>
             <td><?=$editor->getIsActive() ? t('Yes') : t('No') ?></td>
         </tr>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>

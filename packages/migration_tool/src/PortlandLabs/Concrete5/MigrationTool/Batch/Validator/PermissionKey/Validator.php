@@ -1,20 +1,16 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey;
 
 use Concrete\Core\Permission\Category;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AbstractValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ItemValidatorInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageCollection;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\UnknownAttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class Validator extends AbstractValidator
 {
-
     public function validate($key)
     {
         $messages = new MessageCollection();
@@ -24,15 +20,16 @@ class Validator extends AbstractValidator
                 new Message(t('Permission category %s does not exist in the site or in the current content batch', $key->getCategory()))
             );
         }
-        foreach($key->getAccessEntities() as $entity) {
+        foreach ($key->getAccessEntities() as $entity) {
             $validator = $entity->getRecordValidator($this->getBatch());
             $entityMessages = $validator->validate($entity);
             if (is_object($entityMessages) && count($entityMessages)) {
-                foreach($entityMessages as $message) {
+                foreach ($entityMessages as $message) {
                     $messages->add($message);
                 }
             }
         }
+
         return $messages;
     }
 
@@ -44,11 +41,10 @@ class Validator extends AbstractValidator
         }
 
         $categories = $batch->getObjectCollection('permission_key_category');
-        foreach($categories->getCategories() as $c) {
+        foreach ($categories->getCategories() as $c) {
             if ($c->getHandle() == $handle) {
                 return true;
             }
         }
-
     }
 }

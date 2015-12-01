@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Value;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\ImportedAttributeValue;
@@ -13,7 +12,7 @@ class Importer implements ImporterInterface
     {
         $value = new ImportedAttributeValue();
         $value->setValue((string) $node->asXML());
+
         return $value;
     }
-
 }

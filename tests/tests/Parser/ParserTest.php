@@ -4,7 +4,6 @@ use \PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
 
 class ParserTest extends MigrationToolTestCase
 {
-
     protected $parser;
 
     public function setUp()
@@ -44,9 +43,9 @@ class ParserTest extends MigrationToolTestCase
         $page = $entities[2];
         $this->assertEquals('Project Title', $page->getName());
         $this->assertEquals(6, count($page->attributes));
-        /** @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute $page */
+        /* @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute $page */
         $attribute1 = $page->attributes[2];
-        /** @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute $page */
+        /* @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute $page */
         $attribute2 = $page->attributes[4];
         $this->assertEquals('project_topics', $attribute1->getAttribute()->getHandle());
         $this->assertXmlStringEqualsXmlString('<attributekey handle="project_topics"><topics><topic>/Homework</topic></topics></attributekey>', $attribute1->getAttribute()->getAttributeValue()->getValue());
@@ -61,9 +60,9 @@ class ParserTest extends MigrationToolTestCase
         $page = $entities[10];
         $this->assertEquals('Hello World!', $page->getName());
         $this->assertEquals(5, count($page->areas));
-        /** @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area $page */
+        /* @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area $page */
         $area1 = $page->areas[1];
-        /** @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area $page */
+        /* @var \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area $page */
         $area2 = $page->areas[3];
         $this->assertEquals('Main', $area1->getName());
         $this->assertEquals('Sidebar', $area2->getName());
@@ -75,7 +74,4 @@ class ParserTest extends MigrationToolTestCase
         $data = simplexml_load_string($blocks[0]->getBlockValue()->getValue());
         $this->assertEquals('btContentLocal', (string) $data->data['table']);
     }
-
 }
-
-

@@ -1,20 +1,14 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey;
 
-
-use Concrete\Core\Attribute\Key\CollectionKey;
 use Concrete\Core\Attribute\Key\Key as CoreAttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\BooleanAttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
-use Concrete\Core\Page\Page;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class BooleanPublisher implements PublisherInterface
 {
-
     /**
      * @param BooleanAttributeKey $source
      * @param CoreAttributeKey $destination

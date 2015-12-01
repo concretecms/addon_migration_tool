@@ -1,13 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\AttributeKeyCategoryFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\BlockTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\ConversationEditorFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTemplateFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PermissionKeyCategoryFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
@@ -16,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 class CategoryObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="Category", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -68,9 +62,4 @@ class CategoryObjectCollection extends ObjectCollection
     {
         return false;
     }
-
-
-
-
-
 }

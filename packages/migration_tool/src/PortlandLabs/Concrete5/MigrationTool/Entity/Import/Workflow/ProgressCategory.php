@@ -1,14 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BlockTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ConversationRatingTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\WorkflowProgressCategoryValidator;
-
 
 /**
  * @Entity
@@ -16,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\WorkflowProgressCat
  */
 class ProgressCategory implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -37,8 +30,6 @@ class ProgressCategory implements PublishableInterface
      * @Column(type="string", nullable=true)
      */
     protected $package = null;
-
-
 
     public function getPublisherValidator()
     {
@@ -108,7 +99,4 @@ class ProgressCategory implements PublishableInterface
     {
         $this->package = $package;
     }
-
-
-
 }

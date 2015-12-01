@@ -1,9 +1,6 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\SinglePageFormatter;
 
 /**
@@ -11,8 +8,6 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\Single
  */
 class SinglePageObjectCollection extends PageObjectCollection
 {
-
-
     public function getType()
     {
         return 'single_page';
@@ -22,5 +17,4 @@ class SinglePageObjectCollection extends PageObjectCollection
     {
         return new SinglePageFormatter($this);
     }
-
 }

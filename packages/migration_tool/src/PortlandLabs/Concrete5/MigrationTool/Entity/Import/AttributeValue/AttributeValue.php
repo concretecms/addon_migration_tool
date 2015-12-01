@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -12,19 +11,17 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 abstract class AttributeValue
 {
-
     /**
      * @Id @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
      */
     protected $id;
 
-
     /**
      * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute", mappedBy="attribute_value")
      **/
     protected $attribute;
-    
+
     /**
      * @return mixed
      */
@@ -57,7 +54,6 @@ abstract class AttributeValue
         $this->id = $id;
     }
 
-
     abstract public function getFormatter();
     abstract public function getPublisher();
 
@@ -70,6 +66,4 @@ abstract class AttributeValue
     {
         return false;
     }
-
-
 }

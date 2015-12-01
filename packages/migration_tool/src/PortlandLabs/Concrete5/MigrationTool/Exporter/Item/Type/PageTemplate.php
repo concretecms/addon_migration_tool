@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem;
@@ -10,7 +9,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class PageTemplate extends AbstractType
 {
-
     public function getHeaders()
     {
         return array(t('Name'));
@@ -19,7 +17,7 @@ class PageTemplate extends AbstractType
     public function exportCollection(ObjectCollection $collection, \SimpleXMLElement $element)
     {
         $node = $element->addChild('pagetemplates');
-        foreach($collection->getItems() as $template) {
+        foreach ($collection->getItems() as $template) {
             $t = \Concrete\Core\Page\Template::getByID($template->getItemIdentifier());
             if (is_object($t)) {
                 $t->export($node);
@@ -30,13 +28,14 @@ class PageTemplate extends AbstractType
     public function getResultColumns(ExportItem $exportItem)
     {
         $t = \Concrete\Core\Page\Template::getByID($exportItem->getItemIdentifier());
+
         return array($t->getPageTemplateDisplayName());
     }
 
     public function getItemsFromRequest($array)
     {
         $items = array();
-        foreach($array as $id) {
+        foreach ($array as $id) {
             $t = \Concrete\Core\Page\Template::getByID($id);
             if (is_object($t)) {
                 $template = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\PageTemplate();
@@ -44,6 +43,7 @@ class PageTemplate extends AbstractType
                 $items[] = $template;
             }
         }
+
         return $items;
     }
 
@@ -51,11 +51,12 @@ class PageTemplate extends AbstractType
     {
         $list = \Concrete\Core\Page\Template::getList();
         $items = array();
-        foreach($list as $t) {
+        foreach ($list as $t) {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\PageTemplate();
             $item->setItemId($t->getPageTemplateID());
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -68,5 +69,4 @@ class PageTemplate extends AbstractType
     {
         return t('Page Templates');
     }
-
 }

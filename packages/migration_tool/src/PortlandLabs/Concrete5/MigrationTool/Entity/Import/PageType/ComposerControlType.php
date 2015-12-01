@@ -1,10 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypeComposerControlTypeValidator;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypeComposerControlTypeValidator;
 
 /**
  * @Entity
@@ -12,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypeComposerCon
  */
 class ComposerControlType implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -119,12 +116,8 @@ class ComposerControlType implements PublishableInterface
         $this->name = $name;
     }
 
-
     public function getPublisherValidator()
     {
         return new PageTypeComposerControlTypeValidator($this);
     }
-
-
-
 }

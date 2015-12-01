@@ -1,19 +1,14 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\AttributeTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\BlockTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTemplateFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
  */
 class AttributeTypeObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeType", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -61,9 +56,4 @@ class AttributeTypeObjectCollection extends ObjectCollection
     {
         return false;
     }
-
-
-
-
-
 }

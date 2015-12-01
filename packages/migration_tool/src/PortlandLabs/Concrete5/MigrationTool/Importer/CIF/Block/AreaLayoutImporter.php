@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayoutColumnBlock;
@@ -10,11 +9,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\PresetAreaLayo
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\ThemeGridAreaLayout;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\ThemeGridAreaLayoutColumn;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\AreaLayoutBlockValue;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\CustomAreaLayoutBlockValue;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\PresetAreaLayoutBlockValue;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\StandardBlockDataRecord;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\StandardBlockValue;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ThemeGridAreaLayoutBlockValue;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\StyleSet;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ImporterInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayout;
@@ -26,11 +20,12 @@ class AreaLayoutImporter implements ImporterInterface
     /**
      * @param $type
      * @param \stdClass $node
+     *
      * @return AreaLayout
      */
     public function createLayoutObject($type, \SimpleXMLElement $node)
     {
-        switch($type) {
+        switch ($type) {
             case 'custom':
                 $layout = new CustomAreaLayout();
                 $layout->setSpacing(intval($node['spacing']));
@@ -48,12 +43,13 @@ class AreaLayoutImporter implements ImporterInterface
                 $layout->setPreset((string) $node['preset']);
                 break;
         }
+
         return $layout;
     }
 
     protected function createColumnObject($type, \SimpleXMLElement $node)
     {
-        switch($type) {
+        switch ($type) {
             case 'custom':
                 $column = new CustomAreaLayoutColumn();
                 $column->setWidth(intval($node['width']));
@@ -67,13 +63,12 @@ class AreaLayoutImporter implements ImporterInterface
                 $column = new PresetAreaLayoutColumn();
                 break;
         }
+
         return $column;
     }
 
-
     public function parse(\SimpleXMLElement $node)
     {
-
         $blockImporter = \Core::make('migration/manager/import/block');
         $styleSetImporter = new StyleSet();
 
@@ -84,7 +79,7 @@ class AreaLayoutImporter implements ImporterInterface
             $column = $this->createColumnObject($type, $columnNode);
             $column->setAreaLayout($layout);
             $i = 0;
-            foreach($columnNode->block as $blockNode) {
+            foreach ($columnNode->block as $blockNode) {
                 if ($blockNode['type']) {
                     $block = new AreaLayoutColumnBlock();
                     $block->setColumn($column);
@@ -103,13 +98,13 @@ class AreaLayoutImporter implements ImporterInterface
                     $block->setBlockValue($blockValue);
                     $block->setPosition($i);
                     $column->getBlocks()->add($block);
-                    $i++;
+                    ++$i;
                 }
             }
             $layout->getColumns()->add($column);
         }
         $value->setAreaLayout($layout);
+
         return $value;
     }
-
 }

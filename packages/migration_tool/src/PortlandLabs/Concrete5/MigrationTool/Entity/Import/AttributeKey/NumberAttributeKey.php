@@ -1,9 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankFormatter;
-
 
 /**
  * @Entity
@@ -11,7 +9,6 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankForma
  */
 class NumberAttributeKey extends AttributeKey
 {
-
     public function getType()
     {
         return 'number';
@@ -21,5 +18,4 @@ class NumberAttributeKey extends AttributeKey
     {
         return new BlankFormatter($this);
     }
-
 }

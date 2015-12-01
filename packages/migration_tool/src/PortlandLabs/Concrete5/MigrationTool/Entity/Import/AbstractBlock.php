@@ -1,6 +1,6 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+
 /**
  * @Entity
  * @Table(name="MigrationImportBlocks")
@@ -9,7 +9,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
  */
 class AbstractBlock
 {
-
     /**
      * @Id @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
@@ -91,7 +90,6 @@ class AbstractBlock
         $this->area = $area;
     }
 
-
     /**
      * @return mixed
      */
@@ -139,7 +137,6 @@ class AbstractBlock
     {
         $this->block_value = $block_value;
     }
-
 
     /**
      * @Column(type="string", nullable=true)
@@ -193,9 +190,4 @@ class AbstractBlock
     {
         $this->custom_template = $custom_template;
     }
-
-    
-
-
-
 }

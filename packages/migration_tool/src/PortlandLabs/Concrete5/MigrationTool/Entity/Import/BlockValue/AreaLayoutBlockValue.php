@@ -1,11 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\AreaLayoutFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\StandardFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\AreaLayoutInspector;
-use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\StandardInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\AreaLayoutPublisher;
 
 /**
@@ -14,12 +11,10 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\AreaLayoutPublisher;
  */
 class AreaLayoutBlockValue extends BlockValue
 {
-
     /**
      * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayout", inversedBy="block_value", cascade={"persist", "remove"})
      **/
     protected $area_layout;
-
 
     /**
      * @return \PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayout
@@ -51,8 +46,4 @@ class AreaLayoutBlockValue extends BlockValue
     {
         return new AreaLayoutPublisher();
     }
-
-
-
-
 }

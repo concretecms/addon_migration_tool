@@ -1,16 +1,13 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\BooleanAttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\DateTimeAttributeKey;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class DateTimeImporter implements ImporterInterface
 {
-
     public function getEntity()
     {
         return new DateTimeAttributeKey();
@@ -25,5 +22,4 @@ class DateTimeImporter implements ImporterInterface
         $mode = (string) $element->type['mode'];
         $key->setMode($mode);
     }
-
 }

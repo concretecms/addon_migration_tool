@@ -1,12 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\StandardFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\StandardInspector;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\StandardPublisher;
 
 /**
  * @Entity
@@ -16,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\StandardPublisher;
  */
 abstract class AreaLayout
 {
-
     /**
      * @Id @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
@@ -74,5 +68,4 @@ abstract class AreaLayout
      * @return \PortlandLabs\Concrete5\MigrationTool\Publisher\AreaLayout\PublisherInterface
      */
     abstract public function getPublisher();
-
 }

@@ -6,13 +6,17 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getThemes() as $theme) {
-        $validator = $theme->getPublisherValidator();
-        ?>
-        <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <?php foreach ($collection->getThemes() as $theme) {
+    $validator = $theme->getPublisherValidator();
+    ?>
+        <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
             <td><?=$theme->getHandle()?></td>
             <td><?=$theme->getIsActivated() ? t("Yes") : t("No") ?></td>
         </tr>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>

@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Validator;
 
 use Concrete\Core\Attribute\Key\CollectionKey;
@@ -8,11 +7,10 @@ use Concrete\Core\Attribute\Key\UserKey;
 
 class AttributeKeyValidator extends AbstractValidator
 {
-
     public function skipItem()
     {
         $key = false;
-        switch($this->object->getCategory()) {
+        switch ($this->object->getCategory()) {
             case 'collection':
                 $key = CollectionKey::getByHandle($this->object->getHandle());
                 break;
@@ -23,7 +21,7 @@ class AttributeKeyValidator extends AbstractValidator
                 $key = UserKey::getByHandle($this->object->getHandle());
                 break;
         }
+
         return is_object($key);
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem;
@@ -10,7 +9,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Theme extends AbstractType
 {
-
     public function getHeaders()
     {
         return array(t('Name'));
@@ -19,7 +17,7 @@ class Theme extends AbstractType
     public function exportCollection(ObjectCollection $collection, \SimpleXMLElement $element)
     {
         $node = $element->addChild('themes');
-        foreach($collection->getItems() as $theme) {
+        foreach ($collection->getItems() as $theme) {
             $t = \Concrete\Core\Page\Theme\Theme::getByID($theme->getItemIdentifier());
             if (is_object($t)) {
                 $t->export($node);
@@ -30,13 +28,14 @@ class Theme extends AbstractType
     public function getResultColumns(ExportItem $exportItem)
     {
         $t = \Concrete\Core\Page\Theme\Theme::getByID($exportItem->getItemIdentifier());
+
         return array($t->getThemeName());
     }
 
     public function getItemsFromRequest($array)
     {
         $items = array();
-        foreach($array as $id) {
+        foreach ($array as $id) {
             $t = \Concrete\Core\Page\Theme\Theme::getByID($id);
             if (is_object($t)) {
                 $theme = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\Theme();
@@ -44,6 +43,7 @@ class Theme extends AbstractType
                 $items[] = $theme;
             }
         }
+
         return $items;
     }
 
@@ -51,11 +51,12 @@ class Theme extends AbstractType
     {
         $list = \Concrete\Core\Page\Theme\Theme::getList();
         $items = array();
-        foreach($list as $t) {
+        foreach ($list as $t) {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\Theme();
             $item->setItemId($t->getThemeID());
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -68,5 +69,4 @@ class Theme extends AbstractType
     {
         return t('Themes');
     }
-
 }

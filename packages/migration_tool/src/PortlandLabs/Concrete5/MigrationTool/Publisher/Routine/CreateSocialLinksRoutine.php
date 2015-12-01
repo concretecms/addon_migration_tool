@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Sharing\SocialNetwork\Link;
@@ -9,11 +8,10 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreateSocialLinksRoutine implements RoutineInterface
 {
-
     public function execute(Batch $batch)
     {
         $links = $batch->getObjectCollection('social_link');
-        foreach($links->getLinks() as $link) {
+        foreach ($links->getLinks() as $link) {
             if (!$link->getPublisherValidator()->skipItem()) {
                 $l = new Link();
                 $l->setServiceHandle($link->getService());
@@ -22,5 +20,4 @@ class CreateSocialLinksRoutine implements RoutineInterface
             }
         }
     }
-
 }

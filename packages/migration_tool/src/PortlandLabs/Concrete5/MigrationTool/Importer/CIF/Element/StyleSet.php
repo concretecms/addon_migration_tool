@@ -1,27 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
-
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BannedWordObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\FlagType;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\FlagTypeObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageTemplate as CorePageTemplate;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageTemplateObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow\Type;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow\TypeObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementInterface;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class StyleSet
 {
-
     public function import(\SimpleXMLElement $node)
     {
         $o = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\StyleSet();
@@ -55,7 +38,7 @@ class StyleSet
         $o->setHideOnSmallDevice((bool) $node->hideOnSmallDevice);
         $o->setHideOnMediumDevice((bool) $node->hideOnMediumDevice);
         $o->setHideOnLargeDevice((bool) $node->hideOnLargeDevice);
+
         return $o;
     }
-
 }

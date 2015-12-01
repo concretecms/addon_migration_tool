@@ -1,10 +1,11 @@
-<? defined('C5_EXECUTE') or die("Access Denied."); ?>
+<?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 
 <div class="ccm-dashboard-header-buttons">
     <a href="javascript:void(0)" data-dialog="add-batch" class="btn btn-primary"><?=t("Add Batch")?></a>
 </div>
 
-<? if (count($batches)) { ?>
+<?php if (count($batches)) {
+    ?>
 
     <table class="table">
         <thead>
@@ -14,19 +15,25 @@
         </tr>
         </thead>
         <tbody>
-        <? foreach($batches as $batch) { ?>
+        <?php foreach ($batches as $batch) {
+    ?>
             <tr>
                 <td style="white-space: nowrap"><a href="<?=$view->action('view_batch', $batch->getID())?>"><?=$batch->getDate()->format('F d, Y g:i a')?></a></td>
                 <td width="100%"><?=$batch->getNotes()?></td>
             </tr>
-        <? } ?>
+        <?php 
+}
+    ?>
         </tbody>
     </table>
 
 
-<? } else { ?>
+<?php 
+} else {
+    ?>
     <p><?=$batchEmptyMessage?></p>
-<? } ?>
+<?php 
+} ?>
 
 <div style="display: none">
     <div id="ccm-dialog-add-batch" class="ccm-ui">

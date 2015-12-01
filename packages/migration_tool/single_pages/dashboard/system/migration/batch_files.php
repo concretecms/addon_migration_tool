@@ -1,4 +1,4 @@
-<? defined('C5_EXECUTE') or die("Access Denied."); ?>
+<?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 <div class="ccm-dashboard-header-buttons btn-group">
     <a href="<?=$view->action('view_batch', $batch->getID())?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?=t('Batch to Batch')?></a>
     <button data-dialog="delete-files" type="button" data-dialog-title="<?=t('Delete Files')?>" class="btn btn-danger"><?=t('Delete Files')?></button>
@@ -27,7 +27,8 @@
 <h2><?=t('Batch')?>
     <small><?=$batch->getDate()->format('F d, Y g:i a')?></small></h2>
 
-<? if (count($files)) { ?>
+<?php if (count($files)) {
+    ?>
 
 
     <table class="table table-striped">
@@ -39,18 +40,24 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($files as $file) { ?>
+    <?php foreach ($files as $file) {
+    ?>
         <tr>
             <td><?=$file->getListingThumbnailImage()?></td>
             <td><?=$file->getType()?></td>
             <td><?=$file->getFilename()?></td>
         </tr>
-    <? } ?>
+    <?php 
+}
+    ?>
     </table>
 
-<? } else { ?>
+<?php 
+} else {
+    ?>
     <p><?=t('No files have been added to this batch.')?></p>
-<? } ?>
+<?php 
+} ?>
 
 <script type="text/javascript">
 

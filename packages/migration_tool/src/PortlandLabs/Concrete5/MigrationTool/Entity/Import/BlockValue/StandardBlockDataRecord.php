@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 
 /**
@@ -8,7 +7,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
  */
 class StandardBlockDataRecord
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -34,7 +32,6 @@ class StandardBlockDataRecord
      * @Column(type="integer")
      */
     protected $position;
-
 
     /**
      * @return mixed
@@ -115,7 +112,4 @@ class StandardBlockDataRecord
     {
         $this->position = $position;
     }
-
-
-
 }

@@ -1,11 +1,9 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Tree\Node\Node;
 use Concrete\Core\Tree\Node\NodeType;
 use Concrete\Core\Tree\Tree;
-use Concrete\Core\Tree\TreeType;
 use Concrete\Core\Tree\Type\Topic;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\TreeNode;
@@ -14,13 +12,12 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreateTreesRoutine implements RoutineInterface
 {
-
     protected function add(TreeNode $node, Node $parent)
     {
         $type = NodeType::getByHandle($node->getType());
         $class = $type->getTreeNodeTypeClass();
         $new = call_user_func_array(array($class, 'add'), array($node->getTitle(), $parent));
-        foreach($node->getChildren() as $child) {
+        foreach ($node->getChildren() as $child) {
             $this->add($child, $new);
         }
     }
@@ -28,7 +25,7 @@ class CreateTreesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $values = $batch->getObjectCollection('tree');
-        foreach($values->getTrees() as $t) {
+        foreach ($values->getTrees() as $t) {
             $name = (string) $t->getName();
             $tree = Topic::getByName($name);
             if (is_object($tree)) {
@@ -45,10 +42,9 @@ class CreateTreesRoutine implements RoutineInterface
                 $tree = Topic::add($name);
             }
             $parent = $tree->getRootTreeNodeObject();
-            foreach($t->getRootNodes() as $node) {
+            foreach ($t->getRootNodes() as $node) {
                 $this->add($node, $parent);
             }
         }
     }
-
 }

@@ -1,13 +1,12 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+
 /**
  * @Entity
  * @Table(name="MigrationImportPageAttributes")
  */
 class PageAttribute
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -18,7 +17,6 @@ class PageAttribute
      * @OneToOne(targetEntity="Attribute", cascade={"persist", "remove"})
      **/
     protected $attribute;
-
 
     /**
      * @ManyToOne(targetEntity="Page")
@@ -32,7 +30,6 @@ class PageAttribute
     {
         return $this->id;
     }
-
 
     /**
      * @return mixed
@@ -65,7 +62,4 @@ class PageAttribute
     {
         $this->page = $page;
     }
-
-
-
 }

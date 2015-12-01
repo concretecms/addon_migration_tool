@@ -1,10 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTemplateFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTypePublishTargetTypeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
@@ -13,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 class PublishTargetTypeObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="PublishTargetType", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -61,7 +58,4 @@ class PublishTargetTypeObjectCollection extends ObjectCollection
     {
         return false;
     }
-
-
-
 }

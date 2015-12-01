@@ -1,8 +1,6 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\StandardFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\SelectFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
 
@@ -12,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
  */
 class SelectAttributeValue extends AttributeValue
 {
-
     /**
      * @Column(type="json_array")
      */
@@ -40,6 +37,4 @@ class SelectAttributeValue extends AttributeValue
     {
         return new StandardPublisher();
     }
-
-
 }

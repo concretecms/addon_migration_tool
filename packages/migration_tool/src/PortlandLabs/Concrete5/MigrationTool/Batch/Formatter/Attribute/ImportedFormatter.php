@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute;
 
 use HtmlObject\Element;
@@ -10,15 +9,15 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class ImportedFormatter implements TreeContentItemFormatterInterface
 {
-
     protected $value;
 
     public function getBatchTreeNodeJsonObject()
     {
-        $node = new \stdClass;
+        $node = new \stdClass();
         $node->title = $this->value->getAttribute()->getHandle();
         $node->itemvalue = (string) $this->getColumnValue();
         $node->iconclass = 'fa fa-cog';
+
         return $node;
     }
 
@@ -29,6 +28,7 @@ class ImportedFormatter implements TreeContentItemFormatterInterface
         $tooltip = new Element('i', '', array('class' => 'launch-tooltip fa fa-question-circle', 'title' => t('Raw CIF XML Imported because this attribute is not installed or mapped to an existing attribute.')));
         $span->appendChild($link);
         $span->appendChild($tooltip);
+
         return $span;
     }
 
@@ -36,6 +36,4 @@ class ImportedFormatter implements TreeContentItemFormatterInterface
     {
         $this->value = $value;
     }
-
-
 }

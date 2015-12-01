@@ -1,13 +1,9 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\PageFeedInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageFeedValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
-
 
 /**
  * @Entity
@@ -15,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidat
  */
 class PageFeed implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -269,7 +264,6 @@ class PageFeed implements PublishableInterface
         $this->content_type_area = $content_type_area;
     }
 
-
     public function getPublisherValidator()
     {
         return new PageFeedValidator($this);
@@ -279,10 +273,4 @@ class PageFeed implements PublishableInterface
     {
         return new PageFeedInspector($this);
     }
-
-
-
-
-
-
 }

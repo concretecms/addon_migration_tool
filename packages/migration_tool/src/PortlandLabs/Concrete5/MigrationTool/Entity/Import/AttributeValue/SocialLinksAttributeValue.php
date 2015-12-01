@@ -1,12 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\SocialLinksFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\StandardFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\SelectFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\SocialLinksPublisher;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
 
 /**
  * @Entity
@@ -14,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
  */
 class SocialLinksAttributeValue extends AttributeValue
 {
-
     /**
      * @Column(type="json_array")
      */
@@ -42,6 +37,4 @@ class SocialLinksAttributeValue extends AttributeValue
     {
         return new SocialLinksPublisher();
     }
-
-
 }

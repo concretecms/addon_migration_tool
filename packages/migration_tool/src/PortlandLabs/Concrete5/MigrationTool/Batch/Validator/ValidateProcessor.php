@@ -1,24 +1,19 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator;
 
 use Concrete\Core\Foundation\Processor\Processor;
-use Concrete\Core\Foundation\Processor\TargetInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ItemValidatorInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 abstract class ValidateProcessor extends AbstractValidator
 {
-
     protected $tasks = array();
     protected $processor;
 
     /**
      * @param $mixed
+     *
      * @return ValidatorTargetInterface
      */
     abstract public function getTarget($mixed);
@@ -52,15 +47,15 @@ abstract class ValidateProcessor extends AbstractValidator
         $this->processor = $processor;
     }
 
-
     public function validate($mixed)
     {
         $target = $this->getTarget($mixed);
         $processor = $this->getProcessor($target);
-        foreach($this->tasks as $task) {
+        foreach ($this->tasks as $task) {
             $processor->registerTask($task);
         }
         $processor->process();
+
         return $target->getMessages();
     }
 }

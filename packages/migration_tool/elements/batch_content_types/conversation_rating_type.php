@@ -7,14 +7,18 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getTypes() as $type) {
-        $validator = $type->getPublisherValidator();
-        ?>
-        <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <?php foreach ($collection->getTypes() as $type) {
+    $validator = $type->getPublisherValidator();
+    ?>
+        <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
             <td><?=$type->getHandle()?></td>
             <td><?=$type->getName()?></td>
             <td><?=$type->getPoints()?></td>
         </tr>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>

@@ -1,25 +1,22 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\BlockItem;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
-use Concrete\Core\Block\BlockType\BlockType as CoreBlockType;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class BlockType implements TransformerInterface
 {
-
     public function getUntransformedEntityObjects()
     {
         $em = \ORM::entityManager('migration_tool');
         $query = $em->createQuery('select v from \PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue v where v instance of \PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ImportedBlockValue');
         $results = $query->getResult();
+
         return $results;
     }
 
@@ -28,6 +25,7 @@ class BlockType implements TransformerInterface
         if ($block_value && $block_value->getBlock()) {
             $block = $block_value->getBlock();
             $item = new BlockItem($block);
+
             return $item;
         }
     }
@@ -45,7 +43,7 @@ class BlockType implements TransformerInterface
             $type = $bt->getBlockTypeHandle();
         } else {
             $collection = $batch->getObjectCollection('block_type');
-            foreach($collection->getTypes() as $blockType) {
+            foreach ($collection->getTypes() as $blockType) {
                 if ($blockType->getHandle() == $item->getIdentifier()) {
                     $type = $blockType->getType();
                     break;
@@ -57,8 +55,7 @@ class BlockType implements TransformerInterface
             $manager = \Core::make('migration/manager/import/block');
             try {
                 $driver = $manager->driver($type);
-            } catch(\Exception $e) {
-
+            } catch (\Exception $e) {
             }
 
             if (isset($driver)) {
@@ -76,5 +73,4 @@ class BlockType implements TransformerInterface
             }
         }
     }
-
 }

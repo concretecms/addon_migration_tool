@@ -1,9 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankFormatter;
-
 
 /**
  * @Entity
@@ -11,7 +9,6 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankForma
  */
 class SocialLinksAttributeKey extends AttributeKey
 {
-
     public function getType()
     {
         return 'social_links';
@@ -21,5 +18,4 @@ class SocialLinksAttributeKey extends AttributeKey
     {
         return new BlankFormatter($this);
     }
-
 }

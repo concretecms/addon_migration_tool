@@ -1,10 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\ImportedFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\CIFPublisher;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
 
 /**
  * @Entity
@@ -12,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
  */
 final class ImportedAttributeValue extends AttributeValue
 {
-
     /**
      * @Column(type="text")
      */
@@ -40,8 +37,4 @@ final class ImportedAttributeValue extends AttributeValue
     {
         return new CIFPublisher();
     }
-
-
-
-
 }

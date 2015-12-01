@@ -1,10 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyCategoryValidator;
-
 
 /**
  * @Entity
@@ -12,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyCategor
  */
 class AttributeKeyCategory implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -119,12 +116,8 @@ class AttributeKeyCategory implements PublishableInterface
         $this->package = $package;
     }
 
-
     public function getPublisherValidator()
     {
         return new AttributeKeyCategoryValidator($this);
     }
-
-
-
 }

@@ -1,12 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class MessageFormatter
 {
-
     protected $message;
 
     public function __construct(Message $message)
@@ -21,7 +19,7 @@ class MessageFormatter
 
     public function getLevelClass()
     {
-        switch($this->getSeverity()) {
+        switch ($this->getSeverity()) {
             case Message::E_DANGER:
                 return 'danger';
                 break;
@@ -36,7 +34,7 @@ class MessageFormatter
 
     public function getIconClass()
     {
-        switch($this->getSeverity()) {
+        switch ($this->getSeverity()) {
             case Message::E_DANGER:
                 return 'text-danger fa fa-exclamation-triangle';
                 break;
@@ -56,5 +54,4 @@ class MessageFormatter
             $this->message->getText()
         );
     }
-
 }

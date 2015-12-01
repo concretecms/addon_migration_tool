@@ -1,12 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class SinglePageFormatter extends AbstractFormatter
 {
-
     public function getElement()
     {
         return 'page';
@@ -17,4 +15,3 @@ class SinglePageFormatter extends AbstractFormatter
         return t('Single Pages');
     }
 }
-

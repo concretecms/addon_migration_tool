@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute;
 
 use Concrete\Core\Attribute\Key\CollectionKey;
@@ -10,8 +9,5 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 interface PublisherInterface
 {
-
     public function publish(CollectionKey $ak, Page $page, AttributeValue $value);
-
-
 }

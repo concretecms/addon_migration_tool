@@ -1,11 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\GroupAccessEntityFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\GroupAccessEntityValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEntityTypeValidator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
@@ -14,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 class GroupAccessEntity extends AccessEntity
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -58,7 +54,6 @@ class GroupAccessEntity extends AccessEntity
         $this->group_name = $group_name;
     }
 
-
     public function getFormatter()
     {
         return new GroupAccessEntityFormatter($this);
@@ -68,6 +63,4 @@ class GroupAccessEntity extends AccessEntity
     {
         return new GroupAccessEntityValidator($batch);
     }
-
-
 }

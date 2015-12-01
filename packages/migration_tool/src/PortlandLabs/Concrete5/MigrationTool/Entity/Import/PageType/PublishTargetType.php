@@ -1,12 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypePublishTargetTypeValidator;
-
 
 /**
  * @Entity
@@ -14,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypePublishTarg
  */
 class PublishTargetType implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -89,7 +84,6 @@ class PublishTargetType implements PublishableInterface
         $this->handle = $handle;
     }
 
-
     /**
      * @return mixed
      */
@@ -126,8 +120,4 @@ class PublishTargetType implements PublishableInterface
     {
         $this->package = $package;
     }
-
-
-
-
 }

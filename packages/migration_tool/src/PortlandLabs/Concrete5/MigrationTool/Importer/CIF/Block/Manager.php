@@ -1,16 +1,12 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block;
 
 use Concrete\Core\Support\Manager as CoreManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block\Importer;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block\StandardImporter;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class Manager extends CoreManager
 {
-
     public function driver($driver = null)
     {
         $method = 'create'.camelcase($driver).'Driver';
@@ -18,6 +14,7 @@ class Manager extends CoreManager
         if ($driver && !isset($this->customCreators[$driver]) && !method_exists($this, $method)) {
             return $this->createStandardDriver();
         }
+
         return parent::driver($driver);
     }
 
@@ -45,5 +42,4 @@ class Manager extends CoreManager
     {
         return new SocialLinksImporter();
     }
-
 }

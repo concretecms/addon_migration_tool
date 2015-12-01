@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\User\UserInfo;
@@ -15,7 +14,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class User implements MapperInterface
 {
-
     public function getMappedItemPluralName()
     {
         return t('Users');
@@ -29,7 +27,7 @@ class User implements MapperInterface
     public function getItems(Batch $batch)
     {
         $users = array();
-        foreach($batch->getPages() as $page) {
+        foreach ($batch->getPages() as $page) {
             if ($page->getUser() && !in_array($page->getUser(), $users)) {
                 $users[] = $page->getUser();
             }
@@ -37,9 +35,9 @@ class User implements MapperInterface
 
         $pageTypes = $batch->getObjectCollection('page_type');
         if (is_object($pageTypes)) {
-            foreach($pageTypes->getTypes() as $type) {
+            foreach ($pageTypes->getTypes() as $type) {
                 $defaults = $type->getDefaultPageCollection();
-                foreach($defaults->getPages() as $page) {
+                foreach ($defaults->getPages() as $page) {
                     if ($page->getUser() && !in_array($page->getUser(), $users)) {
                         $users[] = $page->getUser();
                     }
@@ -48,11 +46,12 @@ class User implements MapperInterface
         }
 
         $items = array();
-        foreach($users as $user) {
+        foreach ($users as $user) {
             $item = new Item();
             $item->setIdentifier($user);
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -63,6 +62,7 @@ class User implements MapperInterface
             $targetItem = new TargetItem($this);
             $targetItem->setItemId($user->getUserID());
             $targetItem->setItemName($user->getUserDisplayName());
+
             return $targetItem;
         }
     }
@@ -78,12 +78,13 @@ class User implements MapperInterface
         $ul->sortByUserName();
         $users = $ul->getResults();
         $items = array();
-        foreach($users as $user) {
+        foreach ($users as $user) {
             $item = new TargetItem($this);
             $item->setItemId($user->getUserID());
             $item->setItemName($user->getUserDisplayName());
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -91,7 +92,4 @@ class User implements MapperInterface
     {
         return \UserInfo::getByID($targetItem->getItemID());
     }
-
-
-
 }

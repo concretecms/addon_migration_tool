@@ -5,11 +5,15 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getCategories() as $category) {
-        $validator = $category->getPublisherValidator();
+    <?php foreach ($collection->getCategories() as $category) {
+    $validator = $category->getPublisherValidator();
     ?>
-    <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
         <td><?=$category->getHandle()?></td>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>

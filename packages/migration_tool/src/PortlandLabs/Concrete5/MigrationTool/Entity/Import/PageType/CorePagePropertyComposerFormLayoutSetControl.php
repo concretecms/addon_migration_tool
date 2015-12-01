@@ -1,17 +1,13 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-
 
 /**
  * @Entity
  */
 class CorePagePropertyComposerFormLayoutSetControl extends ComposerFormLayoutSetControl
 {
-
     public function getHandle()
     {
         return 'core_page_property';
@@ -21,7 +17,4 @@ class CorePagePropertyComposerFormLayoutSetControl extends ComposerFormLayoutSet
     {
         return false;
     }
-
-
-
 }

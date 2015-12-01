@@ -1,11 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyCategoryValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionKeyCategoryValidator;
-
 
 /**
  * @Entity
@@ -13,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionKeyCatego
  */
 class Category implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -99,12 +95,8 @@ class Category implements PublishableInterface
         $this->package = $package;
     }
 
-
     public function getPublisherValidator()
     {
         return new PermissionKeyCategoryValidator($this);
     }
-
-
-
 }

@@ -1,11 +1,9 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageValidator;
-
 
 /**
  * @Entity
@@ -13,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageValidator;
  */
 class Page implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
@@ -74,7 +71,6 @@ class Page implements PublishableInterface
      * @Column(type="string", nullable=true)
      */
     protected $package;
-
 
     /**
      * @Column(type="boolean")
@@ -355,8 +351,4 @@ class Page implements PublishableInterface
     {
         $this->package = $package;
     }
-
-
-
-
 }

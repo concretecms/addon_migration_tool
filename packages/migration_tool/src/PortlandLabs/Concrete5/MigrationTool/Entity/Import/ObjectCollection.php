@@ -1,8 +1,5 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
-
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
@@ -12,7 +9,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 abstract class ObjectCollection
 {
-
     /**
      * @Id @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
@@ -38,7 +34,4 @@ abstract class ObjectCollection
     abstract public function getRecords();
 
     abstract public function getRecordValidator(Batch $batch);
-
-
-
 }

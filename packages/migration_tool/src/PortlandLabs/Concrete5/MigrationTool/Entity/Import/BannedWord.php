@@ -1,14 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeTypeValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BannedWordValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BlockTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
-
 
 /**
  * @Entity
@@ -16,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidat
  */
 class BannedWord implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -85,9 +78,4 @@ class BannedWord implements PublishableInterface
     {
         $this->word = $word;
     }
-
-
-
-
-
 }

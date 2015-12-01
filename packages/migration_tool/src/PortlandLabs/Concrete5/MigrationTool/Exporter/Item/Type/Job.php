@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem;
@@ -10,7 +9,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Job extends AbstractType
 {
-
     public function getHeaders()
     {
         return array(t('Name'));
@@ -19,7 +17,7 @@ class Job extends AbstractType
     public function exportCollection(ObjectCollection $collection, \SimpleXMLElement $element)
     {
         $node = $element->addChild('jobs');
-        foreach($collection->getItems() as $type) {
+        foreach ($collection->getItems() as $type) {
             $j = \Concrete\Core\Job\Job::getByID($type->getItemIdentifier());
             if (is_object($j)) {
                 $nodeType = $node->addChild('job');
@@ -32,13 +30,14 @@ class Job extends AbstractType
     public function getResultColumns(ExportItem $exportItem)
     {
         $j = \Concrete\Core\Job\Job::getByID($exportItem->getItemIdentifier());
+
         return array($j->getJobName());
     }
 
     public function getItemsFromRequest($array)
     {
         $items = array();
-        foreach($array as $id) {
+        foreach ($array as $id) {
             $j = \Concrete\Core\Job\Job::getByID($id);
             if (is_object($j)) {
                 $job = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\Job();
@@ -46,6 +45,7 @@ class Job extends AbstractType
                 $items[] = $job;
             }
         }
+
         return $items;
     }
 
@@ -53,11 +53,12 @@ class Job extends AbstractType
     {
         $list = \Concrete\Core\Job\Job::getList();
         $items = array();
-        foreach($list as $j) {
+        foreach ($list as $j) {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\Job();
             $item->setItemId($j->getJobID());
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -70,5 +71,4 @@ class Job extends AbstractType
     {
         return t('Jobs');
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 class ComposerControlTypeObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="ComposerControlType", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -60,7 +58,4 @@ class ComposerControlTypeObjectCollection extends ObjectCollection
     {
         return false;
     }
-
-
-
 }

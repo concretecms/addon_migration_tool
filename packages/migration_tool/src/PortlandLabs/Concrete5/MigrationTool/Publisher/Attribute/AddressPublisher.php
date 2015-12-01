@@ -1,7 +1,5 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute;
-
 
 use Concrete\Attribute\Address\Value;
 use Concrete\Core\Attribute\Key\CollectionKey;
@@ -13,7 +11,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class AddressPublisher implements PublisherInterface
 {
-
     /**
      * @param CollectionKey $ak
      * @param Page $page
@@ -31,5 +28,4 @@ class AddressPublisher implements PublisherInterface
         $value->postal_code = $address->getPostalCode();
         $page->setAttribute($ak->getAttributeKeyHandle(), $value);
     }
-
 }

@@ -6,13 +6,17 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getTypes() as $type) {
-        $validator = $type->getPublisherValidator();
+    <?php foreach ($collection->getTypes() as $type) {
+    $validator = $type->getPublisherValidator();
     ?>
-    <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
         <td><?=$type->getHandle()?></td>
         <td><?=$type->getName()?></td>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>
 

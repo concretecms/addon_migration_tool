@@ -1,9 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF;
 
 use Concrete\Core\Support\Manager as CoreManager;
-
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\AttributeSet;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\AttributeType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\AttributeKey;
@@ -25,7 +23,6 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\PageFeed;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\PageTemplate;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\PageType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\PageTypeComposerControlType;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\PageTypeComposerOutputControlType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\PageTypePublishTargetType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\PermissionAccessEntityType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\PermissionKey;
@@ -43,7 +40,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Manager extends CoreManager
 {
-
     public function createPageDriver()
     {
         return new Page();
@@ -53,7 +49,6 @@ class Manager extends CoreManager
     {
         return new AttributeKey();
     }
-
 
     public function createSinglePagedriver()
     {

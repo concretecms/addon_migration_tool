@@ -6,13 +6,17 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getLinks() as $link) {
-        $validator = $link->getPublisherValidator();
-        ?>
-        <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <?php foreach ($collection->getLinks() as $link) {
+    $validator = $link->getPublisherValidator();
+    ?>
+        <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
             <td><?=$link->getService()?></td>
             <td><?=$link->getURL()?></td>
         </tr>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>

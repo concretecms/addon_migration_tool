@@ -1,11 +1,5 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
-
-use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThumbnailTypeValidator;
-use Gedmo\Mapping\Annotation as Gedmo;
-
 
 /**
  * @Entity
@@ -13,7 +7,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class TreeNode
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -78,8 +71,6 @@ class TreeNode
         $this->tree = $tree;
     }
 
-
-
     /**
      * @return mixed
      */
@@ -127,10 +118,4 @@ class TreeNode
     {
         return $this->children;
     }
-
-
-
-
-
-
 }

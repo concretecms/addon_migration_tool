@@ -6,12 +6,16 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getValues() as $config) {
-        $validator = $config->getPublisherValidator();
+    <?php foreach ($collection->getValues() as $config) {
+    $validator = $config->getPublisherValidator();
     ?>
-    <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
         <td><?=$config->getConfigKey()?></td>
         <td><?=$config->getConfigValue()?></td>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>

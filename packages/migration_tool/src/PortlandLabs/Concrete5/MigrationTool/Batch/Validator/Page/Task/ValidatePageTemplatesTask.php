@@ -1,12 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
 
 use Concrete\Core\Foundation\Processor\ActionInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageTemplate;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
@@ -15,7 +13,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class ValidatePageTemplatesTask implements TaskInterface
 {
-
     public function execute(ActionInterface $action)
     {
         // Grab the target item for the page's page type.
@@ -36,7 +33,5 @@ class ValidatePageTemplatesTask implements TaskInterface
 
     public function finish(ActionInterface $action)
     {
-
     }
-
 }

@@ -1,13 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BlockTypeValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ConversationFlagTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
-
 
 /**
  * @Entity
@@ -15,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidat
  */
 class FlagType implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -36,7 +30,6 @@ class FlagType implements PublishableInterface
      * @Column(type="string", nullable=true)
      */
     protected $package = null;
-
 
     /**
      * @return mixed
@@ -102,12 +95,8 @@ class FlagType implements PublishableInterface
         $this->package = $package;
     }
 
-
     public function getPublisherValidator()
     {
         return new ConversationFlagTypeValidator($this);
     }
-
-
-
 }

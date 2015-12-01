@@ -1,11 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\UserAccessEntityFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\UserAccessEntityValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEntityTypeValidator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
@@ -14,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 class UserAccessEntity extends AccessEntity
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -72,9 +68,4 @@ class UserAccessEntity extends AccessEntity
     {
         return new CIFPublisher();
     }
-
-
-
-
-
 }

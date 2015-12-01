@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
@@ -8,7 +7,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 abstract class AbstractFormatter implements FormatterInterface
 {
-
     protected $collection;
 
     public function __construct(ObjectCollection $collection)
@@ -30,8 +28,7 @@ abstract class AbstractFormatter implements FormatterInterface
             . $this->getElement(), array(
             'batch' => $batch,
             'type' => $this->collection->getType(),
-            'collection' => $this->collection
+            'collection' => $this->collection,
         ), 'migration_tool');
     }
-
 }

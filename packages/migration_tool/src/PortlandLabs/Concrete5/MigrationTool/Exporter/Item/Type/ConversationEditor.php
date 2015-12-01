@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use Concrete\Core\Conversation\Editor\Editor;
@@ -11,7 +10,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class ConversationEditor extends AbstractType
 {
-
     public function getHeaders()
     {
         return array(t('Name'));
@@ -20,7 +18,7 @@ class ConversationEditor extends AbstractType
     public function exportCollection(ObjectCollection $collection, \SimpleXMLElement $element)
     {
         $node = $element->addChild('conversationeditors');
-        foreach($collection->getItems() as $type) {
+        foreach ($collection->getItems() as $type) {
             $t = Editor::getByID($type->getItemIdentifier());
             if (is_object($t)) {
                 $t->export($node);
@@ -35,13 +33,14 @@ class ConversationEditor extends AbstractType
         if (is_object($t)) {
             $return[] = $t->getConversationEditorName();
         }
+
         return $return;
     }
 
     public function getItemsFromRequest($array)
     {
         $items = array();
-        foreach($array as $id) {
+        foreach ($array as $id) {
             $t = Editor::getByID($id);
             if (is_object($t)) {
                 $type = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\ConversationEditor();
@@ -49,6 +48,7 @@ class ConversationEditor extends AbstractType
                 $items[] = $type;
             }
         }
+
         return $items;
     }
 
@@ -56,11 +56,12 @@ class ConversationEditor extends AbstractType
     {
         $list = Editor::getList();
         $items = array();
-        foreach($list as $t) {
+        foreach ($list as $t) {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\ConversationEditor();
             $item->setItemId($t->getConversationEditorID());
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -73,5 +74,4 @@ class ConversationEditor extends AbstractType
     {
         return t('Conversation Editor');
     }
-
 }

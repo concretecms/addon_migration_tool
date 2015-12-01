@@ -1,24 +1,18 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeSetObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeTypeObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockTypeSetObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeType as CoreAttributeType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class AttributeSet implements ElementParserInterface
 {
-
     public function getObjectCollection(\SimpleXMLElement $element)
     {
         $collection = new AttributeSetObjectCollection();
         if ($element->attributesets) {
-            foreach($element->attributesets->attributeset as $node) {
+            foreach ($element->attributesets->attributeset as $node) {
                 $set = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeSet();
                 $set->setHandle((string) $node['handle']);
                 $set->setName((string) $node['name']);
@@ -30,7 +24,7 @@ class AttributeSet implements ElementParserInterface
 
                 $attributes = array();
                 if ($node->attributekey) {
-                    foreach($node->attributekey as $cn) {
+                    foreach ($node->attributekey as $cn) {
                         $attributes[] = (string) $cn['handle'];
                     }
                 }
@@ -39,7 +33,7 @@ class AttributeSet implements ElementParserInterface
                 $set->setCollection($collection);
             }
         }
+
         return $collection;
     }
-
 }

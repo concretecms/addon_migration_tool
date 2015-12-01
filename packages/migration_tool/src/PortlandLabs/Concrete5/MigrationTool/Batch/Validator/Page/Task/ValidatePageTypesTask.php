@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
 
 use Concrete\Core\Foundation\Processor\ActionInterface;
@@ -17,7 +16,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class ValidatePageTypesTask implements TaskInterface
 {
-
     public function execute(ActionInterface $action)
     {
         // Grab the target item for the page's page type.
@@ -39,7 +37,7 @@ class ValidatePageTypesTask implements TaskInterface
                         $composerMapper = new ComposerOutputContent();
                         $composerTargetItemList = new TargetItemList($target->getBatch(), $composerMapper);
                         $items = $composerMapper->getPageTypeComposerOutputContentItems($targetPageType);
-                        foreach($items as $item) {
+                        foreach ($items as $item) {
                             $targetItem = $composerTargetItemList->getSelectedTargetItem($item);
                             if ($targetItem instanceof UnmappedTargetItem) {
                                 $action->getTarget()->addMessage(
@@ -58,7 +56,5 @@ class ValidatePageTypesTask implements TaskInterface
 
     public function finish(ActionInterface $action)
     {
-
     }
-
 }

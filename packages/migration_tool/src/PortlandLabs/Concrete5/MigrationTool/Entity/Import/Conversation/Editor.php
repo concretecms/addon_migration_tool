@@ -1,13 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BlockTypeValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ConversationEditorValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
-
 
 /**
  * @Entity
@@ -15,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidat
  */
 class Editor implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -143,12 +137,8 @@ class Editor implements PublishableInterface
         $this->package = $package;
     }
 
-
     public function getPublisherValidator()
     {
         return new ConversationEditorValidator($this);
     }
-
-
-
 }

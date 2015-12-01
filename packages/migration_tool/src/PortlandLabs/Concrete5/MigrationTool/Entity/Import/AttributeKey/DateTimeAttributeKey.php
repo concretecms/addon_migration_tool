@@ -1,11 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\DateTimeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TextAreaFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\DateTimePublisher;
-
 
 /**
  * @Entity
@@ -13,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\DateTimePublishe
  */
 class DateTimeAttributeKey extends AttributeKey
 {
-
     /**
      * @Column(type="string")
      */
@@ -35,7 +31,6 @@ class DateTimeAttributeKey extends AttributeKey
         $this->mode = $mode;
     }
 
-
     public function getType()
     {
         return 'date_time';
@@ -50,5 +45,4 @@ class DateTimeAttributeKey extends AttributeKey
     {
         return new DateTimePublisher();
     }
-
 }

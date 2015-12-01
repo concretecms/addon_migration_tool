@@ -5,11 +5,15 @@
 \    </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getPackages() as $pkg) {
-        $validator = $pkg->getPublisherValidator();
+    <?php foreach ($collection->getPackages() as $pkg) {
+    $validator = $pkg->getPublisherValidator();
     ?>
-    <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
         <td><?=$pkg->getHandle()?></td>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>

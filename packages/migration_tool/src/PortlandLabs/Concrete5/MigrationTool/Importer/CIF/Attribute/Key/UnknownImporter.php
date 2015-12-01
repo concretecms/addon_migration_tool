@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
@@ -9,7 +8,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class UnknownImporter implements ImporterInterface
 {
-
     public function getEntity()
     {
         return new UnknownAttributeKey();
@@ -19,5 +17,4 @@ class UnknownImporter implements ImporterInterface
     {
         $key->setOptionsXml((string) $element->asXML());
     }
-
 }

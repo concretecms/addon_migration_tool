@@ -1,13 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BlockTypeValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ConversationRatingTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
-
 
 /**
  * @Entity
@@ -15,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidat
  */
 class RatingType implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -46,7 +40,6 @@ class RatingType implements PublishableInterface
      * @Column(type="string", nullable=true)
      */
     protected $package = null;
-
 
     /**
      * @return mixed
@@ -112,7 +105,6 @@ class RatingType implements PublishableInterface
         $this->package = $package;
     }
 
-
     public function getPublisherValidator()
     {
         return new ConversationRatingTypeValidator($this);
@@ -149,7 +141,4 @@ class RatingType implements PublishableInterface
     {
         $this->points = $points;
     }
-
-
-
 }

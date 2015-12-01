@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,7 +13,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 class KeyObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="Key", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -46,7 +44,6 @@ class KeyObjectCollection extends ObjectCollection
         $this->keys = $keys;
     }
 
-
     public function getType()
     {
         return 'permission_key';
@@ -71,9 +68,4 @@ class KeyObjectCollection extends ObjectCollection
     {
         return new PermissionKeyValidator($batch);
     }
-
-
-
-
-
 }

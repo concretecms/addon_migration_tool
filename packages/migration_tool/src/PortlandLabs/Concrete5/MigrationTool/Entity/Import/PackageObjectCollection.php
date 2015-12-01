@@ -1,18 +1,14 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\JobFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PackageFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
  */
 class PackageObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Package", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -60,9 +56,4 @@ class PackageObjectCollection extends ObjectCollection
     {
         return false;
     }
-
-
-
-
-
 }

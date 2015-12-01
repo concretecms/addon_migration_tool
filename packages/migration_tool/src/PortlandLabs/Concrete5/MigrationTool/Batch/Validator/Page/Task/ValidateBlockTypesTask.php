@@ -1,14 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
 
-use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Foundation\Processor\ActionInterface;
-use Concrete\Core\Foundation\Processor\TargetInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
 use Concrete\Core\Page\Type\Type;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\BlockItem;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
@@ -17,14 +13,13 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class ValidateBlockTypesTask implements TaskInterface
 {
-
     public function execute(ActionInterface $action)
     {
         $blocks = $action->getSubject();
         $target = $action->getTarget();
         $mapper = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType();
         $targetItemList = new TargetItemList($target->getBatch(), $mapper);
-        foreach($blocks as $block) {
+        foreach ($blocks as $block) {
             if ($block->getType()) {
                 $item = new BlockItem($block);
                 $targetItem = $targetItemList->getSelectedTargetItem($item);
@@ -33,7 +28,7 @@ class ValidateBlockTypesTask implements TaskInterface
                         new Message(t('Block type <strong>%s</strong> does not exist.', $item->getIdentifier()))
                     );
                 }
-            } else if ($block->getDefaultsOutputIdentifier()) {
+            } elseif ($block->getDefaultsOutputIdentifier()) {
                 // This is a block on a page that is pulling its content from page defaults. We need to find
                 // a block with the corresponding string in page defaults. Otherwise we're going to have a problem.
                 $area = $block->getArea();
@@ -50,11 +45,11 @@ class ValidateBlockTypesTask implements TaskInterface
                             $pageType = $r1->findOneByHandle($type);
                             if (is_object($pageType)) {
                                 $defaults = $pageType->getDefaultPageCollection();
-                                foreach($defaults->getPages() as $default) {
+                                foreach ($defaults->getPages() as $default) {
                                     if ($default->getTemplate() == $template) {
                                         // whew. We've located the proper place.
-                                        foreach($default->getAreas() as $area) {
-                                            foreach($area->getBlocks() as $defaultBlock) {
+                                        foreach ($default->getAreas() as $area) {
+                                            foreach ($area->getBlocks() as $defaultBlock) {
                                                 if ($defaultBlock->getDefaultsOutputIdentifier() == $block->getDefaultsOutputIdentifier()) {
                                                     $found = true;
                                                 }
@@ -77,7 +72,5 @@ class ValidateBlockTypesTask implements TaskInterface
 
     public function finish(ActionInterface $action)
     {
-
     }
-
 }

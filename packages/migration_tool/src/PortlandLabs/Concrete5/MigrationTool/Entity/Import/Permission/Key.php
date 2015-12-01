@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -7,14 +6,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\TreeJsonF
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionKeyValidator;
 
-
 /**
  * @Entity
  * @Table(name="MigrationImportPermissionKeys")
  */
 class Key implements PublishableInterface
 {
-
     public function __construct()
     {
         $this->access_entities = new ArrayCollection();
@@ -240,5 +237,4 @@ class Key implements PublishableInterface
     {
         return new TreeJsonFormatter($this);
     }
-
 }

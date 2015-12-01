@@ -1,34 +1,49 @@
-<?
+<?php
 defined('C5_EXECUTE') or die(_("Access Denied."));
 ?>
-<? if (count($results)) { ?>
+<?php if (count($results)) {
+    ?>
 
 <table class="migration-table table table-bordered table-striped">
     <thead>
     <tr>
         <th><input type="checkbox" data-action="select-all"></th>
-        <? foreach($headers as $header) { ?>
+        <?php foreach ($headers as $header) {
+    ?>
             <th><?=$header?></th>
-        <? } ?>
+        <?php 
+}
+    ?>
     </tr>
     </thead>
     <tbody>
-    <? foreach($results as $result) {
-        /** @var $result PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem */?>
+    <?php foreach ($results as $result) {
+    /* @var $result PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem */?>
     <tr>
         <td style="width: 30px">
-            <input <? if ($mode == 'search' && is_object($collection) && $collection->contains($result)) { ?>disabled<? } ?> data-checkbox="batch-item" type="checkbox" name="id[<?=$type->getHandle()?>][]" value="<?=$result->getItemIdentifier()?>">
+            <input <?php if ($mode == 'search' && is_object($collection) && $collection->contains($result)) {
+    ?>disabled<?php 
+}
+    ?> data-checkbox="batch-item" type="checkbox" name="id[<?=$type->getHandle()?>][]" value="<?=$result->getItemIdentifier()?>">
         </td>
-        <? foreach($type->getResultColumns($result) as $column) { ?>
+        <?php foreach ($type->getResultColumns($result) as $column) {
+    ?>
             <td><?=$column?></td>
-        <? } ?>
+        <?php 
+}
+    ?>
     </tr>
-    <? } ?>
+    <?php 
+}
+    ?>
     </tbody>
 </table>
 
-<? } else { ?>
+<?php 
+} else {
+    ?>
 
     <p><?=t('No results found.')?></p>
 
-<? } ?>
+<?php 
+} ?>

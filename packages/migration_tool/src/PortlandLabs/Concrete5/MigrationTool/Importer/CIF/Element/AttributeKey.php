@@ -1,23 +1,20 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementInterface;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class AttributeKey implements ElementParserInterface
 {
-
     public function getObjectCollection(\SimpleXMLElement $element)
     {
         $manager = \Core::make('migration/manager/import/attribute/key');
         $categoryManager = \Core::make('migration/manager/import/attribute/category');
         $collection = new AttributeKeyObjectCollection();
         if ($element->attributekeys->attributekey) {
-            foreach($element->attributekeys->attributekey as $node) {
+            foreach ($element->attributekeys->attributekey as $node) {
                 $importer = $manager->driver((string) $node['type']);
                 $key = $importer->getEntity();
                 $key->setHandle((string) $node['handle']);
@@ -41,7 +38,7 @@ class AttributeKey implements ElementParserInterface
                 $key->setCollection($collection);
             }
         }
+
         return $collection;
     }
-
 }

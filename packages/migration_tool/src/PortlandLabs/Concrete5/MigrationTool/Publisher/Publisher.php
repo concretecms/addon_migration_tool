@@ -1,13 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher;
-
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 class Publisher
 {
-
     protected $manager;
     protected $batch;
 
@@ -19,9 +16,8 @@ class Publisher
 
     public function publish()
     {
-        foreach($this->manager->getDrivers() as $driver) {
+        foreach ($this->manager->getDrivers() as $driver) {
             $driver->execute($this->batch);
         }
     }
-
 }

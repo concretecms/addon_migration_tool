@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\SearchResult;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem;
@@ -9,7 +8,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 interface StandardFormatterTypeInterface
 {
-
     public function getHandle();
 
     public function getHeaders();

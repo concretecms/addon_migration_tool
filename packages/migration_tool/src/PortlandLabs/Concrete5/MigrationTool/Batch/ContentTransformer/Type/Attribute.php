@@ -1,8 +1,6 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type;
 
-use Concrete\Core\Attribute\Key\CollectionKey;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformerInterface;
@@ -16,16 +14,17 @@ defined('C5_EXECUTE') or die("Access Denied.");
  * This class is responsible for taking imported attribute values and transforming them based on their imported XML
  * into better data structures. This can't happen at import because we don't necessarily know the type of the attribute
  * being imported until after all the import is complete.
+ *
  * @package PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type
  */
 class Attribute implements TransformerInterface
 {
-
     public function getUntransformedEntityObjects()
     {
         $em = \ORM::entityManager('migration_tool');
         $query = $em->createQuery('select v from \PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue v where v instance of \PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\ImportedAttributeValue');
         $results = $query->getResult();
+
         return $results;
     }
 
@@ -34,6 +33,7 @@ class Attribute implements TransformerInterface
         if ($attribute_value && $attribute_value->getAttribute()) {
             $handle = $attribute_value->getAttribute()->getHandle();
             $item = new Item($handle);
+
             return $item;
         }
     }
@@ -51,7 +51,7 @@ class Attribute implements TransformerInterface
             $type = $ak->getAttributeKeyType()->getAttributeTypeHandle();
         } else {
             $collection = $batch->getObjectCollection('attribute_key');
-            foreach($collection->getKeys() as $key) {
+            foreach ($collection->getKeys() as $key) {
                 if ($key->getHandle() == $item->getIdentifier()) {
                     $type = $key->getType();
                     break;
@@ -62,8 +62,7 @@ class Attribute implements TransformerInterface
             $manager = \Core::make('migration/manager/import/attribute/value');
             try {
                 $driver = $manager->driver($type);
-            } catch(\Exception $e) {
-
+            } catch (\Exception $e) {
             }
             if (isset($driver)) {
                 $xml = simplexml_load_string($entity->getValue());
@@ -77,7 +76,4 @@ class Attribute implements TransformerInterface
             }
         }
     }
-
-
-
 }

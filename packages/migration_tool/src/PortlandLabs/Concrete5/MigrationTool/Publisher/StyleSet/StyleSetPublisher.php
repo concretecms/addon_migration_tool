@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\StyleSet;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\StyleSet;
@@ -7,7 +6,6 @@ use Concrete\Core\StyleCustomizer\Inline\StyleSet as CoreStyleSet;
 
 class StyleSetPublisher
 {
-
     protected $styleSet;
 
     public function __construct(StyleSet $styleSet)
@@ -60,6 +58,7 @@ class StyleSetPublisher
         $o->setHideOnMediumDevice($this->styleSet->getHideOnMediumDevice());
         $o->setHideOnLargeDevice($this->styleSet->getHideOnLargeDevice());
         $o->save();
+
         return $o;
     }
 }

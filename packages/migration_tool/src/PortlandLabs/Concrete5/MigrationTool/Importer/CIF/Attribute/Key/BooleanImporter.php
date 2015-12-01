@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
@@ -9,7 +8,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class BooleanImporter implements ImporterInterface
 {
-
     public function getEntity()
     {
         return new BooleanAttributeKey();
@@ -24,5 +22,4 @@ class BooleanImporter implements ImporterInterface
             $key->setIsChecked(false);
         }
     }
-
 }

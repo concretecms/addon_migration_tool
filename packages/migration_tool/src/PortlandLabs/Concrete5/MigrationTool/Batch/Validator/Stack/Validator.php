@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Stack;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AbstractValidator;
@@ -9,7 +8,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Validator extends AbstractValidator
 {
-
     public function validate($stack)
     {
         $r = new MessageCollection();
@@ -17,10 +15,11 @@ class Validator extends AbstractValidator
         $validator = \Core::make('migration/batch/block/validator', array($this->getBatch()));
         $messages = $validator->validate($blocks);
         if ($messages && count($messages)) {
-            foreach($messages as $message) {
+            foreach ($messages as $message) {
                 $r->add($message);
             }
         }
+
         return $r;
     }
 }

@@ -1,11 +1,9 @@
 <?php
-
 namespace Concrete\Package\MigrationTool;
 
 use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
-use Concrete\Package\MigrationTool\Database\EntityManagerFactory;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Block\CollectionValidator;
@@ -29,28 +27,25 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\PageType\PublishTarget\Man
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block\Manager as BlockManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Manager as ImportManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspector\InspectionRoutine\BatchPageRoutine;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspector\ValueInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager as BlockPublisherManager;
 use PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type\Manager as ExporterItemTypeManager;
-
 use SinglePage;
 
 class Controller extends Package
 {
-
     protected $pkgHandle = 'migration_tool';
     protected $appVersionRequired = '5.7.5.4a1';
     protected $pkgVersion = '0.5.4';
     protected $pkgAutoloaderMapCoreExtensions = true;
     protected $pkgAutoloaderRegistries = array(
-        'src/PortlandLabs/Concrete5/MigrationTool' => '\PortlandLabs\Concrete5\MigrationTool'
+        'src/PortlandLabs/Concrete5/MigrationTool' => '\PortlandLabs\Concrete5\MigrationTool',
     );
 
     protected $singlePages = array(
         '/dashboard/system/migration',
         '/dashboard/system/migration/import',
-        '/dashboard/system/migration/export'
+        '/dashboard/system/migration/export',
     );
 
     protected $singlePagesToExclude = array(
@@ -59,12 +54,12 @@ class Controller extends Package
     protected $singlePageTitles = array(
         '/dashboard/system/migration' => 'Migration Tool',
         '/dashboard/system/migration/import' => 'Import Content',
-        '/dashboard/system/migration/export' => 'Export Content'
+        '/dashboard/system/migration/export' => 'Export Content',
     );
 
     protected function installSinglePages($pkg)
     {
-        foreach($this->singlePages as $path) {
+        foreach ($this->singlePages as $path) {
             if (Page::getByPath($path)->getCollectionID() <= 0) {
                 SinglePage::add($path, $pkg);
             }
@@ -78,7 +73,7 @@ class Controller extends Package
             }
 
             if (isset($this->singlePageTitles[$path])) {
-                $pp->update(array('cName'=> $this->singlePageTitles[$path]));
+                $pp->update(array('cName' => $this->singlePageTitles[$path]));
             }
         }
 
@@ -94,7 +89,6 @@ class Controller extends Package
 
     public function on_start()
     {
-
         \Core::bind('migration/batch/page/validator', function ($app, $batch) {
             $v = new Validator($batch[0]);
             $v->registerTask(new ValidateAttributesTask());
@@ -103,12 +97,14 @@ class Controller extends Package
             $v->registerTask(new ValidateUsersTask());
             $v->registerTask(new ValidateBlocksTask());
             $v->registerTask(new ValidateAreasTask());
+
             return $v;
         });
 
         \Core::bindShared('migration/batch/validator', function () {
             $v = new BatchValidator();
             $v->registerTask(new ValidateBatchRecordsTask());
+
             return $v;
         });
 
@@ -116,9 +112,9 @@ class Controller extends Package
             $v = new CollectionValidator($batch[0]);
             $v->registerTask(new ValidateBlockTypesTask());
             $v->registerTask(new ValidateReferencedContentItemsTask());
+
             return $v;
         });
-
 
         \Core::bindShared('migration/manager/mapping', function ($app) {
             return new Manager($app);
@@ -159,17 +155,16 @@ class Controller extends Package
             return new BlockPublisherManager($app);
         });
 
-        \Core::bind('migration/import/value_inspector', function($app, $args) {
+        \Core::bind('migration/import/value_inspector', function ($app, $args) {
             $inspector = $app->make('import/value_inspector');
             $inspector->registerInspectionRoutine(new BatchPageRoutine($args[0]));
+
             return $inspector;
         });
 
         \Core::bindShared('migration/manager/exporters', function ($app) {
             return new ExporterItemTypeManager($app);
         });
-
-
 
         $al = AssetList::getInstance();
         $al->register(
@@ -194,10 +189,9 @@ class Controller extends Package
             array('javascript', 'fancytree'),
             array('javascript', 'migration/batch-table-tree'),
             array('css', 'fancytree/skin/bootstrap'),
-            array('css', 'migration/batch-table-tree')
+            array('css', 'migration/batch-table-tree'),
         ));
     }
-
 
     public function getPackageDescription()
     {
@@ -226,7 +220,7 @@ class Controller extends Package
             Type::add(array(
                 'internal' => true,
                 'name' => 'Import Batch',
-                'handle' => 'import_batch'
+                'handle' => 'import_batch',
             ));
         }
     }
@@ -238,6 +232,4 @@ class Controller extends Package
         $this->installSinglePages($pkg);
         $this->installPageTypes($pkg);
     }
-
-
 }

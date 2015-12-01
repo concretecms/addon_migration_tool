@@ -1,13 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Page\Type\Composer\FormLayoutSetControl;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
-use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
-use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -17,11 +11,10 @@ class PublishPageContentRoutine extends AbstractPageRoutine
     public function execute(Batch $batch)
     {
         $this->batch = $batch;
-        foreach($this->getPagesOrderedForImport($batch) as $page) {
-
+        foreach ($this->getPagesOrderedForImport($batch) as $page) {
             $concretePage = $this->getPageByPath($batch, $page->getBatchPath());
 
-            foreach($page->attributes as $attribute) {
+            foreach ($page->attributes as $attribute) {
                 $ak = $this->getTargetItem('attribute', $attribute->getAttribute()->getHandle());
                 if (is_object($ak)) {
                     $value = $attribute->getAttribute()->getAttributeValue();
@@ -33,14 +26,14 @@ class PublishPageContentRoutine extends AbstractPageRoutine
             $em = \ORM::entityManager("migration_tool");
             $r = $em->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem');
             $controls = $r->findBy(array('item_type' => 'composer_output_content'));
-            $controlHandles = array_map(function($a) {
+            $controlHandles = array_map(function ($a) {
                 return $a->getItemID();
             }, $controls);
             $blockSubstitutes = array();
             // Now we have our $controls array which we will use to determine if any of the blocks on this page
             // need to be replaced by another block.
 
-            foreach($page->areas as $area) {
+            foreach ($page->areas as $area) {
                 $styleSet = $area->getStyleSet();
                 if (is_object($styleSet)) {
                     $styleSetPublisher = $styleSet->getPublisher();
@@ -48,7 +41,7 @@ class PublishPageContentRoutine extends AbstractPageRoutine
                     $concreteArea = \Area::getOrCreate($concretePage, $area->getName());
                     $concretePage->setCustomStyleSet($concreteArea, $publishedStyleSet);
                 }
-                foreach($area->blocks as $block) {
+                foreach ($area->blocks as $block) {
                     $bt = $this->getTargetItem('block_type', $block->getType());
                     if (is_object($bt)) {
                         $value = $block->getBlockValue();
@@ -73,9 +66,9 @@ class PublishPageContentRoutine extends AbstractPageRoutine
 
             // Loop through all the blocks on the page. If any of them are composer output content blocks
             // We look in our composer mapping.
-            foreach($concretePage->getBlocks() as $b) {
+            foreach ($concretePage->getBlocks() as $b) {
                 if ($b->getBlockTypeHandle() == BLOCK_HANDLE_PAGE_TYPE_OUTPUT_PROXY) {
-                    foreach($controls as $targetItem) {
+                    foreach ($controls as $targetItem) {
                         if ($targetItem->isMapped() && intval($targetItem->getSourceItemIdentifier()) == intval($b->getBlockID())) {
                             $substitute = $blockSubstitutes[$targetItem->getItemID()];
                             if ($substitute) {
@@ -99,9 +92,6 @@ class PublishPageContentRoutine extends AbstractPageRoutine
                     $b->deleteBlock();
                 }
             }
-
-
         }
     }
-
 }

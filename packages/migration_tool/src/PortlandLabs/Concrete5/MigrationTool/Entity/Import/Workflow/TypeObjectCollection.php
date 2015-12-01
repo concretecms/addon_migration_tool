@@ -1,12 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\BlockTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\ConversationRatingTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTemplateFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\WorkflowTypeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
@@ -15,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 class TypeObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="Type", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -63,9 +58,4 @@ class TypeObjectCollection extends ObjectCollection
     {
         return false;
     }
-
-
-
-
-
 }

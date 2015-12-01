@@ -1,19 +1,15 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKeyCategory;
-
 
 use Concrete\Core\Attribute\Key\UserKey;
 use Concrete\Core\Package\Package;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\UserAttributeKeyCategoryInstance;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class UserPublisher implements PublisherInterface
 {
-
     public function publish(AttributeKey $ak, Package $pkg = null)
     {
         /** @var $category UserAttributeKeyCategoryInstance */
@@ -31,10 +27,9 @@ class UserPublisher implements PublisherInterface
                 'uakProfileEditRequired' => $category->getRequiredInProfile(),
                 'uakRegisterEdit' => $category->getEditableInRegistration(),
                 'uakRegisterEditRequired' => $category->getRequiredInRegistration(),
-                'uakMemberListDisplay' => $category->getDisplayedInMemberList()
+                'uakMemberListDisplay' => $category->getDisplayedInMemberList(),
             ), $pkg);
+
         return $key;
-
     }
-
 }

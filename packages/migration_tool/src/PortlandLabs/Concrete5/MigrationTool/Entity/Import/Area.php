@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Area
 {
-
     /**
      * @Id @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
@@ -78,7 +76,6 @@ class Area
         $this->name = $name;
     }
 
-
     public function __construct()
     {
         $this->blocks = new ArrayCollection();
@@ -115,9 +112,4 @@ class Area
     {
         $this->style_set = $style_set;
     }
-
-
-
-
-
 }

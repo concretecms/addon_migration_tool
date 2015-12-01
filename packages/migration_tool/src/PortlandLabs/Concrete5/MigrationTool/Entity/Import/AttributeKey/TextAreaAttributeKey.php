@@ -1,10 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TextAreaFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\TextAreaPublisher;
-
 
 /**
  * @Entity
@@ -12,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\TextAreaPublishe
  */
 class TextAreaAttributeKey extends AttributeKey
 {
-
     /**
      * @Column(type="string")
      */
@@ -33,7 +30,6 @@ class TextAreaAttributeKey extends AttributeKey
     {
         $this->mode = $mode;
     }
-
 
     public function getType()
     {

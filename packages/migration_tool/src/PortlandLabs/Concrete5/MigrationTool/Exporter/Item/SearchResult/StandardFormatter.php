@@ -1,17 +1,14 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\SearchResult;
 
 use Concrete\Core\Foundation\Environment;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch;
-use PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type\TypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class StandardFormatter implements FormatterInterface
 {
-
     protected $itemType;
     protected $batch;
     protected $collection;
@@ -41,13 +38,13 @@ class StandardFormatter implements FormatterInterface
         $this->request = $request;
     }
 
-
     public function hasSearchForm()
     {
         $env = Environment::get();
         $rec = $env->getRecord(
             DIRNAME_ELEMENTS . '/export/search/' . $this->itemType->getHandle() . '.php',
             'migration_tool');
+
         return $rec->exists();
     }
 
@@ -59,7 +56,7 @@ class StandardFormatter implements FormatterInterface
 
         if (!$this->hasSearchForm()) {
             return true;
-        } else if ($this->getRequest()->query->has('search_form_submit')) {
+        } elseif ($this->getRequest()->query->has('search_form_submit')) {
             return true;
         }
     }
@@ -83,7 +80,7 @@ class StandardFormatter implements FormatterInterface
             'mode' => 'results',
             'type' => $this->itemType,
             'headers' => $this->itemType->getHeaders(),
-            'results' => $this->collection->getItems()
+            'results' => $this->collection->getItems(),
         ), 'migration_tool');
     }
 
@@ -96,9 +93,7 @@ class StandardFormatter implements FormatterInterface
             'mode' => 'search',
             'type' => $this->itemType,
             'headers' => $this->itemType->getHeaders(),
-            'results' => $this->itemType->getResults($this->getRequest())
+            'results' => $this->itemType->getResults($this->getRequest()),
         ), 'migration_tool');
     }
-
-
 }

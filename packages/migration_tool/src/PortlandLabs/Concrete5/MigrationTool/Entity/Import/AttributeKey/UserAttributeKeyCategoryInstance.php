@@ -1,19 +1,14 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BooleanFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKeyCategory\UserFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKeyCategory\UserPublisher;
-
 
 /**
  * @Entity
  */
 class UserAttributeKeyCategoryInstance extends AttributeKeyCategoryInstance
 {
-
     /**
      * @Column(type="boolean")
      */
@@ -154,5 +149,4 @@ class UserAttributeKeyCategoryInstance extends AttributeKeyCategoryInstance
     {
         return new UserPublisher();
     }
-
 }

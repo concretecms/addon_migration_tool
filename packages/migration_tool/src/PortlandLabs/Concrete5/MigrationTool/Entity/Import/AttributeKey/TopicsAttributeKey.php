@@ -1,13 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TextAreaFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TopicsFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeKey\TopicsValidator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\TopicsPublisher;
-
 
 /**
  * @Entity
@@ -15,7 +12,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\TopicsPublisher;
  */
 class TopicsAttributeKey extends AttributeKey
 {
-
     /**
      * @Column(type="string")
      */
@@ -77,5 +73,4 @@ class TopicsAttributeKey extends AttributeKey
     {
         return new TopicsPublisher();
     }
-
 }

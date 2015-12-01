@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ObjectCollection
 {
-
     /**
      * @Id @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
@@ -80,18 +78,18 @@ class ObjectCollection
     public function getItemTypeObject()
     {
         $exporters = \Core::make('migration/manager/exporters');
+
         return $exporters->driver($this->getType());
     }
 
     public function contains(ExportItem $item)
     {
-        foreach($this->getItems() as $existingItem) {
+        foreach ($this->getItems() as $existingItem) {
             if ($existingItem->getItemIdentifier() == $item->getItemIdentifier()) {
                 return true;
             }
         }
+
         return false;
     }
-
-
 }

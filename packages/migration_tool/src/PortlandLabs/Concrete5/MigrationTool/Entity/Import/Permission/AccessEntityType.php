@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
@@ -11,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEnt
  */
 class AccessEntityType implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -143,11 +141,4 @@ class AccessEntityType implements PublishableInterface
     {
         return new PermissionAccessEntityTypeValidator($this);
     }
-
-
-
-
-
-
-
 }

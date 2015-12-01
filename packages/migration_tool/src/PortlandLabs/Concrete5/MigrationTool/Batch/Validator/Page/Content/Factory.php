@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content;
 
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\ItemInterface;
@@ -11,12 +10,10 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Factory
 {
-
     protected $validator;
 
     public function __construct(ItemInterface $item)
     {
-
         if ($item instanceof PageItem) {
             $this->validator = new PageItemValidator();
         }
@@ -24,7 +21,6 @@ class Factory
         if ($item instanceof PageFeedItem) {
             $this->validator = new PageFeedItemValidator();
         }
-
 
         if ($item instanceof PageTypeItem) {
             $this->validator = new PageTypeItemValidator();
@@ -39,5 +35,4 @@ class Factory
     {
         return $this->validator;
     }
-
 }

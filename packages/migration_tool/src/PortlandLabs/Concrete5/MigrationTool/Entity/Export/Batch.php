@@ -1,8 +1,6 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
 
-use Concrete\Core\File\Set\Set;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -11,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Batch
 {
-
     /**
      * @Id @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
@@ -107,7 +104,6 @@ class Batch
         $this->collections = $collections;
     }
 
-
     public function hasRecords()
     {
         return $this->collections->count() > 0;
@@ -115,7 +111,7 @@ class Batch
 
     public function getObjectCollection($type)
     {
-        foreach($this->collections as $collection) {
+        foreach ($this->collections as $collection) {
             if ($collection->getType() == $type) {
                 return $collection;
             }
@@ -129,6 +125,4 @@ class Batch
     {
         return $this->getID();
     }
-
-
 }

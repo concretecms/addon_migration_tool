@@ -1,17 +1,14 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\ConfigValueFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
  */
 class ConfigValueObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="ConfigValue", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -59,9 +56,4 @@ class ConfigValueObjectCollection extends ObjectCollection
     {
         return false;
     }
-
-
-
-
-
 }

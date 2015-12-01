@@ -1,11 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeSetValidator;
-
 
 /**
  * @Entity
@@ -13,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeSetValidat
  */
 class AttributeSet implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -39,7 +35,6 @@ class AttributeSet implements PublishableInterface
      * @Column(type="string")
      */
     protected $category;
-
 
     /**
      * @Column(type="string", nullable=true)
@@ -188,11 +183,4 @@ class AttributeSet implements PublishableInterface
     {
         return new AttributeSetValidator($this);
     }
-
-
-
-
-
-
-
 }

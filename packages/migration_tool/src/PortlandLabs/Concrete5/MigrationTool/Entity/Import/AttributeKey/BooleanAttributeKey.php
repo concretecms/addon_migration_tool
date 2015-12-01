@@ -1,10 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BooleanFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\BooleanPublisher;
-
 
 /**
  * @Entity
@@ -12,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\BooleanPublisher
  */
 class BooleanAttributeKey extends AttributeKey
 {
-
     /**
      * @Column(type="boolean")
      */
@@ -48,8 +45,4 @@ class BooleanAttributeKey extends AttributeKey
     {
         return new BooleanPublisher();
     }
-
-
-
-
 }

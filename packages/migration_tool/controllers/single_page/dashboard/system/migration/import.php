@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\Migration;
 
 use Concrete\Core\File\Importer;
@@ -7,9 +7,7 @@ use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\MapContentTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
@@ -22,7 +20,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Import extends DashboardPageController
 {
-
     public function add_batch()
     {
         if (!$this->token->validate('add_batch')) {
@@ -48,11 +45,11 @@ class Import extends DashboardPageController
             $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
             $batch = $r->findOneById($this->request->request->get('id'));
             if (is_object($batch)) {
-                foreach($batch->getObjectCollections() as $collection) {
+                foreach ($batch->getObjectCollections() as $collection) {
                     $this->entityManager->remove($collection);
                 }
                 $batch->setObjectCollections(new ArrayCollection());
-                foreach($batch->getTargetItems() as $targetItem) {
+                foreach ($batch->getTargetItems() as $targetItem) {
                     $targetItem->setBatch(null);
                     $this->entityManager->remove($targetItem);
                 }
@@ -68,11 +65,11 @@ class Import extends DashboardPageController
 
     protected function clearContent($batch)
     {
-        foreach($batch->getObjectCollections() as $collection) {
+        foreach ($batch->getObjectCollections() as $collection) {
             $this->entityManager->remove($collection);
         }
         $batch->setObjectCollections(new ArrayCollection());
-        foreach($batch->getTargetItems() as $targetItem) {
+        foreach ($batch->getTargetItems() as $targetItem) {
             $targetItem->setBatch(null);
             $this->entityManager->remove($targetItem);
         }
@@ -105,7 +102,7 @@ class Import extends DashboardPageController
             $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
             $batch = $r->findOneById($this->request->request->get('id'));
             if (is_object($batch)) {
-                foreach($batch->getFiles() as $f) {
+                foreach ($batch->getFiles() as $f) {
                     $fp = new \Permissions($f);
                     if ($fp->canDeleteFile()) {
                         $f->delete();
@@ -124,8 +121,6 @@ class Import extends DashboardPageController
         }
         $this->view();
     }
-
-
 
     public function add_content_to_batch()
     {
@@ -148,12 +143,11 @@ class Import extends DashboardPageController
         }
 
         if (!$this->error->has()) {
-
             if ($this->request->request->get('importMethod') == 'replace') {
                 $this->clearContent($batch);
             }
 
-            foreach($importer->getContentObjectCollections($_FILES['file']['tmp_name']) as $collection) {
+            foreach ($importer->getContentObjectCollections($_FILES['file']['tmp_name']) as $collection) {
                 $batch->getObjectCollections()->add($collection);
             }
 
@@ -215,7 +209,7 @@ class Import extends DashboardPageController
         if (is_object($batch)) {
             $formats = array();
             $drivers = \Core::make('migration/manager/importer/parser')->getDrivers();
-            foreach($drivers as $driver) {
+            foreach ($drivers as $driver) {
                 $formats[$driver->getDriver()] = $driver->getName();
             }
             $this->set('batch', $batch);
@@ -280,7 +274,6 @@ class Import extends DashboardPageController
         $r->outputJSON();
     }
 
-
     public function find_and_replace($id = null)
     {
         $this->view_batch($id);
@@ -311,9 +304,9 @@ class Import extends DashboardPageController
             // them in the post below.
             $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem');
             $items = $r->findBy(array(
-                'batch' => $batch
+                'batch' => $batch,
             ));
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 if ($item->getTargetItem()->getItemType() == $mapper->getHandle()) {
                     $this->entityManager->remove($item);
                 }
@@ -324,7 +317,7 @@ class Import extends DashboardPageController
             $post = $this->request->request->get('targetItem');
             $targetItemList = new TargetItemList($batch, $mapper);
 
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 $value = $post[$item->getIdentifier()];
                 $targetItem = $targetItemList->getTargetItem($value);
                 $targetItem->setSourceItemIdentifier($item->getIdentifier());
@@ -366,10 +359,11 @@ class Import extends DashboardPageController
                 $data['alertclass'] = $formatter->getAlertClass();
                 $data['message'] = $formatter->getCreateStatusMessage();
                 $messageObjects = array();
-                foreach(array_unique($messages->toArray()) as $message) {
+                foreach (array_unique($messages->toArray()) as $message) {
                     $messageObjects[] = $message;
                 }
                 $data['messages'] = $messageObjects;
+
                 return new JsonResponse($data);
             }
         }
@@ -380,8 +374,9 @@ class Import extends DashboardPageController
         session_write_close();
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection');
         $collection = $r->findOneById($this->request->get('id'));
-        if (is_object($collection))  {
+        if (is_object($collection)) {
             $formatter = $collection->getTreeFormatter();
+
             return new JsonResponse($formatter);
         }
     }
@@ -391,8 +386,9 @@ class Import extends DashboardPageController
         session_write_close();
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page');
         $page = $r->findOneById($this->request->get('id'));
-        if (is_object($page))  {
+        if (is_object($page)) {
             $formatter = new TreePageJsonFormatter($page);
+
             return new JsonResponse($formatter);
         }
     }
@@ -402,15 +398,14 @@ class Import extends DashboardPageController
         session_write_close();
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page');
         $page = $r->findOneById($this->request->get('pk'));
-        if (is_object($page))  {
+        if (is_object($page)) {
             $page->setBatchPath($this->request->request('value'));
             $this->entityManager->persist($page);
             $this->entityManager->flush();
+
             return new JsonResponse($page);
         }
     }
-
-
 
     public function map_content($id = null, $type = null)
     {
@@ -429,6 +424,4 @@ class Import extends DashboardPageController
             $this->view();
         }
     }
-
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Processor;
 
 use Concrete\Core\Foundation\Processor\TargetInterface;
@@ -28,5 +27,4 @@ class Target implements TargetInterface
     {
         return $this->batch->getPages();
     }
-
 }

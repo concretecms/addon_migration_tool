@@ -1,14 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BlockTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\SocialLinkValidator;
-
 
 /**
  * @Entity
@@ -16,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\SocialLinkValidator
  */
 class SocialLink implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -106,12 +99,4 @@ class SocialLink implements PublishableInterface
     {
         return new SocialLinkValidator($this);
     }
-
-
-
-
-
-
-
-
 }

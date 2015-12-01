@@ -1,26 +1,18 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType;
 
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\PageTemplateItem;
-use Concrete\Core\Backup\ContentImporter\ValueInspector\ValueInspector;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AbstractValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ItemValidatorInterface;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content\Factory;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content\PageTemplateItemValidator;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageType;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class Validator extends AbstractValidator
 {
-
     /**
      * @param $type \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageType
+     *
      * @return MessageCollection
      */
     public function validate($type)
@@ -28,8 +20,8 @@ class Validator extends AbstractValidator
         $collection = new MessageCollection();
 
         // Validate the composer form controls
-        foreach($type->getLayoutSets() as $set) {
-            foreach($set->getControls() as $control) {
+        foreach ($type->getLayoutSets() as $set) {
+            foreach ($set->getControls() as $control) {
                 $validator = $control->getRecordValidator($this->getBatch());
                 if (is_object($validator)) {
                     $messages = $validator->validate($control);
@@ -50,7 +42,7 @@ class Validator extends AbstractValidator
             $templates[] = $template;
         }
         if ($type->getAllowedTemplates() == 'C') {
-            foreach($type->getTemplates() as $template) {
+            foreach ($type->getTemplates() as $template) {
                 if (!in_array($template, $templates)) {
                     $templates[] = $template;
                 }
@@ -58,7 +50,7 @@ class Validator extends AbstractValidator
         }
 
         $validator = new PageTemplateItemValidator();
-        foreach($templates as $template) {
+        foreach ($templates as $template) {
             $item = new PageTemplateItem($template);
             if (!$validator->itemExists($item, $this->getBatch())) {
                 $validator->addMissingItemMessage($item, $collection);
@@ -68,7 +60,7 @@ class Validator extends AbstractValidator
         // Validate the page type defaults
         $defaultPages = $type->getDefaultPageCollection();
         $pageValidator = $defaultPages->getRecordValidator($this->getBatch());
-        foreach($defaultPages->getPages() as $page) {
+        foreach ($defaultPages->getPages() as $page) {
             $pageMessages = $pageValidator->validate($page);
             if (is_object($pageMessages)) {
                 $collection->addMessages($pageMessages);

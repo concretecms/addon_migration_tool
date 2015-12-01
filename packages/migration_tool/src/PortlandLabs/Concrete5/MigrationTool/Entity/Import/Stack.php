@@ -1,11 +1,9 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\StackValidator;
-
 
 /**
  * @Entity
@@ -13,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\StackValidator;
  */
 class Stack implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -129,7 +126,4 @@ class Stack implements PublishableInterface
     {
         return new StackValidator($this);
     }
-
-
-
 }

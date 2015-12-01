@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 /**
@@ -29,7 +28,4 @@ class StackBlock extends AbstractBlock
     {
         $this->stack = $stack;
     }
-
-
-
 }

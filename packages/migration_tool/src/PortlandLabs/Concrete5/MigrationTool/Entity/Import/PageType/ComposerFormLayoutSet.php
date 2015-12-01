@@ -1,9 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 
 /**
  * @Entity
@@ -11,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class ComposerFormLayoutSet
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -47,7 +44,6 @@ class ComposerFormLayoutSet
     /**
      * @return mixed
      */
-
     public function __construct()
     {
         $this->controls = new ArrayCollection();
@@ -164,10 +160,4 @@ class ComposerFormLayoutSet
     {
         $this->position = $position;
     }
-
-    
-
-
-
-
 }

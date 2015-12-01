@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Attribute\Key\CollectionKey;
@@ -15,7 +14,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Attribute implements MapperInterface
 {
-
     public function getMappedItemPluralName()
     {
         return t('Attributes');
@@ -29,8 +27,8 @@ class Attribute implements MapperInterface
     public function getItems(Batch $batch)
     {
         $handles = array();
-        foreach($batch->getPages() as $page) {
-            foreach($page->getAttributes() as $attribute) {
+        foreach ($batch->getPages() as $page) {
+            foreach ($page->getAttributes() as $attribute) {
                 if (!in_array($attribute->getAttribute()->getHandle(), $handles)) {
                     $handles[] = $attribute->getAttribute()->getHandle();
                 }
@@ -39,9 +37,9 @@ class Attribute implements MapperInterface
 
         $pageTypes = $batch->getObjectCollection('page_type');
         if (is_object($pageTypes)) {
-            foreach($pageTypes->getTypes() as $type) {
-                foreach($type->getLayoutSets() as $set) {
-                    foreach($set->getControls() as $control) {
+            foreach ($pageTypes->getTypes() as $type) {
+                foreach ($type->getLayoutSets() as $set) {
+                    foreach ($set->getControls() as $control) {
                         if ($control instanceof CollectionAttributeComposerFormLayoutSetControl) {
                             if (!in_array($control->getItemIdentifier(), $handles)) {
                                 $handles[] = $control->getItemIdentifier();
@@ -50,8 +48,8 @@ class Attribute implements MapperInterface
                     }
                 }
                 $defaults = $type->getDefaultPageCollection();
-                foreach($defaults->getPages() as $page) {
-                    foreach($page->getAttributes() as $attribute) {
+                foreach ($defaults->getPages() as $page) {
+                    foreach ($page->getAttributes() as $attribute) {
                         if (!in_array($attribute->getAttribute()->getHandle(), $handles)) {
                             $handles[] = $attribute->getAttribute()->getHandle();
                         }
@@ -61,11 +59,12 @@ class Attribute implements MapperInterface
         }
 
         $items = array();
-        foreach($handles as $handle) {
+        foreach ($handles as $handle) {
             $item = new Item();
             $item->setIdentifier($handle);
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -76,14 +75,16 @@ class Attribute implements MapperInterface
             $targetItem = new TargetItem($this);
             $targetItem->setItemId($ak->getAttributeKeyHandle());
             $targetItem->setItemName($ak->getAttributeKeyDisplayName());
+
             return $targetItem;
         } else { // we check the current batch.
             $collection = $batch->getObjectCollection('attribute_key');
-            foreach($collection->getKeys() as $key) {
+            foreach ($collection->getKeys() as $key) {
                 if ($key->getHandle() == $item->getIdentifier()) {
                     $targetItem = new TargetItem($this);
                     $targetItem->setItemId($key->getHandle());
                     $targetItem->setItemName($key->getHandle());
+
                     return $targetItem;
                 }
             }
@@ -94,7 +95,7 @@ class Attribute implements MapperInterface
     {
         $collection = $batch->getObjectCollection('attribute_key');
         $items = array();
-        foreach($collection->getKeys() as $key) {
+        foreach ($collection->getKeys() as $key) {
             if (!$key->getPublisherValidator()->skipItem()) {
                 $item = new TargetItem($this);
                 $item->setItemId($key->getHandle());
@@ -102,22 +103,24 @@ class Attribute implements MapperInterface
                 $items[] = $item;
             }
         }
+
         return $items;
     }
 
     public function getInstalledTargetItems(Batch $batch)
     {
         $keys = CollectionKey::getList();
-        usort($keys, function($a, $b) {
+        usort($keys, function ($a, $b) {
             return strcasecmp($a->getAttributeKeyName(), $b->getAttributeKeyName());
         });
         $items = array();
-        foreach($keys as $ak) {
+        foreach ($keys as $ak) {
             $item = new TargetItem($this);
             $item->setItemId($ak->getAttributeKeyHandle());
             $item->setItemName($ak->getAttributeKeyDisplayName());
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -125,7 +128,4 @@ class Attribute implements MapperInterface
     {
         return CollectionKey::getByHandle($targetItem->getItemID());
     }
-
-
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Block;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
@@ -12,8 +11,5 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 interface PublisherInterface
 {
-
     public function publish(Batch $batch, BlockType $bt, Page $page, Area $area, BlockValue $value);
-
-
 }

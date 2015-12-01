@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\ImportedFormatter;
@@ -12,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\CIFPublisher;
  */
 class ImportedBlockValue extends BlockValue
 {
-
     /**
      * @Column(type="text", nullable=true)
      */
@@ -45,5 +43,4 @@ class ImportedBlockValue extends BlockValue
     {
         return new CIFInspector($this);
     }
-
 }

@@ -1,11 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
-use Concrete\Core\Attribute\Key\Category;
-use Concrete\Core\Attribute\Key\Key;
 use Concrete\Core\Page\PageList;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,11 +9,10 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Page extends SinglePage
 {
-
     public function exportCollection(ObjectCollection $collection, \SimpleXMLElement $element)
     {
         $node = $element->addChild('pages');
-        foreach($collection->getItems() as $page) {
+        foreach ($collection->getItems() as $page) {
             $c = \Page::getByID($page->getItemIdentifier());
             if (is_object($c) && !$c->isError()) {
                 $c->export($node);
@@ -52,11 +47,12 @@ class Page extends SinglePage
         $pl->setItemsPerPage(1000);
         $results = $pl->getResults();
         $items = array();
-        foreach($results as $c) {
+        foreach ($results as $c) {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\Page();
             $item->setItemId($c->getCollectionID());
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -69,5 +65,4 @@ class Page extends SinglePage
     {
         return t('Pages');
     }
-
 }

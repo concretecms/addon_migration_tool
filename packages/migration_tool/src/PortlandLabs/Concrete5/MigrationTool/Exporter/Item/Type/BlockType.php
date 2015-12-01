@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use Concrete\Core\Block\BlockType\BlockTypeList;
@@ -11,7 +10,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class BlockType extends AbstractType
 {
-
     public function getHeaders()
     {
         return array(t('Name'));
@@ -20,13 +18,14 @@ class BlockType extends AbstractType
     public function getResultColumns(ExportItem $exportItem)
     {
         $bt = \Concrete\Core\Block\BlockType\BlockType::getByID($exportItem->getItemIdentifier());
+
         return array($bt->getBlockTypeName());
     }
 
     public function exportCollection(ObjectCollection $collection, \SimpleXMLElement $element)
     {
         $node = $element->addChild('blocktypes');
-        foreach($collection->getItems() as $type) {
+        foreach ($collection->getItems() as $type) {
             $bt = \Concrete\Core\Block\BlockType\BlockType::getByID($type->getItemIdentifier());
             if (is_object($bt)) {
                 $nodeType = $node->addChild('blocktype');
@@ -39,7 +38,7 @@ class BlockType extends AbstractType
     public function getItemsFromRequest($array)
     {
         $items = array();
-        foreach($array as $id) {
+        foreach ($array as $id) {
             $item = \Concrete\Core\Block\BlockType\BlockType::getByID($id);
             if (is_object($item)) {
                 $blockType = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\BlockType();
@@ -47,6 +46,7 @@ class BlockType extends AbstractType
                 $items[] = $blockType;
             }
         }
+
         return $items;
     }
 
@@ -56,11 +56,12 @@ class BlockType extends AbstractType
         $list->sortByMultiple('btID asc');
         $list = $list->get();
         $items = array();
-        foreach($list as $type) {
+        foreach ($list as $type) {
             $blockType = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\BlockType();
             $blockType->setItemId($type->getBlockTypeID());
             $items[] = $blockType;
         }
+
         return $items;
     }
 
@@ -73,5 +74,4 @@ class BlockType extends AbstractType
     {
         return t('Block Types');
     }
-
 }

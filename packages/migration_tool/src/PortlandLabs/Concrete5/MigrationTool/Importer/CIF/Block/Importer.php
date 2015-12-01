@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ImportedBlockValue;
@@ -13,7 +12,7 @@ class Importer implements ImporterInterface
     {
         $value = new ImportedBlockValue();
         $value->setValue((string) $node->asXML());
+
         return $value;
     }
-
 }

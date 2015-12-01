@@ -1,4 +1,4 @@
-<? defined('C5_EXECUTE') or die("Access Denied."); ?>
+<?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 <div class="ccm-dashboard-header-buttons">
 <div class="btn-group" role="group" aria-label="...">
     <a href="javascript:void(0)" data-dialog="add-to-batch" data-dialog-title="<?=t('Add Content')?>" class="btn btn-default"><?=t("Add Content to Batch")?></a>
@@ -10,11 +10,13 @@
         </button>
         <ul class="dropdown-menu">
             <li class="dropdown-header"><?=t('Map Content')?></li>
-            <? foreach($mappers->getDrivers() as $mapper) {?>
+            <?php foreach ($mappers->getDrivers() as $mapper) {
+    ?>
                 <li><a href="<?=$view->action('map_content', $batch->getId(), $mapper->getHandle())?>"><?=$mapper->getMappedItemPluralName()?></a></li>
-            <? } ?>
+            <?php 
+} ?>
             <li class="divider"></li>
-            <? /*
+            <?php /*
             <li><a href="<?=$view->action('find_and_replace', $batch->getID())?>"><?=t("Find and Replace")?></a></li>
  */ ?>
             <li><a href="javascript:void(0)" data-dialog="create-content" data-dialog-title="<?=t('Import Batch to Site')?>" class=""><span class="text-primary"><?=t("Import Batch to Site")?></span></a>
@@ -97,17 +99,22 @@
 </div>
 
 
-<? if ($batch) { ?>
+<?php if ($batch) {
+    ?>
 
     <h2><?=t('Batch')?>
         <small><?=$batch->getDate()->format('F d, Y g:i a')?></small></h2>
 
-    <? if ($batch->getNotes()) { ?>
+    <?php if ($batch->getNotes()) {
+    ?>
         <p><?=$batch->getNotes()?></p>
-    <? } ?>
+    <?php 
+}
+    ?>
 
 
-    <? if ($batch->hasRecords()) { ?>
+    <?php if ($batch->hasRecords()) {
+    ?>
 
     <h3><?=t('Status')?></h3>
     <div class="alert alert-info" id="migration-batch-status">
@@ -154,21 +161,25 @@
 
         <?=Core::make('helper/concrete/ui')->tabs(array(
             array('batch-content', t('Content'), true),
-            array('errors', t('Errors'))
+            array('errors', t('Errors')),
         ))?>
 
 
         <div class="ccm-tab-content" id="ccm-tab-content-batch-content">
 
-    <? foreach($batch->getObjectCollections() as $collection) {
-        if ($collection->hasRecords()) {
-            $formatter = $collection->getFormatter();
-            ?>
+    <?php foreach ($batch->getObjectCollections() as $collection) {
+    if ($collection->hasRecords()) {
+        $formatter = $collection->getFormatter();
+        ?>
 
             <h3><?=$formatter->getPluralDisplayName()?></h3>
-            <? print $formatter->displayObjectCollection()?>
-        <? } ?>
-    <? } ?>
+            <?php print $formatter->displayObjectCollection()?>
+        <?php 
+    }
+    ?>
+    <?php 
+}
+    ?>
 
         </div>
 
@@ -178,16 +189,21 @@
         </div>
 
 
-    <?
-    } else { ?>
+    <?php
+
+} else {
+    ?>
         <p><?=t('This content batch is empty.')?></p>
-    <? } ?>
+    <?php 
+}
+    ?>
 
 
 
 
 
-<? } ?>
+<?php 
+} ?>
 
 
 

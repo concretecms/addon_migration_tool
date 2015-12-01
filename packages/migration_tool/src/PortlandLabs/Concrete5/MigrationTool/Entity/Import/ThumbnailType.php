@@ -1,10 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThumbnailTypeValidator;
-
 
 /**
  * @Entity
@@ -12,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThumbnailTypeValida
  */
 class ThumbnailType implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -161,12 +158,8 @@ class ThumbnailType implements PublishableInterface
         $this->is_required = $is_required;
     }
 
-
     public function getPublisherValidator()
     {
         return new ThumbnailTypeValidator($this);
     }
-
-
-
 }

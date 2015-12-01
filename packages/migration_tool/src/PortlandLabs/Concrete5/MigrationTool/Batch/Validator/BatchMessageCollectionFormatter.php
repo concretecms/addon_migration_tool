@@ -1,15 +1,13 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class BatchMessageCollectionFormatter extends MessageCollectionFormatter
 {
-
     public function getAlertClass()
     {
-        switch($this->getSeverity()) {
+        switch ($this->getSeverity()) {
             case Message::E_DANGER:
                 return 'alert-danger';
                 break;
@@ -24,7 +22,7 @@ class BatchMessageCollectionFormatter extends MessageCollectionFormatter
 
     public function getCreateStatusMessage()
     {
-        switch($this->getSeverity()) {
+        switch ($this->getSeverity()) {
             case Message::E_DANGER:
                 return t('Significant errors detected. Some pages may be incomplete or the entire operation may have trouble completing. Consider mapping more content items.');
                 break;
@@ -36,5 +34,4 @@ class BatchMessageCollectionFormatter extends MessageCollectionFormatter
                 break;
         }
     }
-
 }

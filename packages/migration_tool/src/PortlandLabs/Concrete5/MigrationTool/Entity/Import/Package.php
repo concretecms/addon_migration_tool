@@ -1,10 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PackageValidator;
-
 
 /**
  * @Entity
@@ -12,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PackageValidator;
  */
 class Package implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -77,12 +74,8 @@ class Package implements PublishableInterface
         $this->handle = $handle;
     }
 
-
     public function getPublisherValidator()
     {
         return new PackageValidator($this);
     }
-
-
-
 }

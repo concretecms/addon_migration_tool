@@ -1,14 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\AddressFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\SocialLinksFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\StandardFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\SelectFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\AddressPublisher;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\SocialLinksPublisher;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
 
 /**
  * @Entity
@@ -16,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
  */
 class AddressAttributeValue extends AttributeValue
 {
-
     /**
      * @Column(type="string")
      */
@@ -164,8 +157,6 @@ class AddressAttributeValue extends AttributeValue
         $this->postal_code = $postal_code;
     }
 
-
-
     public function getFormatter()
     {
         return new AddressFormatter($this);
@@ -175,6 +166,4 @@ class AddressAttributeValue extends AttributeValue
     {
         return new AddressPublisher();
     }
-
-
 }

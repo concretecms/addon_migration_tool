@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Page\Type\Type;
@@ -15,7 +14,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class PageType implements MapperInterface
 {
-
     public function getMappedItemPluralName()
     {
         return t('Page Types');
@@ -29,7 +27,7 @@ class PageType implements MapperInterface
     public function getItems(Batch $batch)
     {
         $types = array();
-        foreach($batch->getPages() as $page) {
+        foreach ($batch->getPages() as $page) {
             if ($page->getType() && !in_array($page->getType(), $types)) {
                 $types[] = $page->getType();
             }
@@ -37,7 +35,7 @@ class PageType implements MapperInterface
 
         $pageTypes = $batch->getObjectCollection('page_type');
         if (is_object($pageTypes)) {
-            foreach($pageTypes->getTypes() as $pageType) {
+            foreach ($pageTypes->getTypes() as $pageType) {
                 if (!in_array($pageType->getHandle(), $types)) {
                     $types[] = $pageType->getHandle();
                 }
@@ -49,13 +47,14 @@ class PageType implements MapperInterface
                 }
             }
         }
-        
+
         $items = array();
-        foreach($types as $type) {
+        foreach ($types as $type) {
             $item = new Item();
             $item->setIdentifier($type);
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -66,18 +65,19 @@ class PageType implements MapperInterface
             $targetItem = new TargetItem($this);
             $targetItem->setItemId($type->getPageTypeHandle());
             $targetItem->setItemName($type->getPageTypeDisplayName());
+
             return $targetItem;
         } else {
             $collection = $batch->getObjectCollection('page_type');
-            foreach($collection->getTypes() as $type) {
+            foreach ($collection->getTypes() as $type) {
                 if ($type->getHandle() == $item->getIdentifier()) {
                     $targetItem = new TargetItem($this);
                     $targetItem->setItemId($type->getHandle());
                     $targetItem->setItemName($type->getHandle());
+
                     return $targetItem;
                 }
             }
-
         }
     }
 
@@ -85,7 +85,7 @@ class PageType implements MapperInterface
     {
         $collection = $batch->getObjectCollection('page_type');
         $items = array();
-        foreach($collection->getTypes() as $type) {
+        foreach ($collection->getTypes() as $type) {
             if (!$type->getPublisherValidator()->skipItem()) {
                 $item = new TargetItem($this);
                 $item->setItemId($type->getHandle());
@@ -93,23 +93,24 @@ class PageType implements MapperInterface
                 $items[] = $item;
             }
         }
+
         return $items;
     }
-
 
     public function getInstalledTargetItems(Batch $batch)
     {
         $types = Type::getList();
-        usort($types, function($a, $b) {
+        usort($types, function ($a, $b) {
             return strcasecmp($a->getPageTypeName(), $b->getPageTypeName());
         });
         $items = array();
-        foreach($types as $type) {
+        foreach ($types as $type) {
             $item = new TargetItem($this);
             $item->setItemId($type->getPageTypeHandle());
             $item->setItemName($type->getPageTypeDisplayName());
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -117,8 +118,4 @@ class PageType implements MapperInterface
     {
         return Type::getByHandle($targetItem->getItemID());
     }
-
-
-
-
 }

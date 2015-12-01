@@ -1,11 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Block;
 
-
 use Concrete\Core\Area\SubArea;
-use Concrete\Core\Backup\ContentImporter;
-use Concrete\Core\Legacy\BlockRecord;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue;
@@ -19,7 +15,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class AreaLayoutPublisher implements PublisherInterface
 {
-
     public function publish(Batch $batch, BlockType $bt, Page $page, Area $area, BlockValue $value)
     {
         $routine = new PublishPageContentRoutine();
@@ -32,7 +27,7 @@ class AreaLayoutPublisher implements PublisherInterface
         $columns = $layout->getColumns();
         $i = 0;
         $layoutBlock = $page->addBlock($bt, $area->getName(), array('arLayoutID' => $layoutObject->getAreaLayoutID()));
-        foreach($layoutObject->getAreaLayoutColumns() as $columnObject) {
+        foreach ($layoutObject->getAreaLayoutColumns() as $columnObject) {
             $column = $columns[$i];
             foreach ($column->getBlocks() as $block) {
                 $subValue = $block->getBlockValue();
@@ -40,7 +35,7 @@ class AreaLayoutPublisher implements PublisherInterface
                 $subarea = new Area();
                 $subAreaName = $area->getName() . SubArea::AREA_SUB_DELIMITER . $columnObject->getAreaLayoutColumnDisplayID();
                 $subarea->setName($subAreaName);
-                /**
+                /*
                  * @var $publisher BlockPublisherInterface
                  */
                 $subBlockType = $routine->getTargetItem('block_type', $block->getType());
@@ -57,9 +52,9 @@ class AreaLayoutPublisher implements PublisherInterface
                     }
                 }
             }
-            $i++;
+            ++$i;
         }
+
         return $layoutBlock;
     }
-
 }

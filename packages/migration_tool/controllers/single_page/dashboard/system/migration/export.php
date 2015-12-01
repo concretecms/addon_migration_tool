@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\Migration;
 
 use Concrete\Core\Application\EditResponse;
@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Export extends DashboardPageController
 {
-
     public function add_batch()
     {
         if (!$this->token->validate('add_batch')) {
@@ -37,7 +36,7 @@ class Export extends DashboardPageController
             $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch');
             $batch = $r->findOneById($this->request->request->get('id'));
             if (is_object($batch)) {
-                foreach($batch->getObjectCollections() as $collection) {
+                foreach ($batch->getObjectCollections() as $collection) {
                     $this->entityManager->remove($collection);
                 }
                 $batch->setObjectCollections(new ArrayCollection());
@@ -106,7 +105,6 @@ class Export extends DashboardPageController
         }
     }
 
-
     public function add_items_to_batch()
     {
         if (!$this->token->validate('add_items_to_batch')) {
@@ -128,7 +126,6 @@ class Export extends DashboardPageController
             $this->error->add(t('Invalid item type.'));
         }
 
-
         if (!$this->error->has()) {
             $values = $this->request->request->get('id');
             $exportItems = $selectedItemType->getItemsFromRequest($values[$selectedItemType->getHandle()]);
@@ -138,7 +135,7 @@ class Export extends DashboardPageController
                 $collection->setType($selectedItemType->getHandle());
                 $batch->getObjectCollections()->add($collection);
             }
-            foreach($exportItems as $item) {
+            foreach ($exportItems as $item) {
                 if (!$collection->contains($item)) {
                     $item->setCollection($collection);
                     $collection->getItems()->add($item);
@@ -148,6 +145,7 @@ class Export extends DashboardPageController
             $this->entityManager->persist($batch);
             $this->entityManager->flush();
             $response = new JsonResponse($exportItems);
+
             return $response;
         }
 
@@ -171,10 +169,10 @@ class Export extends DashboardPageController
 
         if (!$this->error->has()) {
             $values = $this->request->request->get('id');
-            foreach($values as $item_type => $ids) {
+            foreach ($values as $item_type => $ids) {
                 $collection = $batch->getObjectCollection($item_type);
                 if (is_object($collection)) {
-                    foreach($collection->getItems() as $item) {
+                    foreach ($collection->getItems() as $item) {
                         if (in_array($item->getItemIdentifier(), $ids)) {
                             $this->entityManager->remove($item);
                         }
@@ -187,7 +185,7 @@ class Export extends DashboardPageController
             // Now we make sure no empty object collections remain.
             $collections = $batch->getObjectCollections();
             $batch->setObjectCollections(new ArrayCollection());
-            foreach($collections as $collection) {
+            foreach ($collections as $collection) {
                 if (!$collection->hasRecords()) {
                     $this->entityManager->remove($collection);
                 } else {
@@ -226,7 +224,4 @@ class Export extends DashboardPageController
             $this->view();
         }
     }
-
-
-
 }

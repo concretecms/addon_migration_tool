@@ -1,17 +1,14 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\ContentEditorSnippetFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
  */
 class ContentEditorSnippetObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="ContentEditorSnippet", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -59,9 +56,4 @@ class ContentEditorSnippetObjectCollection extends ObjectCollection
     {
         return false;
     }
-
-
-
-
-
 }

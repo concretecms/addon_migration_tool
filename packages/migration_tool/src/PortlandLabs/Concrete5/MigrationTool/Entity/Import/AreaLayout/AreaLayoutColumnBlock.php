@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AbstractBlock;
@@ -31,7 +30,4 @@ class AreaLayoutColumnBlock extends AbstractBlock
     {
         $this->column = $column;
     }
-
-
-
 }

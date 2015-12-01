@@ -1,18 +1,13 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BooleanFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKeyCategory\FilePublisher;
-
 
 /**
  * @Entity
  */
 class FileAttributeKeyCategoryInstance extends AttributeKeyCategoryInstance
 {
-
     public function getHandle()
     {
         return 'file';
@@ -27,5 +22,4 @@ class FileAttributeKeyCategoryInstance extends AttributeKeyCategoryInstance
     {
         return new FilePublisher();
     }
-
 }

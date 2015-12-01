@@ -5,11 +5,15 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getJobs() as $job) {
-        $validator = $job->getPublisherValidator();
+    <?php foreach ($collection->getJobs() as $job) {
+    $validator = $job->getPublisherValidator();
     ?>
-    <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
         <td><?=$job->getHandle()?></td>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>

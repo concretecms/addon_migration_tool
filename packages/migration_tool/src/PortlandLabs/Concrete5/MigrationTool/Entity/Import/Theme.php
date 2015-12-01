@@ -1,14 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BlockTypeValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThemeValidator;
-
 
 /**
  * @Entity
@@ -16,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThemeValidator;
  */
 class Theme implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -42,7 +35,6 @@ class Theme implements PublishableInterface
      * @Column(type="string", nullable=true)
      */
     protected $package = null;
-
 
     /**
      * @return mixed
@@ -108,7 +100,6 @@ class Theme implements PublishableInterface
         $this->package = $package;
     }
 
-
     public function getPublisherValidator()
     {
         return new ThemeValidator($this);
@@ -129,9 +120,4 @@ class Theme implements PublishableInterface
     {
         $this->is_activated = $is_activated;
     }
-
-
-
-
-
 }

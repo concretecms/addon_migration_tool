@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task;
 
 use Concrete\Core\Foundation\Processor\ActionInterface;
@@ -11,7 +10,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class NormalizePagePathsTask implements TaskInterface
 {
-
     protected $paths = array();
 
     public function execute(ActionInterface $action)
@@ -30,10 +28,12 @@ class NormalizePagePathsTask implements TaskInterface
         $l = strlen($this->paths[0]);
         while ($pl < $l) {
             $c = $this->paths[0][$pl];
-            for ($i = 1; $i < $n; $i++) {
-                if ($this->paths[$i][$pl] !== $c) break 2;
+            for ($i = 1; $i < $n; ++$i) {
+                if ($this->paths[$i][$pl] !== $c) {
+                    break 2;
+                }
             }
-            $pl++;
+            ++$pl;
         }
         $common = substr($this->paths[0], 0, $pl);
         $pages = $target->getBatch()->getPages();
@@ -44,15 +44,15 @@ class NormalizePagePathsTask implements TaskInterface
             $common = '/' . trim($common, '/');
             $contentSearchURL = "/\{ccm:export:page:" . preg_quote($common, '/') . "(.*?)\}/i";
             $contentReplaceURL = "{ccm:export:page:$1}";
-            foreach($pages as $page) {
+            foreach ($pages as $page) {
                 $originalPath = $page->getOriginalPath();
                 $newPath = substr($originalPath, strlen($common));
                 $page->setBatchPath($newPath);
 
                 $areas = $page->getAreas();
-                foreach($areas as $area) {
+                foreach ($areas as $area) {
                     $blocks = $area->getBlocks();
-                    foreach($blocks as $block) {
+                    foreach ($blocks as $block) {
                         $value = $block->getBlockValue();
                         if ($value instanceof ImportedBlockValue) {
                             $content = preg_replace($contentSearchURL, $contentReplaceURL, $value->getValue());
@@ -66,10 +66,9 @@ class NormalizePagePathsTask implements TaskInterface
                 }
             }
         } else {
-            foreach($pages as $page) {
+            foreach ($pages as $page) {
                 $page->setBatchPath($page->getOriginalPath());
             }
         }
     }
-
 }

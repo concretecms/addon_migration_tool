@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Page\Template;
@@ -9,12 +8,10 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreatePageTemplatesRoutine implements RoutineInterface
 {
-
     public function execute(Batch $batch)
     {
-
         $templates = $batch->getObjectCollection('page_template');
-        foreach($templates->getTemplates() as $template) {
+        foreach ($templates->getTemplates() as $template) {
             if (!$template->getPublisherValidator()->skipItem()) {
                 $pkg = null;
                 if ($template->getPackage()) {
@@ -24,5 +21,4 @@ class CreatePageTemplatesRoutine implements RoutineInterface
             }
         }
     }
-
 }

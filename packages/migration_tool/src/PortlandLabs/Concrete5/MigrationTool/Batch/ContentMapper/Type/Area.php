@@ -1,8 +1,6 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
-use Concrete\Core\Page\Type\Type;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
@@ -14,7 +12,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Area implements MapperInterface
 {
-
     public function getMappedItemPluralName()
     {
         return t('Areas');
@@ -28,8 +25,8 @@ class Area implements MapperInterface
     public function getItems(Batch $batch)
     {
         $areas = array();
-        foreach($batch->getPages() as $page) {
-            foreach($page->getAreas() as $area) {
+        foreach ($batch->getPages() as $page) {
+            foreach ($page->getAreas() as $area) {
                 if ($area->getName() && !in_array($area->getName(), $areas)) {
                     $areas[] = $area->getName();
                 }
@@ -38,10 +35,10 @@ class Area implements MapperInterface
 
         $pageTypes = $batch->getObjectCollection('page_type');
         if (is_object($pageTypes)) {
-            foreach($pageTypes->getTypes() as $type) {
+            foreach ($pageTypes->getTypes() as $type) {
                 $defaults = $type->getDefaultPageCollection();
-                foreach($defaults->getPages() as $page) {
-                    foreach($page->getAreas() as $area) {
+                foreach ($defaults->getPages() as $page) {
+                    foreach ($page->getAreas() as $area) {
                         if ($area->getName() && !in_array($area->getName(), $areas)) {
                             $areas[] = $area->getName();
                         }
@@ -51,11 +48,12 @@ class Area implements MapperInterface
         }
 
         $items = array();
-        foreach($areas as $area) {
+        foreach ($areas as $area) {
             $item = new Item();
             $item->setIdentifier($area);
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -66,6 +64,7 @@ class Area implements MapperInterface
             $targetItem = new TargetItem($this);
             $targetItem->setItemId($item->getIdentifier());
             $targetItem->setItemName($item->getIdentifier());
+
             return $targetItem;
         }
     }
@@ -80,12 +79,13 @@ class Area implements MapperInterface
         $areas = \Concrete\Core\Area\Area::getHandleList();
         asort($areas);
         $items = array();
-        foreach($areas as $area) {
+        foreach ($areas as $area) {
             $item = new TargetItem($this);
             $item->setItemId($area);
             $item->setItemName($area);
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -93,8 +93,4 @@ class Area implements MapperInterface
     {
         return $targetItem->getItemID();
     }
-
-
-
-
 }

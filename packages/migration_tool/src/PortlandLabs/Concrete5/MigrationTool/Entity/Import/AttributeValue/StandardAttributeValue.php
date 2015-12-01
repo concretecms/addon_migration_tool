@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\StandardFormatter;
@@ -11,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
  */
 class StandardAttributeValue extends AttributeValue
 {
-
     /**
      * @Column(type="text")
      */
@@ -39,6 +37,4 @@ class StandardAttributeValue extends AttributeValue
     {
         return new StandardPublisher();
     }
-
-
 }

@@ -1,19 +1,16 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeSet\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeSet\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\AttributeSetFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
  */
 class AttributeSetObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="AttributeSet", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -61,9 +58,4 @@ class AttributeSetObjectCollection extends ObjectCollection
     {
         return new Validator($batch);
     }
-
-
-
-
-
 }

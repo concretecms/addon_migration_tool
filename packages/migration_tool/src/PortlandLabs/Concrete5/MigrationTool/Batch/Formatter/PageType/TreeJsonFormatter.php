@@ -1,25 +1,20 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageType;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AbstractTreeJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class TreeJsonFormatter extends AbstractTreeJsonFormatter
 {
-
     public function jsonSerialize()
     {
         $response = array();
-        foreach($this->collection->getTypes() as $type) {
+        foreach ($this->collection->getTypes() as $type) {
             $messages = $this->validator->validate($type);
             $formatter = $messages->getFormatter();
-            $node = new \stdClass;
+            $node = new \stdClass();
             $node->title = $type->getName();
             $node->handle = $type->getHandle();
             $node->nodetype = 'page_type';
@@ -35,16 +30,16 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
                 $node->children[] = $targetNode;
             }
 
-            $composerFormHolderNode = new \stdClass;
+            $composerFormHolderNode = new \stdClass();
             $composerFormHolderNode->title = t('Compose Form');
             $composerFormHolderNode->iconclass = 'fa fa-list-alt';
             $composerFormHolderNode->children = array();
 
-            foreach($type->getLayoutSets() as $set) {
-                $setNode = new \stdClass;
+            foreach ($type->getLayoutSets() as $set) {
+                $setNode = new \stdClass();
                 $setNode->title = $set->getName();
-                foreach($set->getControls() as $control) {
-                    $controlNode = new \stdClass;
+                foreach ($set->getControls() as $control) {
+                    $controlNode = new \stdClass();
                     $controlNode->title = $control->getLabel();
                     $setNode->children[] = $controlNode;
                 }
@@ -53,15 +48,15 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
 
             $node->children[] = $composerFormHolderNode;
 
-            $defaultsHolderNode = new \stdClass;
+            $defaultsHolderNode = new \stdClass();
             $defaultsHolderNode->iconclass = 'fa fa-font';
             $defaultsHolderNode->title = t('Page Defaults');
             $defaultsHolderNode->children = array();
 
             $defaultPages = $type->getDefaultPageCollection();
-            foreach($defaultPages->getPages() as $page) {
+            foreach ($defaultPages->getPages() as $page) {
                 $pageFormatter = $messages->getFormatter();
-                $pageNode = new \stdClass;
+                $pageNode = new \stdClass();
                 $pageNode->title = t('Template: %s', $page->getTemplate());
                 $pageNode->lazy = true;
                 $pageNode->nodetype = 'page';
@@ -72,6 +67,7 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $node->children[] = $defaultsHolderNode;
             $response[] = $node;
         }
+
         return $response;
     }
 }

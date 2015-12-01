@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 
 /**
@@ -10,13 +9,11 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
  */
 abstract class BlockValue
 {
-
     /**
      * @Id @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
      */
     protected $id;
-
 
     /**
      * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AbstractBlock", mappedBy="block_value")
@@ -47,9 +44,7 @@ abstract class BlockValue
         $this->block = $block;
     }
 
-
     abstract public function getFormatter();
     abstract public function getPublisher();
     abstract public function getInspector();
-
 }

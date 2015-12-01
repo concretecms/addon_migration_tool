@@ -1,20 +1,14 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\AttributeTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\BlockTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTemplateFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\SocialLinkFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
  */
 class SocialLinkObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="SocialLink", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -62,9 +56,4 @@ class SocialLinkObjectCollection extends ObjectCollection
     {
         return false;
     }
-
-
-
-
-
 }

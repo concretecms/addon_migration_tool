@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\StandardBlockDataRecord;
@@ -20,21 +19,21 @@ class StandardImporter implements ImporterInterface
         $value = $this->createBlockValueObject();
         $position = 0;
         foreach ($node->data as $data) {
-            foreach($data->record as $record) {
+            foreach ($data->record as $record) {
                 $r = new StandardBlockDataRecord();
                 $r->setTable((string) $data['table']);
                 $recordData = array();
-                foreach($record->children() as $field) {
+                foreach ($record->children() as $field) {
                     $recordData[$field->getName()] = (string) $field;
                 }
                 $r->setData($recordData);
                 $r->setValue($value);
                 $r->setPosition($position);
                 $value->getRecords()->add($r);
-                $position++;
+                ++$position;
             }
         }
+
         return $value;
     }
-
 }

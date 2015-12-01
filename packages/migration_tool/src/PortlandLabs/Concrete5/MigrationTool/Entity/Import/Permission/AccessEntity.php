@@ -1,13 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\AccessEntityFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\AccessEntityValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Permission\AccessEntityPublisher;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEntityTypeValidator;
 
 /**
  * @Entity
@@ -17,7 +14,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEnt
  */
 class AccessEntity
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -66,8 +62,6 @@ class AccessEntity
         $this->key = $key;
     }
 
-
-
     /**
      * @return mixed
      */
@@ -84,7 +78,6 @@ class AccessEntity
         $this->id = $id;
     }
 
-
     public function getFormatter()
     {
         return new AccessEntityFormatter($this);
@@ -99,6 +92,4 @@ class AccessEntity
     {
         return new AccessEntityPublisher();
     }
-
-
 }

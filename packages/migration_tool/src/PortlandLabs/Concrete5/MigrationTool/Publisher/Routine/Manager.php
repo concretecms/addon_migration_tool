@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Support\Manager as CoreManager;
@@ -8,7 +7,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Manager extends CoreManager
 {
-
     public function createCreatePageTemplatesDriver()
     {
         return new CreatePageTemplatesRoutine();
@@ -73,7 +71,6 @@ class Manager extends CoreManager
     {
         return new CreatePageTypePublishTargetTypesRoutine();
     }
-
 
     public function createCreatePageTypeComposerControlTypesDriver()
     {

@@ -1,19 +1,11 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout;
-
-use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\StandardFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\StandardInspector;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\StandardPublisher;
 
 /**
  * @Entity
  */
 class ThemeGridAreaLayoutColumn extends AreaLayoutColumn
 {
-
     /**
      * @Column(type="integer")
      */
@@ -55,8 +47,4 @@ class ThemeGridAreaLayoutColumn extends AreaLayoutColumn
     {
         $this->offset = $offset;
     }
-
-
-
-
 }

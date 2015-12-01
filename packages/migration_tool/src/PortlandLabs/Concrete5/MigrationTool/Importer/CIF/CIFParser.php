@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF;
 
 use Concrete\Core\Error\Error;
@@ -10,7 +9,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CIFParser implements FileParserInterface
 {
-
     public function getDriver()
     {
         return 'concrete5';
@@ -33,7 +31,7 @@ class CIFParser implements FileParserInterface
         $manager = \Core::make('migration/manager/importer/cif');
         $simplexml = simplexml_load_file($file);
         $collections = array();
-        foreach($manager->getDrivers() as $driver) {
+        foreach ($manager->getDrivers() as $driver) {
             $collection = $driver->getObjectCollection($simplexml);
             if ($collection) {
                 if (!($collection instanceof ObjectCollection)) {
@@ -43,7 +41,7 @@ class CIFParser implements FileParserInterface
                 }
             }
         }
+
         return $collections;
     }
-
 }

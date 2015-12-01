@@ -6,12 +6,16 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getSets() as $set) {
+    <?php foreach ($collection->getSets() as $set) {
     $validator = $set->getPublisherValidator();
     ?>
-    <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
         <td><?=$set->getName()?></td>
         <td><?=implode(', ', $set->getJobs())?></td>
-        <? } ?>
+        <?php 
+} ?>
     </tbody>
 </table>

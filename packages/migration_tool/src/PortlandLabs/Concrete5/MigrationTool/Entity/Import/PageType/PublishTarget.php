@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -12,7 +11,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 abstract class PublishTarget
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -42,5 +40,4 @@ abstract class PublishTarget
 
     abstract public function getFormatter();
     abstract public function getRecordValidator(Batch $batch);
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
@@ -11,7 +10,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class TargetItemList
 {
-
     protected $mapper;
 
     public function __construct(Batch $batch, MapperInterface $mapper)
@@ -35,7 +33,7 @@ class TargetItemList
     {
         return array(
             new UnmappedTargetItem($this->mapper),
-            new IgnoredTargetItem($this->mapper)
+            new IgnoredTargetItem($this->mapper),
         );
     }
 
@@ -46,6 +44,7 @@ class TargetItemList
             $targetItem = new UnmappedTargetItem($this->mapper);
         }
         $targetItem->setSourceItemIdentifier($item->getIdentifier());
+
         return $targetItem;
     }
 
@@ -63,6 +62,7 @@ class TargetItemList
         if (!is_object($targetItem[0])) {
             return new UnmappedTargetItem($this->mapper);
         }
+
         return $targetItem[0];
     }
 
@@ -73,11 +73,12 @@ class TargetItemList
             $this->getMapperInstalledTargetItems(),
             $this->getInternalTargetItems());
         $item = false;
-        foreach($items as $item) {
+        foreach ($items as $item) {
             if ($item->getItemID() == $identifier) {
                 break;
             }
         }
+
         return $item;
     }
 }

@@ -1,13 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyValidator;
-
 
 /**
  * @Entity
@@ -17,7 +14,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyValidat
  */
 abstract class AttributeKey implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -63,7 +59,6 @@ abstract class AttributeKey implements PublishableInterface
      * @Column(type="string", nullable=true)
      */
     protected $package = null;
-
 
     /**
      * @return mixed
@@ -216,12 +211,10 @@ abstract class AttributeKey implements PublishableInterface
         $this->is_indexed = $is_indexed;
     }
 
-
     public function getFormatter()
     {
         return new BlankFormatter($this);
     }
-
 
     public function getRecordValidator(Batch $batch)
     {
@@ -235,5 +228,4 @@ abstract class AttributeKey implements PublishableInterface
     {
         return false;
     }
-
 }

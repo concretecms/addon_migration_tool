@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,7 +13,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 class AttributeKeyObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="AttributeKey", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -62,6 +60,4 @@ class AttributeKeyObjectCollection extends ObjectCollection
     {
         return new AttributeKeyValidator($batch);
     }
-
-
 }

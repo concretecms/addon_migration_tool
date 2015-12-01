@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer;
 
 use Concrete\Core\Support\Manager as CoreManager;
@@ -10,7 +9,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Manager extends CoreManager
 {
-
     protected function createAttributeDriver()
     {
         return new Attribute();

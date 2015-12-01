@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,7 +13,6 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTy
  */
 class PageTypeObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="PageType", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -62,7 +60,4 @@ class PageTypeObjectCollection extends ObjectCollection
     {
         return new Validator($batch);
     }
-
-
-
 }

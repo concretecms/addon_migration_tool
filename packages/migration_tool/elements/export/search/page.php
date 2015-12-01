@@ -1,11 +1,11 @@
-<?
+<?php
 defined('C5_EXECUTE') or die(_("Access Denied."));
 $form = Core::make('helper/form');
 $pagetypes = array();
 $datetime = Loader::helper('form/date_time')->translate('datetime', $_GET);
 $list = \Concrete\Core\Page\Type\Type::getList();
 $pagetypes = array('' => t('** Choose a page type'));
-foreach($list as $type) {
+foreach ($list as $type) {
     $pagetypes[$type->getPageTypeID()] = $type->getPageTypeDisplayName();
 }
 ?>

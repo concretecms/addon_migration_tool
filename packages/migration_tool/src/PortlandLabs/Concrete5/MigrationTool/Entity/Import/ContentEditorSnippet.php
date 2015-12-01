@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
@@ -11,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ContentEditorSnippe
  */
 class ContentEditorSnippet implements PublishableInterface
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -42,7 +40,6 @@ class ContentEditorSnippet implements PublishableInterface
      * @Column(type="string", nullable=true)
      */
     protected $package = null;
-
 
     public function getPublisherValidator()
     {
@@ -144,7 +141,4 @@ class ContentEditorSnippet implements PublishableInterface
     {
         $this->package = $package;
     }
-
-
-
 }

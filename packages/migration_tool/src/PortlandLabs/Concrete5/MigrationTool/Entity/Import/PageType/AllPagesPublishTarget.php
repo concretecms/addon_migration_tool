@@ -1,13 +1,8 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageType\AllPagesPublishTargetFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\GroupAccessEntityFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType\AllPagesPublishTargetValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\GroupAccessEntityValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEntityTypeValidator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
@@ -15,7 +10,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
  */
 class AllPagesPublishTarget extends PublishTarget
 {
-
     /**
      * @Column(type="string")
      */
@@ -46,6 +40,4 @@ class AllPagesPublishTarget extends PublishTarget
     {
         return new AllPagesPublishTargetValidator($batch);
     }
-
-
 }

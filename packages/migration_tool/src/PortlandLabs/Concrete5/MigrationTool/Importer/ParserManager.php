@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer;
 
 use Concrete\Core\Support\Manager as CoreManager;
@@ -10,7 +9,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class ParserManager extends CoreManager
 {
-
     public function createConcrete5Driver()
     {
         return new CIFParser();
@@ -26,5 +24,4 @@ class ParserManager extends CoreManager
         $this->driver('concrete5');
         $this->driver('wordpress');
     }
-
 }

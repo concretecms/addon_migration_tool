@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use Concrete\Core\Conversation\Rating\Type;
@@ -11,7 +10,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class ConversationRatingType extends AbstractType
 {
-
     public function getHeaders()
     {
         return array(t('Name'));
@@ -20,7 +18,7 @@ class ConversationRatingType extends AbstractType
     public function exportCollection(ObjectCollection $collection, \SimpleXMLElement $element)
     {
         $node = $element->addChild('conversationratingtypes');
-        foreach($collection->getItems() as $type) {
+        foreach ($collection->getItems() as $type) {
             $t = Type::getByID($type->getItemIdentifier());
             if (is_object($t)) {
                 $t->export($node);
@@ -35,13 +33,14 @@ class ConversationRatingType extends AbstractType
         if (is_object($t)) {
             $return[] = $t->getConversationRatingTypeName();
         }
+
         return $return;
     }
 
     public function getItemsFromRequest($array)
     {
         $items = array();
-        foreach($array as $id) {
+        foreach ($array as $id) {
             $t = Type::getByID($id);
             if (is_object($t)) {
                 $type = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\ConversationRatingType();
@@ -49,6 +48,7 @@ class ConversationRatingType extends AbstractType
                 $items[] = $type;
             }
         }
+
         return $items;
     }
 
@@ -56,11 +56,12 @@ class ConversationRatingType extends AbstractType
     {
         $list = Type::getList();
         $items = array();
-        foreach($list as $t) {
+        foreach ($list as $t) {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\ConversationRatingType();
             $item->setItemId($t->getConversationRatingTypeID());
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -73,5 +74,4 @@ class ConversationRatingType extends AbstractType
     {
         return t('Conversation Rating Type');
     }
-
 }

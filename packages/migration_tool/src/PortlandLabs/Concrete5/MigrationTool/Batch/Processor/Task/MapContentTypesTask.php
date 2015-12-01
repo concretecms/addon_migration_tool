@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task;
 
 use Concrete\Core\Foundation\Processor\ActionInterface;
@@ -11,7 +10,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class MapContentTypesTask implements TaskInterface
 {
-
     public function execute(ActionInterface $action)
     {
         return;
@@ -24,9 +22,9 @@ class MapContentTypesTask implements TaskInterface
 
         $targetItems = array();
         $mappers = \Core::make('migration/manager/mapping');
-        foreach($mappers->getDrivers() as $mapper) {
+        foreach ($mappers->getDrivers() as $mapper) {
             $targetItemList = new TargetItemList($batch, $mapper);
-            foreach($mapper->getItems($batch) as $item) {
+            foreach ($mapper->getItems($batch) as $item) {
                 $targetItem = $targetItemList->getMatchedTargetItem($item);
                 if (is_object($targetItem)) {
                     $targetItems[] = $targetItem;
@@ -34,12 +32,11 @@ class MapContentTypesTask implements TaskInterface
             }
         }
 
-        foreach($targetItems as $targetItem) {
+        foreach ($targetItems as $targetItem) {
             $batchTargetItem = new BatchTargetItem();
             $batchTargetItem->setBatch($batch);
             $batchTargetItem->setTargetItem($targetItem);
             $batch->target_items->add($batchTargetItem);
         }
     }
-
 }

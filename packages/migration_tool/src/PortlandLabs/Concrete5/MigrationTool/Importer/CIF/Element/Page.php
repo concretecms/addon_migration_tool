@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
@@ -7,15 +6,13 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\StyleSet;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementInterface;
+
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class Page implements ElementParserInterface
 {
-
     protected $attributeImporter;
     protected $blockImporter;
     protected $simplexml;
@@ -35,7 +32,7 @@ class Page implements ElementParserInterface
 
     public function getPageNodes()
     {
-       return $this->simplexml->pages->page;
+        return $this->simplexml->pages->page;
     }
 
     public function getObjectCollection(\SimpleXMLElement $element)
@@ -44,14 +41,15 @@ class Page implements ElementParserInterface
         $i = 0;
         $collection = new PageObjectCollection();
         if ($this->hasPageNodes()) {
-            foreach($this->getPageNodes() as $node) {
+            foreach ($this->getPageNodes() as $node) {
                 $page = $this->parsePage($node);
                 $page->setPosition($i);
-                $i++;
+                ++$i;
                 $collection->getPages()->add($page);
                 $page->setCollection($collection);
             }
         }
+
         return $collection;
     }
 
@@ -59,7 +57,7 @@ class Page implements ElementParserInterface
     {
         $parts = explode('/', $path);
         $full = '';
-        foreach($parts as $part) {
+        foreach ($parts as $part) {
             $txt = \Core::make('helper/text');
             $part = $txt->slugSafeString($part);
             $part = str_replace('-', \Config::get('concrete.seo.page_path_separator'), $part);
@@ -86,19 +84,19 @@ class Page implements ElementParserInterface
         // Parse attributes
         if ($node->attributes->attributekey) {
             $i = 0;
-            foreach($node->attributes->attributekey as $keyNode) {
+            foreach ($node->attributes->attributekey as $keyNode) {
                 $attribute = $this->parseAttribute($keyNode);
                 $pageAttribute = new PageAttribute();
                 $pageAttribute->setAttribute($attribute);
                 $pageAttribute->setPage($page);
                 $page->attributes->add($pageAttribute);
-                $i++;
+                ++$i;
             }
         }
 
         // Parse areas
         if ($node->area) {
-            foreach($node->area as $areaNode) {
+            foreach ($node->area as $areaNode) {
                 $area = $this->parseArea($areaNode);
                 $area->setPage($page);
                 $page->areas->add($area);
@@ -114,6 +112,7 @@ class Page implements ElementParserInterface
         $attribute->setHandle((string) $node['handle']);
         $value = $this->attributeImporter->driver()->parse($node);
         $attribute->setAttributeValue($value);
+
         return $attribute;
     }
 
@@ -134,6 +133,7 @@ class Page implements ElementParserInterface
         }
         $value = $this->blockImporter->driver($type)->parse($node);
         $block->setBlockValue($value);
+
         return $block;
     }
 
@@ -151,17 +151,17 @@ class Page implements ElementParserInterface
         $nodes = false;
         if ($node->blocks->block) {
             $nodes = $node->blocks->block;
-        } else if ($node->block) {
+        } elseif ($node->block) {
             // 5.6
             $nodes = $node->block;
         }
 
         if ($nodes) {
             $i = 0;
-            foreach($nodes as $blockNode) {
+            foreach ($nodes as $blockNode) {
                 if ($blockNode['type']) {
                     $block = $this->parseBlock($blockNode);
-                } else if ($blockNode['mc-block-id'] != '') {
+                } elseif ($blockNode['mc-block-id'] != '') {
                     $block = new Block();
                     $block->setDefaultsOutputIdentifier((string) $blockNode['mc-block-id']);
                 }
@@ -169,7 +169,7 @@ class Page implements ElementParserInterface
                     $block->setPosition($i);
                     $block->setArea($area);
                     $area->blocks->add($block);
-                    $i++;
+                    ++$i;
                 }
             }
         }

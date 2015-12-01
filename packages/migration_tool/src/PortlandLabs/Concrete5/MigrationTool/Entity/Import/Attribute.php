@@ -1,13 +1,12 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+
 /**
  * @Entity
  * @Table(name="MigrationImportAttributes")
  */
 class Attribute
 {
-
     /**
      * @Id @Column(type="guid")
      * @GeneratedValue(strategy="UUID")
@@ -23,7 +22,6 @@ class Attribute
      * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue", inversedBy="attribute", cascade={"persist", "remove"})
      **/
     protected $attribute_value;
-
 
     /**
      * @return mixed
@@ -64,8 +62,4 @@ class Attribute
     {
         $this->attribute_value = $attribute_value;
     }
-
-
-
-
 }

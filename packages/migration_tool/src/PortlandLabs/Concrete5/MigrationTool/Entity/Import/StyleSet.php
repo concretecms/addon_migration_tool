@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\StyleSet\StyleSetPublisher;
@@ -10,7 +9,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\StyleSet\StyleSetPublisher;
  */
 class StyleSet
 {
-
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -667,7 +665,4 @@ class StyleSet
     {
         return new StyleSetPublisher($this);
     }
-
-
-
 }

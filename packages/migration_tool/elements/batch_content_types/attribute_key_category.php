@@ -6,13 +6,17 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach($collection->getCategories() as $category) {
-        $validator = $category->getPublisherValidator();
-        ?>
-        <tr <? if ($validator->skipItem()) { ?>class="migration-item-skipped"<? } ?>>
+    <?php foreach ($collection->getCategories() as $category) {
+    $validator = $category->getPublisherValidator();
+    ?>
+        <tr <?php if ($validator->skipItem()) {
+    ?>class="migration-item-skipped"<?php 
+}
+    ?>>
             <td><?=$category->getHandle()?></td>
             <td><?=$category->getAllowSets()?></td>
         </tr>
-    <? } ?>
+    <?php 
+} ?>
     </tbody>
 </table>

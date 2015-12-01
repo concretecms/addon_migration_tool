@@ -1,10 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
 
-use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Foundation\Processor\ActionInterface;
-use Concrete\Core\Foundation\Processor\TargetInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
 use Concrete\Core\Page\Type\Type;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
@@ -17,7 +14,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class ValidateUsersTask implements TaskInterface
 {
-
     public function execute(ActionInterface $action)
     {
         // Grab the target item for the page's page type.
@@ -38,7 +34,5 @@ class ValidateUsersTask implements TaskInterface
 
     public function finish(ActionInterface $action)
     {
-
     }
-
 }

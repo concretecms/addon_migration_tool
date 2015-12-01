@@ -1,16 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator;
-
-use Concrete\Core\Foundation\Processor\Processor;
-use Concrete\Core\Foundation\Processor\TaskInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class Message implements \JsonSerializable
 {
-
     const E_INFO = 1;
     const E_WARNING = 5;
     const E_DANGER = 10;
@@ -70,7 +64,7 @@ class Message implements \JsonSerializable
     public function jsonSerialize()
     {
         $formatter = new MessageJsonFormatter($this);
+
         return $formatter->jsonSerialize();
     }
-
 }

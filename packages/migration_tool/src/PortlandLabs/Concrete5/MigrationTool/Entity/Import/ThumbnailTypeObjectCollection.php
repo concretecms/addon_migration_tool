@@ -1,17 +1,14 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\ThumbnailTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 /**
  * @Entity
  */
 class ThumbnailTypeObjectCollection extends ObjectCollection
 {
-
     /**
      * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\ThumbnailType", mappedBy="collection", cascade={"persist", "remove"})
      **/
@@ -59,9 +56,4 @@ class ThumbnailTypeObjectCollection extends ObjectCollection
     {
         return false;
     }
-
-
-
-
-
 }

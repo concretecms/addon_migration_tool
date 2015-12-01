@@ -1,4 +1,4 @@
-<? defined('C5_EXECUTE') or die("Access Denied."); ?>
+<?php defined('C5_EXECUTE') or die("Access Denied."); ?>
 <div class="ccm-dashboard-header-buttons">
 <div class="btn-group" role="group">
     <a href="<?=$view->action('add_to_batch', $batch->getId())?>" class="btn btn-default"><?=t("Add Content to Batch")?></a>
@@ -25,41 +25,55 @@
 </div>
 
 
-<? if ($batch) { ?>
+<?php if ($batch) {
+    ?>
 
     <h2><?=t('Batch')?>
         <small><?=$batch->getDate()->format('F d, Y g:i a')?></small></h2>
 
-    <? if ($batch->getNotes()) { ?>
+    <?php if ($batch->getNotes()) {
+    ?>
         <p><?=$batch->getNotes()?></p>
-    <? } ?>
+    <?php 
+}
+    ?>
 
-    <? if ($batch->hasRecords()) { ?>
+    <?php if ($batch->hasRecords()) {
+    ?>
 
         <form method="post" action="<?=$view->action('remove_batch_items')?>" data-form="remove-batch-items">
             <?=$token->output('remove_batch_items')?>
             <?=$form->hidden('batch_id', $batch->getId())?>
 
 
-            <? foreach($batch->getObjectCollections() as $collection) {
-                if ($collection->hasRecords()) {
-                    $itemType = $collection->getItemTypeObject();
-                    $formatter = $itemType->getResultsFormatter($batch);
-                    ?>
+            <?php foreach ($batch->getObjectCollections() as $collection) {
+    if ($collection->hasRecords()) {
+        $itemType = $collection->getItemTypeObject();
+        $formatter = $itemType->getResultsFormatter($batch);
+        ?>
 
                     <h3><?=$itemType->getPluralDisplayName()?></h3>
-                    <? print $formatter->displayBatchResults()?>
-                <? } ?>
-            <? } ?>
+                    <?php print $formatter->displayBatchResults()?>
+                <?php 
+    }
+    ?>
+            <?php 
+}
+    ?>
 
         </form>
 
-    <?
-    } else { ?>
-        <p><?=t('This export batch is empty.')?></p>
-    <? } ?>
+    <?php
 
-<? } ?>
+} else {
+    ?>
+        <p><?=t('This export batch is empty.')?></p>
+    <?php 
+}
+    ?>
+
+<?php 
+} ?>
 
 
 

@@ -54,6 +54,26 @@ class Manager extends CoreManager
         return new AttributeKeyCategory();
     }
 
+    public function createPageTypePublishTargetTypeDriver()
+    {
+        return new PageTypePublishTargetType();
+    }
+
+    public function createConversationEditorDriver()
+    {
+        return new ConversationEditor();
+    }
+
+    public function createConversationRatingTypeDriver()
+    {
+        return new ConversationRatingType();
+    }
+
+    public function createPageTypeComposerControlTypeDriver()
+    {
+        return new PageTypeComposerControlType();
+    }
+
     public function __construct()
     {
         /*
@@ -67,11 +87,11 @@ class Manager extends CoreManager
         */
 
         $this->driver('attribute_key_category');
-        /*
         $this->driver('conversation_editor');
         $this->driver('conversation_rating_type');
         $this->driver('page_type_publish_target_type');
         $this->driver('page_type_composer_control_type');
+        /*
         $this->driver('attribute_type');
         $this->driver('block_type_set');
         $this->driver('attribute_set');

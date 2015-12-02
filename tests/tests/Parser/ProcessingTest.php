@@ -28,6 +28,36 @@ class ProcessingTest extends MigrationToolTestCase
 
         return $batch;
     }
+
+    public function testLinkNormalizationYear()
+    {
+        $data = array(
+            array('Foo', '/2014/foo'),
+            array('Bar', '/2015/bar'),
+        );
+        $batch = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch();
+        $collection = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection();
+
+        foreach ($data as $r) {
+            $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
+            $page->setName($r[0]);
+            $page->setOriginalPath($r[1]);
+            $collection->getPages()->add($page);
+            $batch->getObjectCollections()->add($collection);
+        }
+
+        $this->assertEquals(2, $batch->getObjectCollections()->get(0)->getPages()->count());
+
+        $target = new \PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target($batch);
+        $processor = new \Concrete\Core\Foundation\Processor\Processor($target);
+        $processor->registerTask(new \PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask());
+        $processor->process();
+
+        $pages = $batch->getPages();
+        $this->assertEquals('/2014/foo', $pages[0]->getBatchPath());
+        $this->assertEquals('/2015/bar', $pages[1]->getBatchPath());
+    }
+
     public function testLinkNormalization()
     {
         $batch = $this->getSampleBatch();

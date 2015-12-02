@@ -10,31 +10,36 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Tree implements ElementParserInterface
 {
+
+    protected function walk(\SimpleXMLElement $node,
+    \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Tree $tree,
+    TreeNode $parent = null)
+
+    {
+        foreach ($node->children() as $child) {
+            $n = new TreeNode();
+            $n->setType((string) $child->getName());
+            $n->setTitle((string) $child['name']);
+            $n->setTree($tree);
+            $n->setParent($parent);
+            if ($child->count() > 0) {
+                $this->walk($child, $tree, $n);
+            }
+            $tree->getNodes()->add($n);
+        }
+
+    }
+
     public function getObjectCollection(\SimpleXMLElement $element)
     {
-        function walk(\SimpleXMLElement $node,
-            \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Tree $tree,
-            TreeNode $parent = null)
-        {
-            foreach ($node->children() as $child) {
-                $n = new TreeNode();
-                $n->setType((string) $child->getName());
-                $n->setTitle((string) $child['name']);
-                $n->setTree($tree);
-                $n->setParent($parent);
-                if ($child->count() > 0) {
-                    walk($child, $tree, $n);
-                }
-                $tree->getNodes()->add($n);
-            }
-        }
+
         $collection = new TreeObjectCollection();
         if ($element->trees->tree) {
             foreach ($element->trees->tree as $node) {
                 $tree = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Tree();
                 $tree->setType((string) $node['type']);
                 $tree->setName((string) $node['name']);
-                walk($node, $tree);
+                $this->walk($node, $tree);
                 $collection->getTrees()->add($tree);
                 $tree->setCollection($collection);
             }

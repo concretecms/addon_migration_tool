@@ -90,15 +90,17 @@ class Controller extends Package
     public function on_start()
     {
         \Core::bind('migration/batch/page/validator', function ($app, $batch) {
-            $v = new Validator($batch[0]);
-            $v->registerTask(new ValidateAttributesTask());
-            $v->registerTask(new ValidatePageTemplatesTask());
-            $v->registerTask(new ValidatePageTypesTask());
-            $v->registerTask(new ValidateUsersTask());
-            $v->registerTask(new ValidateBlocksTask());
-            $v->registerTask(new ValidateAreasTask());
+            if (isset($batch[0])) {
+                $v = new Validator($batch[0]);
+                $v->registerTask(new ValidateAttributesTask());
+                $v->registerTask(new ValidatePageTemplatesTask());
+                $v->registerTask(new ValidatePageTypesTask());
+                $v->registerTask(new ValidateUsersTask());
+                $v->registerTask(new ValidateBlocksTask());
+                $v->registerTask(new ValidateAreasTask());
 
-            return $v;
+                return $v;
+            }
         });
 
         \Core::bindShared('migration/batch/validator', function () {
@@ -109,11 +111,13 @@ class Controller extends Package
         });
 
         \Core::bind('migration/batch/block/validator', function ($app, $batch) {
-            $v = new CollectionValidator($batch[0]);
-            $v->registerTask(new ValidateBlockTypesTask());
-            $v->registerTask(new ValidateReferencedContentItemsTask());
+            if (isset($batch[0])) {
+                $v = new CollectionValidator($batch[0]);
+                $v->registerTask(new ValidateBlockTypesTask());
+                $v->registerTask(new ValidateReferencedContentItemsTask());
 
-            return $v;
+                return $v;
+            }
         });
 
         \Core::bindShared('migration/manager/mapping', function ($app) {
@@ -156,10 +160,12 @@ class Controller extends Package
         });
 
         \Core::bind('migration/import/value_inspector', function ($app, $args) {
-            $inspector = $app->make('import/value_inspector');
-            $inspector->registerInspectionRoutine(new BatchPageRoutine($args[0]));
+            if (isset($args[0])) {
+                $inspector = $app->make('import/value_inspector');
+                $inspector->registerInspectionRoutine(new BatchPageRoutine($args[0]));
 
-            return $inspector;
+                return $inspector;
+            }
         });
 
         \Core::bindShared('migration/manager/exporters', function ($app) {

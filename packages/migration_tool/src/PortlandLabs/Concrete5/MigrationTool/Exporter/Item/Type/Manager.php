@@ -72,6 +72,11 @@ class Manager extends CoreManager
         return new PageTypeComposerControlType();
     }
 
+    public function createAttributeTypeDriver()
+    {
+        return new AttributeType();
+    }
+
     public function __construct()
     {
         /*
@@ -89,10 +94,10 @@ class Manager extends CoreManager
         $this->driver('conversation_rating_type');
         $this->driver('page_type_publish_target_type');
         $this->driver('page_type_composer_control_type');
-        /*
         $this->driver('attribute_type');
-        $this->driver('block_type_set');
-        $this->driver('attribute_set');
+        //$this->driver('block_type_set');
+        //$this->driver('attribute_set');
+        /*
         $this->driver('package');
         $this->driver('permission_access_entity_type');
         $this->driver('permission_key');

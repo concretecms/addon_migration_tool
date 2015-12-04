@@ -51,11 +51,17 @@ class Controller extends Package
     protected $singlePagesToExclude = array(
     );
 
-    protected $singlePageTitles = array(
-        '/dashboard/system/migration' => 'Migration Tool',
-        '/dashboard/system/migration/import' => 'Import Content',
-        '/dashboard/system/migration/export' => 'Export Content',
-    );
+    protected function getSinglePageTitle($path)
+    {
+        switch ($path) {
+            case '/dashboard/system/migration':
+                return t('Migration Tool');
+            case '/dashboard/system/migration/import':
+                return t('Import Content');
+            case '/dashboard/system/migration/export':
+                return t('Export Content');
+        }
+    }
 
     protected function installSinglePages($pkg)
     {
@@ -72,8 +78,9 @@ class Controller extends Package
                 }
             }
 
-            if (isset($this->singlePageTitles[$path])) {
-                $pp->update(array('cName' => $this->singlePageTitles[$path]));
+            $title = $this->getSinglePageTitle($path);
+            if (isset($title)) {
+                $pp->update(array('cName' => $title));
             }
         }
 

@@ -1,4 +1,7 @@
-<?php defined('C5_EXECUTE') or die("Access Denied."); ?>
+<?php defined('C5_EXECUTE') or die("Access Denied.");
+$dh = Core::make('helper/date');
+/** @var \Concrete\Core\Localization\Service\Date $dh */
+?>
 <div class="ccm-dashboard-header-buttons">
 <div class="btn-group" role="group">
     <a href="<?=$view->action('add_to_batch', $batch->getId())?>" class="btn btn-default"><?=t("Add Content to Batch")?></a>
@@ -29,7 +32,7 @@
     ?>
 
     <h2><?=t('Batch')?>
-        <small><?=$batch->getDate()->format('F d, Y g:i a')?></small></h2>
+        <small><?=$dh->formatDateTime($batch->getDate(), true)?></small></h2>
 
     <?php if ($batch->getNotes()) {
     ?>

@@ -7,17 +7,26 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2015-12-02T10:45:37+01:00\n"
-"PO-Revision-Date: 2015-12-02T10:45:38+01:00\n"
+"POT-Creation-Date: 2015-12-04T12:21:17+01:00\n"
+"PO-Revision-Date: 2015-12-04T12:21:18+01:00\n"
 "Language: en_US\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: packages/migration_tool/controller.php:198
-#: packages/migration_tool/controller.php:203
+#: packages/migration_tool/controller.php:58
+#: packages/migration_tool/controller.php:211
+#: packages/migration_tool/controller.php:216
 msgid "Migration Tool"
 msgstr ""
 
-#: packages/migration_tool/controller.php:209
+#: packages/migration_tool/controller.php:60
+msgid "Import Content"
+msgstr ""
+
+#: packages/migration_tool/controller.php:62
+msgid "Export Content"
+msgstr ""
+
+#: packages/migration_tool/controller.php:222
 msgid "This add-on requires PHP 5.4 or greater."
 msgstr ""
 
@@ -37,7 +46,7 @@ msgstr ""
 
 #: packages/migration_tool/controllers/single_page/dashboard/system/migration/export.php:69
 #: packages/migration_tool/controllers/single_page/dashboard/system/migration/export.php:82
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:6
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:9
 msgid "Export Batch"
 msgstr ""
 
@@ -85,7 +94,7 @@ msgid "You have not created any import batches. Create a batch and add content r
 msgstr ""
 
 #: packages/migration_tool/controllers/single_page/dashboard/system/migration/import.php:216
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:43
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:46
 msgid "Import Batch"
 msgstr ""
 
@@ -110,7 +119,7 @@ msgid "Batch mappings updated."
 msgstr ""
 
 #: packages/migration_tool/controllers/single_page/dashboard/system/migration/import.php:418
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:12
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:15
 msgid "Map Content"
 msgstr ""
 
@@ -173,7 +182,7 @@ msgstr ""
 #: packages/migration_tool/elements/batch_content_types/attribute_key.php:10
 #: packages/migration_tool/elements/batch_content_types/page.php:9
 #: packages/migration_tool/elements/batch_content_types/stack.php:8
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:38
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:41
 msgid "Type"
 msgstr ""
 
@@ -332,10 +341,10 @@ msgid "Filter by Page Type"
 msgstr ""
 
 #: packages/migration_tool/single_pages/dashboard/system/migration/add_to_export_batch.php:4
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:3
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:6
 #: packages/migration_tool/single_pages/dashboard/system/migration/finalize_export_batch.php:3
-#: packages/migration_tool/single_pages/dashboard/system/migration/find_and_replace.php:3
-#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:3
+#: packages/migration_tool/single_pages/dashboard/system/migration/find_and_replace.php:7
+#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:6
 msgid "Back to Batch"
 msgstr ""
 
@@ -367,60 +376,60 @@ msgstr ""
 msgid "Items added successfully."
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:4
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:7
 msgid "Delete Files"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:7
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:108
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:10
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:111
 msgid "Upload Files"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:17
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:20
 msgid "Are you sure you remove all the files from this batch? They will be deleted from the entire concrete5 site. This cannot be undone."
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:19
-#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:84
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:42
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:54
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:66
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:95
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:55
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:19
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:22
+#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:87
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:45
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:57
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:69
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:98
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:58
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:22
 msgid "Cancel"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:20
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:26
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:67
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:23
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:29
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:70
 msgid "Clear Batch"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:27
-#: packages/migration_tool/single_pages/dashboard/system/migration/find_and_replace.php:7
-#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:7
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:105
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:13
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:31
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:30
+#: packages/migration_tool/single_pages/dashboard/system/migration/find_and_replace.php:11
+#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:10
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:108
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:16
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:34
 msgid "Batch"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:39
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:42
 #: packages/migration_tool/single_pages/dashboard/system/migration/finalize_export_batch.php:42
 msgid "Filename"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:58
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:61
 msgid "No files have been added to this batch."
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:94
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:115
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:97
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:118
 msgid "Error"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:98
+#: packages/migration_tool/single_pages/dashboard/system/migration/batch_files.php:101
 msgid "Uploading"
 msgstr ""
 
@@ -430,7 +439,7 @@ msgstr ""
 
 #: packages/migration_tool/single_pages/dashboard/system/migration/finalize_export_batch.php:35
 #: packages/migration_tool/single_pages/dashboard/system/migration/finalize_export_batch.php:62
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:5
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:8
 msgid "Files"
 msgstr ""
 
@@ -454,143 +463,143 @@ msgstr ""
 msgid "Download XML"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:23
+#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:26
 msgid "Batch Item"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:24
+#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:27
 msgid "Maps To"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:46
+#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:49
 #, php-format
 msgid "Installed %s"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:61
+#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:64
 #, php-format
 msgid "Batch %s"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:85
+#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:88
 msgid "Save"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:93
+#: packages/migration_tool/single_pages/dashboard/system/migration/map_content.php:96
 msgid "No items of the selected type found in the batch."
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:4
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:96
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:7
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:99
 msgid "Add Content"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:4
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:4
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:7
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:7
 msgid "Add Content to Batch"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:8
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:11
 msgid "Edit Batch"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:22
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:25
 msgid "Import Batch to Site"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:28
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:55
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:7
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:20
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:31
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:58
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:10
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:23
 msgid "Delete Batch"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:40
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:43
 msgid "Create site content from the contents of this batch?"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:52
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:55
 msgid "Are you sure you want to delete this import batch? This cannot be undone."
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:64
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:67
 msgid "Are you sure you remove all content from this import batch? This cannot be undone."
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:77
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:80
 msgid "Content File"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:81
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:84
 msgid "File Format"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:85
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:88
 msgid "Records"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:87
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:90
 msgid "Replace all batch content."
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:90
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:93
 msgid "Add content to batch."
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:119
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:122
 msgid "Status"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:122
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:125
 msgid "Computing Batch Status"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:152
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:155
 msgid "None"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:163
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:166
 msgid "Content"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:164
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:167
 #: packages/migration_tool/src/PortlandLabs/Concrete5/MigrationTool/Batch/Formatter/Page/TreePageJsonFormatter.php:30
 #: packages/migration_tool/src/PortlandLabs/Concrete5/MigrationTool/Batch/Formatter/AbstractTreeJsonFormatter.php:27
 msgid "Errors"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:188
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:191
 msgid "Loading Errors..."
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:196
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batch.php:199
 msgid "This content batch is empty."
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:4
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:56
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:68
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:7
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:59
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:71
 msgid "Add Batch"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:14
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:50
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:17
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:53
 msgid "Notes"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:43
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_batches.php:46
 msgid "Date"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:5
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:8
 msgid "Remove Selected"
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:17
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:20
 msgid "Are you sure you want to delete this export batch? This cannot be undone."
 msgstr ""
 
-#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:70
+#: packages/migration_tool/single_pages/dashboard/system/migration/view_export_batch.php:73
 msgid "This export batch is empty."
 msgstr ""
 

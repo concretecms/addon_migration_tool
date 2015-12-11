@@ -80,6 +80,6 @@ class WordpressParserTest extends MigrationToolTestCase
 
     // TODO create tests for things that might be missed inside pages, like empty titles. Maybe these cases
     // just need to be reported and not error to the user, so they can be presented on the report page.
-
-    // TODO test the pageType collection output
+    // TODO test or expect some methods to be called inside? like block creation for content or other blocks?
+    // TODO test also the import and creation of pages from the batch? This way we'll go full circle
 }

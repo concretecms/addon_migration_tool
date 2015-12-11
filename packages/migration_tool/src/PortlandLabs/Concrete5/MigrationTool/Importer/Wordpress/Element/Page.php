@@ -1,9 +1,9 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Element;
 
-//use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
 //use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
-//use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
 //use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
 
@@ -82,12 +82,17 @@ class Page implements ElementParserInterface
         $page->setOriginalPath(parse_url($node->link, PHP_URL_PATH));
         $page->setDescription((string) html_entity_decode($node->description));
 
-        // TODO do properly
+        // TODO add other kinds of pages like blog_entry, etc...
         $page->setType('page');
         $page->setTemplate('blank');
 
-        // TODO import users before pages and link them here
+        // TODO import users
         $page->setUser('tas');
+
+        // TODO add page to parent page with wp:post_parent?
+        // TODO save page as published or not published based on the WXR field wp:status?
+        // TODO wp:menu_order?
+        // TODO what todo with wp:postmeta?
 
 //        // Parse areas
 //        if ($node->area) {
@@ -97,11 +102,24 @@ class Page implements ElementParserInterface
 //                $page->areas->add($area);
 //            }
 //        }
+        $area = new Area();
+        $area->setName('Main');
 
-        // TODO add page to parent page with wp:post_parent?
-        // TODO save page as published or not published based on the WXR field wp:status?
-        // TODO wp:menu_order?
-        // TODO what todo with wp:postmeta?
+        $area->setPage($page);
+        $page->areas->add($area);
+
+
+        // Blocks
+        $block = new Block();
+        $block->setType('content');
+        $block->setName('Content');
+
+        $content = $node->children( 'http://purl.org/rss/1.0/modules/content/' );
+        $block->setBlockValue((string) $content->encoded);
+
+        $block->setPosition($i);
+        $block->setArea($area);
+        $area->blocks->add($block);
 
         return $page;
     }

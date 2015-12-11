@@ -12,25 +12,28 @@ class CreatePageFeedsRoutine implements RoutineInterface
     {
         $inspector = \Core::make('import/value_inspector');
         $feeds = $batch->getObjectCollection('page_feed');
-        foreach ($feeds->getFeeds() as $feed) {
-            if (!$feed->getPublisherValidator()->skipItem()) {
-                $f = new Feed();
-                $parentID = intval($inspector->inspect($feed->getParent())->getReplacedValue());
-                $pageType = intval($inspector->inspect($feed->getPageType())->getReplacedValue());
-                $f->setTitle($feed->getTitle());
-                $f->setHandle($feed->getHandle());
-                $f->setDescription($feed->getDescription());
-                $f->setParentID($parentID);
-                $f->setPageTypeID($pageType);
-                $f->setIncludeAllDescendents($feed->getIncludeAllDescendants());
-                $f->setDisplayFeaturedOnly($feed->getDisplayFeaturedOnly());
-                $f->setDisplayAliases($feed->getDisplayAliases());
-                if ($feed->getContentType() == 'description') {
-                    $f->displayShortDescriptionContent();
-                } else {
-                    $f->displayAreaContent($feed->getContentTypeArea());
+
+        if ($feeds) {
+            foreach ($feeds->getFeeds() as $feed) {
+                if (!$feed->getPublisherValidator()->skipItem()) {
+                    $f = new Feed();
+                    $parentID = intval($inspector->inspect($feed->getParent())->getReplacedValue());
+                    $pageType = intval($inspector->inspect($feed->getPageType())->getReplacedValue());
+                    $f->setTitle($feed->getTitle());
+                    $f->setHandle($feed->getHandle());
+                    $f->setDescription($feed->getDescription());
+                    $f->setParentID($parentID);
+                    $f->setPageTypeID($pageType);
+                    $f->setIncludeAllDescendents($feed->getIncludeAllDescendants());
+                    $f->setDisplayFeaturedOnly($feed->getDisplayFeaturedOnly());
+                    $f->setDisplayAliases($feed->getDisplayAliases());
+                    if ($feed->getContentType() == 'description') {
+                        $f->displayShortDescriptionContent();
+                    } else {
+                        $f->displayAreaContent($feed->getContentTypeArea());
+                    }
+                    $f->save();
                 }
-                $f->save();
             }
         }
     }

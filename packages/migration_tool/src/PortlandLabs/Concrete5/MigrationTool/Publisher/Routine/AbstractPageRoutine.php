@@ -43,6 +43,10 @@ abstract class AbstractPageRoutine implements RoutineInterface
     {
         $collection = $this->getPageCollection($batch);
 
+        if (!$collection) {
+            return;
+        }
+
         $pages = array();
         foreach ($collection->getPages() as $page) {
             $pages[] = $page;

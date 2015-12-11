@@ -65,6 +65,9 @@ class CreatePageStructureRoutine extends AbstractPageRoutine
 
             $data['name'] = $page->getName();
             $data['cDescription'] = $page->getDescription();
+
+            // TODO fix this hack
+            $parent = \Page::getByID(1);
             $parent->add($type, $data);
         }
     }

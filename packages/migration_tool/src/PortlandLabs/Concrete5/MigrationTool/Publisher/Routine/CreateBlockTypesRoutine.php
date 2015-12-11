@@ -11,16 +11,19 @@ class CreateBlockTypesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $types = $batch->getObjectCollection('block_type');
-        foreach ($types->getTypes() as $type) {
-            if (!$type->getPublisherValidator()->skipItem()) {
-                $pkg = null;
-                if ($type->getPackage()) {
-                    $pkg = \Package::getByHandle($type->getPackage());
-                }
-                if (is_object($pkg)) {
-                    BlockType::installBlockTypeFromPackage($type->getHandle(), $pkg);
-                } else {
-                    BlockType::installBlockType($type->getHandle());
+
+        if ($types) {
+            foreach ($types->getTypes() as $type) {
+                if (!$type->getPublisherValidator()->skipItem()) {
+                    $pkg = null;
+                    if ($type->getPackage()) {
+                        $pkg = \Package::getByHandle($type->getPackage());
+                    }
+                    if (is_object($pkg)) {
+                        BlockType::installBlockTypeFromPackage($type->getHandle(), $pkg);
+                    } else {
+                        BlockType::installBlockType($type->getHandle());
+                    }
                 }
             }
         }

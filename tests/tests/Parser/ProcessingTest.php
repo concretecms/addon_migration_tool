@@ -54,8 +54,10 @@ class ProcessingTest extends MigrationToolTestCase
         $processor->process();
 
         $pages = $batch->getPages();
-        $this->assertEquals('/2014/foo', $pages[0]->getBatchPath());
-        $this->assertEquals('/2015/bar', $pages[1]->getBatchPath());
+
+        // The normalization saves a batch_patch without the common bit, in this case without the string '/20' of the original path
+        $this->assertEquals('4/foo', $pages[0]->getBatchPath());
+        $this->assertEquals('5/bar', $pages[1]->getBatchPath());
     }
 
     public function testLinkNormalization()

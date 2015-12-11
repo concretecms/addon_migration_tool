@@ -10,13 +10,16 @@ class CreatePageTypeComposerControlTypesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $types = $batch->getObjectCollection('page_type_publish_target_type');
-        foreach ($types->getTypes() as $type) {
-            if (!$type->getPublisherValidator()->skipItem()) {
-                $pkg = false;
-                if ($type->getPackage()) {
-                    $pkg = \Package::getByHandle($type->getPackage());
+
+        if ($types) {
+            foreach ($types->getTypes() as $type) {
+                if (!$type->getPublisherValidator()->skipItem()) {
+                    $pkg = false;
+                    if ($type->getPackage()) {
+                        $pkg = \Package::getByHandle($type->getPackage());
+                    }
+                    \Concrete\Core\Page\Type\Composer\Control\Type\Type::add($type->getHandle(), $type->getName(), $pkg);
                 }
-                \Concrete\Core\Page\Type\Composer\Control\Type\Type::add($type->getHandle(), $type->getName(), $pkg);
             }
         }
     }

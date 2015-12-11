@@ -11,13 +11,16 @@ class CreateAttributeCategoriesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $categories = $batch->getObjectCollection('attribute_key_category');
-        foreach ($categories->getCategories() as $category) {
-            if (!$category->getPublisherValidator()->skipItem()) {
-                $pkg = null;
-                if ($category->getPackage()) {
-                    $pkg = \Package::getByHandle($category->getPackage());
+
+        if ($categories) {
+            foreach ($categories->getCategories() as $category) {
+                if (!$category->getPublisherValidator()->skipItem()) {
+                    $pkg = null;
+                    if ($category->getPackage()) {
+                        $pkg = \Package::getByHandle($category->getPackage());
+                    }
+                    Category::add($category->getHandle(), $category->getAllowSets(), $pkg);
                 }
-                Category::add($category->getHandle(), $category->getAllowSets(), $pkg);
             }
         }
     }

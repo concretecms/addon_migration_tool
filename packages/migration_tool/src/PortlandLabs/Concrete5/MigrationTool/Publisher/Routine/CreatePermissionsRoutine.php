@@ -11,16 +11,19 @@ class CreatePermissionsRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $keys = $batch->getObjectCollection('permission_key');
-        foreach ($keys->getKeys() as $key) {
-            if (!$key->getPublisherValidator()->skipItem()) {
-                $pkg = null;
-                if ($key->getPackage()) {
-                    $pkg = \Package::getByHandle($key->getPackage());
-                }
-                $p = Key::add($key->getCategory(), $key->getHandle(), $key->getName(), $key->getDescription(), $key->getCanTriggerWorkflow(), $key->getHasCustomClass(),  $pkg);
-                foreach ($key->getAccessEntities() as $entity) {
-                    $publisher = $entity->getPublisher();
-                    $publisher->publish($p, $entity);
+
+        if ($keys) {
+            foreach ($keys->getKeys() as $key) {
+                if (!$key->getPublisherValidator()->skipItem()) {
+                    $pkg = null;
+                    if ($key->getPackage()) {
+                        $pkg = \Package::getByHandle($key->getPackage());
+                    }
+                    $p = Key::add($key->getCategory(), $key->getHandle(), $key->getName(), $key->getDescription(), $key->getCanTriggerWorkflow(), $key->getHasCustomClass(),  $pkg);
+                    foreach ($key->getAccessEntities() as $entity) {
+                        $publisher = $entity->getPublisher();
+                        $publisher->publish($p, $entity);
+                    }
                 }
             }
         }

@@ -11,9 +11,12 @@ class CreateBannedWordsRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $words = $batch->getObjectCollection('banned_word');
-        foreach ($words->getWords() as $word) {
-            if (!$word->getPublisherValidator()->skipItem()) {
-                BannedWord::add(str_rot13($word->getWord()));
+
+        if ($words) {
+            foreach ($words->getWords() as $word) {
+                if (!$word->getPublisherValidator()->skipItem()) {
+                    BannedWord::add(str_rot13($word->getWord()));
+                }
             }
         }
     }

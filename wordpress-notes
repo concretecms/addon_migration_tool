@@ -1,0 +1,8 @@
+3 types of post_type: page, post, attachment. In this case, attachments are images to a post that has a gallery
+
+Attachments (images) can be accessed via its own page. Should we respect that?
+
+Gallery items also can speify which posts (images) to include. There is also an example of a gallery that
+shows the images in randomised order.
+
+TODO js error on batch editing doesn't seem to allow importing, clearing or deleting the batch

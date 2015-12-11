@@ -11,41 +11,51 @@ class CreateConversationDataRoutine extends AbstractPageRoutine
     public function execute(Batch $batch)
     {
         $editors = $batch->getObjectCollection('conversation_editor');
-        foreach ($editors->getEditors() as $editor) {
-            if (!$editor->getPublisherValidator()->skipItem()) {
-                $pkg = null;
-                if ($editor->getPackage()) {
-                    $pkg = \Package::getByHandle($editor->getPackage());
-                }
-                $ce = Editor::add($editor->getHandle(),
-                    $editor->getName(), $pkg);
-                if ($editor->getIsActive()) {
-                    $ce->activate();
+
+        if ($editors) {
+            foreach ($editors->getEditors() as $editor) {
+                if (!$editor->getPublisherValidator()->skipItem()) {
+                    $pkg = null;
+                    if ($editor->getPackage()) {
+                        $pkg = \Package::getByHandle($editor->getPackage());
+                    }
+                    $ce = Editor::add($editor->getHandle(),
+                        $editor->getName(), $pkg);
+                    if ($editor->getIsActive()) {
+                        $ce->activate();
+                    }
                 }
             }
         }
+
         $types = $batch->getObjectCollection('conversation_flag_type');
-        foreach ($types->getTypes() as $type) {
-            if (!$type->getPublisherValidator()->skipItem()) {
-                $pkg = null;
-                if ($type->getPackage()) {
-                    $pkg = \Package::getByHandle($type->getPackage());
+
+        if ($types) {
+            foreach ($types->getTypes() as $type) {
+                if (!$type->getPublisherValidator()->skipItem()) {
+                    $pkg = null;
+                    if ($type->getPackage()) {
+                        $pkg = \Package::getByHandle($type->getPackage());
+                    }
+                    $ce = \Concrete\Core\Conversation\FlagType\FlagType::add($type->getHandle());
                 }
-                $ce = \Concrete\Core\Conversation\FlagType\FlagType::add($type->getHandle());
             }
         }
 
         $types = $batch->getObjectCollection('conversation_rating_type');
-        foreach ($types->getTypes() as $type) {
-            if (!$type->getPublisherValidator()->skipItem()) {
-                $pkg = null;
-                if ($type->getPackage()) {
-                    $pkg = \Package::getByHandle($type->getPackage());
+
+        if ($types) {
+            foreach ($types->getTypes() as $type) {
+                if (!$type->getPublisherValidator()->skipItem()) {
+                    $pkg = null;
+                    if ($type->getPackage()) {
+                        $pkg = \Package::getByHandle($type->getPackage());
+                    }
+                    \Concrete\Core\Conversation\Rating\Type::add(
+                        $type->getHandle(), $type->getName(), $type->getPoints(),
+                        $pkg
+                    );
                 }
-                \Concrete\Core\Conversation\Rating\Type::add(
-                    $type->getHandle(), $type->getName(), $type->getPoints(),
-                    $pkg
-                );
             }
         }
     }

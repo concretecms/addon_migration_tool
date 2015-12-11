@@ -10,16 +10,19 @@ class CreateConfigValuesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $values = $batch->getObjectCollection('config_value');
-        foreach ($values->getValues() as $value) {
-            if (!$value->getPublisherValidator()->skipItem()) {
-                $pkg = null;
-                if ($value->getPackage()) {
-                    $pkg = \Package::getByHandle($value->getPackage());
-                }
-                if (is_object($pkg)) {
-                    \Config::save($pkg->getPackageHandle() . '::' . $value->getConfigKey(), $value->getConfigValue());
-                } else {
-                    \Config::save($value->getConfigKey(), $value->getConfigValue());
+
+        if ($values) {
+            foreach ($values->getValues() as $value) {
+                if (!$value->getPublisherValidator()->skipItem()) {
+                    $pkg = null;
+                    if ($value->getPackage()) {
+                        $pkg = \Package::getByHandle($value->getPackage());
+                    }
+                    if (is_object($pkg)) {
+                        \Config::save($pkg->getPackageHandle() . '::' . $value->getConfigKey(), $value->getConfigValue());
+                    } else {
+                        \Config::save($value->getConfigKey(), $value->getConfigValue());
+                    }
                 }
             }
         }

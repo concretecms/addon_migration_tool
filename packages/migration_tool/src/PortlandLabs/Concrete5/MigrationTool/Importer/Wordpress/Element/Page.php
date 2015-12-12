@@ -23,7 +23,7 @@ class Page implements ElementParserInterface
     public function __construct()
     {
 //        $this->attributeImporter = \Core::make('migration/manager/import/attribute/value');
-//        $this->blockImporter = \Core::make('migration/manager/import/block');
+        $this->blockImporter = \Core::make('migration/manager/import/wordpress_block');
 //        $this->styleSetImporter = new StyleSet();
     }
 
@@ -108,18 +108,11 @@ class Page implements ElementParserInterface
         $area->setPage($page);
         $page->areas->add($area);
 
-
-        // Blocks
         $block = new Block();
-        $block->setType('content');
+        $block->setType('Content');
         $block->setName('Content');
-
-        $content = $node->children( 'http://purl.org/rss/1.0/modules/content/' );
-        $block->setBlockValue((string) $content->encoded);
-
-        $block->setPosition($i);
-        $block->setArea($area);
-        $area->blocks->add($block);
+        $value = $this->blockImporter->driver('standard')->parse($node);
+        $block->setBlockValue($value);
 
         return $page;
     }

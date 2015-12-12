@@ -6,3 +6,4 @@ Gallery items also can speify which posts (images) to include. There is also an 
 shows the images in randomised order.
 
 TODO js error on batch editing doesn't seem to allow importing, clearing or deleting the batch
+TODO maybe I do not need to rename the CIFImporter and the CIFBlockImporter....that's why we have namespaces...

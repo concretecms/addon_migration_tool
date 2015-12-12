@@ -69,7 +69,7 @@ class AreaLayoutImporter implements ImporterInterface
 
     public function parse(\SimpleXMLElement $node)
     {
-        $blockImporter = \Core::make('migration/manager/import/block');
+        $blockImporter = \Core::make('migration/manager/import/cif_block');
         $styleSetImporter = new StyleSet();
 
         $value = new AreaLayoutBlockValue();

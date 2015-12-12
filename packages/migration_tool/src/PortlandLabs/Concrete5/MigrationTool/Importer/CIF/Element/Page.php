@@ -21,7 +21,7 @@ class Page implements ElementParserInterface
     public function __construct()
     {
         $this->attributeImporter = \Core::make('migration/manager/import/attribute/value');
-        $this->blockImporter = \Core::make('migration/manager/import/block');
+        $this->blockImporter = \Core::make('migration/manager/import/cif_block');
         $this->styleSetImporter = new StyleSet();
     }
 

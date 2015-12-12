@@ -24,9 +24,10 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Category\Manager
 use PortlandLabs\Concrete5\MigrationTool\Importer\ParserManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Permission\AccessEntity\Manager as AccessEntityManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\PageType\PublishTarget\Manager as PublishTargetManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block\Manager as BlockManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block\Manager as CIFBlockManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Manager as CIFImportManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Manager as WordpressImportManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Block\Manager as WordpressBlockManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspector\InspectionRoutine\BatchPageRoutine;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager as BlockPublisherManager;
@@ -151,8 +152,11 @@ class Controller extends Package
             return new PublishTargetManager($app);
         });
 
-        \Core::bindShared('migration/manager/import/block', function ($app) {
-            return new BlockManager($app);
+        \Core::bindShared('migration/manager/import/cif_block', function ($app) {
+            return new CIFBlockManager($app);
+        });
+        \Core::bindShared('migration/manager/import/wordpress_block', function ($app) {
+            return new WordpressBlockManager($app);
         });
         \Core::bindShared('migration/manager/importer/parser', function ($app) {
             return new ParserManager($app);

@@ -15,7 +15,7 @@ class Stack implements ElementParserInterface
 
     public function __construct()
     {
-        $this->blockImporter = \Core::make('migration/manager/import/block');
+        $this->blockImporter = \Core::make('migration/manager/import/cif_block');
     }
 
     public function getObjectCollection(\SimpleXMLElement $element)

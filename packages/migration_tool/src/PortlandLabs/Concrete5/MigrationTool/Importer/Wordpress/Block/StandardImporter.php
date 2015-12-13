@@ -16,25 +16,16 @@ class StandardImporter implements ImporterInterface
 
     public function parse(\SimpleXMLElement $node)
     {
-        // TODO finish this bad boy...
         $content = $node->children( 'http://purl.org/rss/1.0/modules/content/' );
         $value = $this->createBlockValueObject();
-        $position = 0;
-        foreach ($node->data as $data) {
-            foreach ($data->record as $record) {
-                $r = new StandardBlockDataRecord();
-                $r->setTable((string) $data['table']);
-                $recordData = array();
-                foreach ($record->children() as $field) {
-                    $recordData[$field->getName()] = (string) $field;
-                }
-                $r->setData($recordData);
-                $r->setValue($value);
-                $r->setPosition($position);
-                $value->getRecords()->add($r);
-                ++$position;
-            }
-        }
+
+        $r = new StandardBlockDataRecord();
+        $r->setTable('btContentLocal');
+        $recordData = array('content' => (string) $content->encoded);
+        $r->setData($recordData);
+        $r->setValue($value);
+        $r->setPosition(1);
+        $value->getRecords()->add($r);
 
         return $value;
     }

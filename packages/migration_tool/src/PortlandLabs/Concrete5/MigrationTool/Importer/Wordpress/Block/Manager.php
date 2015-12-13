@@ -23,23 +23,8 @@ class Manager extends CoreManager
         return 'unmapped';
     }
 
-//    public function createUnmappedDriver()
-//    {
-//        return new Importer();
-//    }
-
     public function createStandardDriver()
     {
         return new StandardImporter();
     }
-
-//    public function createCoreAreaLayoutDriver()
-//    {
-//        return new AreaLayoutImporter();
-//    }
-//
-//    public function createSocialLinksDriver()
-//    {
-//        return new SocialLinksImporter();
-//    }
 }

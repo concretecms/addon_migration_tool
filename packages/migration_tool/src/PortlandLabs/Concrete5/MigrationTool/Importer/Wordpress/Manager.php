@@ -23,6 +23,5 @@ class Manager extends CoreManager
     public function __construct()
     {
         $this->driver('page');
-//        $this->driver('page_type');
     }
 }

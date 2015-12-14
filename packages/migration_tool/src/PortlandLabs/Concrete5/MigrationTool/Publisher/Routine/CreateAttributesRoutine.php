@@ -11,6 +11,9 @@ class CreateAttributesRoutine implements RoutineInterface
     public function execute(Batch $batch)
     {
         $keys = $batch->getObjectCollection('attribute_key');
+        /**
+         * @var AttributeKey
+         */
 
         if (!$keys) {
             return;

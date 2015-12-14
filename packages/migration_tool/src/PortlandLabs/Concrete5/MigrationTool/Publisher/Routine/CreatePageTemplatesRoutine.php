@@ -12,15 +12,17 @@ class CreatePageTemplatesRoutine implements RoutineInterface
     {
         $templates = $batch->getObjectCollection('page_template');
 
-        if ($templates) {
-            foreach ($templates->getTemplates() as $template) {
-                if (!$template->getPublisherValidator()->skipItem()) {
-                    $pkg = null;
-                    if ($template->getPackage()) {
-                        $pkg = \Package::getByHandle($template->getPackage());
-                    }
-                    Template::add($template->getHandle(), $template->getName(), $template->getIcon(), $pkg, $template->getIsInternal());
+        if (!$templates) {
+            return;
+        }
+
+        foreach ($templates->getTemplates() as $template) {
+            if (!$template->getPublisherValidator()->skipItem()) {
+                $pkg = null;
+                if ($template->getPackage()) {
+                    $pkg = \Package::getByHandle($template->getPackage());
                 }
+                Template::add($template->getHandle(), $template->getName(), $template->getIcon(), $pkg, $template->getIsInternal());
             }
         }
     }

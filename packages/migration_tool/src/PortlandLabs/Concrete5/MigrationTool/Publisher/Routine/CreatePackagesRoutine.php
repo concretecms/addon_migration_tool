@@ -11,13 +11,15 @@ class CreatePackagesRoutine implements RoutineInterface
     {
         $packages = $batch->getObjectCollection('package');
 
-        if ($packages) {
-            foreach ($packages->getPackages() as $package) {
-                if (!$package->getPublisherValidator()->skipItem()) {
-                    $pkg = \Package::getClass($package->getHandle());
-                    if (!$pkg->isPackageInstalled()) {
-                        $pkg->install();
-                    }
+        if (!$packages) {
+            return;
+        }
+
+        foreach ($packages->getPackages() as $package) {
+            if (!$package->getPublisherValidator()->skipItem()) {
+                $pkg = \Package::getClass($package->getHandle());
+                if (!$pkg->isPackageInstalled()) {
+                    $pkg->install();
                 }
             }
         }

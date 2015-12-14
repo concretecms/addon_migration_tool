@@ -12,17 +12,19 @@ class CreateCaptchaLibrariesRoutine implements RoutineInterface
     {
         $libraries = $batch->getObjectCollection('captcha_library');
 
-        if ($libraries) {
-            foreach ($libraries->getLibraries() as $library) {
-                if (!$library->getPublisherValidator()->skipItem()) {
-                    $pkg = null;
-                    if ($library->getPackage()) {
-                        $pkg = \Package::getByHandle($library->getPackage());
-                    }
-                    $l = Library::add($library->getHandle(), $library->getName(), $pkg);
-                    if ($library->getIsActivated()) {
-                        $l->activate();
-                    }
+        if (!$libraries) {
+            return;
+        }
+
+        foreach ($libraries->getLibraries() as $library) {
+            if (!$library->getPublisherValidator()->skipItem()) {
+                $pkg = null;
+                if ($library->getPackage()) {
+                    $pkg = \Package::getByHandle($library->getPackage());
+                }
+                $l = Library::add($library->getHandle(), $library->getName(), $pkg);
+                if ($library->getIsActivated()) {
+                    $l->activate();
                 }
             }
         }

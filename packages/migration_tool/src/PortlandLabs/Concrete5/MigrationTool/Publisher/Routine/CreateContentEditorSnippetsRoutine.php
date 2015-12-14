@@ -12,17 +12,19 @@ class CreateContentEditorSnippetsRoutine implements RoutineInterface
     {
         $snippets = $batch->getObjectCollection('content_editor_snippet');
 
-        if ($snippets) {
-            foreach ($snippets->getSnippets() as $snippet) {
-                if (!$snippet->getPublisherValidator()->skipItem()) {
-                    $pkg = null;
-                    if ($snippet->getPackage()) {
-                        $pkg = \Package::getByHandle($snippet->getPackage());
-                    }
-                    $t = Snippet::add($snippet->getHandle(), $snippet->getNAme(), $pkg);
-                    if ($snippet->getIsActivated()) {
-                        $t->activate();
-                    }
+        if (!$snippets) {
+            return;
+        }
+
+        foreach ($snippets->getSnippets() as $snippet) {
+            if (!$snippet->getPublisherValidator()->skipItem()) {
+                $pkg = null;
+                if ($snippet->getPackage()) {
+                    $pkg = \Package::getByHandle($snippet->getPackage());
+                }
+                $t = Snippet::add($snippet->getHandle(), $snippet->getNAme(), $pkg);
+                if ($snippet->getIsActivated()) {
+                    $t->activate();
                 }
             }
         }

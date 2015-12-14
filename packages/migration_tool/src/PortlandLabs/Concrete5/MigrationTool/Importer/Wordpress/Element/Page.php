@@ -59,6 +59,8 @@ class Page implements ElementParserInterface
         $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
         $page->setName((string)html_entity_decode($node->title));
         $page->setPublicDate((string) $node->xpath('wp:post_date_gmt')[0]);
+
+        // TODO remove last slash?
         $page->setOriginalPath(parse_url($node->link, PHP_URL_PATH));
         $page->setDescription((string) html_entity_decode($node->description));
 
@@ -67,7 +69,7 @@ class Page implements ElementParserInterface
         $page->setTemplate('blank');
 
         // TODO import users
-        $page->setUser('tas');
+        $page->setUser('admin');
 
         // TODO add page to parent page with wp:post_parent?
         // TODO save page as published or not published based on the WXR field wp:status?

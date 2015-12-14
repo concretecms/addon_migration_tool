@@ -44,7 +44,7 @@ abstract class AbstractPageRoutine implements RoutineInterface
         $collection = $this->getPageCollection($batch);
 
         if (!$collection) {
-            return;
+            return array();
         }
 
         $pages = array();

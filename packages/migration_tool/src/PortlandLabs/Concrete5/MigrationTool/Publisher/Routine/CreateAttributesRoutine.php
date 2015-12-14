@@ -12,22 +12,24 @@ class CreateAttributesRoutine implements RoutineInterface
     {
         $keys = $batch->getObjectCollection('attribute_key');
 
-        if ($keys) {
-            foreach ($keys->getKeys() as $key) {
-                if (!$key->getPublisherValidator()->skipItem()) {
-                    $pkg = null;
-                    if ($key->getPackage()) {
-                        $pkg = \Package::getByHandle($key->getPackage());
-                    }
+        if (!$keys) {
+            return;
+        }
 
-                    $category = $key->getCategory();
-                    if (is_object($category)) {
-                        $publisher = $category->getPublisher();
-                        $o = $publisher->publish($key, $pkg);
-                        $typePublisher = $key->getTypePublisher();
-                        if (is_object($typePublisher)) {
-                            $typePublisher->publish($key, $o);
-                        }
+        foreach ($keys->getKeys() as $key) {
+            if (!$key->getPublisherValidator()->skipItem()) {
+                $pkg = null;
+                if ($key->getPackage()) {
+                    $pkg = \Package::getByHandle($key->getPackage());
+                }
+
+                $category = $key->getCategory();
+                if (is_object($category)) {
+                    $publisher = $category->getPublisher();
+                    $o = $publisher->publish($key, $pkg);
+                    $typePublisher = $key->getTypePublisher();
+                    if (is_object($typePublisher)) {
+                        $typePublisher->publish($key, $o);
                     }
                 }
             }

@@ -19,24 +19,26 @@ class CreateSinglePageStructureRoutine extends AbstractPageRoutine
 
         $pages = $this->getPagesOrderedForImport($batch);
 
-        if ($pages) {
-            // Now loop through all pages, and build them
-            foreach ($pages as $page) {
-                $pkg = null;
-                if ($page->getPackage()) {
-                    $pkg = \Package::getByHandle($page->getPackage());
+        if (!$pages) {
+            return;
+        }
+
+        // Now loop through all pages, and build them
+        foreach ($pages as $page) {
+            $pkg = null;
+            if ($page->getPackage()) {
+                $pkg = \Package::getByHandle($page->getPackage());
+            }
+
+            $c = Single::add($page->getOriginalPath(), $pkg);
+            if (is_object($c)) {
+                if ($page->getIsAtRoot()) {
+                    $c->moveToRoot();
                 }
 
-                $c = Single::add($page->getOriginalPath(), $pkg);
-                if (is_object($c)) {
-                    if ($page->getIsAtRoot()) {
-                        $c->moveToRoot();
-                    }
-
-                    $data['name'] = $page->getName();
-                    $data['description'] = $page->getDescription();
-                    $c->update($data);
-                }
+                $data['name'] = $page->getName();
+                $data['description'] = $page->getDescription();
+                $c->update($data);
             }
         }
     }

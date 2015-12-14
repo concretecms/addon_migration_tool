@@ -11,15 +11,17 @@ class CreateWorkflowProgressCategoriesRoutine implements RoutineInterface
     {
         $types = $batch->getObjectCollection('workflow_progress_category');
 
-        if ($types) {
-            foreach ($types->getCategories() as $category) {
-                if (!$category->getPublisherValidator()->skipItem()) {
-                    $pkg = null;
-                    if ($category->getPackage()) {
-                        $pkg = \Package::getByHandle($category->getPackage());
-                    }
-                    \Concrete\Core\Workflow\Progress\Category::add($category->getHandle(), $pkg);
+        if (!$types) {
+            return;
+        }
+
+        foreach ($types->getCategories() as $category) {
+            if (!$category->getPublisherValidator()->skipItem()) {
+                $pkg = null;
+                if ($category->getPackage()) {
+                    $pkg = \Package::getByHandle($category->getPackage());
                 }
+                \Concrete\Core\Workflow\Progress\Category::add($category->getHandle(), $pkg);
             }
         }
     }

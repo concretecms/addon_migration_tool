@@ -12,17 +12,19 @@ class CreateStackStructureRoutine implements RoutineInterface
     {
         $stacks = $batch->getObjectCollection('stack');
 
-        if ($stacks) {
-            foreach ($stacks->getStacks() as $stack) {
-                if (!$stack->getPublisherValidator()->skipItem()) {
-                    $s = Stack::getByName($stack->getName());
-                    if (!is_object($s)) {
-                        if ($stack->getType()) {
-                            $type = Stack::mapImportTextToType($stack->getType());
-                            Stack::addStack($stack->getName(), $type);
-                        } else {
-                            Stack::addStack($stack->getName());
-                        }
+        if (!$stacks) {
+            return;
+        }
+
+        foreach ($stacks->getStacks() as $stack) {
+            if (!$stack->getPublisherValidator()->skipItem()) {
+                $s = Stack::getByName($stack->getName());
+                if (!is_object($s)) {
+                    if ($stack->getType()) {
+                        $type = Stack::mapImportTextToType($stack->getType());
+                        Stack::addStack($stack->getName(), $type);
+                    } else {
+                        Stack::addStack($stack->getName());
                     }
                 }
             }

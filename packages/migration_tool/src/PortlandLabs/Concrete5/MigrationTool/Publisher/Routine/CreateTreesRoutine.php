@@ -26,27 +26,29 @@ class CreateTreesRoutine implements RoutineInterface
     {
         $values = $batch->getObjectCollection('tree');
 
-        if ($values) {
-            foreach ($values->getTrees() as $t) {
-                $name = (string) $t->getName();
-                $tree = Topic::getByName($name);
-                if (is_object($tree)) {
-                    // We already have a tree. But we know we're going to have sub-nodes
-                    // of this tree in the import, so let's keep the same tree so that pointers
-                    // to attributes work, but let's clear it out.
-                    $root = $tree->getRootTreeNodeObject();
-                    $root->populateChildren();
-                    $children = $root->getChildNodes();
-                    foreach ($children as $child) {
-                        $child->delete();
-                    }
-                } else {
-                    $tree = Topic::add($name);
+        if (!$values) {
+            return;
+        }
+
+        foreach ($values->getTrees() as $t) {
+            $name = (string) $t->getName();
+            $tree = Topic::getByName($name);
+            if (is_object($tree)) {
+                // We already have a tree. But we know we're going to have sub-nodes
+                // of this tree in the import, so let's keep the same tree so that pointers
+                // to attributes work, but let's clear it out.
+                $root = $tree->getRootTreeNodeObject();
+                $root->populateChildren();
+                $children = $root->getChildNodes();
+                foreach ($children as $child) {
+                    $child->delete();
                 }
-                $parent = $tree->getRootTreeNodeObject();
-                foreach ($t->getRootNodes() as $node) {
-                    $this->add($node, $parent);
-                }
+            } else {
+                $tree = Topic::add($name);
+            }
+            $parent = $tree->getRootTreeNodeObject();
+            foreach ($t->getRootNodes() as $node) {
+                $this->add($node, $parent);
             }
         }
     }

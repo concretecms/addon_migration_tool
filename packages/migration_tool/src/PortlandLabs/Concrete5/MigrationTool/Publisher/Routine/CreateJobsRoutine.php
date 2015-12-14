@@ -12,18 +12,20 @@ class CreateJobsRoutine implements RoutineInterface
     {
         $jobs = $batch->getObjectCollection('job');
 
-        if ($jobs) {
-            foreach ($jobs->getJobs() as $job) {
-                if (!$job->getPublisherValidator()->skipItem()) {
-                    $pkg = null;
-                    if ($job->getPackage()) {
-                        $pkg = \Package::getByHandle($job->getPackage());
-                    }
-                    if (is_object($pkg)) {
-                        Job::installByPackage($job->getHandle(), $pkg);
-                    } else {
-                        Job::installByHandle($job->getHandle());
-                    }
+        if (!$jobs) {
+            return;
+        }
+
+        foreach ($jobs->getJobs() as $job) {
+            if (!$job->getPublisherValidator()->skipItem()) {
+                $pkg = null;
+                if ($job->getPackage()) {
+                    $pkg = \Package::getByHandle($job->getPackage());
+                }
+                if (is_object($pkg)) {
+                    Job::installByPackage($job->getHandle(), $pkg);
+                } else {
+                    Job::installByHandle($job->getHandle());
                 }
             }
         }

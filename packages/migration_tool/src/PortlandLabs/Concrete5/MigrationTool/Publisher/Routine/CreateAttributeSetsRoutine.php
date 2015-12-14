@@ -12,26 +12,28 @@ class CreateAttributeSetsRoutine implements RoutineInterface
     {
         $sets = $batch->getObjectCollection('attribute_set');
 
-        if ($sets) {
-            foreach ($sets->getSets() as $set) {
-                $akc = Category::getByHandle($set->getCategory());
-                if (!$set->getPublisherValidator()->skipItem()) {
-                    $pkg = null;
-                    if ($set->getPackage()) {
-                        $pkg = \Package::getByHandle($set->getPackage());
-                    }
-                    $setObject = $akc->addSet($set->getHandle(), $set->getName(), $pkg, intval($set->getIsLocked()));
-                } else {
-                    $setObject = \Concrete\Core\Attribute\Set::getByHandle($set->getHandle());
-                }
+        if (!$sets) {
+            return;
+        }
 
-                if (is_object($setObject)) {
-                    $attributes = $set->getAttributes();
-                    foreach ($attributes as $handle) {
-                        $ak = $akc->getAttributeKeyByHandle($handle);
-                        if (is_object($ak)) {
-                            $setObject->addKey($ak);
-                        }
+        foreach ($sets->getSets() as $set) {
+            $akc = Category::getByHandle($set->getCategory());
+            if (!$set->getPublisherValidator()->skipItem()) {
+                $pkg = null;
+                if ($set->getPackage()) {
+                    $pkg = \Package::getByHandle($set->getPackage());
+                }
+                $setObject = $akc->addSet($set->getHandle(), $set->getName(), $pkg, intval($set->getIsLocked()));
+            } else {
+                $setObject = \Concrete\Core\Attribute\Set::getByHandle($set->getHandle());
+            }
+
+            if (is_object($setObject)) {
+                $attributes = $set->getAttributes();
+                foreach ($attributes as $handle) {
+                    $ak = $akc->getAttributeKeyByHandle($handle);
+                    if (is_object($ak)) {
+                        $setObject->addKey($ak);
                     }
                 }
             }

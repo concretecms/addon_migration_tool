@@ -12,15 +12,17 @@ class CreateAttributeCategoriesRoutine implements RoutineInterface
     {
         $categories = $batch->getObjectCollection('attribute_key_category');
 
-        if ($categories) {
-            foreach ($categories->getCategories() as $category) {
-                if (!$category->getPublisherValidator()->skipItem()) {
-                    $pkg = null;
-                    if ($category->getPackage()) {
-                        $pkg = \Package::getByHandle($category->getPackage());
-                    }
-                    Category::add($category->getHandle(), $category->getAllowSets(), $pkg);
+        if (!$categories) {
+            return;
+        }
+
+        foreach ($categories->getCategories() as $category) {
+            if (!$category->getPublisherValidator()->skipItem()) {
+                $pkg = null;
+                if ($category->getPackage()) {
+                    $pkg = \Package::getByHandle($category->getPackage());
                 }
+                Category::add($category->getHandle(), $category->getAllowSets(), $pkg);
             }
         }
     }

@@ -6465,9 +6465,9 @@ This is some text after the Tiled Gallery just to make sure that everything spac
         </item>
         <item>
             <title>Page Markup And Formatting</title>
-            <link>http://wpthemetestdata.wordpress.com/about/page-markup-and-formatting/</link>
+            <link>/page-markup-and-formatting</link>
             <pubDate>Fri, 15 Mar 2013 23:20:05 +0000</pubDate>
-            <dc:creator>themedemos</dc:creator>
+            <dc:creator>admin</dc:creator>
             <guid isPermaLink="false">http://wptest.io/demo/?page_id=1083</guid>
             <description/>
             <content:encoded><![CDATA[<strong>Headings</strong>

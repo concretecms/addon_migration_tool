@@ -21,8 +21,14 @@ class CreatePageStructureRoutine extends AbstractPageRoutine
             'pkgID' => \Package::getByHandle('migration_tool')->getPackageID(),
         ));
 
+        $pages = $this->getPagesOrderedForImport($batch);
+
+        if (!$pages) {
+            return;
+        }
+
         // Now loop through all pages, and build them
-        foreach ($this->getPagesOrderedForImport($batch) as $page) {
+        foreach ($pages as $page) {
             $data = array();
             $ui = $this->getTargetItem('user', $page->getUser());
             if ($ui != '') {
@@ -66,8 +72,6 @@ class CreatePageStructureRoutine extends AbstractPageRoutine
             $data['name'] = $page->getName();
             $data['cDescription'] = $page->getDescription();
 
-            // TODO fix this hack
-//            $parent = \Page::getByID(1);
             $parent->add($type, $data);
         }
     }

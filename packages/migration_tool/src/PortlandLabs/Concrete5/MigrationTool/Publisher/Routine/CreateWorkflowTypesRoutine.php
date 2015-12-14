@@ -12,15 +12,17 @@ class CreateWorkflowTypesRoutine implements RoutineInterface
     {
         $types = $batch->getObjectCollection('workflow_type');
 
-        if ($types) {
-            foreach ($types->getTypes() as $type) {
-                if (!$type->getPublisherValidator()->skipItem()) {
-                    $pkg = null;
-                    if ($type->getPackage()) {
-                        $pkg = \Package::getByHandle($type->getPackage());
-                    }
-                    Type::add($type->getHandle(), $type->getName(), $pkg);
+        if (!$types) {
+            return;
+        }
+
+        foreach ($types->getTypes() as $type) {
+            if (!$type->getPublisherValidator()->skipItem()) {
+                $pkg = null;
+                if ($type->getPackage()) {
+                    $pkg = \Package::getByHandle($type->getPackage());
                 }
+                Type::add($type->getHandle(), $type->getName(), $pkg);
             }
         }
     }

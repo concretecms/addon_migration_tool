@@ -12,15 +12,17 @@ class CreatePermissionCategoriesRoutine implements RoutineInterface
     {
         $categories = $batch->getObjectCollection('permission_key_category');
 
-        if ($categories) {
-            foreach ($categories->getCategories() as $category) {
-                if (!$category->getPublisherValidator()->skipItem()) {
-                    $pkg = null;
-                    if ($category->getPackage()) {
-                        $pkg = \Package::getByHandle($category->getPackage());
-                    }
-                    Category::add($category->getHandle(), $pkg);
+        if (!$categories) {
+            return;
+        }
+
+        foreach ($categories->getCategories() as $category) {
+            if (!$category->getPublisherValidator()->skipItem()) {
+                $pkg = null;
+                if ($category->getPackage()) {
+                    $pkg = \Package::getByHandle($category->getPackage());
                 }
+                Category::add($category->getHandle(), $pkg);
             }
         }
     }

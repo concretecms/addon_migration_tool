@@ -74,8 +74,8 @@ class WordpressParserTest extends MigrationToolTestCase
 
         $collections = $this->parser->getContentObjectCollections();
 
-        // Expecting 18 new pages on the collection
-        $this->assertCount(18, $collections[0]->pages);
+        // Expecting 60 new pages and posts on the collection
+        $this->assertCount(60, $collections[0]->pages);
     }
 
     // TODO create tests for things that might be missed inside pages, like empty titles. Maybe these cases

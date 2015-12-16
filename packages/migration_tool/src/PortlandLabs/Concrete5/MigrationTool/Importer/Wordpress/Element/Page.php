@@ -80,7 +80,7 @@ class Page implements ElementParserInterface
                 break;
         }
 
-        return $pageType;
+        return isset($pageType) ? $pageType : $itemType;
     }
 
     protected function parsePage($node)

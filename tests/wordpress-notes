@@ -1,0 +1,16 @@
+TODO
+Add posts and comments
+Check all inserted values and have proper defaults for each of them
+Check if we need to process metas for pages and posts
+Ask Andrew how to deal with special blocks inside content blocks
+Ask Andrew - Tree structure not kept when moving pages
+Maybe I do not need to rename the CIFImporter and the CIFBlockImporter....that's why we have namespaces...
+
+TODO AFTER
+Add Users
+
+Pages to import
+- 3 types of post_type: page, post, attachment. In this case, attachments are images to a post that has a gallery
+- Attachments (images) can be accessed via its own page. Should we respect that?
+- Gallery items also can speify which posts (images) to include. There is also an example of a gallery that
+shows the images in randomised order.

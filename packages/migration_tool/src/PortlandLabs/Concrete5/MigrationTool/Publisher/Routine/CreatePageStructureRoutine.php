@@ -56,6 +56,7 @@ class CreatePageStructureRoutine extends AbstractPageRoutine
                 }
             }
 
+            // TODO exception if parent not found
             if ($page->getBatchPath() != '') {
                 $lastSlash = strrpos($page->getBatchPath(), '/');
                 $parentPath = substr($page->getBatchPath(), 0, $lastSlash);

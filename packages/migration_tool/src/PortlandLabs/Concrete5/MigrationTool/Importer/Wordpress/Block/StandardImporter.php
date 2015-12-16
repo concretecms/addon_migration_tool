@@ -17,14 +17,16 @@ class StandardImporter implements ImporterInterface
     public function parse(\SimpleXMLElement $node)
     {
         $content = $node->children( 'http://purl.org/rss/1.0/modules/content/' );
+        $recordData = array('content' => (string) $content->encoded);
+
         $value = $this->createBlockValueObject();
 
         $r = new StandardBlockDataRecord();
         $r->setTable('btContentLocal');
-        $recordData = array('content' => (string) $content->encoded);
         $r->setData($recordData);
         $r->setValue($value);
         $r->setPosition(1);
+
         $value->getRecords()->add($r);
 
         return $value;

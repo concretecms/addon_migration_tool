@@ -19,6 +19,34 @@ class Page implements ElementParserInterface
         $this->blockImporter = \Core::make('migration/manager/import/wordpress_block');
     }
 
+    public function getObjectCollection(\SimpleXMLElement $element, array $namespaces)
+    {
+        $this->simplexml = $element;
+        $this->namespaces = $namespaces;
+
+        $collection = new PageObjectCollection();
+        $pages = $this->createParentPages();
+        foreach ($this->getPageNodes() as $node) {
+            $pages[] = $this->parsePage($node);
+        }
+
+        // Order pages by its path so parent pages are created first
+        usort($pages, array($this, 'comparePath'));
+
+        $i = 0;
+        foreach ($pages as $page) {
+            $page->setPosition($i);
+            ++$i;
+            $collection->getPages()->add($page);
+            $page->setCollection($collection);
+
+            // Do not Normalize path when processing the batch later on
+            $page->setNormalizePath(false);
+        }
+
+        return $collection;
+    }
+
     public function getPageNodes()
     {
         $pages = array();
@@ -39,111 +67,6 @@ class Page implements ElementParserInterface
         return (string)$wp->post_type;
     }
 
-    private function createParentPages()
-    {
-        $pages = array();
-        $parentPages = array(
-            'blog-posts' => 'Blog posts',
-            'pages' => 'Pages'
-        );
-
-        foreach ($parentPages as $parentPagePath => $parentPageName) {
-            $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
-            $page->setName('Auto-generated parent for ' . $parentPageName);
-            $page->setDescription('Auto-generated page for ' . $parentPageName);
-            $page->setPublicDate(date('Y-m-d H:i:s'));
-            $page->setType('page');
-            $page->setOriginalPath('/' . $parentPagePath);
-            $page->setTemplate('blank');
-            $page->setUser('admin');
-            $pages[] = $page;
-        }
-
-        return $pages;
-    }
-
-    public function getObjectCollection(\SimpleXMLElement $element, array $namespaces)
-    {
-        $this->simplexml = $element;
-        $this->namespaces = $namespaces;
-
-        $collection = new PageObjectCollection();
-        $pages = array();
-
-        foreach ($this->getPageNodes() as $node) {
-            $pages[] = $this->parsePage($node);
-        }
-
-        $pages = array_merge($pages, $this->createParentPages());
-
-        // Order pages by its path so parent pages are created first
-        usort($pages, array($this, 'comparePath'));
-
-        // TODO check if parents exists, then adapt it and show warning message
-
-        $i = 0;
-        foreach ($pages as $page) {
-            $page->setPosition($i);
-            ++$i;
-            $collection->getPages()->add($page);
-            $page->setCollection($collection);
-        }
-
-        return $collection;
-    }
-
-    private function comparePath($a, $b)
-    {
-        return strcmp($a->getOriginalPath(), $b->getOriginalPath());
-    }
-
-    private function createPath($path, $node, $pageType)
-    {
-        $path = parse_url($path, PHP_URL_PATH);
-        $path = rtrim($path, '/');
-
-        if (!$path) {
-            // TODO create validation error
-//            $path = '/' . $node->title . '-' . (string)$node->xpath('wp:post_id')[0];
-        }
-
-        $path = $pageType == 'blog_entry' ? '/blog-posts' . $path : '/pages' . $path;
-
-        return strtolower($path);
-    }
-
-    private function getUser(\SimpleXMLElement $node)
-    {
-        $dc = $node->children('http://purl.org/dc/elements/1.1/');
-        return (string)$dc->creator;
-    }
-
-    protected function parsePage($node)
-    {
-        $pageType = $this->getPageType($node);
-
-        $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
-        $page->setName((string)html_entity_decode($node->title));
-        $page->setPublicDate((string)$node->xpath('wp:post_date_gmt')[0]);
-        $page->setDescription((string)html_entity_decode($node->description));
-        $page->setType($pageType);
-        $page->setOriginalPath($this->createPath($node->link, $node, $pageType));
-        $page->setTemplate('blank');
-//        $page->setUser($this->getUser($node));
-        // TODO remove temporary user assignment
-        $page->setUser('admin');
-
-        // wp:status = publish | pending, draft or invalid = not publishable
-        // version cvIsApproved = 0 | 1
-        // wp:status = private, having wp:post_password or invalid = change permissions to just admins
-
-        $area = $this->parseArea($node);
-        $area->setPage($page);
-        $page->areas->add($area);
-
-        return $page;
-    }
-
     private function getPageType($node)
     {
         $itemType = $this->getItemType($node);
@@ -158,6 +81,94 @@ class Page implements ElementParserInterface
         }
 
         return $pageType;
+    }
+
+    protected function parsePage($node)
+    {
+        $pageType = $this->getPageType($node);
+
+        $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
+        $page->setName((string)html_entity_decode($node->title));
+        $page->setPublicDate((string)$node->xpath('wp:post_date_gmt')[0]);
+        $page->setDescription((string)html_entity_decode($node->description));
+        $page->setType($pageType);
+        $page->setTemplate('blank');
+
+        $page->setOriginalPath($this->createOriginalPath($node));
+        $page->setBatchPath($this->createBatchPath($page->getOriginalPath(), $pageType));
+
+//        $page->setUser($this->getUser($node));
+        // TODO remove temporary user assignment
+        $page->setUser('admin');
+
+        $area = $this->parseArea($node);
+        $area->setPage($page);
+        $page->areas->add($area);
+
+        return $page;
+    }
+
+    private function createOriginalPath($node)
+    {
+        $path = parse_url($node->link, PHP_URL_PATH);
+        $path = rtrim($path, '/');
+
+        if (!$path) {
+            // TODO create validation warning on items that have a generated path
+            $path = '/imported-item-without-original-path-' . (string)$node->xpath('wp:post_id')[0];
+        }
+
+        return strtolower($path);
+    }
+
+    private function createBatchPath($originalPath, $pageType)
+    {
+        $URIParts = explode('/', $originalPath);
+        $URIParts = array_filter($URIParts);
+
+        if ($pageType == 'blog_entry') {
+            $batchPath = '/posts/' . end($URIParts);
+        } elseif ($pageType == 'page') {
+            // TODO construct the page path looking at the <wp:post_parent> link + the current item's name
+            $batchPath = '/pages' . $originalPath;
+        }
+
+        return $batchPath;
+    }
+
+    private function createParentPages()
+    {
+        $pages = array();
+        $parentPages = array(
+            'posts' => 'Posts',
+            'pages' => 'Pages'
+        );
+
+        foreach ($parentPages as $parentPagePath => $parentPageName) {
+            $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
+            $page->setName('Wordpress ' . $parentPageName . ' (Auto-generated)');
+            $page->setDescription('Auto-generated parent page to hold Wordpress ' . $parentPageName);
+            $page->setPublicDate(date('Y-m-d H:i:s'));
+            $page->setType('page');
+            $page->setOriginalPath('/' . $parentPagePath);
+            $page->setBatchPath('/' . $parentPagePath);
+            $page->setTemplate('blank');
+            $page->setUser('admin');
+            $pages[] = $page;
+        }
+
+        return $pages;
+    }
+
+    private function comparePath($a, $b)
+    {
+        return strcmp($a->getBatchPath(), $b->getBatchPath());
+    }
+
+    private function getUser(\SimpleXMLElement $node)
+    {
+        $dc = $node->children('http://purl.org/dc/elements/1.1/');
+        return (string)$dc->creator;
     }
 
     private function parseArea($node)

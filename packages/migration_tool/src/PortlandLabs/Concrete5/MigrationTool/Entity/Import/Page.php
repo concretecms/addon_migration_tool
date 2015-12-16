@@ -93,6 +93,27 @@ class Page implements PublishableInterface
      **/
     protected $collection;
 
+    /**
+     * @var bool
+     */
+    protected $normalizePath = true;
+
+    /**
+     * @return boolean
+     */
+    public function canNormalizePath()
+    {
+        return $this->normalizePath;
+    }
+
+    /**
+     * @param boolean $normalizePath
+     */
+    public function setNormalizePath($normalizePath)
+    {
+        $this->normalizePath = $normalizePath;
+    }
+
     public function __construct()
     {
         $this->attributes = new ArrayCollection();

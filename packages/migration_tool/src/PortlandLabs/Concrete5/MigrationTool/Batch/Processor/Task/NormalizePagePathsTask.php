@@ -47,7 +47,10 @@ class NormalizePagePathsTask implements TaskInterface
             foreach ($pages as $page) {
                 $originalPath = $page->getOriginalPath();
                 $newPath = substr($originalPath, strlen($common));
-                $page->setBatchPath($newPath);
+
+                if ($page->canNormalizePath()) {
+                    $page->setBatchPath($newPath);
+                }
 
                 $areas = $page->getAreas();
                 foreach ($areas as $area) {
@@ -67,7 +70,9 @@ class NormalizePagePathsTask implements TaskInterface
             }
         } else {
             foreach ($pages as $page) {
-                $page->setBatchPath($page->getOriginalPath());
+                if ($page->canNormalizePath()) {
+                    $page->setBatchPath($page->getOriginalPath());
+                }
             }
         }
     }

@@ -52,7 +52,6 @@ class BlockType implements TransformerInterface
         }
 
         if (isset($type)) {
-            // TODO check if this one needs to be changed to cif_block
             $manager = \Core::make('migration/manager/import/block');
             try {
                 $driver = $manager->driver($type);

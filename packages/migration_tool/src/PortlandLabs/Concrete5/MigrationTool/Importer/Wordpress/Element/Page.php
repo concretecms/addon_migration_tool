@@ -5,6 +5,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
 
+use PortlandLabs\Concrete5\MigrationTool\Importer\Sanitizer\PagePathSanitizer;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\ElementParserInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -123,6 +124,8 @@ class Page implements ElementParserInterface
 
     private function createBatchPath($originalPath, $pageType)
     {
+        $sanitizer = new PagePathSanitizer();
+        $originalPath = $sanitizer->sanitize($originalPath);
         $URIParts = explode('/', $originalPath);
         $URIParts = array_filter($URIParts);
 

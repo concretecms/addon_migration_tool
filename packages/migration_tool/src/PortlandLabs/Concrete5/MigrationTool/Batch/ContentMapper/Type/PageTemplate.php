@@ -96,15 +96,16 @@ class PageTemplate implements MapperInterface
     {
         $collection = $batch->getObjectCollection('page_template');
         $items = array();
-        foreach ($collection->getTemplates() as $template) {
-            if (!$template->getPublisherValidator()->skipItem()) {
-                $item = new TargetItem($this);
-                $item->setItemId($template->getHandle());
-                $item->setItemName($template->getName());
-                $items[] = $item;
+        if ($collection) {
+            foreach ($collection->getTemplates() as $template) {
+                if (!$template->getPublisherValidator()->skipItem()) {
+                    $item = new TargetItem($this);
+                    $item->setItemId($template->getHandle());
+                    $item->setItemName($template->getName());
+                    $items[] = $item;
+                }
             }
         }
-
         return $items;
     }
 

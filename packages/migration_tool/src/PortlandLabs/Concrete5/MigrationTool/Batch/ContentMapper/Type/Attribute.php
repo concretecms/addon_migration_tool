@@ -95,12 +95,14 @@ class Attribute implements MapperInterface
     {
         $collection = $batch->getObjectCollection('attribute_key');
         $items = array();
-        foreach ($collection->getKeys() as $key) {
-            if (!$key->getPublisherValidator()->skipItem()) {
-                $item = new TargetItem($this);
-                $item->setItemId($key->getHandle());
-                $item->setItemName($key->getHandle());
-                $items[] = $item;
+        if ($collection) {
+            foreach ($collection->getKeys() as $key) {
+                if (!$key->getPublisherValidator()->skipItem()) {
+                    $item = new TargetItem($this);
+                    $item->setItemId($key->getHandle());
+                    $item->setItemName($key->getHandle());
+                    $items[] = $item;
+                }
             }
         }
 

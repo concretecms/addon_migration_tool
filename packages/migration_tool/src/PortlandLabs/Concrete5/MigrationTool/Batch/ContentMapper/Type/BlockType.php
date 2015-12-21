@@ -123,15 +123,16 @@ class BlockType implements MapperInterface
     {
         $collection = $batch->getObjectCollection('block_type');
         $items = array();
-        foreach ($collection->getTypes() as $type) {
-            if (!$type->getPublisherValidator()->skipItem()) {
-                $item = new TargetItem($this);
-                $item->setItemId($type->getHandle());
-                $item->setItemName($type->getHandle());
-                $items[] = $item;
+        if ($collection) {
+            foreach ($collection->getTypes() as $type) {
+                if (!$type->getPublisherValidator()->skipItem()) {
+                    $item = new TargetItem($this);
+                    $item->setItemId($type->getHandle());
+                    $item->setItemName($type->getHandle());
+                    $items[] = $item;
+                }
             }
         }
-
         return $items;
     }
 

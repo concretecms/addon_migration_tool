@@ -85,15 +85,16 @@ class PageType implements MapperInterface
     {
         $collection = $batch->getObjectCollection('page_type');
         $items = array();
-        foreach ($collection->getTypes() as $type) {
-            if (!$type->getPublisherValidator()->skipItem()) {
-                $item = new TargetItem($this);
-                $item->setItemId($type->getHandle());
-                $item->setItemName($type->getName());
-                $items[] = $item;
+        if ($collection) {
+            foreach ($collection->getTypes() as $type) {
+                if (!$type->getPublisherValidator()->skipItem()) {
+                    $item = new TargetItem($this);
+                    $item->setItemId($type->getHandle());
+                    $item->setItemName($type->getName());
+                    $items[] = $item;
+                }
             }
         }
-
         return $items;
     }
 

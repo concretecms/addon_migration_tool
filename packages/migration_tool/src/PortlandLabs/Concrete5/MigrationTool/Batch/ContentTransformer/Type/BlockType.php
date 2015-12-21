@@ -52,7 +52,7 @@ class BlockType implements TransformerInterface
         }
 
         if (isset($type)) {
-            $manager = \Core::make('migration/manager/import/block');
+            $manager = \Core::make('migration/manager/import/cif_block');
             try {
                 $driver = $manager->driver($type);
             } catch (\Exception $e) {

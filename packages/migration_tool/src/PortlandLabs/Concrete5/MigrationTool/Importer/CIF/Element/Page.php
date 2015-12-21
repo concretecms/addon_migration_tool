@@ -8,6 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
 
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Sanitizer\PagePathSanitizer;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -53,26 +54,15 @@ class Page implements ElementParserInterface
         return $collection;
     }
 
-    protected function convertPath($path)
-    {
-        $parts = explode('/', $path);
-        $full = '';
-        foreach ($parts as $part) {
-            $txt = \Core::make('helper/text');
-            $part = $txt->slugSafeString($part);
-            $part = str_replace('-', \Config::get('concrete.seo.page_path_separator'), $part);
-            $full .= $part . '/';
-        }
-
-        return rtrim($full, '/');
-    }
-
     protected function parsePage($node)
     {
+        $sanitizer = new PagePathSanitizer();
+        $originalPath = $sanitizer->sanitize((string) $node['path']);
+
         $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
         $page->setName((string) html_entity_decode($node['name']));
         $page->setPublicDate((string) $node['public-date']);
-        $page->setOriginalPath($this->convertPath((string) $node['path']));
+        $page->setOriginalPath($originalPath);
         if (isset($node['package'])) {
             $page->setPackage((string) $node['package']);
         }

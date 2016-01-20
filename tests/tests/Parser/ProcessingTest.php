@@ -32,8 +32,9 @@ class ProcessingTest extends MigrationToolTestCase
     public function testLinkNormalizationYear()
     {
         $data = array(
-            array('Foo', '/2014/foo'),
-            array('Bar', '/2015/bar'),
+            array('Foo', '/blog/2014/foo'),
+            array('Bar', '/blog/2015/bar'),
+            array('Bar', '/blog/2015/baz'),
         );
         $batch = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch();
         $collection = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection();
@@ -46,7 +47,7 @@ class ProcessingTest extends MigrationToolTestCase
             $batch->getObjectCollections()->add($collection);
         }
 
-        $this->assertEquals(2, $batch->getObjectCollections()->get(0)->getPages()->count());
+        $this->assertEquals(3, $batch->getObjectCollections()->get(0)->getPages()->count());
 
         $target = new \PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target($batch);
         $processor = new \Concrete\Core\Foundation\Processor\Processor($target);
@@ -55,9 +56,9 @@ class ProcessingTest extends MigrationToolTestCase
 
         $pages = $batch->getPages();
 
-        // The normalization saves a batch_patch without the common bit, in this case without the string '/20' of the original path
-        $this->assertEquals('4/foo', $pages[0]->getBatchPath());
-        $this->assertEquals('5/bar', $pages[1]->getBatchPath());
+        $this->assertEquals('/2014/foo', $pages[0]->getBatchPath());
+        $this->assertEquals('/2015/bar', $pages[1]->getBatchPath());
+        $this->assertEquals('/2015/baz', $pages[2]->getBatchPath());
     }
 
     public function testLinkNormalization()

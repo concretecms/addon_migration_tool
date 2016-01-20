@@ -37,6 +37,8 @@ class ProcessingTest extends MigrationToolTestCase
             array('Bar', '/blog/2015/baz'),
         );
         $batch = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch();
+        $pages = $batch->getPages();
+
         $collection = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection();
 
         foreach ($data as $r) {
@@ -44,17 +46,17 @@ class ProcessingTest extends MigrationToolTestCase
             $page->setName($r[0]);
             $page->setOriginalPath($r[1]);
             $collection->getPages()->add($page);
-            $batch->getObjectCollections()->add($collection);
         }
+        $batch->getObjectCollections()->add($collection);
 
+        $pages = $batch->getPages();
+        $this->assertEquals(3, count($pages));
         $this->assertEquals(3, $batch->getObjectCollections()->get(0)->getPages()->count());
 
         $target = new \PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target($batch);
         $processor = new \Concrete\Core\Foundation\Processor\Processor($target);
         $processor->registerTask(new \PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask());
         $processor->process();
-
-        $pages = $batch->getPages();
 
         $this->assertEquals('/2014/foo', $pages[0]->getBatchPath());
         $this->assertEquals('/2015/bar', $pages[1]->getBatchPath());

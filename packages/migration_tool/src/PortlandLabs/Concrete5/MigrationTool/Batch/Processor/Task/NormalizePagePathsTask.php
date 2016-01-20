@@ -23,19 +23,20 @@ class NormalizePagePathsTask implements TaskInterface
     {
         $entityManager = \ORM::entityManager();
         $target = $action->getTarget();
-        $pl = 0;
-        $n = count($this->paths);
-        $l = strlen($this->paths[0]);
-        while ($pl < $l) {
-            $c = $this->paths[0][$pl];
-            for ($i = 1; $i < $n; ++$i) {
-                if ($this->paths[$i][$pl] !== $c) {
+        $paths = $this->paths;
+        $n = count($paths);
+        $common = '';
+        $offset = 1;
+        while (strpos($paths[0], '/', $offset) !== FALSE) {
+            $offset = strpos($paths[0], '/', $offset) + 1;
+            $c = substr($paths[0], 0, $offset);
+            for ($i = 1; $i < $n; $i++) {
+                if (substr($paths[$i], 0, $offset) !== $c) {
                     break 2;
                 }
             }
-            ++$pl;
+            $common = $c;
         }
-        $common = substr($this->paths[0], 0, $pl);
         $pages = $target->getBatch()->getPages();
 
        // $entityManager->getConnection()->getConfiguration()->setSQLLogger(new EchoSQLLogger());

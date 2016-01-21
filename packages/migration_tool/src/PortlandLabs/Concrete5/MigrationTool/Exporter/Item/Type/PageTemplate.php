@@ -20,7 +20,7 @@ class PageTemplate extends AbstractType
         foreach ($collection->getItems() as $template) {
             $t = \Concrete\Core\Page\Template::getByID($template->getItemIdentifier());
             if (is_object($t)) {
-                $t->export($node);
+                $this->exporter->export($t, $node);
             }
         }
     }

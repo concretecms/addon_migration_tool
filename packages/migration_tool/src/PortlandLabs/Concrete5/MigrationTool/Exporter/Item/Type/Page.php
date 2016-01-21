@@ -15,7 +15,7 @@ class Page extends SinglePage
         foreach ($collection->getItems() as $page) {
             $c = \Page::getByID($page->getItemIdentifier());
             if (is_object($c) && !$c->isError()) {
-                $c->export($node);
+                $this->exporter->export($c, $node);
             }
         }
     }

@@ -20,7 +20,7 @@ class Theme extends AbstractType
         foreach ($collection->getItems() as $theme) {
             $t = \Concrete\Core\Page\Theme\Theme::getByID($theme->getItemIdentifier());
             if (is_object($t)) {
-                $t->export($node);
+                $this->exporter->export($t, $node);
             }
         }
     }

@@ -22,7 +22,7 @@ class AttributeKey extends AbstractType
         foreach ($collection->getItems() as $key) {
             $ak = Key::getInstanceByID($key->getItemIdentifier());
             if (is_object($ak)) {
-                $ak->export($node);
+                $this->exporter->export($ak, $node);
             }
         }
     }

@@ -77,8 +77,14 @@ class Manager extends CoreManager
         return new AttributeType();
     }
 
-    public function __construct()
+    public function createCaptchaDriver()
     {
+        return new Captcha();
+    }
+
+    public function __construct($app)
+    {
+        parent::__construct($app);
         /*
          * This functionality isn't ready yet
          */
@@ -103,12 +109,11 @@ class Manager extends CoreManager
         $this->driver('permission_key');
         $this->driver('workflow_type');
         $this->driver('stack');
-        $this->driver('captcha');
         $this->driver('social_link');
         $this->driver('thumbnail_type');
         $this->driver('tree');
         */
-
+        $this->driver('captcha');
         $this->driver('attribute_key');
         $this->driver('block_type');
         $this->driver('job');

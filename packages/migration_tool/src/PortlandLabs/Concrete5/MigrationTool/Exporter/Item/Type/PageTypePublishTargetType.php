@@ -21,7 +21,7 @@ class PageTypePublishTargetType extends AbstractType
         foreach ($collection->getItems() as $type) {
             $t = Type::getByID($type->getItemIdentifier());
             if (is_object($t)) {
-                $t->export($node);
+                $this->exporter->export($t, $node);
             }
         }
     }

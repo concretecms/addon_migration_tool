@@ -28,7 +28,7 @@ class AttributeType extends AbstractType
         foreach ($collection->getItems() as $type) {
             $at = Type::getByID($type->getItemIdentifier());
             if (is_object($at)) {
-                $at->export($node);
+                $this->exporter->export($at, $node);
             }
         }
     }

@@ -20,7 +20,7 @@ class PageType extends AbstractType
         foreach ($collection->getItems() as $type) {
             $t = \Concrete\Core\Page\Type\Type::getByID($type->getItemIdentifier());
             if (is_object($t)) {
-                $t->export($node);
+                $this->exporter->export($t, $node);
             }
         }
     }

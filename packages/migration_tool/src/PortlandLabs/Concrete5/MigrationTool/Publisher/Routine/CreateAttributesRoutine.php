@@ -31,9 +31,7 @@ class CreateAttributesRoutine implements RoutineInterface
                     $publisher = $category->getPublisher();
                     $o = $publisher->publish($key, $pkg);
                     $typePublisher = $key->getTypePublisher();
-                    if (is_object($typePublisher)) {
-                        $typePublisher->publish($key, $o);
-                    }
+                    $typePublisher->publish($key, $o);
                 }
             }
         }

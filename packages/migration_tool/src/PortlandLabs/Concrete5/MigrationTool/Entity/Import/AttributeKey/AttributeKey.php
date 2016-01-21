@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\StandardPublisher;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyValidator;
 
@@ -222,10 +223,10 @@ abstract class AttributeKey implements PublishableInterface
     }
 
     /**
-     * @return \PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\PublisherInterface | bool
+     * @return \PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\PublisherInterface
      */
     public function getTypePublisher()
     {
-        return false;
+        return new StandardPublisher();
     }
 }

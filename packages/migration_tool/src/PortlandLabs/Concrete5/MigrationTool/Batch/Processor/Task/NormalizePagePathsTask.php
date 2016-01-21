@@ -27,15 +27,17 @@ class NormalizePagePathsTask implements TaskInterface
         $n = count($paths);
         $common = '';
         $offset = 1;
-        while (strpos($paths[0], '/', $offset) !== FALSE) {
-            $offset = strpos($paths[0], '/', $offset) + 1;
-            $c = substr($paths[0], 0, $offset);
-            for ($i = 1; $i < $n; $i++) {
-                if (substr($paths[$i], 0, $offset) !== $c) {
-                    break 2;
+        if (isset($paths[0])) {
+            while (strpos($paths[0], '/', $offset) !== FALSE) {
+                $offset = strpos($paths[0], '/', $offset) + 1;
+                $c = substr($paths[0], 0, $offset);
+                for ($i = 1; $i < $n; $i++) {
+                    if (substr($paths[$i], 0, $offset) !== $c) {
+                        break 2;
+                    }
                 }
+                $common = $c;
             }
-            $common = $c;
         }
         $pages = $target->getBatch()->getPages();
 

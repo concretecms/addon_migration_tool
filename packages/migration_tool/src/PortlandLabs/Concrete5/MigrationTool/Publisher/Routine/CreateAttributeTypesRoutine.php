@@ -11,24 +11,24 @@ class CreateAttributeTypesRoutine implements RoutineInterface
 {
     public function execute(Batch $batch)
     {
-        $types = $batch->getObjectCollection('attribute_key_category');
+        $types = $batch->getObjectCollection('attribute_type');
 
         if (!$types) {
             return;
         }
 
-        foreach ($types->getCategories() as $type) {
+        foreach ($types->getTypes() as $type) {
             if (!$type->getPublisherValidator()->skipItem()) {
                 $pkg = null;
                 if ($type->getPackage()) {
                     $pkg = \Package::getByHandle($type->getPackage());
                 }
-                $type = Type::add($type->getHandle(), $type->getName(), $pkg);
+                $attributeType = Type::add($type->getHandle(), $type->getName(), $pkg);
                 $categories = $type->getCategories();
                 foreach ($categories as $category) {
                     $co = Category::getByHandle($category);
                     if (is_object($co)) {
-                        $co->associateAttributeKeyType($type);
+                        $co->associateAttributeKeyType($attributeType);
                     }
                 }
             }

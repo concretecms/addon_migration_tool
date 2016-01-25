@@ -82,6 +82,17 @@ class Manager extends CoreManager
         return new Captcha();
     }
 
+    public function createStackDriver()
+    {
+        return new Stack();
+    }
+
+    public function createTreeDriver()
+    {
+        return new Tree();
+    }
+
+
     public function __construct($app)
     {
         parent::__construct($app);
@@ -101,6 +112,7 @@ class Manager extends CoreManager
         $this->driver('page_type_publish_target_type');
         $this->driver('page_type_composer_control_type');
         $this->driver('attribute_type');
+        $this->driver('stack');
         //$this->driver('block_type_set');
         //$this->driver('attribute_set');
         /*
@@ -108,11 +120,10 @@ class Manager extends CoreManager
         $this->driver('permission_access_entity_type');
         $this->driver('permission_key');
         $this->driver('workflow_type');
-        $this->driver('stack');
         $this->driver('social_link');
         $this->driver('thumbnail_type');
-        $this->driver('tree');
         */
+        $this->driver('tree');
         $this->driver('captcha');
         $this->driver('attribute_key');
         $this->driver('block_type');

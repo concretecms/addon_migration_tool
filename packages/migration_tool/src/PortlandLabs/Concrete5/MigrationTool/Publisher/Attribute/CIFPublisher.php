@@ -9,7 +9,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CIFPublisher implements PublisherInterface
 {
-    public function publish(CollectionKey $ak, Page $page, AttributeValue $value)
+    public function publish($ak, Page $page, AttributeValue $value)
     {
         $node = simplexml_load_string($value->getValue());
         $page->setAttribute($ak->getAttributeKeyHandle(), $ak->getController()->importValue($node));

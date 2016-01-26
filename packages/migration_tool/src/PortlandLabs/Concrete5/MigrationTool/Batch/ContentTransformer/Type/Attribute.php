@@ -48,7 +48,7 @@ class Attribute implements TransformerInterface
         $mapper = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute();
         $ak = $mapper->getTargetItemContentObject($targetItem);
         if (is_object($ak)) {
-            $type = $ak->getAttributeKeyType()->getAttributeTypeHandle();
+            $type = $ak->getAttributeType()->getAttributeTypeHandle();
         } else {
             $collection = $batch->getObjectCollection('attribute_key');
             foreach ($collection->getKeys() as $key) {

@@ -9,5 +9,5 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 interface PublisherInterface
 {
-    public function publish(CollectionKey $ak, Page $page, AttributeValue $value);
+    public function publish($attributeKey, Page $page, AttributeValue $value);
 }

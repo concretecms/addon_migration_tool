@@ -13,10 +13,13 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
         $response = array();
         foreach ($this->collection->getStacks() as $stack) {
             $messages = $this->validator->validate($stack);
+            $stackFormatter = $stack->getStackFormatter();
             $formatter = $messages->getFormatter();
             $node = new \stdClass();
             $node->title = $stack->getName();
             $node->stackType = $stack->getType();
+            $node->pagePath = $stack->getPath();
+            $node->iconclass = $stackFormatter->getIconClass();
             $node->nodetype = 'stack';
             $node->exists = $stack->getPublisherValidator()->skipItem();
             $node->extraClasses = 'migration-node-main';

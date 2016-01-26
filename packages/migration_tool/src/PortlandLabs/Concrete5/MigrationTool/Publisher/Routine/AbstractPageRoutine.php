@@ -6,6 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -39,6 +40,11 @@ abstract class AbstractPageRoutine implements RoutineInterface
         return $batch->getObjectCollection('page');
     }
 
+    public function getPages(ObjectCollection $collection)
+    {
+        return $collection->getPages();
+    }
+
     public function getPagesOrderedForImport(Batch $batch)
     {
         $collection = $this->getPageCollection($batch);
@@ -48,7 +54,7 @@ abstract class AbstractPageRoutine implements RoutineInterface
         }
 
         $pages = array();
-        foreach ($collection->getPages() as $page) {
+        foreach ($this->getPages($collection) as $page) {
             $pages[] = $page;
         }
         usort($pages, function ($pageA, $pageB) {

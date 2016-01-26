@@ -25,7 +25,7 @@ abstract class AbstractPublisher implements PublisherInterface
         $category = Category::getByHandle($source->getCategory())->getController();
         $indexer = $category->getSearchIndexer();
         if (is_object($indexer)) {
-            $indexer->updateTable($category, $destination);
+            $indexer->updateRepository($category, $destination);
         }
 
         $em = \Database::connection()->getEntityManager();

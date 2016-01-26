@@ -16,7 +16,7 @@ class AddressPublisher implements PublisherInterface
      * @param Page $page
      * @param AddressAttributeValue $address
      */
-    public function publish(CollectionKey $ak, Page $page, AttributeValue $address)
+    public function publish($ak, Page $page, AttributeValue $address)
     {
         $value = new Value();
         $value->address1 = $address->getAddress1();

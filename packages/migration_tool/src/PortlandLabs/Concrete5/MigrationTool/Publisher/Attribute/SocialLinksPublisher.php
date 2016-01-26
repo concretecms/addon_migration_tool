@@ -9,7 +9,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class SocialLinksPublisher implements PublisherInterface
 {
-    public function publish(CollectionKey $ak, Page $page, AttributeValue $value)
+    public function publish($ak, Page $page, AttributeValue $value)
     {
         $links = $value->getValue();
         $r = array();

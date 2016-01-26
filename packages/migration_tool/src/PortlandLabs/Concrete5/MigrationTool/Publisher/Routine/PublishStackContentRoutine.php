@@ -20,7 +20,11 @@ class PublishStackContentRoutine extends AbstractPageRoutine
 
         foreach ($stacks->getStacks() as $stack) {
             if (!$stack->getPublisherValidator()->skipItem()) {
-                $s = Stack::getByName($stack->getName());
+                if (method_exists('\Concrete\Core\Page\Stack\Stack', 'getByPath')) {
+                    $s = Stack::getByPath($stack->getPath());
+                } else {
+                    $s = Stack::getByName($stack->getName());
+                }
                 if (is_object($s)) {
                     foreach ($stack->getBlocks() as $block) {
                         $bt = $this->getTargetItem('block_type', $block->getType());

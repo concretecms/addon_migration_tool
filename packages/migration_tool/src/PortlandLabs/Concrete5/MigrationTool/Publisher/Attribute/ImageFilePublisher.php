@@ -10,7 +10,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class ImageFilePublisher implements PublisherInterface
 {
-    public function publish(CollectionKey $ak, Page $page, AttributeValue $value)
+    public function publish($ak, Page $page, AttributeValue $value)
     {
         $inspector = \Core::make('import/value_inspector');
         $result = $inspector->inspect($value->getValue());

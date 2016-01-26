@@ -9,7 +9,7 @@ class StackBlock extends AbstractBlock
     protected $area = null;
 
     /**
-     * @ManyToOne(targetEntity="Stack")
+     * @ManyToOne(targetEntity="AbstractStack")
      **/
     protected $stack;
 

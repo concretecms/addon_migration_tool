@@ -215,7 +215,11 @@ class Export extends DashboardPageController
                     $this->set('selectedItemType', $selectedItemType);
                 }
             }
-            $this->set('exporters', $exporters);
+            $drivers = $exporters->getDrivers();
+            usort($drivers, function($a, $b) {
+                return strcasecmp($a->getPluralDisplayName(), $b->getPluralDisplayName());
+            });
+            $this->set('drivers', $drivers);
             $this->set('batch', $batch);
             $this->set('request', $this->request);
             $this->set('pageTitle', t('Add To Batch'));

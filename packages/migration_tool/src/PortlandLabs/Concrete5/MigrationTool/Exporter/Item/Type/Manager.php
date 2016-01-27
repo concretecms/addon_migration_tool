@@ -92,10 +92,15 @@ class Manager extends CoreManager
         return new Tree();
     }
 
+    public function createGroupDriver()
+    {
+        return new Group();
+    }
 
     public function __construct($app)
     {
         parent::__construct($app);
+        $this->driver('group');
         /*
          * This functionality isn't ready yet
          */

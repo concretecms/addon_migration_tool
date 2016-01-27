@@ -11,7 +11,7 @@
         <div style="padding-right: 50px; position: relative"">
         <select name="item_type" class="form-control">
             <option value=""><?=t('** Select Item')?></option>
-            <?php foreach ($exporters->getDrivers() as $itemType) {
+            <?php foreach ($drivers as $itemType) {
     ?>
                 <option value="<?=$itemType->getHandle()?>"
                     <?php if (isset($selectedItemType) && $selectedItemType->getHandle() == $itemType->getHandle()) {

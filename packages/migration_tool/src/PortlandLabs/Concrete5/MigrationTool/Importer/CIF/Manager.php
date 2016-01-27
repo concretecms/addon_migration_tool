@@ -15,6 +15,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ContentEditorSnipp
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationEditor;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationFlagType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationRatingType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Group;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Job;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\JobSet;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Package;
@@ -205,8 +206,15 @@ class Manager extends CoreManager
         return new PageType();
     }
 
+    public function createGroupDriver()
+    {
+        return new Group();
+    }
+
+
     public function __construct()
     {
+        $this->driver('group');
         $this->driver('thumbnail_type');
         $this->driver('banned_word');
         $this->driver('social_link');

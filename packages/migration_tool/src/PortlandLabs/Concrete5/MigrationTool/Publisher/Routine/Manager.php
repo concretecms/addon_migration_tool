@@ -182,9 +182,16 @@ class Manager extends CoreManager
         return new CreateAttributesRoutine();
     }
 
+    public function createCreateGroupsDriver()
+    {
+        return new CreateGroupsRoutine();
+    }
+
     public function __construct()
     {
         $this->driver('clear_batch');
+        $this->driver('create_packages');
+        $this->driver('create_groups');
         $this->driver('create_workflow_types');
         $this->driver('create_content_editor_snippets');
         $this->driver('create_workflow_progress_categories');
@@ -197,7 +204,6 @@ class Manager extends CoreManager
         $this->driver('create_thumbnail_types');
         $this->driver('create_jobs');
         $this->driver('create_job_sets');
-        $this->driver('create_packages');
         $this->driver('create_page_type_publish_target_types');
         $this->driver('create_page_type_composer_control_types');
         $this->driver('create_conversation_data');

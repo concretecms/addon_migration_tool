@@ -153,6 +153,24 @@ class Import extends DashboardPageController
 
             $this->entityManager->flush();
 
+            return new JsonResponse($batch);
+
+        } else {
+            return $this->app->make('helper/ajax')->sendError($this->error);
+        }
+    }
+
+    public function run_batch_content_tasks()
+    {
+        if (!$this->token->validate('run_batch_content_tasks')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($this->request->request->get('id'));
+        if (!is_object($batch)) {
+            $this->error->add(t('Invalid batch.'));
+        }
+        if (!$this->error->has()) {
             $target = new Target($batch);
             $processor = new Processor($target);
             $processor->registerTask(new NormalizePagePathsTask());
@@ -164,14 +182,13 @@ class Import extends DashboardPageController
             $processor = new Processor($target);
             $processor->registerTask(new TransformContentTypesTask());
             $processor->process();
+
             $this->entityManager->persist($batch);
             $this->entityManager->flush();
-            $this->flash('success', t('Content added to batch successfully.'));
-            $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
+            return new JsonResponse($batch);
         }
-        $this->view_batch($this->request->request->get('id'));
+        $this->view();
     }
-
     public function create_content_from_batch()
     {
         if (!$this->token->validate('create_content_from_batch')) {
@@ -204,6 +221,7 @@ class Import extends DashboardPageController
     {
         $this->requireAsset('migration/view-batch');
         $this->requireAsset('core/app/editable-fields');
+        $this->requireAsset('jquery/fileupload');
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
         if (is_object($batch)) {

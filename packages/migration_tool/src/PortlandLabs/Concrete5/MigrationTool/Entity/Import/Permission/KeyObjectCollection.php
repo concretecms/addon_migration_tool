@@ -7,6 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\TreeJsonF
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PermissionKeyFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
  * @Entity
@@ -64,7 +65,7 @@ class KeyObjectCollection extends ObjectCollection
         return new TreeJsonFormatter($this);
     }
 
-    public function getRecordValidator(Batch $batch)
+    public function getRecordValidator(ValidatorInterface $batch)
     {
         return new PermissionKeyValidator($batch);
     }

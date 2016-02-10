@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType\BlockComposerFormLayoutSetControlValidator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
  * @Entity
@@ -14,7 +15,7 @@ class BlockComposerFormLayoutSetControl extends ComposerFormLayoutSetControl
         return 'block';
     }
 
-    public function getRecordValidator(Batch $batch)
+    public function getRecordValidator(ValidatorInterface $batch)
     {
         return new BlockComposerFormLayoutSetControlValidator($batch);
     }

@@ -16,7 +16,7 @@ class BatchValidator
         $this->tasks[] = $task;
     }
 
-    public function validate(Batch $batch)
+    public function validate(ValidatorInterface $batch)
     {
         $target = new ValidatorTarget($batch);
         $processor = new Processor($target);

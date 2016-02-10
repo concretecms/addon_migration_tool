@@ -6,6 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\StandardValid
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Attribute\StandardInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\ImageFilePublisher;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
  * @Entity
@@ -16,19 +17,19 @@ class ImageFileAttributeValue extends AttributeValue
     /**
      * @Column(type="text")
      */
-    protected $value;
+    protected $image_file_value;
 
     public function getValue()
     {
-        return $this->value;
+        return $this->image_file_value;
     }
 
     /**
      * @param mixed $value
      */
-    public function setValue($value)
+    public function setValue($image_file_value)
     {
-        $this->value = $value;
+        $this->image_file_value = $image_file_value;
     }
 
     public function getFormatter()
@@ -41,7 +42,7 @@ class ImageFileAttributeValue extends AttributeValue
         return new ImageFilePublisher();
     }
 
-    public function getRecordValidator(Batch $batch)
+    public function getRecordValidator(ValidatorInterface $batch)
     {
         return new StandardValidator($batch);
     }

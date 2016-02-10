@@ -26,6 +26,7 @@ $dh = Core::make('helper/date');
             </li>
 
             <li class="divider"></li>
+            <li><a href="javascript:void(0)" data-action="rescan-batch" data-dialog-title="<?=t('Rescan Batch')?>" class=""><?=t("Rescan Batch")?></a>
             <li><a href="javascript:void(0)" data-dialog="clear-batch" data-dialog-title="<?=t('Clear Batch')?>" class=""><span class="text-danger"><?=t("Clear Batch")?></span></a>
             </li>
             <li><a href="javascript:void(0)" data-dialog="delete-batch" data-dialog-title="<?=t('Delete Batch')?>"><span class="text-danger"><?=t("Delete Batch")?></span></a></li>
@@ -35,6 +36,14 @@ $dh = Core::make('helper/date');
     </div>
 
 <div style="display: none">
+
+    <div id="ccm-dialog-batch-rescan-progress-bar">
+        <div class="ccm-ui">
+        <div class="progress progress-bar-striped progress-striped active" style="opacity: 0.5">
+            <div class="progress-bar" style="width: 100%;"></div>
+        </div>
+        </div>
+    </div>
 
     <div id="ccm-dialog-create-content" class="ccm-ui">
         <form method="post" action="<?=$view->action('create_content_from_batch')?>">
@@ -73,7 +82,7 @@ $dh = Core::make('helper/date');
     </div>
 
     <div id="ccm-dialog-add-to-batch" class="ccm-ui">
-        <form method="post" enctype="multipart/form-data" action="<?=$view->action('add_content_to_batch')?>">
+        <form method="post" enctype="multipart/form-data">
             <?=Loader::helper("validation/token")->output('add_content_to_batch')?>
             <input type="hidden" name="id" value="<?=$batch->getID()?>">
             <div class="form-group">
@@ -93,10 +102,16 @@ $dh = Core::make('helper/date');
                     <label><input type="radio" name="importMethod" value="append"> <?=t('Add content to batch.')?></label>
                 </div>
             </div>
+            <div class="ccm-dialog-add-to-batch-progress-bar" style="display: none">
+                <h4></h4>
+                <div class="progress progress-striped active">
+                    <div class="progress-bar" style="width: 0%;"></div>
+                </div>
+            </div>
         </form>
         <div class="dialog-buttons">
             <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
-            <button class="btn btn-primary pull-right" onclick="$('#ccm-dialog-add-to-batch form').submit()"><?=t('Add Content')?></button>
+            <button class="btn btn-primary pull-right" data-action="add-content"><?=t('Add Content')?></button>
         </div>
     </div>
 </div>
@@ -108,109 +123,48 @@ $dh = Core::make('helper/date');
     <h2><?=t('Batch')?>
         <small><?=$dh->formatDateTime($batch->getDate(), true)?></small></h2>
 
-    <?php if ($batch->getNotes()) {
-    ?>
+    <?php if ($batch->getNotes()) { ?>
         <p><?=$batch->getNotes()?></p>
     <?php 
-}
+        }
     ?>
 
+    <?php Loader::element('batch', array('batch' => $batch), 'migration_tool'); ?>
 
-    <?php if ($batch->hasRecords()) {
-    ?>
-
-    <h3><?=t('Status')?></h3>
-    <div class="alert alert-info" id="migration-batch-status">
-        <div data-message="status-message">
-            <i class="fa fa-spin fa-refresh"></i> <?=t('Computing Batch Status')?>
-        </div>
-    </div>
-
-        <script type="text/javascript">
-            $(function() {
-                $.ajax({
-                    dataType: 'json',
-                    type: 'post',
-                    data: {
-                        'ccm_token': '<?=Core::make('token')->generate('validate_batch')?>',
-                        'id': '<?=$batch->getID()?>'},
-                    url: '<?=$view->action('validate_batch')?>',
-                    success: function(r) {
-                        if (r.alertclass && r.message) {
-                            $('#migration-batch-status').removeClass().addClass('alert ' + r.alertclass);
-                            $('#migration-batch-status').text(r.message);
-                            var tab = $('#ccm-tab-content-errors');
-                            if (r.messages && r.messages.length) {
-                                var html = '<ul id="ccm-migration-batch-bulk-errors" class="list-unstyled">';
-                                for (i = 0; i < r.messages.length; i++) {
-                                    var message = r.messages[i];
-                                    html += '<li class="text-' + message.levelClass + '">';
-                                    html += '<i class="' + message.iconClass + '"></i> ';
-                                    html += message.text;
-                                    html += '</li>';
-                                }
-                                html += '</ul>';
-                                tab.html(html);
-                            } else {
-                                tab.html('<p><?=t('None')?></p>');
-                            }
-                        } else {
-                            $('#migration-batch-status').hide();
-                        }
-                    }
-                });
-            });
-        </script>
-
-        <?=Core::make('helper/concrete/ui')->tabs(array(
-            array('batch-content', t('Content'), true),
-            array('errors', t('Errors')),
-        ))?>
-
-
-        <div class="ccm-tab-content" id="ccm-tab-content-batch-content">
-
-    <?php foreach ($batch->getObjectCollections() as $collection) {
-    if ($collection->hasRecords()) {
-        $formatter = $collection->getFormatter();
-        ?>
-
-            <h3><?=$formatter->getPluralDisplayName()?></h3>
-            <?php print $formatter->displayObjectCollection()?>
-        <?php 
-    }
-    ?>
-    <?php 
-}
-    ?>
-
-        </div>
-
-        <div class="ccm-tab-content" id="ccm-tab-content-errors">
-            <i class="fa fa-spin fa-refresh"></i>
-            <?=t('Loading Errors...')?>
-        </div>
-
-
-    <?php
-
-} else {
-    ?>
-        <p><?=t('This content batch is empty.')?></p>
-    <?php 
-}
-    ?>
-
-
-
-
-
-<?php 
-} ?>
-
+<?php } ?>
 
 
 <script type="text/javascript">
+    showRescanDialog = function() {
+        $('#ccm-dialog-batch-rescan-progress-bar').jqdialog({
+            autoOpen: true,
+            height: 'auto',
+            width: 400,
+            modal: true,
+            title: '<?=t("Scanning Batch")?>',
+            closeOnEscape: false,
+            open: function(e, ui) {
+
+            }
+        });
+    }
+
+    rescanBatchItems = function() {
+        $.concreteAjax({
+            url: '<?=$view->action('run_batch_content_tasks')?>',
+            type: 'POST',
+            data: [
+                {'name': 'id', 'value': '<?=$batch->getID()?>'},
+                {'name': 'ccm_token', 'value': '<?=Core::make('token')->generate('run_batch_content_tasks')?>'}
+            ],
+            success: function(r) {
+                jQuery.fn.dialog.hideLoader();
+                $("#ccm-dialog-progress-bar").jqdialog('open');
+                window.location.reload();
+            }
+        });
+    }
+
     $(function() {
         $('a[data-dialog]').on('click', function() {
             var element = '#ccm-dialog-' + $(this).attr('data-dialog');
@@ -222,8 +176,84 @@ $dh = Core::make('helper/date');
                 height: 'auto'
             });
         });
+        $('a[data-action=rescan-batch]').on('click', function(e) {
+            e.preventDefault();
+            rescanBatchItems();
+            showRescanDialog();
+        });
 
+        var uploadErrors = [];
+
+        $('input[name=file]').fileupload({
+            dataType: 'json',
+            add: function (e, data) {
+                $("button[data-action=add-content]").off('click').on('click', function () {
+                    data.submit();
+                });
+            },
+            url: '<?=$view->action('add_content_to_batch')?>',
+            formData: {
+                'ccm_token': $('#ccm-dialog-add-to-batch input[name=ccm_token]').val(),
+                'id': $('#ccm-dialog-add-to-batch input[name=id]').val(),
+                'format': $('#ccm-dialog-add-to-batch select[name=format]').val(),
+                'importMethod': $('#ccm-dialog-add-to-batch input[name=importMethod]:checked').val()
+            },
+
+            start: function() {
+                $('div#ccm-dialog-add-to-batch input, div#ccm-dialog-add-to-batch select').prop('disabled', true);
+                $('div.ccm-dialog-add-to-batch-progress-bar').show();
+                $('div.ccm-dialog-add-to-batch-progress-bar h4').html('<?=t('Uploading File...')?>');
+                uploadErrors = [];
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('div.ccm-dialog-add-to-batch-progress-bar div.progress-bar').css(
+                    'width',
+                    progress + '%'
+                );
+            },
+
+            error: function(r) {
+                var message = r.responseText;
+                try {
+                    message = jQuery.parseJSON(message).errors;
+                    _(message).each(function(error) {
+                        uploadErrors.push({ name:name, error:error });
+                    });
+                } catch (e) {
+                    ConcreteAlert.dialog('<?=t('Error')?>', r.statusText);
+                }
+            },
+            done: function(e, data)
+            {
+                if (data.result.error) {
+                    _(data.result.errors).each(function(error) {
+                        uploadErrors.push({ name:name, error:error });
+                    });
+                }
+            },
+            stop: function() {
+
+                $('div#ccm-dialog-add-to-batch input, div#ccm-dialog-add-to-batch select').prop('disabled', false);
+                if (uploadErrors.length) {
+                    var str = '';
+                    $.each(uploadErrors, function(i, o) {
+                        str += o.error + "<br>";
+                    });
+                    ConcreteAlert.dialog('<?=t('Error')?>', str);
+                    $('div.ccm-dialog-add-to-batch-progress-bar').hide();
+                    $('div.ccm-dialog-add-to-batch-progress-bar h4').html('');
+
+                } else {
+                    $('div.ccm-dialog-add-to-batch-progress-bar div.progress').replaceWith($('#ccm-dialog-batch-rescan-progress-bar div.progress'));
+                    $('div.ccm-dialog-add-to-batch-progress-bar h4').html('<?=t('Scanning Batch...')?>');
+                    rescanBatchItems();
+                }
+            }
+
+        });
     });
+
 </script>
 
 <style type="text/css">

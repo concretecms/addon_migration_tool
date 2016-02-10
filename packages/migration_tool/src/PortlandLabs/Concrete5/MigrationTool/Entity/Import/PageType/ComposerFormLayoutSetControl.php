@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
  * @Entity
@@ -212,5 +213,5 @@ abstract class ComposerFormLayoutSetControl
         }
     }
 
-    abstract public function getRecordValidator(Batch $batch);
+    abstract public function getRecordValidator(ValidatorInterface $batch);
 }

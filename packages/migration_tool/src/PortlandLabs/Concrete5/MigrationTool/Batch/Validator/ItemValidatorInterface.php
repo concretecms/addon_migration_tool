@@ -7,7 +7,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 interface ItemValidatorInterface
 {
-    public function __construct(Batch $batch);
+    public function __construct(ValidatorInterface $batch);
 
     /**
      * @param $mixed

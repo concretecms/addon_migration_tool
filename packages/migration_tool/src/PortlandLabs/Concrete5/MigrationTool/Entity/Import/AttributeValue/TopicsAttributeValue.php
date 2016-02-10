@@ -13,19 +13,19 @@ class TopicsAttributeValue extends AttributeValue
     /**
      * @Column(type="json_array")
      */
-    protected $value;
+    protected $topics_value;
 
     public function getValue()
     {
-        return $this->value;
+        return $this->topics_value;
     }
 
     /**
      * @param mixed $value
      */
-    public function setValue($value)
+    public function setValue($topics_value)
     {
-        $this->value = $value;
+        $this->topics_value = $topics_value;
     }
 
     public function getFormatter()

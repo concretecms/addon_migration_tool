@@ -9,7 +9,7 @@ abstract class AbstractValidator implements ItemValidatorInterface
 {
     protected $batch;
 
-    public function __construct(Batch $batch)
+    public function __construct(ValidatorInterface $batch)
     {
         $this->batch = $batch;
     }

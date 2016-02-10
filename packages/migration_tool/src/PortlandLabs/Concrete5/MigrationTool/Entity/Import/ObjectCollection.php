@@ -1,5 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
  * @Entity
@@ -33,5 +34,5 @@ abstract class ObjectCollection
 
     abstract public function getRecords();
 
-    abstract public function getRecordValidator(Batch $batch);
+    abstract public function getRecordValidator(ValidatorInterface $batch);
 }

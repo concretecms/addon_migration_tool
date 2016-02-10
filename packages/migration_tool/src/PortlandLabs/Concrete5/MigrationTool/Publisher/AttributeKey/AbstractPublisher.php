@@ -18,7 +18,6 @@ abstract class AbstractPublisher implements PublisherInterface
     protected function publishAttribute(AttributeKey $source, Type $key_type, Key $destination)
     {
         $key_type->setAttributeKey($destination);
-        $key_type->setAttributeType(\Concrete\Core\Attribute\Type::getByHandle($source->getType()));
         $destination->setAttributeKeyType($key_type);
 
         // Modify the category's search indexer.

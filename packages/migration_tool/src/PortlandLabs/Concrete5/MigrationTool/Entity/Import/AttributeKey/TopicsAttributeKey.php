@@ -5,6 +5,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TopicsForm
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeKey\TopicsValidator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\TopicsPublisher;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
  * @Entity
@@ -64,7 +65,7 @@ class TopicsAttributeKey extends AttributeKey
         return new TopicsFormatter($this);
     }
 
-    public function getRecordValidator(Batch $batch)
+    public function getRecordValidator(ValidatorInterface $batch)
     {
         return new TopicsValidator($batch);
     }

@@ -13,19 +13,19 @@ class StandardAttributeValue extends AttributeValue
     /**
      * @Column(type="text")
      */
-    protected $value;
+    protected $standard_value;
 
     public function getValue()
     {
-        return $this->value;
+        return $this->standard_value;
     }
 
     /**
      * @param mixed $value
      */
-    public function setValue($value)
+    public function setValue($standard_value)
     {
-        $this->value = $value;
+        $this->standard_value = $standard_value;
     }
 
     public function getFormatter()

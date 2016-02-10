@@ -13,19 +13,19 @@ final class ImportedAttributeValue extends AttributeValue
     /**
      * @Column(type="text")
      */
-    protected $value;
+    protected $imported_value;
 
     public function getValue()
     {
-        return $this->value;
+        return $this->imported_value;
     }
 
     /**
      * @param mixed $value
      */
-    public function setValue($value)
+    public function setValue($imported_value)
     {
-        $this->value = $value;
+        $this->imported_value = $imported_value;
     }
 
     public function getFormatter()

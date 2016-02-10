@@ -5,6 +5,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\BlockTypeSet\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BlockTypeSet\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\BlockTypeSetFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+
 
 /**
  * @Entity
@@ -54,7 +56,7 @@ class BlockTypeSetObjectCollection extends ObjectCollection
         return new TreeJsonFormatter($this);
     }
 
-    public function getRecordValidator(Batch $batch)
+    public function getRecordValidator(ValidatorInterface $batch)
     {
         return new Validator($batch);
     }

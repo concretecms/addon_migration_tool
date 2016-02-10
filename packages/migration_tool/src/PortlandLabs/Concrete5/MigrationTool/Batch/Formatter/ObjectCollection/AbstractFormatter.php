@@ -19,6 +19,11 @@ abstract class AbstractFormatter implements FormatterInterface
         return $this->collection->getType();
     }
 
+    protected function getPackageHandle()
+    {
+        return 'migration_tool';
+    }
+
     public function displayObjectCollection()
     {
         $em = \ORM::entityManager('migration_tool');
@@ -29,6 +34,6 @@ abstract class AbstractFormatter implements FormatterInterface
             'batch' => $batch,
             'type' => $this->collection->getType(),
             'collection' => $this->collection,
-        ), 'migration_tool');
+        ), $this->getPackageHandle());
     }
 }

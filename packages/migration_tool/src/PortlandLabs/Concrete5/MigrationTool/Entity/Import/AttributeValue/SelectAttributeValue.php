@@ -13,19 +13,19 @@ class SelectAttributeValue extends AttributeValue
     /**
      * @Column(type="json_array")
      */
-    protected $value;
+    protected $select_value;
 
     public function getValue()
     {
-        return $this->value;
+        return $this->select_value;
     }
 
     /**
      * @param mixed $value
      */
-    public function setValue($value)
+    public function setValue($select_value)
     {
-        $this->value = $value;
+        $this->select_value = $select_value;
     }
 
     public function getFormatter()

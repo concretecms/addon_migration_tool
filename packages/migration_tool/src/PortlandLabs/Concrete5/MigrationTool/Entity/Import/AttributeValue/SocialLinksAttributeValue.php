@@ -13,19 +13,19 @@ class SocialLinksAttributeValue extends AttributeValue
     /**
      * @Column(type="json_array")
      */
-    protected $value;
+    protected $links_value;
 
     public function getValue()
     {
-        return $this->value;
+        return $this->links_value;
     }
 
     /**
      * @param mixed $value
      */
-    public function setValue($value)
+    public function setValue($links_value)
     {
-        $this->value = $value;
+        $this->links_value = $links_value;
     }
 
     public function getFormatter()

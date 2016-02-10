@@ -2,12 +2,13 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
  * @Entity
  * @Table(name="MigrationImportAttributeValues")
  * @InheritanceType("JOINED")
- * @DiscriminatorColumn(name="value_type", type="string")
+ * @DiscriminatorColumn(name="type", type="string")
  */
 abstract class AttributeValue
 {
@@ -62,7 +63,7 @@ abstract class AttributeValue
         return false;
     }
 
-    public function getRecordValidator(Batch $batch)
+    public function getRecordValidator(ValidatorInterface $batch)
     {
         return false;
     }

@@ -10,7 +10,7 @@ class ValidatorTarget implements ValidatorTargetInterface
     protected $messages;
     protected $batch;
 
-    public function __construct(Batch $batch)
+    public function __construct(ValidatorInterface $batch)
     {
         $this->batch = $batch;
         $this->messages = new MessageCollection();

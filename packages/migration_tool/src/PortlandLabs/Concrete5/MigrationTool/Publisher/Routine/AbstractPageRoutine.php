@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
@@ -83,9 +84,12 @@ abstract class AbstractPageRoutine implements RoutineInterface
     public function getTargetItem($mapper, $subject)
     {
         if ($subject) {
+            /**
+             * @var $mappers MapperManagerInterface
+             */
             $mappers = \Core::make('migration/manager/mapping');
             $mapper = $mappers->driver($mapper);
-            $list = new TargetItemList($this->batch, $mapper);
+            $list = $mappers->createTargetItemList($this->batch, $mapper);
             $item = new Item($subject);
             $targetItem = $list->getSelectedTargetItem($item);
             if (!($targetItem instanceof UnmappedTargetItem || $targetItem instanceof IgnoredTargetItem)) {

@@ -68,6 +68,9 @@ class Attribute
         if ($this->id) {
             $this->id = null;
             $this->attribute_value = clone $this->attribute_value;
+            if (is_object($this->attribute_value)) {
+                $this->attribute_value->setAttribute($this);
+            }
         }
     }
 }

@@ -180,7 +180,7 @@ class Import extends DashboardPageController
             $this->entityManager->flush();
 
             $processor = new Processor($target);
-            $processor->registerTask(new TransformContentTypesTask());
+            $processor->registerTask(new TransformContentTypesTask($mappers));
             $processor->process();
 
             $this->entityManager->persist($batch);
@@ -354,7 +354,7 @@ class Import extends DashboardPageController
 
             $target = new Target($batch);
             $processor = new Processor($target);
-            $processor->registerTask(new TransformContentTypesTask());
+            $processor->registerTask(new TransformContentTypesTask($mappers));
             $processor->process();
 
             $this->entityManager->flush();

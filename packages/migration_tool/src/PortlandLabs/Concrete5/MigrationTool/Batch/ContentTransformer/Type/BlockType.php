@@ -1,21 +1,29 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type;
 
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\BlockItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformableEntityMapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ImportedBlockValue;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class BlockType implements TransformerInterface
 {
-    public function getUntransformedEntityObjects()
+    public function getUntransformedEntityObjects(TransformableEntityMapperInterface $mapper, BatchInterface $batch)
     {
-        $em = \ORM::entityManager('migration_tool');
-        $query = $em->createQuery('select v from \PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue v where v instance of \PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ImportedBlockValue');
-        $results = $query->getResult();
+        $results = array();
+        foreach($mapper->getTransformableEntityObjects($batch) as $object) {
+            $value = $object->getBlockValue();
+            if ($value instanceof ImportedBlockValue) {
+                $results[] = $value;
+            }
+        }
 
         return $results;
     }
@@ -30,14 +38,13 @@ class BlockType implements TransformerInterface
         }
     }
 
-    public function getMapper()
+    public function getDriver()
     {
-        return new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType();
+        return 'block_type';
     }
 
-    public function transform($entity, ItemInterface $item, TargetItem $targetItem, Batch $batch)
+    public function transform($entity, MapperInterface $mapper, ItemInterface $item, TargetItem $targetItem, BatchInterface $batch)
     {
-        $mapper = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType();
         $bt = $mapper->getTargetItemContentObject($targetItem);
         if (is_object($bt)) {
             $type = $bt->getBlockTypeHandle();

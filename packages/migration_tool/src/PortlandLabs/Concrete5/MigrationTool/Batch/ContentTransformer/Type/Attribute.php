@@ -1,10 +1,14 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type;
 
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformableEntityMapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\ImportedAttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -19,11 +23,15 @@ defined('C5_EXECUTE') or die("Access Denied.");
  */
 class Attribute implements TransformerInterface
 {
-    public function getUntransformedEntityObjects()
+    public function getUntransformedEntityObjects(TransformableEntityMapperInterface $mapper, BatchInterface $batch)
     {
-        $em = \ORM::entityManager('migration_tool');
-        $query = $em->createQuery('select v from \PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue v where v instance of \PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\ImportedAttributeValue');
-        $results = $query->getResult();
+        $results = array();
+        foreach($mapper->getTransformableEntityObjects($batch) as $object) {
+            $value = $object->getAttributeValue();
+            if ($value instanceof ImportedAttributeValue) {
+                $results[] = $value;
+            }
+        }
 
         return $results;
     }
@@ -38,23 +46,24 @@ class Attribute implements TransformerInterface
         }
     }
 
-    public function getMapper()
+    public function getDriver()
     {
-        return new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute();
+        return 'attribute';
     }
 
-    public function transform($entity, ItemInterface $item, TargetItem $targetItem, Batch $batch)
+    public function transform($entity, MapperInterface $mapper, ItemInterface $item, TargetItem $targetItem, BatchInterface $batch)
     {
-        $mapper = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute();
         $ak = $mapper->getTargetItemContentObject($targetItem);
         if (is_object($ak)) {
             $type = $ak->getAttributeType()->getAttributeTypeHandle();
         } else {
             $collection = $batch->getObjectCollection('attribute_key');
-            foreach ($collection->getKeys() as $key) {
-                if ($key->getHandle() == $item->getIdentifier()) {
-                    $type = $key->getType();
-                    break;
+            if (is_object($collection)) {
+                foreach ($collection->getKeys() as $key) {
+                    if ($key->getHandle() == $item->getIdentifier()) {
+                        $type = $key->getType();
+                        break;
+                    }
                 }
             }
         }

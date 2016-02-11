@@ -8,10 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-interface TransformerInterface
+interface TransformableEntityMapperInterface
 {
-    public function getUntransformedEntityObjects(TransformableEntityMapperInterface $mapper, BatchInterface $batch);
-    public function getItem($entity);
-    public function getDriver();
-    public function transform($entity, MapperInterface $mapper, ItemInterface $item, TargetItem $targetItem, BatchInterface $batch);
+    function getTransformableEntityObjects(BatchInterface $batch);
 }

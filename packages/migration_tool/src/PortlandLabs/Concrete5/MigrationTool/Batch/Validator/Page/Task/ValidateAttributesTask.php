@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
 
 use Concrete\Core\Foundation\Processor\ActionInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
@@ -15,13 +16,20 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class ValidateAttributesTask implements TaskInterface
 {
+    protected $mappers;
+
+    public function __construct(MapperManagerInterface $mappers = null)
+    {
+        $this->mappers = $mappers ? $mappers : \Core::make('migration/manager/mapping');
+    }
+
     public function execute(ActionInterface $action)
     {
         // Grab the target item for the page's page type.
         $subject = $action->getSubject();
         $target = $action->getTarget();
-        $attributeMapper = new Attribute();
-        $targetItemList = new TargetItemList($target->getBatch(), $attributeMapper);
+        $attributeMapper = $this->mappers->driver('attribute');
+        $targetItemList = $this->mappers->createTargetItemList($target->getBatch(), $attributeMapper);
         foreach ($subject->getAttributes() as $attribute) {
             $item = new Item($attribute->getAttribute()->getHandle());
             $targetItem = $targetItemList->getSelectedTargetItem($item);

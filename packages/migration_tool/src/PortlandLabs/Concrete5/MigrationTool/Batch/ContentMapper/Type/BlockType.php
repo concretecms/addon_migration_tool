@@ -6,13 +6,14 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformableEntityMapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\BlockComposerFormLayoutSetControl;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class BlockType implements MapperInterface
+class BlockType implements MapperInterface, TransformableEntityMapperInterface
 {
     public function getMappedItemPluralName()
     {
@@ -24,15 +25,13 @@ class BlockType implements MapperInterface
         return 'block_type';
     }
 
-    public function getItems(BatchInterface $batch)
+    public function getTransformableEntityObjects(BatchInterface $batch)
     {
-        $types = array();
+        $blocks = array();
         foreach ($batch->getPages() as $page) {
             foreach ($page->getAreas() as $area) {
                 foreach ($area->getBlocks() as $block) {
-                    if ($block->getType() && !in_array($block->getType(), $types)) {
-                        $types[] = $block->getType();
-                    }
+                    $blocks[] = $block;
                     if ($block->getType() == 'core_area_layout') {
                         // Note: we REALLY need a way to publish new provider drivers
                         // so that area layout, stack, page type, etc.. can all say they provide
@@ -41,9 +40,7 @@ class BlockType implements MapperInterface
                         foreach ($columns as $column) {
                             $columnBlocks = $column->getBlocks();
                             foreach ($columnBlocks as $columnBlock) {
-                                if ($columnBlock->getType() && !in_array($columnBlock->getType(), $types)) {
-                                    $types[] = $columnBlock->getType();
-                                }
+                                $blocks[] = $columnBlock;
                             }
                         }
                     }
@@ -55,10 +52,34 @@ class BlockType implements MapperInterface
             foreach ($stacks->getStacks() as $stack) {
                 $blocks = $stack->getBlocks();
                 foreach ($blocks as $block) {
-                    if ($block->getType() && !in_array($block->getType(), $types)) {
-                        $types[] = $block->getType();
+                    $blocks[] = $block;
+                }
+            }
+        }
+
+        $pageTypes = $batch->getObjectCollection('page_type');
+        if (is_object($pageTypes)) {
+            foreach ($pageTypes->getTypes() as $type) {
+                $defaults = $type->getDefaultPageCollection();
+                foreach ($defaults->getPages() as $page) {
+                    foreach ($page->getAreas() as $area) {
+                        foreach ($area->getBlocks() as $block) {
+                            $blocks[] = $block;
+                        }
                     }
                 }
+            }
+        }
+        return $blocks;
+    }
+
+    public function getItems(BatchInterface $batch)
+    {
+        $types = array();
+        $blocks = $this->getTransformableEntityObjects($batch);
+        foreach($blocks as $block) {
+            if ($block->getType() && !in_array($block->getType(), $types)) {
+                $types[] = $block->getType();
             }
         }
 
@@ -70,16 +91,6 @@ class BlockType implements MapperInterface
                         if ($control instanceof BlockComposerFormLayoutSetControl) {
                             if (!in_array($control->getItemIdentifier(), $types)) {
                                 $types[] = $control->getItemIdentifier();
-                            }
-                        }
-                    }
-                }
-                $defaults = $type->getDefaultPageCollection();
-                foreach ($defaults->getPages() as $page) {
-                    foreach ($page->getAreas() as $area) {
-                        foreach ($area->getBlocks() as $block) {
-                            if (!in_array($block->getType(), $types)) {
-                                $types[] = $block->getType();
                             }
                         }
                     }

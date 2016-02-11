@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Attribute\Key\CollectionKey;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformableEntityMapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\CollectionAttributeComposerFormLayoutSetControl;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
@@ -12,7 +13,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterfac
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class Attribute implements MapperInterface
+class Attribute implements MapperInterface, TransformableEntityMapperInterface
 {
     public function getMappedItemPluralName()
     {
@@ -24,14 +25,41 @@ class Attribute implements MapperInterface
         return 'attribute';
     }
 
+    public function getTransformableEntityObjects(BatchInterface $batch)
+    {
+        $attributes = array();
+        foreach ($batch->getPages() as $page) {
+            foreach ($page->getAttributes() as $attribute) {
+                if (is_object($attribute->getAttribute())) {
+                    $attributes[] = $attribute->getAttribute();
+                }
+            }
+        }
+
+        $pageTypes = $batch->getObjectCollection('page_type');
+        if (is_object($pageTypes)) {
+            foreach ($pageTypes->getTypes() as $type) {
+                $defaults = $type->getDefaultPageCollection();
+                foreach ($defaults->getPages() as $page) {
+                    foreach ($page->getAttributes() as $attribute) {
+                        if (is_object($attribute->getAttribute())) {
+                            $attributes[] = $attribute->getAttribute();
+                        }
+                    }
+                }
+            }
+        }
+        return $attributes;
+    }
+
+
     public function getItems(BatchInterface $batch)
     {
         $handles = array();
-        foreach ($batch->getPages() as $page) {
-            foreach ($page->getAttributes() as $attribute) {
-                if (!in_array($attribute->getAttribute()->getHandle(), $handles)) {
-                    $handles[] = $attribute->getAttribute()->getHandle();
-                }
+        $attributes = $this->getTransformableEntityObjects($batch);
+        foreach($attributes as $attribute) {
+            if (!in_array($attribute->getHandle(), $handles)) {
+                $handles[] = $attribute->getHandle();
             }
         }
 
@@ -44,14 +72,6 @@ class Attribute implements MapperInterface
                             if (!in_array($control->getItemIdentifier(), $handles)) {
                                 $handles[] = $control->getItemIdentifier();
                             }
-                        }
-                    }
-                }
-                $defaults = $type->getDefaultPageCollection();
-                foreach ($defaults->getPages() as $page) {
-                    foreach ($page->getAttributes() as $attribute) {
-                        if (!in_array($attribute->getAttribute()->getHandle(), $handles)) {
-                            $handles[] = $attribute->getAttribute()->getHandle();
                         }
                     }
                 }

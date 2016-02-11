@@ -2,13 +2,13 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Attribute\Key\CollectionKey;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\CollectionAttributeComposerFormLayoutSetControl;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -24,7 +24,7 @@ class Attribute implements MapperInterface
         return 'attribute';
     }
 
-    public function getItems(Batch $batch)
+    public function getItems(BatchInterface $batch)
     {
         $handles = array();
         foreach ($batch->getPages() as $page) {
@@ -68,7 +68,7 @@ class Attribute implements MapperInterface
         return $items;
     }
 
-    public function getMatchedTargetItem(Batch $batch, ItemInterface $item)
+    public function getMatchedTargetItem(BatchInterface $batch, ItemInterface $item)
     {
         $ak = CollectionKey::getByHandle($item->getIdentifier());
         if (is_object($ak)) {
@@ -91,7 +91,7 @@ class Attribute implements MapperInterface
         }
     }
 
-    public function getBatchTargetItems(Batch $batch)
+    public function getBatchTargetItems(BatchInterface $batch)
     {
         $collection = $batch->getObjectCollection('attribute_key');
         $items = array();
@@ -109,7 +109,7 @@ class Attribute implements MapperInterface
         return $items;
     }
 
-    public function getInstalledTargetItems(Batch $batch)
+    public function getInstalledTargetItems(BatchInterface $batch)
     {
         $keys = CollectionKey::getList();
         usort($keys, function ($a, $b) {

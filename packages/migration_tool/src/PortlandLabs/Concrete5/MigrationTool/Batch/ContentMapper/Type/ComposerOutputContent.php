@@ -2,12 +2,12 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Page\Type\Type;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ComposerOutputContentItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -42,7 +42,7 @@ class ComposerOutputContent implements MapperInterface
         return $items;
     }
 
-    public function getItems(Batch $batch)
+    public function getItems(BatchInterface $batch)
     {
         // first, loop through all the page types
         // that are mapped in the current content batch
@@ -74,7 +74,7 @@ class ComposerOutputContent implements MapperInterface
         return $items;
     }
 
-    public function getMatchedTargetItem(Batch $batch, ItemInterface $item)
+    public function getMatchedTargetItem(BatchInterface $batch, ItemInterface $item)
     {
         return false;
     }
@@ -84,12 +84,12 @@ class ComposerOutputContent implements MapperInterface
         return false;
     }
 
-    public function getBatchTargetItems(Batch $batch)
+    public function getBatchTargetItems(BatchInterface $batch)
     {
         return array();
     }
 
-    public function getInstalledTargetItems(Batch $batch)
+    public function getInstalledTargetItems(BatchInterface $batch)
     {
         $db = \Database::connection();
         $em = $db->getEntityManager();

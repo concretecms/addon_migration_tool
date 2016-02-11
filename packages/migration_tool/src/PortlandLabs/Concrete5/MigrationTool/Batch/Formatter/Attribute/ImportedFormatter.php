@@ -23,13 +23,8 @@ class ImportedFormatter implements TreeContentItemFormatterInterface
 
     protected function getColumnValue()
     {
-        $span = new Element('span');
-        $link = new Element('a', t('XML Element'), array('href' => '#'));
-        $tooltip = new Element('i', '', array('class' => 'launch-tooltip fa fa-question-circle', 'title' => t('Raw CIF XML Imported because this attribute is not installed or mapped to an existing attribute.')));
-        $span->appendChild($link);
-        $span->appendChild($tooltip);
-
-        return $span;
+        $div = new Element('div', h($this->value->getValue()), array('class' => 'text-danger'));
+        return $div;
     }
 
     public function __construct(AttributeValue $value)

@@ -62,4 +62,12 @@ class Attribute
     {
         $this->attribute_value = $attribute_value;
     }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+            $this->attribute_value = clone $this->attribute_value;
+        }
+    }
 }

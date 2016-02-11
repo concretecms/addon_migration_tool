@@ -56,6 +56,7 @@ abstract class AttributeValue
     }
 
     abstract public function getFormatter();
+
     abstract public function getPublisher();
 
     public function getInspector()
@@ -67,4 +68,12 @@ abstract class AttributeValue
     {
         return false;
     }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+    }
+
 }

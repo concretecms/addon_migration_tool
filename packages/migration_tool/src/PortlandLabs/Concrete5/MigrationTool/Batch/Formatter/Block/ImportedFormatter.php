@@ -15,11 +15,16 @@ class ImportedFormatter implements TreeContentItemFormatterInterface
     {
         $node = new \stdClass();
         $node->title = $this->value->getBlock()->getType();
-        $element = new Element('a', t('XML Element'), array('href' => '#'));
-        $node->itemvalue = (string) $element;
+        $node->itemvalue = (string) $this->getColumnValue();
         $node->iconclass = 'fa fa-cog';
 
         return $node;
+    }
+
+    protected function getColumnValue()
+    {
+        $div = new Element('div', h($this->value->getValue()), array('class' => 'text-danger'));
+        return $div;
     }
 
     public function __construct(BlockValue $value)

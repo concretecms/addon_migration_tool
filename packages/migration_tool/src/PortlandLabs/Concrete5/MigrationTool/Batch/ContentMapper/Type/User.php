@@ -3,12 +3,12 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\User\UserInfo;
 use Concrete\Core\User\UserList;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -24,7 +24,7 @@ class User implements MapperInterface
         return 'user';
     }
 
-    public function getItems(Batch $batch)
+    public function getItems(BatchInterface $batch)
     {
         $users = array();
         foreach ($batch->getPages() as $page) {
@@ -55,7 +55,7 @@ class User implements MapperInterface
         return $items;
     }
 
-    public function getMatchedTargetItem(Batch $batch, ItemInterface $item)
+    public function getMatchedTargetItem(BatchInterface $batch, ItemInterface $item)
     {
         $user = UserInfo::getByUserName($item->getIdentifier());
         if (is_object($user)) {
@@ -67,12 +67,12 @@ class User implements MapperInterface
         }
     }
 
-    public function getBatchTargetItems(Batch $batch)
+    public function getBatchTargetItems(BatchInterface $batch)
     {
         return array();
     }
 
-    public function getInstalledTargetItems(Batch $batch)
+    public function getInstalledTargetItems(BatchInterface $batch)
     {
         $ul = new UserList();
         $ul->sortByUserName();

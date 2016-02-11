@@ -166,16 +166,7 @@ $dh = Core::make('helper/date');
     }
 
     $(function() {
-        $('a[data-dialog]').on('click', function() {
-            var element = '#ccm-dialog-' + $(this).attr('data-dialog');
-            jQuery.fn.dialog.open({
-                element: element,
-                modal: true,
-                width: 320,
-                title: $(this).attr('data-dialog-title'),
-                height: 'auto'
-            });
-        });
+
         $('a[data-action=rescan-batch]').on('click', function(e) {
             e.preventDefault();
             rescanBatchItems();

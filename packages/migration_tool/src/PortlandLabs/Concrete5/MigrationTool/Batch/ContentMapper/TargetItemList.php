@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper;
 
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -11,13 +12,16 @@ defined('C5_EXECUTE') or die("Access Denied.");
 class TargetItemList
 {
     protected $mapper;
+    protected $repository;
 
-    public function __construct(Batch $batch, MapperInterface $mapper)
+    public function __construct(BatchInterface $batch, MapperInterface $mapper)
     {
         $this->mapper = $mapper;
         $this->batch = $batch;
         $this->entityManager = \Package::getByHandle('migration_tool')->getEntityManager();
+        $this->repository = 'PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem';
     }
+
 
     public function getMapperInstalledTargetItems()
     {
@@ -27,6 +31,22 @@ class TargetItemList
     public function getMapperBatchTargetItems()
     {
         return $this->mapper->getBatchTargetItems($this->batch);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
+
+    /**
+     * @param mixed $repository
+     */
+    public function setRepository($repository)
+    {
+        $this->repository = $repository;
     }
 
     public function getInternalTargetItems()
@@ -51,7 +71,7 @@ class TargetItemList
     public function getSelectedTargetItem(ItemInterface $item)
     {
         $query = $this->entityManager->createQuery(
-            "select ti from PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem bti
+            "select ti from {$this->repository} bti
             join PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem ti
             where bti.batch = :batch and bti.target_item = ti and ti.item_type = :type and ti.source_item_identifier = :source_item_identifier"
         );

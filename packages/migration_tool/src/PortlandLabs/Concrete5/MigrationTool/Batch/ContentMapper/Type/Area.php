@@ -1,12 +1,12 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -22,7 +22,7 @@ class Area implements MapperInterface
         return 'area';
     }
 
-    public function getItems(Batch $batch)
+    public function getItems(BatchInterface $batch)
     {
         $areas = array();
         foreach ($batch->getPages() as $page) {
@@ -57,7 +57,7 @@ class Area implements MapperInterface
         return $items;
     }
 
-    public function getMatchedTargetItem(Batch $batch, ItemInterface $item)
+    public function getMatchedTargetItem(BatchInterface $batch, ItemInterface $item)
     {
         $list = \Concrete\Core\Area\Area::getHandleList();
         if (in_array($item->getIdentifier(), $list)) {
@@ -69,12 +69,12 @@ class Area implements MapperInterface
         }
     }
 
-    public function getBatchTargetItems(Batch $batch)
+    public function getBatchTargetItems(BatchInterface $batch)
     {
         return array();
     }
 
-    public function getInstalledTargetItems(Batch $batch)
+    public function getInstalledTargetItems(BatchInterface $batch)
     {
         $areas = \Concrete\Core\Area\Area::getHandleList();
         asort($areas);

@@ -2,12 +2,12 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Block\BlockType\BlockTypeList;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\BlockComposerFormLayoutSetControl;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -24,7 +24,7 @@ class BlockType implements MapperInterface
         return 'block_type';
     }
 
-    public function getItems(Batch $batch)
+    public function getItems(BatchInterface $batch)
     {
         $types = array();
         foreach ($batch->getPages() as $page) {
@@ -96,7 +96,7 @@ class BlockType implements MapperInterface
         return $items;
     }
 
-    public function getMatchedTargetItem(Batch $batch, ItemInterface $item)
+    public function getMatchedTargetItem(BatchInterface $batch, ItemInterface $item)
     {
         $bt = \Concrete\Core\Block\BlockType\BlockType::getByHandle($item->getIdentifier());
         if (is_object($bt)) {
@@ -119,7 +119,7 @@ class BlockType implements MapperInterface
         }
     }
 
-    public function getBatchTargetItems(Batch $batch)
+    public function getBatchTargetItems(BatchInterface $batch)
     {
         $collection = $batch->getObjectCollection('block_type');
         $items = array();
@@ -136,7 +136,7 @@ class BlockType implements MapperInterface
         return $items;
     }
 
-    public function getInstalledTargetItems(Batch $batch)
+    public function getInstalledTargetItems(BatchInterface $batch)
     {
         $list = new BlockTypeList();
         $list->includeInternalBlockTypes();

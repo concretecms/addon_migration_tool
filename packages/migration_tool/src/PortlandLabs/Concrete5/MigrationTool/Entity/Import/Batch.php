@@ -3,13 +3,14 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Concrete\Core\File\Set\Set;
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
  * @Entity(repositoryClass="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchRepository")
  * @Table(name="MigrationImportBatches")
  */
-class Batch implements ValidatorInterface
+class Batch implements ValidatorInterface, BatchInterface
 {
     /**
      * @Id @Column(type="guid")

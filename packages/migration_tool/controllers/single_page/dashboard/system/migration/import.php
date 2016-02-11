@@ -6,7 +6,7 @@ use Concrete\Core\File\Set\Set;
 use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\MapContentTypesTask;
@@ -15,7 +15,6 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\TransformContentTy
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Publisher;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class Import extends DashboardPageController
@@ -172,9 +171,10 @@ class Import extends DashboardPageController
         }
         if (!$this->error->has()) {
             $target = new Target($batch);
+            $mappers = \Core::make('migration/manager/mapping');
             $processor = new Processor($target);
             $processor->registerTask(new NormalizePagePathsTask());
-            $processor->registerTask(new MapContentTypesTask());
+            $processor->registerTask(new MapContentTypesTask($mappers));
             $processor->process();
 
             $this->entityManager->flush();
@@ -312,6 +312,9 @@ class Import extends DashboardPageController
         }
 
         $mappers = \Core::make('migration/manager/mapping');
+        /**
+         * @var $mappers MapperManagerInterface
+         */
         $mapper = $mappers->driver($this->request->request->get('mapper'));
         if (!is_object($mapper)) {
             $this->error->add(t('Invalid mapping type.'));
@@ -333,14 +336,14 @@ class Import extends DashboardPageController
 
             $items = $mapper->getItems($batch);
             $post = $this->request->request->get('targetItem');
-            $targetItemList = new TargetItemList($batch, $mapper);
+            $targetItemList = $mappers->createTargetItemList($batch, $mapper);
 
             foreach ($items as $item) {
                 $value = $post[$item->getIdentifier()];
                 $targetItem = $targetItemList->getTargetItem($value);
                 $targetItem->setSourceItemIdentifier($item->getIdentifier());
 
-                $batchTargetItem = new BatchTargetItem();
+                $batchTargetItem = $mappers->createBatchTargetItem();
                 $batchTargetItem->setBatch($batch);
                 $batchTargetItem->setTargetItem($targetItem);
                 $batch->target_items->add($batchTargetItem);
@@ -436,7 +439,7 @@ class Import extends DashboardPageController
             $this->set('pageTitle', t('Map Content'));
             $this->set('mapper', $mapper);
             $this->set('items', $mapper->getItems($batch));
-            $this->set('targetItemList', new TargetItemList($batch, $mapper));
+            $this->set('targetItemList', $mappers->createTargetItemList($batch, $mapper));
             $this->render('/dashboard/system/migration/map_content');
         } else {
             $this->view();

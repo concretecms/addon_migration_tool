@@ -82,3 +82,22 @@
     <?php
 }
 ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('div#ccm-dashboard-page').on('click', '[data-dialog]', function() {
+            var width = $(this).attr('data-dialog-width');
+            if (!width) {
+                width = 320;
+            }
+            var element = '#ccm-dialog-' + $(this).attr('data-dialog');
+            jQuery.fn.dialog.open({
+                element: element,
+                modal: true,
+                width: width,
+                title: $(this).attr('data-dialog-title'),
+                height: 'auto'
+            });
+        });
+    });
+</script>

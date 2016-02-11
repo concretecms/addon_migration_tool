@@ -2,13 +2,14 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Page\Feed;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreatePageFeedsRoutine implements RoutineInterface
 {
-    public function execute(Batch $batch)
+    public function execute(BatchInterface $batch)
     {
         $inspector = \Core::make('import/value_inspector');
         $feeds = $batch->getObjectCollection('page_feed');

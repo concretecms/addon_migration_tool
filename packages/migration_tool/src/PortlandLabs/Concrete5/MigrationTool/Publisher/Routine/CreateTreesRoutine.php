@@ -5,6 +5,7 @@ use Concrete\Core\Tree\Node\Node;
 use Concrete\Core\Tree\Node\NodeType;
 use Concrete\Core\Tree\Tree;
 use Concrete\Core\Tree\Type\Topic;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\TreeNode;
 
@@ -22,7 +23,7 @@ class CreateTreesRoutine implements RoutineInterface
         }
     }
 
-    public function execute(Batch $batch)
+    public function execute(BatchInterface $batch)
     {
         $values = $batch->getObjectCollection('tree');
 

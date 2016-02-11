@@ -3,13 +3,14 @@ namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Attribute\Key\Category;
 use Concrete\Core\Attribute\Type;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreateAttributeTypesRoutine implements RoutineInterface
 {
-    public function execute(Batch $batch)
+    public function execute(BatchInterface $batch)
     {
         $types = $batch->getObjectCollection('attribute_type');
 

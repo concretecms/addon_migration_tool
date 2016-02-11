@@ -2,13 +2,14 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Captcha\Library;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreateCaptchaLibrariesRoutine implements RoutineInterface
 {
-    public function execute(Batch $batch)
+    public function execute(BatchInterface $batch)
     {
         $libraries = $batch->getObjectCollection('captcha_library');
 

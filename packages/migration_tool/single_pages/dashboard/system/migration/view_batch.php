@@ -22,8 +22,6 @@ $dh = Core::make('helper/date');
             <?php /*
             <li><a href="<?=$view->action('find_and_replace', $batch->getID())?>"><?=t("Find and Replace")?></a></li>
  */ ?>
-            <li><a href="javascript:void(0)" data-dialog="create-content" data-dialog-title="<?=t('Import Batch to Site')?>" class=""><span class="text-primary"><?=t("Import Batch to Site")?></span></a>
-            </li>
 
             <li class="divider"></li>
             <li><a href="javascript:void(0)" data-action="rescan-batch" data-dialog-title="<?=t('Rescan Batch')?>" class=""><?=t("Rescan Batch")?></a>
@@ -32,6 +30,8 @@ $dh = Core::make('helper/date');
             <li><a href="javascript:void(0)" data-dialog="delete-batch" data-dialog-title="<?=t('Delete Batch')?>"><span class="text-danger"><?=t("Delete Batch")?></span></a></li>
         </ul>
     </div>
+        <a href="javascript:void(0)" class="btn btn-primary" data-dialog="create-content" data-dialog-title="<?=t('Import Batch to Site')?>" class=""><?=t("Import Batch to Site")?></a>
+
 </div>
     </div>
 

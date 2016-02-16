@@ -46,8 +46,7 @@ class ComposerOutputContent implements MapperInterface
     {
         // first, loop through all the page types
         // that are mapped in the current content batch
-        $db = \Database::connection();
-        $em = $db->getEntityManager();
+        $em = \Package::getByHandle('migration_tool')->getEntityManager();
         $query = $em->createQuery(
             "select ti from PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem bti
             join PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem ti
@@ -91,8 +90,7 @@ class ComposerOutputContent implements MapperInterface
 
     public function getInstalledTargetItems(BatchInterface $batch)
     {
-        $db = \Database::connection();
-        $em = $db->getEntityManager();
+        $em = \Package::getByHandle('migration_tool')->getEntityManager();
         $query = $em->createQuery('select distinct b from \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block b
         group by b.type order by b.type asc');
         $types = $query->getResult();

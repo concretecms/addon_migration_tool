@@ -20,7 +20,7 @@ class TreePageJsonFormatter implements \JsonSerializable
         $nodes = array();
         $page = $this->page;
         $collection = $page->getCollection();
-        $r = \Database::connection()->getEntityManager()->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $r = \Package::getByHandle('migration_tool')->getEntityManager()->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findFromCollection($collection);
         $validator = $collection->getRecordValidator($batch);
         $messages = $validator->validate($page);

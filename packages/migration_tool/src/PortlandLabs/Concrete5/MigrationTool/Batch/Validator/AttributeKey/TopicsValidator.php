@@ -37,7 +37,7 @@ class TopicsValidator extends AbstractValidator
             return true;
         }
 
-        $r = \ORM::entityManager()->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Tree');
+        $r = \Package::getByHandle('migration_tool')->getEntityManager()->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Tree');
         $tree = $r->findOneByName($name);
         if (is_object($tree)) {
             return true;

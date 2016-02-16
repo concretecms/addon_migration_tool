@@ -31,7 +31,7 @@ class PublishPageContentRoutine extends AbstractPageRoutine
                 }
             }
 
-            $em = \ORM::entityManager("migration_tool");
+            $em = \Package::getByHandle('migration_tool')->getEntityManager();
             $r = $em->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem');
             $controls = $r->findBy(array('item_type' => 'composer_output_content'));
             $controlHandles = array_map(function ($a) {

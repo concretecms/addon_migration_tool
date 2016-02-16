@@ -21,7 +21,7 @@ class NormalizePagePathsTask implements TaskInterface
 
     public function finish(ActionInterface $action)
     {
-        $entityManager = \ORM::entityManager();
+        $entityManager = \Package::getByHandle('migration_tool')->getEntityManager();
         $target = $action->getTarget();
         $paths = $this->paths;
         $n = count($paths);

@@ -18,7 +18,6 @@ $dh = Core::make('helper/date');
                 <li><a href="<?=$view->action('map_content', $batch->getId(), $mapper->getHandle())?>"><?=$mapper->getMappedItemPluralName()?></a></li>
             <?php 
 } ?>
-            <li class="divider"></li>
             <?php /*
             <li><a href="<?=$view->action('find_and_replace', $batch->getID())?>"><?=t("Find and Replace")?></a></li>
  */ ?>

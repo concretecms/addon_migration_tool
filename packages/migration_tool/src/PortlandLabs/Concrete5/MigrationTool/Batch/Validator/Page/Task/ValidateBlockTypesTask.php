@@ -40,7 +40,7 @@ class ValidateBlockTypesTask implements TaskInterface
                         $template = $page->getTemplate();
                         if ($type && $template) {
                             // Retrieve the page  type by handle.
-                            $em = \ORM::entityManager('migration_tool');
+                            $em = \Package::getByHandle('migration_tool')->getEntityManager();
                             $r1 = $em->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageType');
                             $pageType = $r1->findOneByHandle($type);
                             if (is_object($pageType)) {

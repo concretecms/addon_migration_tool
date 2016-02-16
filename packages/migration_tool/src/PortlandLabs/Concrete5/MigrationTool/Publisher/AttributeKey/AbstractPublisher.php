@@ -27,7 +27,7 @@ abstract class AbstractPublisher implements PublisherInterface
             $indexer->updateRepository($category, $destination);
         }
 
-        $em = \Database::connection()->getEntityManager();
+        $em = \Package::getByHandle('migration_tool')->getEntityManager();
         $em->persist($destination);
         $em->flush();
 

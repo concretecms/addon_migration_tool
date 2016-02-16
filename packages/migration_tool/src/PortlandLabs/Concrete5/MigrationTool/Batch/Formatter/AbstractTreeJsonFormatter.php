@@ -12,7 +12,7 @@ abstract class AbstractTreeJsonFormatter implements \JsonSerializable
 {
     public function __construct(ObjectCollection $collection)
     {
-        $em = \ORM::entityManager('migration_tool');
+        $em = \Package::getByHandle('migration_tool')->getEntityManager();
         $r = $em->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $this->collection = $collection;
         $this->batch = $r->findFromCollection($collection);

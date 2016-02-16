@@ -73,7 +73,7 @@ class BlockType implements TransformerInterface
                 }
                 $block = $entity->getBlock();
                 $block->setBlockValue($value);
-                $manager = \ORM::entityManager('migration_tools');
+                $manager = \Package::getByHandle('migration_tool')->getEntityManager();
                 $manager->persist($block);
                 $manager->remove($entity);
                 $manager->flush();

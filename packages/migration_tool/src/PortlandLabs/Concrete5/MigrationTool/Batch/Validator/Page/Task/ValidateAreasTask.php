@@ -29,7 +29,7 @@ class ValidateAreasTask implements TaskInterface
                 // doesn't exist in the site is because it's part of the new template. In that case, we should show
                 // an info message so we don't get as many scary red errors.
                 if ($template) {
-                    $em = \ORM::entityManager('migration_tool');
+                    $em = \Package::getByHandle('migration_tool')->getEntityManager();
                     $r = $em->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageTemplate');
                     $batchTemplate = $r->findOneByHandle($template);
                 }

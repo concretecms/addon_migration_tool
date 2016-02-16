@@ -78,7 +78,7 @@ class Attribute implements TransformerInterface
                 $value = $driver->parse($xml);
                 $attribute = $entity->getAttribute();
                 $attribute->setAttributeValue($value);
-                $manager = \ORM::entityManager('migration_tools');
+                $manager = \Package::getByHandle('migration_tool')->getEntityManager();
                 $manager->persist($attribute);
                 $manager->remove($entity);
                 $manager->flush();

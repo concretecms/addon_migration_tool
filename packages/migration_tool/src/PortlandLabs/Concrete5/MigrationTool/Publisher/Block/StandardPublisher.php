@@ -12,7 +12,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class StandardPublisher implements PublisherInterface
 {
-    public function publish(Batch $batch, BlockType $bt, Page $page, Area $area, BlockValue $value)
+    public function publish(Batch $batch, BlockType $bt, Page $page, $area, BlockValue $value)
     {
         $records = $value->getRecords();
         $inspector = \Core::make('import/value_inspector');
@@ -22,7 +22,7 @@ class StandardPublisher implements PublisherInterface
                 $result = $inspector->inspect($value);
                 $data[$key] = $result->getReplacedValue();
             }
-            $b = $page->addBlock($bt, $area->getName(), $data);
+            $b = $page->addBlock($bt, $area, $data);
         } elseif (count($records) > 1) {
             foreach ($records as $record) {
                 if (strcasecmp($record->getTable(), $bt->getController()->getBlockTypeDatabaseTable()) == 0) {
@@ -32,7 +32,7 @@ class StandardPublisher implements PublisherInterface
                         $result = $inspector->inspect($value);
                         $data[$key] = $result->getReplacedValue();
                     }
-                    $b = $page->addBlock($bt, $area->getName(), $data);
+                    $b = $page->addBlock($bt, $area, $data);
                 }
             }
             // Now we import the OTHER records.
@@ -48,7 +48,7 @@ class StandardPublisher implements PublisherInterface
                 }
             }
         } else {
-            $b = $page->addBlock($bt, $area->getName(), array());
+            $b = $page->addBlock($bt, $area, array());
         }
 
         return $b;

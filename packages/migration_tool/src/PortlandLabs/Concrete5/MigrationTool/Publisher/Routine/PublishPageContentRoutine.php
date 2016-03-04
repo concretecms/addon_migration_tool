@@ -42,31 +42,34 @@ class PublishPageContentRoutine extends AbstractPageRoutine
             // need to be replaced by another block.
 
             foreach ($page->areas as $area) {
+                $areaName = $this->getTargetItem('area', $area->getName());
                 $styleSet = $area->getStyleSet();
-                if (is_object($styleSet)) {
-                    $styleSetPublisher = $styleSet->getPublisher();
-                    $publishedStyleSet = $styleSetPublisher->publish();
-                    $concreteArea = \Area::getOrCreate($concretePage, $area->getName());
-                    $concretePage->setCustomStyleSet($concreteArea, $publishedStyleSet);
-                }
-                foreach ($area->blocks as $block) {
-                    $bt = $this->getTargetItem('block_type', $block->getType());
-                    if (is_object($bt)) {
-                        $value = $block->getBlockValue();
-                        $publisher = $value->getPublisher();
-                        $b = $publisher->publish($batch, $bt, $concretePage, $area, $value);
-                        $styleSet = $block->getStyleSet();
-                        if (is_object($styleSet)) {
-                            $styleSetPublisher = $styleSet->getPublisher();
-                            $publishedStyleSet = $styleSetPublisher->publish();
-                            $b->setCustomStyleSet($publishedStyleSet);
-                        }
-                        if ($block->getCustomTemplate()) {
-                            $b->setCustomTemplate($block->getCustomTemplate());
-                        }
+                if ($areaName) {
+                    if (is_object($styleSet)) {
+                        $styleSetPublisher = $styleSet->getPublisher();
+                        $publishedStyleSet = $styleSetPublisher->publish();
+                        $concreteArea = \Area::getOrCreate($concretePage, $areaName);
+                        $concretePage->setCustomStyleSet($concreteArea, $publishedStyleSet);
+                    }
+                    foreach ($area->blocks as $block) {
+                        $bt = $this->getTargetItem('block_type', $block->getType());
+                        if (is_object($bt)) {
+                            $value = $block->getBlockValue();
+                            $publisher = $value->getPublisher();
+                            $b = $publisher->publish($batch, $bt, $concretePage, $areaName, $value);
+                            $styleSet = $block->getStyleSet();
+                            if (is_object($styleSet)) {
+                                $styleSetPublisher = $styleSet->getPublisher();
+                                $publishedStyleSet = $styleSetPublisher->publish();
+                                $b->setCustomStyleSet($publishedStyleSet);
+                            }
+                            if ($block->getCustomTemplate()) {
+                                $b->setCustomTemplate($block->getCustomTemplate());
+                            }
 
-                        if (in_array($bt->getBlockTypeHandle(), $controlHandles)) {
-                            $blockSubstitutes[$bt->getBlockTypeHandle()] = $b;
+                            if (in_array($bt->getBlockTypeHandle(), $controlHandles)) {
+                                $blockSubstitutes[$bt->getBlockTypeHandle()] = $b;
+                            }
                         }
                     }
                 }

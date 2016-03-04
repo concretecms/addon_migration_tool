@@ -11,13 +11,13 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class ContentPublisher implements PublisherInterface
 {
-    public function publish(Batch $batch, BlockType $bt, Page $page, Area $area, BlockValue $value)
+    public function publish(Batch $batch, BlockType $bt, Page $page, $area, BlockValue $value)
     {
         $data = $value->getRecords()->get(0)->getData();
         $inspector = \Core::make('migration/import/value_inspector', array($batch));
         $result = $inspector->inspect($data['content']);
         $data['content'] = $result->getReplacedContent();
-        $b = $page->addBlock($bt, $area->getName(), $data);
+        $b = $page->addBlock($bt, $area, $data);
 
         return $b;
     }

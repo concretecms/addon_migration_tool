@@ -15,7 +15,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class AreaLayoutPublisher implements PublisherInterface
 {
-    public function publish(Batch $batch, BlockType $bt, Page $page, Area $area, BlockValue $value)
+    public function publish(Batch $batch, BlockType $bt, Page $page, $area, BlockValue $value)
     {
         $routine = new PublishPageContentRoutine();
         $routine->setBatch($batch);
@@ -26,14 +26,14 @@ class AreaLayoutPublisher implements PublisherInterface
         $layoutObject = $publisher->publish($layout);
         $columns = $layout->getColumns();
         $i = 0;
-        $layoutBlock = $page->addBlock($bt, $area->getName(), array('arLayoutID' => $layoutObject->getAreaLayoutID()));
+        $layoutBlock = $page->addBlock($bt, $area, array('arLayoutID' => $layoutObject->getAreaLayoutID()));
         foreach ($layoutObject->getAreaLayoutColumns() as $columnObject) {
             $column = $columns[$i];
             foreach ($column->getBlocks() as $block) {
                 $subValue = $block->getBlockValue();
                 $publisher = $subValue->getPublisher();
                 $subarea = new Area();
-                $subAreaName = $area->getName() . SubArea::AREA_SUB_DELIMITER . $columnObject->getAreaLayoutColumnDisplayID();
+                $subAreaName = $area . SubArea::AREA_SUB_DELIMITER . $columnObject->getAreaLayoutColumnDisplayID();
                 $subarea->setName($subAreaName);
                 /*
                  * @var $publisher BlockPublisherInterface

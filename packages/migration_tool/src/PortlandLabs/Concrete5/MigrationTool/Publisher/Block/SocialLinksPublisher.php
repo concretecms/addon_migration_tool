@@ -12,7 +12,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class SocialLinksPublisher implements PublisherInterface
 {
-    public function publish(Batch $batch, BlockType $bt, Page $page, Area $area, BlockValue $value)
+    public function publish(Batch $batch, BlockType $bt, Page $page, $area, BlockValue $value)
     {
         $data = array();
         $data['slID'] = array();
@@ -26,7 +26,7 @@ class SocialLinksPublisher implements PublisherInterface
             }
         }
 
-        $b = $page->addBlock($bt, $area->getName(), $data);
+        $b = $page->addBlock($bt, $area, $data);
 
         return $b;
     }

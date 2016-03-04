@@ -65,6 +65,23 @@ class Controller extends Package
         }
     }
 
+    public function uninstall()
+    {
+        // Clear tables
+        parent::uninstall();
+        $db = \Database::connection();
+        $db->Execute('SET foreign_key_checks = 0');
+        $tables = $db->GetCol("show tables like 'MigrationImport%'");
+        foreach($tables as $table) {
+            $db->Execute('drop table ' . $table);
+        }
+        $tables = $db->GetCol("show tables like 'MigrationExport%'");
+        foreach($tables as $table) {
+            $db->Execute('drop table ' . $table);
+        }
+        $db->Execute('SET foreign_key_checks = 1');
+    }
+
     protected function installSinglePages($pkg)
     {
         foreach ($this->singlePages as $path) {

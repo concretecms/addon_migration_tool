@@ -9,7 +9,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreateSinglePageStructureRoutine extends AbstractPageRoutine
 {
-    public function getPageCollection(Batch $batch)
+    public function getPageCollection(BatchInterface $batch)
     {
         return $batch->getObjectCollection('single_page');
     }

@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
@@ -36,7 +37,7 @@ abstract class AbstractPageRoutine implements RoutineInterface
         return \Page::getByPath('/!import_batches/' . $batch->getID() . $path, 'RECENT');
     }
 
-    public function getPageCollection(Batch $batch)
+    public function getPageCollection(BatchInterface $batch)
     {
         return $batch->getObjectCollection('page');
     }

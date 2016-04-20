@@ -36,15 +36,17 @@ class StandardPublisher implements PublisherInterface
                 }
             }
             // Now we import the OTHER records.
-            foreach ($records as $record) {
-                if (strcasecmp($record->getTable(), $bt->getController()->getBlockTypeDatabaseTable()) != 0) {
-                    $aar = new BlockRecord($record->getTable());
-                    $aar->bID = $b->getBlockID();
-                    foreach ($record->getData() as $key => $value) {
-                        $result = $inspector->inspect($value);
-                        $aar->{$key} = $result->getReplacedValue();
+            if ($b) {
+                foreach ($records as $record) {
+                    if (strcasecmp($record->getTable(), $bt->getController()->getBlockTypeDatabaseTable()) != 0) {
+                        $aar = new BlockRecord($record->getTable());
+                        $aar->bID = $b->getBlockID();
+                        foreach ($record->getData() as $key => $value) {
+                            $result = $inspector->inspect($value);
+                            $aar->{$key} = $result->getReplacedValue();
+                        }
+                        $aar->Save();
                     }
-                    $aar->Save();
                 }
             }
         } else {

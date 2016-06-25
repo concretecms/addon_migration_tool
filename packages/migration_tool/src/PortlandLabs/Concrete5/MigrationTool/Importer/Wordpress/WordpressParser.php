@@ -22,7 +22,7 @@ class WordpressParser implements FileParserInterface
         return t('Wordpress Content Export');
     }
 
-    public function validateUploadedFile(array $file, Error &$error)
+    public function validateUploadedFile(array $file, &$error)
     {
         if ($file['type'] != 'text/xml') {
             $error->add(t('File does not appear to be an XML file.'));

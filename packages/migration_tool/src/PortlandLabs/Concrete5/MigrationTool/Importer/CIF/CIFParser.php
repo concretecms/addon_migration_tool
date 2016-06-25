@@ -1,7 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF;
 
-use Concrete\Core\Error\Error;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParserInterface;
 
@@ -19,7 +18,7 @@ class CIFParser implements FileParserInterface
         return t('concrete5 XML Export');
     }
 
-    public function validateUploadedFile(array $file, Error &$error)
+    public function validateUploadedFile(array $file, &$error)
     {
         if ($file['type'] != 'text/xml') {
             $error->add(t('File does not appear to be an XML file.'));

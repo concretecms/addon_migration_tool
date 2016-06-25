@@ -9,9 +9,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\TargetItemProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\MapContentTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\TransformContentTypesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\UntransformedItemProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Publisher;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
@@ -159,6 +161,7 @@ class Import extends DashboardPageController
         }
     }
 
+    /*
     public function run_batch_content_tasks()
     {
         if (!$this->token->validate('run_batch_content_tasks')) {
@@ -189,6 +192,102 @@ class Import extends DashboardPageController
         }
         $this->view();
     }
+    */
+
+    public function run_batch_content_normalize_page_paths_task()
+    {
+        if (!$this->token->validate('run_batch_content_normalize_page_paths_task')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($this->request->request->get('id'));
+        if (!is_object($batch)) {
+            $this->error->add(t('Invalid batch.'));
+        }
+        if (!$this->error->has()) {
+            $target = new Target($batch);
+            $processor = new Processor($target);
+            $processor->registerTask(new NormalizePagePathsTask());
+            $processor->process();
+            $this->entityManager->flush();
+            return new JsonResponse($batch);
+        }
+        $this->view();
+    }
+
+    public function run_batch_content_map_content_types_task()
+    {
+        if (!$this->token->validate('run_batch_content_map_content_types_task')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($this->request->request->get('id'));
+        if (!is_object($batch)) {
+            $this->error->add(t('Invalid batch.'));
+        }
+        if (!$this->error->has()) {
+            $target = new Target($batch);
+            $target->returnMappedItems();
+            $processor = new TargetItemProcessor($target);
+            if ($_POST['process']) {
+                foreach ($processor->receive() as $task) {
+                    $processor->execute($task);
+                }
+                $obj = new \stdClass();
+                $obj->totalItems = $processor->getTotalTasks();
+                echo json_encode($obj);
+                exit;
+            } else {
+                $processor->process();
+            }
+            $totalItems = $processor->getTotalTasks();
+            ob_start();
+            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2("%d task", "%d tasks", $totalItems)));
+            $response = ob_get_contents();
+            ob_end_clean();
+            $response = new \Concrete\Core\Http\Response($response);
+            return $response;
+        }
+        $this->view();
+    }
+
+    public function run_batch_content_transform_content_types_task()
+    {
+        if (!$this->token->validate('run_batch_content_transform_content_types_task')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($this->request->request->get('id'));
+        if (!is_object($batch)) {
+            $this->error->add(t('Invalid batch.'));
+        }
+        if (!$this->error->has()) {
+            $target = new Target($batch);
+            $target->returnUntransformedItems();
+            $processor = new UntransformedItemProcessor($target);
+            if ($_POST['process']) {
+                foreach ($processor->receive() as $task) {
+                    $processor->execute($task);
+                }
+                $obj = new \stdClass();
+                $obj->totalItems = $processor->getTotalTasks();
+                echo json_encode($obj);
+                exit;
+            } else {
+                $processor->process();
+            }
+            $totalItems = $processor->getTotalTasks();
+            ob_start();
+            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2("%d task", "%d tasks", $totalItems)));
+            $response = ob_get_contents();
+            ob_end_clean();
+            $response = new \Concrete\Core\Http\Response($response);
+            return $response;
+        }
+        $this->view();
+    }
+
+
     public function create_content_from_batch()
     {
         if (!$this->token->validate('create_content_from_batch')) {

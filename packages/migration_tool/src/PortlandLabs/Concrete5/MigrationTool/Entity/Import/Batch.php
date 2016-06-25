@@ -164,6 +164,12 @@ class Batch implements ValidatorInterface, BatchInterface
 
         return $fs;
     }
+
+    public function __sleep()
+    {
+        return array('id', 'date', 'notes');
+    }
+
     public function getFiles()
     {
         $fs = $this->getFileSet();
@@ -181,6 +187,6 @@ class Batch implements ValidatorInterface, BatchInterface
      */
     public function __toString()
     {
-        return $this->getID();
+        return (string) $this->getID();
     }
 }

@@ -15,6 +15,7 @@ class TransformContentTypesTask implements TaskInterface
 {
 
     protected $mappers;
+    protected $transformers;
 
     public function __construct(MapperManagerInterface $mappers)
     {
@@ -23,35 +24,31 @@ class TransformContentTypesTask implements TaskInterface
 
     public function execute(ActionInterface $action)
     {
-        return;
+        $target = $action->getTarget();
+        $subject = $action->getSubject();
+        $batch = $target->getBatch();
+
+        $transformers = \Core::make('migration/manager/transforms');
+        $transformer = $transformers->driver($subject['transformer']);
+        $item = $transformer->getItem($subject);
+        // Since batch is serialized we do this:
+        $em = \Database::connection()->getEntityManager();
+        $batch = $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch')->findOneById($batch->getId());
+        $mapper = $this->mappers->driver($subject['mapper']);
+
+        if (is_object($item)) {
+            $targetItem = $targetItemList->getSelectedTargetItem($item);
+            if (is_object($targetItem)) {
+                if (!($targetItem instanceof UnmappedTargetItem || $target instanceof IgnoredTargetItem)) {
+                    $transformer->transform($subject, $mapper, $item, $targetItem, $batch);
+                }
+            }
+        }
+
     }
 
     public function finish(ActionInterface $action)
     {
-        $target = $action->getTarget();
-        $batch = $target->getBatch();
-        $transformers = \Core::make('migration/manager/transforms');
-        foreach ($transformers->getDrivers() as $transformer) {
-            try {
-                $mapper = $this->mappers->driver($transformer->getDriver());
-            } catch (\Exception $e) {
-                // No mapper for this type.}
-                $mapper = new EmptyMapper();
-            }
-
-            $targetItemList = $this->mappers->createTargetItemList($batch, $mapper);
-            $items = $transformer->getUntransformedEntityObjects($mapper, $batch);
-            foreach ($items as $entity) {
-                $item = $transformer->getItem($entity);
-                if (is_object($item)) {
-                    $targetItem = $targetItemList->getSelectedTargetItem($item);
-                    if (is_object($targetItem)) {
-                        if (!($targetItem instanceof UnmappedTargetItem || $target instanceof IgnoredTargetItem)) {
-                            $transformer->transform($entity, $mapper, $item, $targetItem, $batch);
-                        }
-                    }
-                }
-            }
-        }
+        return;
     }
 }

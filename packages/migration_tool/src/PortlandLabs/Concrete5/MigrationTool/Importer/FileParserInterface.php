@@ -9,7 +9,7 @@ interface FileParserInterface
 {
     public function getDriver();
     public function getName();
-    public function validateUploadedFile(array $file, Error &$error);
+    public function validateUploadedFile(array $file, &$error);
 
     /**
      * @param $file

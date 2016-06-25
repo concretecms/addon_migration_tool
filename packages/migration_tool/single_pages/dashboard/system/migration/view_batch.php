@@ -36,11 +36,14 @@ $dh = Core::make('helper/date');
 
 <div style="display: none">
 
-    <div id="ccm-dialog-batch-rescan-progress-bar">
+    <div data-progress-bar="rescan">
         <div class="ccm-ui">
-        <div class="progress progress-bar-striped progress-striped active" style="opacity: 0.5">
-            <div class="progress-bar" style="width: 100%;"></div>
-        </div>
+            <h4 data-progress-bar-title="rescan"></h4>
+            <div data-progress-bar-wrapper="rescan">
+                <div class="progress progress-bar-striped progress-striped active" style="opacity: 0.5">
+                    <div class="progress-bar" style="width: 100%;"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -101,10 +104,12 @@ $dh = Core::make('helper/date');
                     <label><input type="radio" name="importMethod" value="append"> <?=t('Add content to batch.')?></label>
                 </div>
             </div>
-            <div class="ccm-dialog-add-to-batch-progress-bar" style="display: none">
-                <h4></h4>
-                <div class="progress progress-striped active">
-                    <div class="progress-bar" style="width: 0%;"></div>
+            <div data-progress-bar="add-to-batch" style="display: none">
+                <h4 data-progress-bar-title="add-to-batch"></h4>
+                <div data-progress-bar-wrapper="add-to-batch">
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar" style="width: 0%;"></div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -135,7 +140,7 @@ $dh = Core::make('helper/date');
 
 <script type="text/javascript">
     showRescanDialog = function() {
-        $('#ccm-dialog-batch-rescan-progress-bar').jqdialog({
+        $('[data-progress-bar=rescan]').jqdialog({
             autoOpen: true,
             height: 'auto',
             width: 400,
@@ -148,18 +153,47 @@ $dh = Core::make('helper/date');
         });
     }
 
-    rescanBatchItems = function() {
+    rescanBatchItems = function($element) {
+
+        $('h4[data-progress-bar-title]').html('<?=t('Normalizing Page Paths...')?>');
+
+
         $.concreteAjax({
-            url: '<?=$view->action('run_batch_content_tasks')?>',
+            loader: false,
+            url: '<?=$view->action('run_batch_content_normalize_page_paths_task')?>',
             type: 'POST',
             data: [
                 {'name': 'id', 'value': '<?=$batch->getID()?>'},
-                {'name': 'ccm_token', 'value': '<?=Core::make('token')->generate('run_batch_content_tasks')?>'}
+                {'name': 'ccm_token', 'value': '<?=Core::make('token')->generate('run_batch_content_normalize_page_paths_task')?>'}
             ],
             success: function(r) {
-                jQuery.fn.dialog.hideLoader();
-                $("#ccm-dialog-progress-bar").jqdialog('open');
-                window.location.reload();
+                $('h4[data-progress-bar-title]').html('<?=t('Mapping Content Types...')?>');
+                ccm_triggerProgressiveOperation(
+                    '<?=$view->action('run_batch_content_map_content_types_task')?>',
+                    [
+                        {'name': 'id', 'value': '<?=$batch->getID()?>'},
+                        {'name': 'ccm_token', 'value': '<?=Core::make('token')->generate('run_batch_content_map_content_types_task')?>'}
+                    ],
+                    '',
+                    function() {
+                        $('h4[data-progress-bar-title]').html('<?=t('Transforming Content Types...')?>');
+                        ccm_triggerProgressiveOperation(
+                            '<?=$view->action('run_batch_content_transform_content_types_task')?>',
+                            [
+                                {'name': 'id', 'value': '<?=$batch->getID()?>'},
+                                {'name': 'ccm_token', 'value': '<?=Core::make('token')->generate('run_batch_content_transform_content_types_task')?>'}
+                            ],
+                            '',
+                            function() {
+                                window.location.reload();
+                            },
+                            false,
+                            $element
+                        );
+                    },
+                    false,
+                    $element
+                );
             }
         });
     }
@@ -168,8 +202,8 @@ $dh = Core::make('helper/date');
 
         $('a[data-action=rescan-batch]').on('click', function(e) {
             e.preventDefault();
-            rescanBatchItems();
             showRescanDialog();
+            rescanBatchItems($('div[data-progress-bar-wrapper=rescan]'));
         });
 
         var uploadErrors = [];
@@ -191,8 +225,8 @@ $dh = Core::make('helper/date');
 
             start: function() {
                 $('div#ccm-dialog-add-to-batch input, div#ccm-dialog-add-to-batch select').prop('disabled', true);
-                $('div.ccm-dialog-add-to-batch-progress-bar').show();
-                $('div.ccm-dialog-add-to-batch-progress-bar h4').html('<?=t('Uploading File...')?>');
+                $('div[data-progress-bar=add-to-batch]').show();
+                $('div[data-progress-bar=add-to-batch] h4').html('<?=t('Uploading File...')?>');
                 uploadErrors = [];
             },
             progressall: function (e, data) {
@@ -231,13 +265,11 @@ $dh = Core::make('helper/date');
                         str += o.error + "<br>";
                     });
                     ConcreteAlert.dialog('<?=t('Error')?>', str);
-                    $('div.ccm-dialog-add-to-batch-progress-bar').hide();
-                    $('div.ccm-dialog-add-to-batch-progress-bar h4').html('');
+                    $('div[data-progress-bar=add-to-batch]').hide();
+                    $('div[data-progress-bar=add-to-batch] h4').html('');
 
                 } else {
-                    $('div.ccm-dialog-add-to-batch-progress-bar div.progress').replaceWith($('#ccm-dialog-batch-rescan-progress-bar div.progress'));
-                    $('div.ccm-dialog-add-to-batch-progress-bar h4').html('<?=t('Scanning Batch...')?>');
-                    rescanBatchItems();
+                    rescanBatchItems($('div[data-progress-bar-wrapper=add-to-batch]'));
                 }
             }
 

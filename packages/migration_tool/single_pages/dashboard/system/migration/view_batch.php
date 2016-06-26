@@ -40,7 +40,7 @@ $dh = Core::make('helper/date');
         <div class="ccm-ui">
             <h4 data-progress-bar-title="rescan"></h4>
             <div data-progress-bar-wrapper="rescan">
-                <div class="progress progress-bar-striped progress-striped active" style="opacity: 0.5">
+                <div class="progress progress-bar-striped progress-striped active">
                     <div class="progress-bar" style="width: 100%;"></div>
                 </div>
             </div>
@@ -231,7 +231,7 @@ $dh = Core::make('helper/date');
             },
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('div.ccm-dialog-add-to-batch-progress-bar div.progress-bar').css(
+                $('div[data-progress-bar=add-to-batch] div.progress-bar').css(
                     'width',
                     progress + '%'
                 );

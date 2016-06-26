@@ -76,4 +76,9 @@ abstract class AttributeValue
         }
     }
 
+    public function __sleep()
+    {
+        return array('id');
+    }
+
 }

@@ -72,7 +72,6 @@ class Target implements TargetInterface
                         $mapper = new EmptyMapper();
                     }
 
-                    $targetItemList = $mappers->createTargetItemList($this->batch, $mapper);
                     $untransformed = $transformer->getUntransformedEntityObjects($mapper, $this->batch);
                     foreach ($untransformed as $entity) {
                         $items[] = array(

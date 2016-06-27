@@ -13,6 +13,7 @@ interface MapperInterface
     public function getHandle();
     public function getItems(BatchInterface $batch);
     public function getInstalledTargetItems(BatchInterface $batch);
+    public function getCorePropertyTargetItems(BatchInterface $batch);
     public function getBatchTargetItems(BatchInterface $batch);
     public function getMatchedTargetItem(BatchInterface $batch, ItemInterface $item);
     public function getTargetItemContentObject(TargetItemInterface $targetItem);

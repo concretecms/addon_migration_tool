@@ -88,6 +88,11 @@ class ComposerOutputContent implements MapperInterface
         return array();
     }
 
+    public function getCorePropertyTargetItems(BatchInterface $batch)
+    {
+        return array();
+    }
+
     public function getInstalledTargetItems(BatchInterface $batch)
     {
         $em = \Package::getByHandle('migration_tool')->getEntityManager();

@@ -6,7 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ImporterInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class AddressImporter implements ImporterInterface
+class AddressImporter extends AbstractImporter
 {
     public function parse(\SimpleXMLElement $node)
     {

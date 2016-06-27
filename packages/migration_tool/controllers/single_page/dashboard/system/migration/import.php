@@ -161,38 +161,6 @@ class Import extends DashboardPageController
         }
     }
 
-    /*
-    public function run_batch_content_tasks()
-    {
-        if (!$this->token->validate('run_batch_content_tasks')) {
-            $this->error->add($this->token->getErrorMessage());
-        }
-        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
-        $batch = $r->findOneById($this->request->request->get('id'));
-        if (!is_object($batch)) {
-            $this->error->add(t('Invalid batch.'));
-        }
-        if (!$this->error->has()) {
-            $target = new Target($batch);
-            $mappers = \Core::make('migration/manager/mapping');
-            $processor = new Processor($target);
-            $processor->registerTask(new NormalizePagePathsTask());
-            $processor->registerTask(new MapContentTypesTask($mappers));
-            $processor->process();
-
-            $this->entityManager->flush();
-
-            $processor = new Processor($target);
-            $processor->registerTask(new TransformContentTypesTask($mappers));
-            $processor->process();
-
-            $this->entityManager->persist($batch);
-            $this->entityManager->flush();
-            return new JsonResponse($batch);
-        }
-        $this->view();
-    }
-    */
 
     public function run_batch_content_normalize_page_paths_task()
     {
@@ -451,14 +419,7 @@ class Import extends DashboardPageController
 
             $this->entityManager->flush();
 
-            $target = new Target($batch);
-            $processor = new Processor($target);
-            $processor->registerTask(new TransformContentTypesTask($mappers));
-            $processor->process();
-
-            $this->entityManager->flush();
-
-            $this->flash('message', t('Batch mappings updated.'));
+            $this->flash('message', t('Batch mappings updated. Full changes will not take effect until batch items are rescanned.'));
             $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
         }
     }

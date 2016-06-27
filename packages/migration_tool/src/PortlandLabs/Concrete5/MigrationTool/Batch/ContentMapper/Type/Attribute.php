@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 use Concrete\Core\Attribute\Key\CollectionKey;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformableEntityMapperInterface;
+use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\ShortDescriptionTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\CollectionAttributeComposerFormLayoutSetControl;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
@@ -126,6 +127,12 @@ class Attribute implements MapperInterface, TransformableEntityMapperInterface
             }
         }
 
+        return $items;
+    }
+
+    public function getCorePropertyTargetItems(BatchInterface $batch)
+    {
+        $items = array(new ShortDescriptionTargetItem($this));
         return $items;
     }
 

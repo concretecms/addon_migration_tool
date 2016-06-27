@@ -45,6 +45,7 @@ class BlockType implements TransformerInterface
 
     public function transform($entity, MapperInterface $mapper, ItemInterface $item, TargetItem $targetItem, BatchInterface $batch)
     {
+
         $bt = $mapper->getTargetItemContentObject($targetItem);
         if (is_object($bt)) {
             $type = $bt->getBlockTypeHandle();
@@ -69,14 +70,8 @@ class BlockType implements TransformerInterface
                 $value = null;
                 if ($entity->getValue()) {
                     $xml = simplexml_load_string($entity->getValue());
-                    $value = $driver->parse($xml);
+                    $driver->import($xml, $entity);
                 }
-                $block = $entity->getBlock();
-                $block->setBlockValue($value);
-                $manager = \Package::getByHandle('migration_tool')->getEntityManager();
-                $manager->persist($block);
-                $manager->remove($entity);
-                $manager->flush();
             }
         }
     }

@@ -98,6 +98,11 @@ class PageType implements MapperInterface
         return $items;
     }
 
+    public function getCorePropertyTargetItems(BatchInterface $batch)
+    {
+        return array();
+    }
+
     public function getInstalledTargetItems(BatchInterface $batch)
     {
         $types = Type::getList();

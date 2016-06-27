@@ -130,23 +130,6 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
         }
     }
 
-    public function getBatchTargetItems(BatchInterface $batch)
-    {
-        $collection = $batch->getObjectCollection('block_type');
-        $items = array();
-        if ($collection) {
-            foreach ($collection->getTypes() as $type) {
-                if (!$type->getPublisherValidator()->skipItem()) {
-                    $item = new TargetItem($this);
-                    $item->setItemId($type->getHandle());
-                    $item->setItemName($type->getHandle());
-                    $items[] = $item;
-                }
-            }
-        }
-        return $items;
-    }
-
     public function getInstalledTargetItems(BatchInterface $batch)
     {
         $list = new BlockTypeList();
@@ -164,6 +147,28 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
         }
 
         return $items;
+    }
+
+    public function getBatchTargetItems(BatchInterface $batch)
+    {
+        $collection = $batch->getObjectCollection('block_type');
+        $items = array();
+        if ($collection) {
+            foreach ($collection->getTypes() as $type) {
+                if (!$type->getPublisherValidator()->skipItem()) {
+                    $item = new TargetItem($this);
+                    $item->setItemId($type->getHandle());
+                    $item->setItemName($type->getHandle());
+                    $items[] = $item;
+                }
+            }
+        }
+        return $items;
+    }
+
+    public function getCorePropertyTargetItems(BatchInterface $batch)
+    {
+        return array();
     }
 
     public function getTargetItemContentObject(TargetItemInterface $targetItem)

@@ -15,7 +15,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayout;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class AreaLayoutImporter implements ImporterInterface
+class AreaLayoutImporter extends AbstractImporter
 {
     /**
      * @param $type

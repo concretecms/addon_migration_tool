@@ -7,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ImporterInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class StandardImporter implements ImporterInterface
+class StandardImporter extends AbstractImporter
 {
     public function createBlockValueObject()
     {

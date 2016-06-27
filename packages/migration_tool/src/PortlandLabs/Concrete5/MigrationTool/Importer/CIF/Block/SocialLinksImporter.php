@@ -3,11 +3,10 @@ namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\StandardBlockDataRecord;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\StandardBlockValue;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ImporterInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class SocialLinksImporter implements ImporterInterface
+class SocialLinksImporter extends AbstractImporter
 {
     public function parse(\SimpleXMLElement $node)
     {

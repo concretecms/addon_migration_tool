@@ -72,6 +72,11 @@ class User implements MapperInterface
         return array();
     }
 
+    public function getCorePropertyTargetItems(BatchInterface $batch)
+    {
+        return array();
+    }
+
     public function getInstalledTargetItems(BatchInterface $batch)
     {
         $ul = new UserList();

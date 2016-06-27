@@ -32,7 +32,7 @@ abstract class AttributeValue
     }
 
     /**
-     * @return mixed
+     * @return \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute
      */
     public function getAttribute()
     {

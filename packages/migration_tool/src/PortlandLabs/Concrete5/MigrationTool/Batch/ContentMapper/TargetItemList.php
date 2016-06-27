@@ -23,10 +23,16 @@ class TargetItemList
     }
 
 
+    public function getMapperCorePropertyTargetItems()
+    {
+        return $this->mapper->getCorePropertyTargetItems($this->batch);
+    }
+
     public function getMapperInstalledTargetItems()
     {
         return $this->mapper->getInstalledTargetItems($this->batch);
     }
+
 
     public function getMapperBatchTargetItems()
     {
@@ -90,6 +96,7 @@ class TargetItemList
     {
         $items = array_merge(
             $this->getMapperBatchTargetItems(),
+            $this->getMapperCorePropertyTargetItems(),
             $this->getMapperInstalledTargetItems(),
             $this->getInternalTargetItems());
         $item = false;

@@ -21,6 +21,13 @@ class TreePageJsonFormatter implements \JsonSerializable
         $page = $this->page;
         $collection = $page->getCollection();
         $r = \Package::getByHandle('migration_tool')->getEntityManager()->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+
+        $descriptionNode = new \stdClass();
+        $descriptionNode->iconclass = 'fa fa-quote-left';
+        $descriptionNode->title = t('Description');
+        $descriptionNode->itemvalue = $this->page->getDescription();
+        $nodes[] = $descriptionNode;
+
         $batch = $r->findFromCollection($collection);
         $validator = $collection->getRecordValidator($batch);
         $messages = $validator->validate($page);

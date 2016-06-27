@@ -74,6 +74,11 @@ class Area implements MapperInterface
         return array();
     }
 
+    public function getCorePropertyTargetItems(BatchInterface $batch)
+    {
+        return array();
+    }
+
     public function getInstalledTargetItems(BatchInterface $batch)
     {
         $areas = \Concrete\Core\Area\Area::getHandleList();

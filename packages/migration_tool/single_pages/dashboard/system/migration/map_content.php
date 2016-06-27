@@ -44,7 +44,23 @@ $dh = Core::make('helper/date');
                         <?php 
 }
     ?>
-                        <?php if (count($targetItemList->getMapperInstalledTargetItems())) {
+
+        <?php if (count($targetItemList->getMapperCorePropertyTargetItems())) {
+            ?>
+            <optgroup label="** <?=t('Installed %s', $mapper->getMappedItemPluralName())?>"></optgroup>
+            <?php foreach ($targetItemList->getMapperCorePropertyTargetItems() as $targetItem) {
+                ?>
+                <option <?php if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) {
+                        ?>selected="selected" <?php
+                }
+                ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
+                <?php
+            }
+        }
+            ?>
+
+
+            <?php if (count($targetItemList->getMapperInstalledTargetItems())) {
     ?>
                             <optgroup label="** <?=t('Installed %s', $mapper->getMappedItemPluralName())?>"></optgroup>
                             <?php foreach ($targetItemList->getMapperInstalledTargetItems() as $targetItem) {

@@ -34,6 +34,11 @@ class EmptyMapper implements MapperInterface, TransformableEntityMapperInterface
         return array();
     }
 
+    public function getCorePropertyTargetItems(BatchInterface $batch)
+    {
+        return array();
+    }
+
     public function getBatchTargetItems(BatchInterface $batch)
     {
         return array();

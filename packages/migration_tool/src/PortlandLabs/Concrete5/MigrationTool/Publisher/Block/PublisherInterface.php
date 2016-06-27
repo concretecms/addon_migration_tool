@@ -11,5 +11,5 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 interface PublisherInterface
 {
-    public function publish(Batch $batch, BlockType $bt, Page $page, $area, BlockValue $value);
+    public function publish(Batch $batch, $bt, Page $page, $area, BlockValue $value);
 }

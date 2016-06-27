@@ -5,13 +5,12 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue;
 use Concrete\Core\Page\Page;
-use Concrete\Core\Block\BlockType\BlockType;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class ContentPublisher implements PublisherInterface
 {
-    public function publish(Batch $batch, BlockType $bt, Page $page, $area, BlockValue $value)
+    public function publish(Batch $batch, $bt, Page $page, $area, BlockValue $value)
     {
         $data = $value->getRecords()->get(0)->getData();
         $inspector = \Core::make('migration/import/value_inspector', array($batch));

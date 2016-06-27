@@ -11,7 +11,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CIFPublisher implements PublisherInterface
 {
-    public function publish(Batch $batch, BlockType $bt, Page $page, $area, BlockValue $value)
+    public function publish(Batch $batch, $bt, Page $page, $area, BlockValue $value)
     {
         $btc = $bt->getController();
         $bx = simplexml_load_string($value->getValue());

@@ -12,7 +12,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class StandardPublisher implements PublisherInterface
 {
-    public function publish(Batch $batch, BlockType $bt, Page $page, $area, BlockValue $value)
+    public function publish(Batch $batch, $bt, Page $page, $area, BlockValue $value)
     {
         $records = $value->getRecords();
         $inspector = \Core::make('import/value_inspector');

@@ -8,6 +8,7 @@ use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublisherRoutineProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\TargetItemProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\MapContentTypesTask;
@@ -261,16 +262,33 @@ class Import extends DashboardPageController
         if (!$this->token->validate('create_content_from_batch')) {
             $this->error->add($this->token->getErrorMessage());
         }
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($this->request->request->get('id'));
+        if (!is_object($batch)) {
+            $this->error->add(t('Invalid batch.'));
+        }
         if (!$this->error->has()) {
-            $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
-            $batch = $r->findOneById($this->request->request->get('id'));
-            if (is_object($batch)) {
-                // Create a new
-                $publisher = new Publisher($batch);
-                $publisher->publish();
-                $this->flash('success', t('Batch drafts published successfully.'));
-                $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
+            $target = new Target($batch);
+            $target->returnPublisherItems();
+            $processor = new PublisherRoutineProcessor($target);
+            if ($_POST['process']) {
+                foreach ($processor->receive() as $task) {
+                    $processor->execute($task);
+                }
+                $obj = new \stdClass();
+                $obj->totalItems = $processor->getTotalTasks();
+                echo json_encode($obj);
+                exit;
+            } else {
+                $processor->process();
             }
+            $totalItems = $processor->getTotalTasks();
+            ob_start();
+            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2("%d task", "%d tasks", $totalItems)));
+            $response = ob_get_contents();
+            ob_end_clean();
+            $response = new \Concrete\Core\Http\Response($response);
+            return $response;
         }
         $this->view();
     }

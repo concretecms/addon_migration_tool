@@ -16,6 +16,8 @@ abstract class AbstractPageRoutine implements RoutineInterface
 {
     protected $batch;
 
+    abstract public function getPageRoutineAction($page);
+
     /**
      * @return mixed
      */
@@ -30,11 +32,6 @@ abstract class AbstractPageRoutine implements RoutineInterface
     public function setBatch($batch)
     {
         $this->batch = $batch;
-    }
-
-    protected function getPageByPath(Batch $batch, $path)
-    {
-        return \Page::getByPath('/!import_batches/' . $batch->getID() . $path, 'RECENT');
     }
 
     public function getPageCollection(BatchInterface $batch)
@@ -82,20 +79,24 @@ abstract class AbstractPageRoutine implements RoutineInterface
         return $pages;
     }
 
-    public function getTargetItem($mapper, $subject)
+    public function getPublisherRoutineActions(BatchInterface $batch)
     {
-        if ($subject) {
-            /**
-             * @var $mappers MapperManagerInterface
-             */
-            $mappers = \Core::make('migration/manager/mapping');
-            $mapper = $mappers->driver($mapper);
-            $list = $mappers->createTargetItemList($this->batch, $mapper);
-            $item = new Item($subject);
-            $targetItem = $list->getSelectedTargetItem($item);
-            if (!($targetItem instanceof UnmappedTargetItem || $targetItem instanceof IgnoredTargetItem)) {
-                return $mapper->getTargetItemContentObject($targetItem);
+        $pages = $this->getPagesOrderedForImport($batch);
+
+        if (!$pages) {
+            return array();
+        }
+
+        // Now loop through all pages, and build them
+        $actions = array();
+        foreach ($pages as $page) {
+            if (!$page->getPublisherValidator()->skipItem()) {
+                $action = $this->getPageRoutineAction($page);
+                $actions[] = $action;
             }
         }
+
+        return $actions;
     }
+
 }

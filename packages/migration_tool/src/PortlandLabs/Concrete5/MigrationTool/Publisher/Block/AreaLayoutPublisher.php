@@ -38,7 +38,7 @@ class AreaLayoutPublisher implements PublisherInterface
                 /*
                  * @var $publisher BlockPublisherInterface
                  */
-                $subBlockType = $routine->getTargetItem('block_type', $block->getType());
+                $subBlockType = $routine->getTargetItem($batch, 'block_type', $block->getType());
                 if (is_object($subBlockType)) {
                     $b = $publisher->publish($batch, $subBlockType, $page, $subarea, $subValue);
                     $styleSet = $block->getStyleSet();

@@ -7,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class CreatePermissionsRoutine implements RoutineInterface
+class CreatePermissionsRoutine extends AbstractRoutine
 {
     public function execute(BatchInterface $batch)
     {

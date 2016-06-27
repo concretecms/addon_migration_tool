@@ -47,18 +47,6 @@ $dh = Core::make('helper/date');
         </div>
     </div>
 
-    <div id="ccm-dialog-create-content" class="ccm-ui">
-        <form method="post" action="<?=$view->action('create_content_from_batch')?>">
-            <?=Core::make('token')->output('create_content_from_batch')?>
-            <input type="hidden" name="id" value="<?=$batch->getID()?>">
-            <p><?=t('Create site content from the contents of this batch?')?></p>
-            <div class="dialog-buttons">
-                <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
-                <button class="btn btn-primary pull-right" onclick="$('#ccm-dialog-create-content form').submit()"><?=t('Import Batch')?></button>
-            </div>
-        </form>
-    </div>
-
     <div id="ccm-dialog-delete-batch" class="ccm-ui">
         <form method="post" action="<?=$view->action('delete_batch')?>">
             <?=Loader::helper("validation/token")->output('delete_batch')?>
@@ -82,6 +70,26 @@ $dh = Core::make('helper/date');
             </div>
         </form>
     </div>
+
+    <div id="ccm-dialog-create-content" class="ccm-ui">
+        <form method="post">
+            <p data-description="create-content"><?=t('Create site content from the contents of this batch?')?></p>
+            <div data-progress-bar="create-content" style="display: none">
+                <h4 data-progress-bar-title="create-content"></h4>
+                <div data-progress-bar-wrapper="create-content">
+                    <div class="progress progress-striped active">
+                        <div class="progress-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialog-buttons">
+                <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
+                <button class="btn btn-primary pull-right" data-action="publish-content"><?=t('Publish Batch')?></button>
+            </div>
+        </form>
+    </div>
+
 
     <div id="ccm-dialog-add-to-batch" class="ccm-ui">
         <form method="post" enctype="multipart/form-data">
@@ -204,6 +212,26 @@ $dh = Core::make('helper/date');
             e.preventDefault();
             showRescanDialog();
             rescanBatchItems($('div[data-progress-bar-wrapper=rescan]'));
+        });
+
+        $('button[data-action=publish-content]').on('click', function(e) {
+            $('p[data-description=create-content]').hide();
+            $('div[data-progress-bar=create-content]').show();
+            $('div[data-progress-bar=create-content] h4').html('<?=t('Publishing Content...')?>');
+
+            ccm_triggerProgressiveOperation(
+                '<?=$view->action('create_content_from_batch')?>',
+                [
+                    {'name': 'id', 'value': '<?=$batch->getID()?>'},
+                    {'name': 'ccm_token', 'value': '<?=Core::make('token')->generate('create_content_from_batch')?>'}
+                ],
+                '',
+                function() {
+                    window.location.reload()
+                },
+                false,
+                $('div[data-progress-bar-wrapper=create-content]')
+            );
         });
 
         var uploadErrors = [];

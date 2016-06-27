@@ -7,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class CreateAttributesRoutine implements RoutineInterface
+class CreateAttributesRoutine extends AbstractRoutine
 {
     public function execute(BatchInterface $batch)
     {

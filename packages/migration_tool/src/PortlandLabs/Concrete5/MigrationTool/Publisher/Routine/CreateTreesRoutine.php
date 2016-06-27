@@ -11,7 +11,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\TreeNode;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class CreateTreesRoutine implements RoutineInterface
+class CreateTreesRoutine extends AbstractRoutine
 {
     protected function add(TreeNode $node, Node $parent)
     {

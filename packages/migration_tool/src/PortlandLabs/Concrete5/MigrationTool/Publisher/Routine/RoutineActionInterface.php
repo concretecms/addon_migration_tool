@@ -5,7 +5,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-interface RoutineInterface
+interface RoutineActionInterface
 {
-    public function getPublisherRoutineActions(BatchInterface $batch);
+    public function execute(BatchInterface $batch);
 }

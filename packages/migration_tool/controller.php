@@ -115,6 +115,9 @@ class Controller extends Package
 
     public function on_start()
     {
+
+        require $this->getPackagePath() . '/helpers.php';
+        
         \Core::bind('migration/batch/page/validator', function ($app, $batch) {
             if (isset($batch[0])) {
                 $v = new Validator($batch[0]);

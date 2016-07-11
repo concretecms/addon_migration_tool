@@ -28,6 +28,12 @@ class TreePageJsonFormatter implements \JsonSerializable
         $descriptionNode->itemvalue = $this->page->getDescription();
         $nodes[] = $descriptionNode;
 
+        $dateNode = new \stdClass();
+        $dateNode->iconclass = 'fa fa-calendar';
+        $dateNode->title = t('Date');
+        $dateNode->itemvalue = $this->page->getPublicDate();
+        $nodes[] = $dateNode;
+
         $batch = $r->findFromCollection($collection);
         $validator = $collection->getRecordValidator($batch);
         $messages = $validator->validate($page);

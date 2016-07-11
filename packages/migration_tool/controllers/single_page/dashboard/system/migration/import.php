@@ -355,7 +355,9 @@ class Import extends DashboardPageController
                     } else {
                         $ih = new Importer();
                         $response = $ih->import($_FILES['file']['tmp_name'], $_FILES['file']['name']);
-                        if (!($response instanceof \Concrete\Core\File\Version)) {
+                        if (!($response instanceof \Concrete\Core\File\Version) && !compat_is_version_8()) {
+                            throw new \Exception(Importer::getErrorMessage($response));
+                        } else if (!($response instanceof \Concrete\Core\Entity\File\Version) && compat_is_version_8()) {
                             throw new \Exception(Importer::getErrorMessage($response));
                         } else {
                             $file = $response->getFile();

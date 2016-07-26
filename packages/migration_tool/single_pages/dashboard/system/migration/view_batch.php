@@ -16,7 +16,7 @@ $dh = Core::make('helper/date');
             <?php foreach ($mappers->getDrivers() as $mapper) {
     ?>
                 <li><a href="<?=$view->action('map_content', $batch->getId(), $mapper->getHandle())?>"><?=$mapper->getMappedItemPluralName()?></a></li>
-            <?php 
+            <?php
 } ?>
             <?php /*
             <li><a href="<?=$view->action('find_and_replace', $batch->getID())?>"><?=t("Find and Replace")?></a></li>
@@ -92,7 +92,7 @@ $dh = Core::make('helper/date');
 
 
     <div id="ccm-dialog-add-to-batch" class="ccm-ui">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" action="<?=$view->action('add_content_to_batch')?>" enctype="multipart/form-data">
             <?=Loader::helper("validation/token")->output('add_content_to_batch')?>
             <input type="hidden" name="id" value="<?=$batch->getID()?>">
             <div class="form-group">
@@ -116,7 +116,7 @@ $dh = Core::make('helper/date');
                 <h4 data-progress-bar-title="add-to-batch"></h4>
                 <div data-progress-bar-wrapper="add-to-batch">
                     <div class="progress progress-striped active">
-                        <div class="progress-bar" style="width: 0%;"></div>
+                        <div class="progress-bar" style="width: 100%;"></div>
                     </div>
                 </div>
             </div>
@@ -137,7 +137,7 @@ $dh = Core::make('helper/date');
 
     <?php if ($batch->getNotes()) { ?>
         <p><?=$batch->getNotes()?></p>
-    <?php 
+    <?php
         }
     ?>
 
@@ -236,72 +236,29 @@ $dh = Core::make('helper/date');
 
         var uploadErrors = [];
 
-        $('input[name=file]').fileupload({
-            dataType: 'json',
-            add: function (e, data) {
-                $("button[data-action=add-content]").off('click').on('click', function () {
-                    data.submit();
-                });
-            },
-            url: '<?=$view->action('add_content_to_batch')?>',
-            formData: {
-                'ccm_token': $('#ccm-dialog-add-to-batch input[name=ccm_token]').val(),
-                'id': $('#ccm-dialog-add-to-batch input[name=id]').val(),
-                'format': $('#ccm-dialog-add-to-batch select[name=format]').val(),
-                'importMethod': $('#ccm-dialog-add-to-batch input[name=importMethod]:checked').val()
-            },
 
-            start: function() {
-                $('div#ccm-dialog-add-to-batch input, div#ccm-dialog-add-to-batch select').prop('disabled', true);
-                $('div[data-progress-bar=add-to-batch]').show();
-                $('div[data-progress-bar=add-to-batch] h4').html('<?=t('Uploading File...')?>');
-                uploadErrors = [];
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('div[data-progress-bar=add-to-batch] div.progress-bar').css(
-                    'width',
-                    progress + '%'
-                );
-            },
-
-            error: function(r) {
-                var message = r.responseText;
-                try {
-                    message = jQuery.parseJSON(message).errors;
-                    _(message).each(function(error) {
-                        uploadErrors.push({ name:name, error:error });
-                    });
-                } catch (e) {
-                    ConcreteAlert.dialog('<?=t('Error')?>', r.statusText);
-                }
-            },
-            done: function(e, data)
-            {
-                if (data.result.error) {
-                    _(data.result.errors).each(function(error) {
-                        uploadErrors.push({ name:name, error:error });
-                    });
-                }
-            },
-            stop: function() {
-
-                $('div#ccm-dialog-add-to-batch input, div#ccm-dialog-add-to-batch select').prop('disabled', false);
-                if (uploadErrors.length) {
-                    var str = '';
-                    $.each(uploadErrors, function(i, o) {
-                        str += o.error + "<br>";
-                    });
-                    ConcreteAlert.dialog('<?=t('Error')?>', str);
-                    $('div[data-progress-bar=add-to-batch]').hide();
-                    $('div[data-progress-bar=add-to-batch] h4').html('');
-
-                } else {
+        $("button[data-action=add-content]").on('click.uploadFile', function () {
+            var submitSuccess = false;
+            $('div[data-progress-bar=add-to-batch]').show();
+            $('div[data-progress-bar=add-to-batch] h4').html('<?=t('Uploading File...')?>');
+            $('#ccm-dialog-add-to-batch form').concreteAjaxForm({
+                beforeSubmit: function() {
+                    // Nothing - we don't want the loader
+                },
+                success: function(r) {
+                    submitSuccess = true;
                     rescanBatchItems($('div[data-progress-bar-wrapper=add-to-batch]'));
+                },
+                complete: function() {
+                    if (!submitSuccess) {
+                        $('div[data-progress-bar=add-to-batch]').hide();
+                        $('div[data-progress-bar=add-to-batch] h4').html('');
+                    }
                 }
-            }
+            }).submit();
 
         });
+        
     });
 
 </script>

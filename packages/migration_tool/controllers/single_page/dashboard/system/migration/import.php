@@ -160,6 +160,7 @@ class Import extends DashboardPageController
         } else {
             return $this->app->make('helper/ajax')->sendError($this->error);
         }
+        $this->app->shutdown();
     }
 
 

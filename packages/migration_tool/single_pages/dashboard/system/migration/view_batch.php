@@ -258,7 +258,7 @@ $dh = Core::make('helper/date');
             }).submit();
 
         });
-        
+
     });
 
 </script>

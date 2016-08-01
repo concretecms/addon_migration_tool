@@ -12,6 +12,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAttri
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlocksTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockTypesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePagePathTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTemplatesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateReferencedContentItemsTask;
@@ -124,6 +125,7 @@ class Controller extends Package
                 $v->registerTask(new ValidateAttributesTask());
                 $v->registerTask(new ValidatePageTemplatesTask());
                 $v->registerTask(new ValidatePageTypesTask());
+                $v->registerTask(new ValidatePagePathTask());
                 $v->registerTask(new ValidateUsersTask());
                 $v->registerTask(new ValidateBlocksTask());
                 $v->registerTask(new ValidateAreasTask());

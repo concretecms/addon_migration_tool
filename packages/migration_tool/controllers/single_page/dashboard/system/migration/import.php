@@ -294,6 +294,17 @@ class Import extends DashboardPageController
         $this->view();
     }
 
+    protected function clearQueues()
+    {
+        $queue = \Concrete\Core\Foundation\Queue\Queue::get('publisher_routine_processor');
+        $queue->deleteQueue();
+        $queue = \Concrete\Core\Foundation\Queue\Queue::get('untransformed_item_processor');
+        $queue->deleteQueue();
+        $queue = \Concrete\Core\Foundation\Queue\Queue::get('target_item_processor');
+        $queue->deleteQueue();
+
+    }
+
     public function view()
     {
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
@@ -305,6 +316,7 @@ class Import extends DashboardPageController
 
     public function view_batch($id = null)
     {
+        $this->clearQueues();
         $this->requireAsset('migration/view-batch');
         $this->requireAsset('core/app/editable-fields');
         $this->requireAsset('jquery/fileupload');

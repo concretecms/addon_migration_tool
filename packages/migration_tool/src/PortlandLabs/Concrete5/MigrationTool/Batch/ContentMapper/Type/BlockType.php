@@ -118,13 +118,15 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
             return $targetItem;
         } else { // we check the current batch.
             $collection = $batch->getObjectCollection('block_type');
-            foreach ($collection->getTypes() as $type) {
-                if ($type->getHandle() == $item->getIdentifier()) {
-                    $targetItem = new TargetItem($this);
-                    $targetItem->setItemId($type->getHandle());
-                    $targetItem->setItemName($type->getHandle());
+            if (is_object($collection)) {
+                foreach ($collection->getTypes() as $type) {
+                    if ($type->getHandle() == $item->getIdentifier()) {
+                        $targetItem = new TargetItem($this);
+                        $targetItem->setItemId($type->getHandle());
+                        $targetItem->setItemName($type->getHandle());
 
-                    return $targetItem;
+                        return $targetItem;
+                    }
                 }
             }
         }

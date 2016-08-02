@@ -100,13 +100,15 @@ class Attribute implements MapperInterface, TransformableEntityMapperInterface
             return $targetItem;
         } else { // we check the current batch.
             $collection = $batch->getObjectCollection('attribute_key');
-            foreach ($collection->getKeys() as $key) {
-                if ($key->getHandle() == $item->getIdentifier()) {
-                    $targetItem = new TargetItem($this);
-                    $targetItem->setItemId($key->getHandle());
-                    $targetItem->setItemName($key->getHandle());
+            if (is_object($collection)) {
+                foreach ($collection->getKeys() as $key) {
+                    if ($key->getHandle() == $item->getIdentifier()) {
+                        $targetItem = new TargetItem($this);
+                        $targetItem->setItemId($key->getHandle());
+                        $targetItem->setItemName($key->getHandle());
 
-                    return $targetItem;
+                        return $targetItem;
+                    }
                 }
             }
         }

@@ -80,13 +80,15 @@ class PageTemplate implements MapperInterface
             return $targetItem;
         } else { // we check the current batch.
             $collection = $batch->getObjectCollection('page_template');
-            foreach ($collection->getTemplates() as $template) {
-                if ($template->getHandle() == $item->getIdentifier()) {
-                    $targetItem = new TargetItem($this);
-                    $targetItem->setItemId($template->getHandle());
-                    $targetItem->setItemName($template->getName());
+            if (is_object($collection)) {
+                foreach ($collection->getTemplates() as $template) {
+                    if ($template->getHandle() == $item->getIdentifier()) {
+                        $targetItem = new TargetItem($this);
+                        $targetItem->setItemId($template->getHandle());
+                        $targetItem->setItemName($template->getName());
 
-                    return $targetItem;
+                        return $targetItem;
+                    }
                 }
             }
         }

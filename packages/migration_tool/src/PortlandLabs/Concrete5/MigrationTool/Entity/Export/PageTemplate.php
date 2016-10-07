@@ -4,6 +4,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
 /**
  * @Entity
  */
-class PageTemplate extends StandardExportItem
+class PageTemplate extends AbstractStandardExportItem
 {
 }

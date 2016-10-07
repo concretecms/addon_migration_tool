@@ -4,6 +4,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
 /**
  * @Entity
  */
-class ConversationRatingType extends StandardExportItem
+class ConversationRatingType extends AbstractStandardExportItem
 {
 }

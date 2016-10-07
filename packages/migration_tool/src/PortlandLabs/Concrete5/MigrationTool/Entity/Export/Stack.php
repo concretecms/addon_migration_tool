@@ -4,7 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
 /**
  * @Entity
  */
-class Stack extends StandardExportItem
+class Stack extends AbstractStandardExportItem
 {
 
     /**

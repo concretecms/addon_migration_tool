@@ -4,6 +4,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
 /**
  * @Entity
  */
-class Group extends StandardExportItem
+class Group extends AbstractStandardExportItem
 {
 }

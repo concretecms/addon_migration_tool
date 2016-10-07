@@ -78,6 +78,11 @@ class Page implements PublishableInterface
     protected $is_at_root = false;
 
     /**
+     * @Column(type="boolean")
+     */
+    protected $is_global = false;
+
+    /**
      * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute", mappedBy="page", cascade={"persist", "remove"})
      **/
     public $attributes;
@@ -372,4 +377,21 @@ class Page implements PublishableInterface
     {
         $this->package = $package;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIsGlobal()
+    {
+        return $this->is_global;
+    }
+
+    /**
+     * @param mixed $is_global
+     */
+    public function setIsGlobal($is_global)
+    {
+        $this->is_global = $is_global;
+    }
+
 }

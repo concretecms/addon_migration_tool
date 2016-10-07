@@ -28,12 +28,16 @@ class PageType extends AbstractType
     public function getResultColumns(ExportItem $exportItem)
     {
         $t = \Concrete\Core\Page\Type\Type::getByID($exportItem->getItemIdentifier());
-        $return = array();
         if (is_object($t)) {
-            $return[] = $t->getPageTypeDisplayName();
+            if (method_exists($t, 'getSiteTypeObject')) {
+                $siteType = $t->getSiteTypeObject();
+                if (!$siteType->isDefault()) {
+                    return array($siteType->getSiteTypeName() . ': ' . $t->getPageTypeDisplayName());
+                }
+            }
+            return array($t->getPageTypeDisplayName());
         }
-
-        return $return;
+        return array();
     }
 
     public function getItemsFromRequest($array)
@@ -53,7 +57,7 @@ class PageType extends AbstractType
 
     public function getResults(Request $request)
     {
-        $list = \Concrete\Core\Page\Type\Type::getList();
+        $list = \Concrete\Core\Page\Type\Type::getList(true);
         $items = array();
         foreach ($list as $t) {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\PageType();

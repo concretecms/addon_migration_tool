@@ -19,8 +19,8 @@ class StandardPublisher extends AbstractPublisher
         $controller = $type->getController();
         if (class_exists('\Concrete\Core\Entity\Attribute\Key\Type\Type')) {
             // version 8
-            $key_type = $controller->getAttributeKeyType();
-            return $this->publishAttribute($source, $key_type, $destination);
+            $settings = $controller->getAttributeKeySettings();
+            return $this->publishAttribute($source, $settings, $destination);
         }
     }
 }

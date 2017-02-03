@@ -85,6 +85,8 @@ class Controller extends Package
 
     protected function installSinglePages($pkg)
     {
+        require_once $this->getPackagePath() . '/helpers.php';
+
         foreach ($this->singlePages as $path) {
             if (Page::getByPath($path)->getCollectionID() <= 0) {
                 SinglePage::add($path, $pkg);
@@ -106,11 +108,15 @@ class Controller extends Package
 
         $batches = \Page::getByPath('/!import_batches');
         if (!is_object($batches) || $batches->isError()) {
-            $c = SinglePage::add('/!import_batches', $pkg);
+            if (compat_is_version_8()) {
+                $c = SinglePage::addGlobal('/!import_batches', $pkg);
+            } else {
+                $c = SinglePage::add('/!import_batches', $pkg);
+                $c->moveToRoot();
+            }
             $c->update(array('cName' => 'Import Batches'));
             $c->setOverrideTemplatePermissions(1);
             $c->setAttribute('icon_dashboard', 'fa fa-cubes');
-            $c->moveToRoot();
         }
     }
 

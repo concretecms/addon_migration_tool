@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
 
 /**
@@ -7,6 +6,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
  */
 class Stack extends AbstractStandardExportItem
 {
+
     /**
      * @Column(type="string", nullable=false)
      */
@@ -27,4 +27,9 @@ class Stack extends AbstractStandardExportItem
     {
         $this->stack_type = $stack_type;
     }
+
+
+
+
+
 }

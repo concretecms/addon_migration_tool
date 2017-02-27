@@ -1,11 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 interface TypeInterface
 {

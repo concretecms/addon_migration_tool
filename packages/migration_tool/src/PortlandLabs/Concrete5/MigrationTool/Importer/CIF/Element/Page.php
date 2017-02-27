@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
@@ -7,10 +6,11 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
+
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Sanitizer\PagePathSanitizer;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class Page implements ElementParserInterface
 {

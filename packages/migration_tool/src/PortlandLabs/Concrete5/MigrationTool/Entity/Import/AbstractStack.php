@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,6 +13,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\StackValidator;
  */
 abstract class AbstractStack implements PublishableInterface
 {
+
     abstract public function getType();
 
     abstract public function getStackFormatter();
@@ -102,7 +102,7 @@ abstract class AbstractStack implements PublishableInterface
         $this->path = $path;
     }
 
-    /**
+        /**
      * @return mixed
      */
     public function getName()

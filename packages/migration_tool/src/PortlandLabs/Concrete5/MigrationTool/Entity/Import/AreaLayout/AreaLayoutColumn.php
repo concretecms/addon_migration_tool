@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout;
 
 use Doctrine\Common\Collections\ArrayCollection;

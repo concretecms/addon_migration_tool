@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Tree\Node\Node;
@@ -7,9 +6,10 @@ use Concrete\Core\Tree\Node\NodeType;
 use Concrete\Core\Tree\Tree;
 use Concrete\Core\Tree\Type\Topic;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\TreeNode;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreateTreesRoutine extends AbstractRoutine
 {

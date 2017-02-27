@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKeyCategory;
 
 use Concrete\Core\Attribute\Key\Category;
@@ -8,7 +7,7 @@ use Concrete\Core\Package\Package;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\UserAttributeKeyCategoryInstance;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class UserPublisher implements PublisherInterface
 {
@@ -32,6 +31,7 @@ class UserPublisher implements PublisherInterface
             $key->setAttributeKeyEditableOnRegister($category->getEditableInRegistration());
             $key->setAttributeKeyRequiredOnRegister($category->getRequiredInRegistration());
             $key->setAttributeKeyDisplayedOnMemberList($category->getDisplayedInMemberList());
+
         } else {
             // Legacy
 

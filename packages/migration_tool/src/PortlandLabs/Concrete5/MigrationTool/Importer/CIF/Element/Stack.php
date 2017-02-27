@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
@@ -8,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\StackBlock;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\StackObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class Stack implements ElementParserInterface
 {
@@ -23,14 +22,13 @@ class Stack implements ElementParserInterface
     {
         if ($element->getName() == 'folder') {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\StackFolder();
-        } elseif ((string) $element['type'] == 'global_area') {
+        } else if ((string) $element['type'] == 'global_area') {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\GlobalArea();
         } else {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Stack();
         }
         $item->setName((string) $element['name']);
         $item->setPath((string) $element['path']);
-
         return $item;
     }
 
@@ -72,7 +70,7 @@ class Stack implements ElementParserInterface
                         }
                     }
                 }
-                ++$position;
+                $position++;
                 $collection->getStacks()->add($stack);
                 $stack->setCollection($collection);
             }

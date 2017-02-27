@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
@@ -8,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class TargetItemList
 {
@@ -23,6 +22,7 @@ class TargetItemList
         $this->repository = 'PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem';
     }
 
+
     public function getMapperCorePropertyTargetItems()
     {
         return $this->mapper->getCorePropertyTargetItems($this->batch);
@@ -32,6 +32,7 @@ class TargetItemList
     {
         return $this->mapper->getInstalledTargetItems($this->batch);
     }
+
 
     public function getMapperBatchTargetItems()
     {

@@ -16,7 +16,6 @@
         <td><?=$group->getName()?></td>
         <td><?=$group->getPath()?></td>
     <?php
-
 } ?>
     </tbody>
 </table>

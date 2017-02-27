@@ -1,5 +1,4 @@
 <?php
-
 namespace Concrete\Package\MigrationTool;
 
 use Concrete\Core\Asset\AssetList;
@@ -36,7 +35,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager as BlockPublish
 use PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type\Manager as ExporterItemTypeManager;
 use SinglePage;
 
-class controller extends Package
+class Controller extends Package
 {
     protected $pkgHandle = 'migration_tool';
     protected $appVersionRequired = '5.7.5.4a1';
@@ -74,19 +73,19 @@ class controller extends Package
         $db = \Database::connection();
         $db->Execute('SET foreign_key_checks = 0');
         $tables = $db->GetCol("show tables like 'MigrationImport%'");
-        foreach ($tables as $table) {
-            $db->Execute('drop table '.$table);
+        foreach($tables as $table) {
+            $db->Execute('drop table ' . $table);
         }
         $tables = $db->GetCol("show tables like 'MigrationExport%'");
-        foreach ($tables as $table) {
-            $db->Execute('drop table '.$table);
+        foreach($tables as $table) {
+            $db->Execute('drop table ' . $table);
         }
         $db->Execute('SET foreign_key_checks = 1');
     }
 
     protected function installSinglePages($pkg)
     {
-        require_once $this->getPackagePath().'/helpers.php';
+        require_once $this->getPackagePath() . '/helpers.php';
 
         foreach ($this->singlePages as $path) {
             if (Page::getByPath($path)->getCollectionID() <= 0) {
@@ -123,8 +122,9 @@ class controller extends Package
 
     public function on_start()
     {
-        require $this->getPackagePath().'/helpers.php';
 
+        require $this->getPackagePath() . '/helpers.php';
+        
         \Core::bind('migration/batch/page/validator', function ($app, $batch) {
             if (isset($batch[0])) {
                 $v = new Validator($batch[0]);
@@ -244,12 +244,12 @@ class controller extends Package
 
     public function getPackageDescription()
     {
-        return t('Migration Tool');
+        return t("Migration Tool");
     }
 
     public function getPackageName()
     {
-        return t('Migration Tool');
+        return t("Migration Tool");
     }
 
     public function install()

@@ -1,5 +1,4 @@
 <?php
-
 namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\Migration;
 
 use Concrete\Core\File\Importer;
@@ -12,13 +11,16 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormat
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublisherRoutineProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\TargetItemProcessor;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\MapContentTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\TransformContentTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\UntransformedItemProcessor;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Publisher;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class import extends DashboardPageController
+class Import extends DashboardPageController
 {
     public function add_batch()
     {
@@ -154,11 +156,13 @@ class import extends DashboardPageController
             $this->entityManager->flush();
 
             return new JsonResponse($batch);
+
         } else {
             return $this->app->make('helper/ajax')->sendError($this->error);
         }
         $this->app->shutdown();
     }
+
 
     public function run_batch_content_normalize_page_paths_task()
     {
@@ -176,7 +180,6 @@ class import extends DashboardPageController
             $processor->registerTask(new NormalizePagePathsTask());
             $processor->process();
             $this->entityManager->flush();
-
             return new JsonResponse($batch);
         }
         $this->view();
@@ -209,11 +212,10 @@ class import extends DashboardPageController
             }
             $totalItems = $processor->getTotalTasks();
             ob_start();
-            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2('%d task', '%d tasks', $totalItems)));
+            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2("%d task", "%d tasks", $totalItems)));
             $response = ob_get_contents();
             ob_end_clean();
             $response = new \Concrete\Core\Http\Response($response);
-
             return $response;
         }
         $this->view();
@@ -246,15 +248,15 @@ class import extends DashboardPageController
             }
             $totalItems = $processor->getTotalTasks();
             ob_start();
-            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2('%d task', '%d tasks', $totalItems)));
+            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2("%d task", "%d tasks", $totalItems)));
             $response = ob_get_contents();
             ob_end_clean();
             $response = new \Concrete\Core\Http\Response($response);
-
             return $response;
         }
         $this->view();
     }
+
 
     public function create_content_from_batch()
     {
@@ -283,11 +285,10 @@ class import extends DashboardPageController
             }
             $totalItems = $processor->getTotalTasks();
             ob_start();
-            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2('%d task', '%d tasks', $totalItems)));
+            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2("%d task", "%d tasks", $totalItems)));
             $response = ob_get_contents();
             ob_end_clean();
             $response = new \Concrete\Core\Http\Response($response);
-
             return $response;
         }
         $this->view();
@@ -301,6 +302,7 @@ class import extends DashboardPageController
         $queue->deleteQueue();
         $queue = \Concrete\Core\Foundation\Queue\Queue::get('target_item_processor');
         $queue->deleteQueue();
+
     }
 
     public function view()
@@ -368,7 +370,7 @@ class import extends DashboardPageController
                         $response = $ih->import($_FILES['file']['tmp_name'], $_FILES['file']['name']);
                         if (!($response instanceof \Concrete\Core\File\Version) && !compat_is_version_8()) {
                             throw new \Exception(Importer::getErrorMessage($response));
-                        } elseif (!($response instanceof \Concrete\Core\Entity\File\Version) && compat_is_version_8()) {
+                        } else if (!($response instanceof \Concrete\Core\Entity\File\Version) && compat_is_version_8()) {
                             throw new \Exception(Importer::getErrorMessage($response));
                         } else {
                             $file = $response->getFile();
@@ -411,7 +413,7 @@ class import extends DashboardPageController
 
         $mappers = \Core::make('migration/manager/mapping');
         /**
-         * @var MapperManagerInterface
+         * @var $mappers MapperManagerInterface
          */
         $mapper = $mappers->driver($this->request->request->get('mapper'));
         if (!is_object($mapper)) {

@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task;
 
 use Concrete\Core\Foundation\Processor\ActionInterface;
@@ -7,7 +6,7 @@ use Concrete\Core\Foundation\Processor\TaskInterface;
 use Doctrine\DBAL\Logging\EchoSQLLogger;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ImportedBlockValue;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class NormalizePagePathsTask implements TaskInterface
 {
@@ -29,10 +28,10 @@ class NormalizePagePathsTask implements TaskInterface
         $common = '';
         $offset = 1;
         if (isset($paths[0]) && $paths[0]) {
-            while (strpos($paths[0], '/', $offset) !== false) {
+            while (strpos($paths[0], '/', $offset) !== FALSE) {
                 $offset = strpos($paths[0], '/', $offset) + 1;
                 $c = substr($paths[0], 0, $offset);
-                for ($i = 1; $i < $n; ++$i) {
+                for ($i = 1; $i < $n; $i++) {
                     if (substr($paths[$i], 0, $offset) !== $c) {
                         break 2;
                     }
@@ -45,9 +44,9 @@ class NormalizePagePathsTask implements TaskInterface
        // $entityManager->getConnection()->getConfiguration()->setSQLLogger(new EchoSQLLogger());
 
         if ($common && count($pages) > 1) {
-            $common = '/'.trim($common, '/');
-            $contentSearchURL = "/\{ccm:export:page:".preg_quote($common, '/')."(.*?)\}/i";
-            $contentReplaceURL = '{ccm:export:page:$1}';
+            $common = '/' . trim($common, '/');
+            $contentSearchURL = "/\{ccm:export:page:" . preg_quote($common, '/') . "(.*?)\}/i";
+            $contentReplaceURL = "{ccm:export:page:$1}";
             foreach ($pages as $page) {
                 $originalPath = $page->getOriginalPath();
                 $newPath = substr($originalPath, strlen($common));

@@ -1,8 +1,7 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageType;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class PageTypePublishTargetFormatter extends PublishTargetFormatter
 {

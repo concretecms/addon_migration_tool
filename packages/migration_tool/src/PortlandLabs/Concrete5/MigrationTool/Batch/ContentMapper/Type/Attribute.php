@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Attribute\Key\CollectionKey;
@@ -13,7 +12,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class Attribute implements MapperInterface, TransformableEntityMapperInterface
 {
@@ -51,15 +50,15 @@ class Attribute implements MapperInterface, TransformableEntityMapperInterface
                 }
             }
         }
-
         return $attributes;
     }
+
 
     public function getItems(BatchInterface $batch)
     {
         $handles = array();
         $attributes = $this->getTransformableEntityObjects($batch);
-        foreach ($attributes as $attribute) {
+        foreach($attributes as $attribute) {
             if (!in_array($attribute->getHandle(), $handles)) {
                 $handles[] = $attribute->getHandle();
             }
@@ -136,7 +135,6 @@ class Attribute implements MapperInterface, TransformableEntityMapperInterface
     public function getCorePropertyTargetItems(BatchInterface $batch)
     {
         $items = array(new ShortDescriptionTargetItem($this));
-
         return $items;
     }
 

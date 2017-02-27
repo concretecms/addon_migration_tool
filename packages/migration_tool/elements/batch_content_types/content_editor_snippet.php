@@ -16,7 +16,7 @@
     ?>>
             <td><?=$snippet->getHandle()?></td>
             <td><?=$snippet->getName()?></td>
-            <td><?=$snippet->getIsActivated() ? t('Yes') : t('No') ?></td>
+            <td><?=$snippet->getIsActivated() ? t("Yes") : t("No") ?></td>
         </tr>
     <?php 
 } ?>

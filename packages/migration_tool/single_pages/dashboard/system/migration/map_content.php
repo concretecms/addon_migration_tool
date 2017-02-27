@@ -1,6 +1,6 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.');
+<?php defined('C5_EXECUTE') or die("Access Denied.");
 $dh = Core::make('helper/date');
-/* @var \Concrete\Core\Localization\Service\Date $dh */
+/** @var \Concrete\Core\Localization\Service\Date $dh */
 ?>
 <div class="ccm-dashboard-header-buttons">
     <a href="<?=$view->action('view_batch', $batch->getID())?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?=t('Back to Batch')?></a>
@@ -46,20 +46,18 @@ $dh = Core::make('helper/date');
     ?>
 
         <?php if (count($targetItemList->getMapperCorePropertyTargetItems())) {
-    ?>
+            ?>
             <optgroup label="** <?=t('Installed %s', $mapper->getMappedItemPluralName())?>"></optgroup>
             <?php foreach ($targetItemList->getMapperCorePropertyTargetItems() as $targetItem) {
-    ?>
+                ?>
                 <option <?php if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) {
-    ?>selected="selected" <?php
-
-}
-    ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
+                        ?>selected="selected" <?php
+                }
+                ?> value="<?=$targetItem->getItemID()?>"><?=$targetItem->getItemName()?></option>
                 <?php
-
-}
-}
-    ?>
+            }
+        }
+            ?>
 
 
             <?php if (count($targetItemList->getMapperInstalledTargetItems())) {

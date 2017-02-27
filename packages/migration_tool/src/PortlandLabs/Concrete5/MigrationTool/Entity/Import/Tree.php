@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -131,7 +130,7 @@ class Tree implements PublishableInterface
 
     public function getRootNodes()
     {
-        $criteria = Criteria::create()->where(Criteria::expr()->eq('parent', null));
+        $criteria = Criteria::create()->where(Criteria::expr()->eq("parent", null));
 
         return $this->nodes->matching($criteria);
     }

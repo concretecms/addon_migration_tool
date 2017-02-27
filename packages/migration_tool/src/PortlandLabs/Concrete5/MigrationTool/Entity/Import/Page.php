@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -105,7 +104,7 @@ class Page implements PublishableInterface
     protected $normalizePath = true;
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function canNormalizePath()
     {
@@ -113,7 +112,7 @@ class Page implements PublishableInterface
     }
 
     /**
-     * @param bool $normalizePath
+     * @param boolean $normalizePath
      */
     public function setNormalizePath($normalizePath)
     {
@@ -394,4 +393,5 @@ class Page implements PublishableInterface
     {
         $this->is_global = $is_global;
     }
+
 }

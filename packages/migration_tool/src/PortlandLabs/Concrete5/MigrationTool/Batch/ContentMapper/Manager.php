@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper;
 
 use Concrete\Core\Support\Manager as CoreManager;
@@ -13,10 +12,11 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\User;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class Manager extends CoreManager implements MapperManagerInterface
 {
+
     public function createTargetItemList(BatchInterface $batch, MapperInterface $mapper)
     {
         return new TargetItemList($batch, $mapper);

@@ -1,10 +1,10 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.');
+<?php defined('C5_EXECUTE') or die("Access Denied.");
 $dh = Core::make('helper/date');
-/* @var \Concrete\Core\Localization\Service\Date $dh */
+/** @var \Concrete\Core\Localization\Service\Date $dh */
 ?>
 <div class="ccm-dashboard-header-buttons">
 <div class="btn-group" role="group" aria-label="...">
-    <a href="javascript:void(0)" data-dialog="add-to-batch" data-dialog-title="<?=t('Add Content')?>" class="btn btn-default"><?=t('Add Content to Batch')?></a>
+    <a href="javascript:void(0)" data-dialog="add-to-batch" data-dialog-title="<?=t('Add Content')?>" class="btn btn-default"><?=t("Add Content to Batch")?></a>
     <a href="<?=$view->action('batch_files', $batch->getID())?>" class="btn btn-default"><?=t('Files')?></a>
     <div class="btn-group" role="group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -17,20 +17,19 @@ $dh = Core::make('helper/date');
     ?>
                 <li><a href="<?=$view->action('map_content', $batch->getId(), $mapper->getHandle())?>"><?=$mapper->getMappedItemPluralName()?></a></li>
             <?php
-
 } ?>
             <?php /*
             <li><a href="<?=$view->action('find_and_replace', $batch->getID())?>"><?=t("Find and Replace")?></a></li>
  */ ?>
 
             <li class="divider"></li>
-            <li><a href="javascript:void(0)" data-action="rescan-batch" data-dialog-title="<?=t('Rescan Batch')?>" class=""><?=t('Rescan Batch')?></a>
-            <li><a href="javascript:void(0)" data-dialog="clear-batch" data-dialog-title="<?=t('Clear Batch')?>" class=""><span class="text-danger"><?=t('Clear Batch')?></span></a>
+            <li><a href="javascript:void(0)" data-action="rescan-batch" data-dialog-title="<?=t('Rescan Batch')?>" class=""><?=t("Rescan Batch")?></a>
+            <li><a href="javascript:void(0)" data-dialog="clear-batch" data-dialog-title="<?=t('Clear Batch')?>" class=""><span class="text-danger"><?=t("Clear Batch")?></span></a>
             </li>
-            <li><a href="javascript:void(0)" data-dialog="delete-batch" data-dialog-title="<?=t('Delete Batch')?>"><span class="text-danger"><?=t('Delete Batch')?></span></a></li>
+            <li><a href="javascript:void(0)" data-dialog="delete-batch" data-dialog-title="<?=t('Delete Batch')?>"><span class="text-danger"><?=t("Delete Batch")?></span></a></li>
         </ul>
     </div>
-        <a href="javascript:void(0)" class="btn btn-primary" data-dialog="create-content" data-dialog-title="<?=t('Import Batch to Site')?>" class=""><?=t('Import Batch to Site')?></a>
+        <a href="javascript:void(0)" class="btn btn-primary" data-dialog="create-content" data-dialog-title="<?=t('Import Batch to Site')?>" class=""><?=t("Import Batch to Site")?></a>
 
 </div>
     </div>
@@ -50,7 +49,7 @@ $dh = Core::make('helper/date');
 
     <div id="ccm-dialog-delete-batch" class="ccm-ui">
         <form method="post" action="<?=$view->action('delete_batch')?>">
-            <?=Loader::helper('validation/token')->output('delete_batch')?>
+            <?=Loader::helper("validation/token")->output('delete_batch')?>
             <input type="hidden" name="id" value="<?=$batch->getID()?>">
             <p><?=t('Are you sure you want to delete this import batch? This cannot be undone.')?></p>
             <div class="dialog-buttons">
@@ -62,7 +61,7 @@ $dh = Core::make('helper/date');
 
     <div id="ccm-dialog-clear-batch" class="ccm-ui">
         <form method="post" action="<?=$view->action('clear_batch')?>">
-            <?=Loader::helper('validation/token')->output('clear_batch')?>
+            <?=Loader::helper("validation/token")->output('clear_batch')?>
             <input type="hidden" name="id" value="<?=$batch->getID()?>">
             <p><?=t('Are you sure you remove all content from this import batch? This cannot be undone.')?></p>
             <div class="dialog-buttons">
@@ -94,18 +93,18 @@ $dh = Core::make('helper/date');
 
     <div id="ccm-dialog-add-to-batch" class="ccm-ui">
         <form method="post" action="<?=$view->action('add_content_to_batch')?>" enctype="multipart/form-data">
-            <?=Loader::helper('validation/token')->output('add_content_to_batch')?>
+            <?=Loader::helper("validation/token")->output('add_content_to_batch')?>
             <input type="hidden" name="id" value="<?=$batch->getID()?>">
             <div class="form-group">
-                <?=Loader::helper('form')->label('file', t('Content File'))?>
+                <?=Loader::helper("form")->label('file', t('Content File'))?>
                 <?=Loader::helper('form')->file('file')?>
             </div>
             <div class="form-group">
-                <?=Loader::helper('form')->label('format', t('File Format'))?>
+                <?=Loader::helper("form")->label('format', t('File Format'))?>
                 <?=Loader::helper('form')->select('format', $formats)?>
             </div>
             <div class="form-group">
-                <?=Loader::helper('form')->label('method', t('Records'))?>
+                <?=Loader::helper("form")->label('method', t('Records'))?>
                 <div class="radio">
                     <label><input type="radio" name="importMethod" value="replace" checked> <?=t('Replace all batch content.')?></label>
                 </div>
@@ -136,19 +135,15 @@ $dh = Core::make('helper/date');
     <h2><?=t('Batch')?>
         <small><?=$dh->formatDateTime($batch->getDate(), true)?></small></h2>
 
-    <?php if ($batch->getNotes()) {
-    ?>
+    <?php if ($batch->getNotes()) { ?>
         <p><?=$batch->getNotes()?></p>
     <?php
-
-}
+        }
     ?>
 
-    <?php Loader::element('batch', array('batch' => $batch), 'migration_tool');
-    ?>
+    <?php Loader::element('batch', array('batch' => $batch), 'migration_tool'); ?>
 
-<?php 
-} ?>
+<?php } ?>
 
 
 <script type="text/javascript">
@@ -158,7 +153,7 @@ $dh = Core::make('helper/date');
             height: 'auto',
             width: 400,
             modal: true,
-            title: '<?=t('Scanning Batch')?>',
+            title: '<?=t("Scanning Batch")?>',
             closeOnEscape: false,
             open: function(e, ui) {
 

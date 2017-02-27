@@ -14,7 +14,7 @@
 }
     ?>>
             <td><?=$theme->getHandle()?></td>
-            <td><?=$theme->getIsActivated() ? t('Yes') : t('No') ?></td>
+            <td><?=$theme->getIsActivated() ? t("Yes") : t("No") ?></td>
         </tr>
     <?php 
 } ?>

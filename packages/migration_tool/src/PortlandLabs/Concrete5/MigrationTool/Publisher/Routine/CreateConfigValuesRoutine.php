@@ -1,10 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreateConfigValuesRoutine extends AbstractRoutine
 {
@@ -23,7 +23,7 @@ class CreateConfigValuesRoutine extends AbstractRoutine
                     $pkg = \Package::getByHandle($value->getPackage());
                 }
                 if (is_object($pkg)) {
-                    \Config::save($pkg->getPackageHandle().'::'.$value->getConfigKey(), $value->getConfigValue());
+                    \Config::save($pkg->getPackageHandle() . '::' . $value->getConfigKey(), $value->getConfigValue());
                 } else {
                     \Config::save($value->getConfigKey(), $value->getConfigValue());
                 }

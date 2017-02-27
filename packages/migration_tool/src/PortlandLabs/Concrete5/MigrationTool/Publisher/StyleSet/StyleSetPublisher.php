@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\StyleSet;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\StyleSet;

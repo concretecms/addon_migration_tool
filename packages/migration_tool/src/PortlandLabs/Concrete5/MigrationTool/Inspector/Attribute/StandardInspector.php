@@ -1,11 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Inspector\Attribute;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\InspectorInterface;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class StandardInspector implements InspectorInterface
 {

@@ -53,20 +53,18 @@
     <div class="ccm-tab-content" id="ccm-tab-content-batch-content">
 
         <?php foreach ($batch->getObjectCollections() as $collection) {
-    if ($collection->hasRecords()) {
-        $formatter = $collection->getFormatter();
-        ?>
+            if ($collection->hasRecords()) {
+                $formatter = $collection->getFormatter();
+                ?>
 
                 <h3><?=$formatter->getPluralDisplayName()?></h3>
-                <?php echo $formatter->displayObjectCollection()?>
+                <?php print $formatter->displayObjectCollection()?>
                 <?php
-
-    }
-    ?>
+            }
+            ?>
             <?php
-
-}
-    ?>
+        }
+        ?>
 
     </div>
 
@@ -82,7 +80,6 @@
     ?>
     <p><?=t('This content batch is empty.')?></p>
     <?php
-
 }
 ?>
 

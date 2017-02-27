@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;

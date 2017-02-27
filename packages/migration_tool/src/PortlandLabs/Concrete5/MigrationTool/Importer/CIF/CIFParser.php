@@ -1,11 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParserInterface;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class CIFParser implements FileParserInterface
 {
@@ -30,7 +29,7 @@ class CIFParser implements FileParserInterface
         $XMLErrors = libxml_get_errors();
 
         foreach ($XMLErrors as $XMLError) {
-            $error->add(t('XML format error. '.$XMLError->message));
+            $error->add(t('XML format error. ' . $XMLError->message));
         }
 
         if ($this->wxr) {
@@ -40,6 +39,7 @@ class CIFParser implements FileParserInterface
                 $error->add(t('This does not appear to be a valid concrete5 CIF file.'));
             }
         }
+
     }
 
     public function getContentObjectCollections($file)

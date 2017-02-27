@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF;
 
 use Concrete\Core\Support\Manager as CoreManager;
@@ -38,7 +37,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Tree;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\WorkflowProgressCategory;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\WorkflowType;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class Manager extends CoreManager
 {
@@ -211,6 +210,7 @@ class Manager extends CoreManager
     {
         return new Group();
     }
+
 
     public function __construct()
     {

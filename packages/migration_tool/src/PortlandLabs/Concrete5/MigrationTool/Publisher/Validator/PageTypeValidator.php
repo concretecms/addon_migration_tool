@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Validator;
 
 use Concrete\Core\Page\Type\Type;

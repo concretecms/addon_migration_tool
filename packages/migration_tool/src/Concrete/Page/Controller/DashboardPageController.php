@@ -1,5 +1,4 @@
 <?php
-
 namespace Concrete\Package\MigrationTool\Page\Controller;
 
 use Concrete\Core\Package\Package;

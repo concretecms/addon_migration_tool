@@ -1,11 +1,10 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Tree;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AbstractTreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\TreeNode;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class TreeJsonFormatter extends AbstractTreeJsonFormatter
 {

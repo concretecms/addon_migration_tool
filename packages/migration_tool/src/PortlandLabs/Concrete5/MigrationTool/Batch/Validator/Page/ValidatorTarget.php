@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
@@ -8,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorTargetInterfac
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class ValidatorTarget implements ValidatorTargetInterface
 {

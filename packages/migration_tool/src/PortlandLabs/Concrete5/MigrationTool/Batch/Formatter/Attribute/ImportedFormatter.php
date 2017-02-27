@@ -1,12 +1,11 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute;
 
 use HtmlObject\Element;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreeContentItemFormatterInterface;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class ImportedFormatter implements TreeContentItemFormatterInterface
 {
@@ -25,7 +24,6 @@ class ImportedFormatter implements TreeContentItemFormatterInterface
     protected function getColumnValue()
     {
         $div = new Element('div', h($this->value->getValue()), array('class' => 'text-danger'));
-
         return $div;
     }
 

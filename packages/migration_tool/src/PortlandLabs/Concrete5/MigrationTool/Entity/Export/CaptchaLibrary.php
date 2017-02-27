@@ -1,5 +1,4 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
 
 /**
@@ -7,6 +6,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
  */
 class CaptchaLibrary extends ExportItem
 {
+
     /**
      * @Column(type="string", nullable=false)
      */
@@ -32,4 +32,5 @@ class CaptchaLibrary extends ExportItem
     {
         return $this->getHandle();
     }
+
 }

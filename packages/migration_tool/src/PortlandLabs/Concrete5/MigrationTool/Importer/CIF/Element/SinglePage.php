@@ -1,10 +1,9 @@
 <?php
-
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\SinglePageObjectCollection;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 
 class SinglePage extends Page
 {
@@ -38,7 +37,6 @@ class SinglePage extends Page
         if (isset($node['global']) && $node['global'] == true) {
             $page->setIsGlobal(true);
         }
-
         return $page;
     }
 }

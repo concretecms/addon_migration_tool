@@ -1,5 +1,4 @@
 <?php
-
 namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\Migration;
 
 use Concrete\Core\Application\EditResponse;
@@ -10,7 +9,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Exporter\Exporter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class export extends DashboardPageController
+class Export extends DashboardPageController
 {
     public function add_batch()
     {
@@ -99,7 +98,7 @@ class export extends DashboardPageController
             } else {
                 header('Content-type: text/xml');
             }
-            echo $exporter->getElement()->asXML();
+            print $exporter->getElement()->asXML();
             exit;
         } else {
             $this->view();
@@ -217,7 +216,7 @@ class export extends DashboardPageController
                 }
             }
             $drivers = $exporters->getDrivers();
-            usort($drivers, function ($a, $b) {
+            usort($drivers, function($a, $b) {
                 return strcasecmp($a->getPluralDisplayName(), $b->getPluralDisplayName());
             });
             $this->set('drivers', $drivers);

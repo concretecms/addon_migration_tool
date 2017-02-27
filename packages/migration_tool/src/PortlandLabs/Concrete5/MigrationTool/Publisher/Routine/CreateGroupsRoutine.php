@@ -1,11 +1,10 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
-use Concrete\Core\Job\Job;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class CreateGroupsRoutine extends AbstractRoutine
 {
@@ -30,7 +29,7 @@ class CreateGroupsRoutine extends AbstractRoutine
             }
         });
 
-        foreach($groups as $group) {
+        foreach ($groups as $group) {
             $parent = null;
             if ($group->getPath() != '') {
                 $lastSlash = strrpos($group->getPath(), '/');

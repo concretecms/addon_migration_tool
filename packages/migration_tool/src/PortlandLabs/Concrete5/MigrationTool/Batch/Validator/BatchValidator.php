@@ -1,11 +1,11 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator;
 
 use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Core\Foundation\Processor\TaskInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class BatchValidator
 {

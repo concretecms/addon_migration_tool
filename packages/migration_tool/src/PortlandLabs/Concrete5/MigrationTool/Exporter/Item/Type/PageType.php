@@ -1,11 +1,12 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection;
 use Symfony\Component\HttpFoundation\Request;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class PageType extends AbstractType
 {
@@ -32,11 +33,13 @@ class PageType extends AbstractType
             if (method_exists($t, 'getSiteTypeObject')) {
                 $siteType = $t->getSiteTypeObject();
                 if (!$siteType->isDefault()) {
-                    return array($siteType->getSiteTypeName() . ': ' . $t->getPageTypeDisplayName());
+                    return array($siteType->getSiteTypeName().': '.$t->getPageTypeDisplayName());
                 }
             }
+
             return array($t->getPageTypeDisplayName());
         }
+
         return array();
     }
 

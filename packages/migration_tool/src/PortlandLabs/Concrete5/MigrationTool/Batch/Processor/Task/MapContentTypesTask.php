@@ -1,18 +1,16 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task;
 
 use Concrete\Core\Foundation\Processor\ActionInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class MapContentTypesTask implements TaskInterface
 {
-
     protected $mappers;
 
     public function __construct(MapperManagerInterface $mappers)

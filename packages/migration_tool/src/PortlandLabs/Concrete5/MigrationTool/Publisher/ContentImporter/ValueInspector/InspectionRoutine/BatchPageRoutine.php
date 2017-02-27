@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspector\InspectionRoutine;
 
 use Concrete\Core\Backup\ContentImporter\ValueInspector\InspectionRoutine\PageRoutine;
@@ -21,7 +22,7 @@ class BatchPageRoutine extends PageRoutine
             return $item;
         }
 
-        $path = '/!import_batches/' . $this->batch->getID() . $identifier;
+        $path = '/!import_batches/'.$this->batch->getID().$identifier;
         $item = new PageItem($path);
 
         return $item;

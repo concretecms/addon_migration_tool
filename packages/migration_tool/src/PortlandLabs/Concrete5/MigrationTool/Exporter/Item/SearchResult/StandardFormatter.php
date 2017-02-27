@@ -1,11 +1,12 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\SearchResult;
 
 use Concrete\Core\Foundation\Environment;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch;
 use Symfony\Component\HttpFoundation\Request;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class StandardFormatter implements FormatterInterface
 {
@@ -42,7 +43,7 @@ class StandardFormatter implements FormatterInterface
     {
         $env = Environment::get();
         $rec = $env->getRecord(
-            DIRNAME_ELEMENTS . '/export/search/' . $this->itemType->getHandle() . '.php',
+            DIRNAME_ELEMENTS.'/export/search/'.$this->itemType->getHandle().'.php',
             'migration_tool');
 
         return $rec->exists();
@@ -63,7 +64,7 @@ class StandardFormatter implements FormatterInterface
 
     public function displaySearchForm()
     {
-        print \View::element('export/search/' . $this->itemType->getHandle(), array(
+        echo \View::element('export/search/'.$this->itemType->getHandle(), array(
             'formatter' => $this,
             'batch' => $this->batch,
             'collection' => $this->collection,
@@ -73,7 +74,7 @@ class StandardFormatter implements FormatterInterface
 
     public function displayBatchResults()
     {
-        print \View::element('export/results/standard_list', array(
+        echo \View::element('export/results/standard_list', array(
             'formatter' => $this,
             'batch' => $this->batch,
             'collection' => $this->collection,
@@ -86,7 +87,7 @@ class StandardFormatter implements FormatterInterface
 
     public function displaySearchResults()
     {
-        print \View::element('export/results/standard_list', array(
+        echo \View::element('export/results/standard_list', array(
             'formatter' => $this,
             'batch' => $this->batch,
             'collection' => $this->collection,

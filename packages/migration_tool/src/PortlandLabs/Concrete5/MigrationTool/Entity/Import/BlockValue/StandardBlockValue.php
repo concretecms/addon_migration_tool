@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 
 use Doctrine\Common\Collections\ArrayCollection;

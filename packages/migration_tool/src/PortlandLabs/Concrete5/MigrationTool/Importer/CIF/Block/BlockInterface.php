@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block;
 
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ImporterInterface;

@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use Concrete\Core\Page\Stack\StackList;
@@ -7,7 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection;
 use Symfony\Component\HttpFoundation\Request;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class Stack extends AbstractType
 {
@@ -25,7 +26,7 @@ class Stack extends AbstractType
         $node = $element->addChild('stacks');
         foreach ($collection->getItems() as $item) {
             $c = false;
-            switch($item->getStackType()) {
+            switch ($item->getStackType()) {
                 case STACKS_PAGE_TYPE:
                     $c = \Concrete\Core\Page\Stack\Stack::getByID($item->getItemIdentifier());
                     break;
@@ -41,7 +42,7 @@ class Stack extends AbstractType
 
     public function getResultColumns(ExportItem $exportItem)
     {
-        switch($exportItem->getStackType()) {
+        switch ($exportItem->getStackType()) {
             case STACK_CATEGORY_PAGE_TYPE:
                 $c = StackFolder::getByID($exportItem->getItemIdentifier());
                 if (is_object($c)) {
@@ -94,7 +95,7 @@ class Stack extends AbstractType
     {
         $list = new StackList();
         $stacks = $list->getResults();
-       foreach($stacks as $stack) {
+        foreach ($stacks as $stack) {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\Stack();
             $item->setItemId($stack->getCollectionID());
             $item->setStackType($stack->getCollectionTypeHandle());

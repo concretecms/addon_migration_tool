@@ -1,10 +1,11 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKeyCategory;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreeContentItemFormatterInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\UserAttributeKeyCategoryInstance;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class UserFormatter implements TreeContentItemFormatterInterface
 {

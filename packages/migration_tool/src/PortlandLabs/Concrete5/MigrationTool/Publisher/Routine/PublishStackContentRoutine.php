@@ -1,17 +1,15 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Page\Stack\Stack;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class PublishStackContentRoutine extends AbstractPageRoutine
 {
-
     public function getPageCollection(BatchInterface $batch)
     {
         return $batch->getObjectCollection('stack');
@@ -26,6 +24,4 @@ class PublishStackContentRoutine extends AbstractPageRoutine
     {
         return new PublishStackContentRoutineAction($page);
     }
-
-
 }

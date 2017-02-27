@@ -1,30 +1,25 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
 
 use Concrete\Core\Foundation\Processor\ActionInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\ValidatorTarget;
-use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\ComposerOutputContent;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageType;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
-use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class ValidatePagePathTask implements TaskInterface
 {
     public function execute(ActionInterface $action)
     {
         /**
-         * @var $subject Page
+         * @var Page
          */
         $subject = $action->getSubject();
         /**
-         * @var $target ValidatorTarget
+         * @var ValidatorTarget
          */
         $target = $action->getTarget();
 

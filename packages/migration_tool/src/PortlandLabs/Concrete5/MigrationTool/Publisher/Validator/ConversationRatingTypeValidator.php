@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Validator;
 
 use Concrete\Core\Conversation\Rating\Type;

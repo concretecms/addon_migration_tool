@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayoutColumnBlock;
@@ -10,10 +11,9 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\ThemeGridAreaL
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\ThemeGridAreaLayoutColumn;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\AreaLayoutBlockValue;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\StyleSet;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ImporterInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayout;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class AreaLayoutImporter extends AbstractImporter
 {

@@ -1,10 +1,11 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\PageType\PublishTarget;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\ParentPagePublishTarget;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PublishTarget;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class ParentPageImporter implements ImporterInterface
 {
@@ -15,7 +16,7 @@ class ParentPageImporter implements ImporterInterface
 
     /**
      * @param ParentPagePublishTarget $entity
-     * @param \SimpleXMLElement $element
+     * @param \SimpleXMLElement       $element
      */
     public function loadFromXml(PublishTarget $entity, \SimpleXMLElement $element)
     {

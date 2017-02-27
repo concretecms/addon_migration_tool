@@ -1,10 +1,11 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\StyleSet\TreeJsonFormatter as StyleSetTreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class TreePageJsonFormatter implements \JsonSerializable
 {

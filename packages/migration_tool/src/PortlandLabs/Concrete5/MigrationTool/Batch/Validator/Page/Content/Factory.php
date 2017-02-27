@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content;
 
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\ItemInterface;
@@ -6,7 +7,7 @@ use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\PageFeedItem;
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\PageItem;
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\PageTypeItem;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class Factory
 {

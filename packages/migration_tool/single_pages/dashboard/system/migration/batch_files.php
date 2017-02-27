@@ -1,6 +1,6 @@
-<?php defined('C5_EXECUTE') or die("Access Denied.");
+<?php defined('C5_EXECUTE') or die('Access Denied.');
 $dh = Core::make('helper/date');
-/** @var \Concrete\Core\Localization\Service\Date $dh */
+/* @var \Concrete\Core\Localization\Service\Date $dh */
 ?>
 <div class="ccm-dashboard-header-buttons btn-group">
     <a href="<?=$view->action('view_batch', $batch->getID())?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?=t('Back to Batch')?></a>
@@ -15,7 +15,7 @@ $dh = Core::make('helper/date');
 
     <div id="ccm-dialog-delete-files" class="ccm-ui">
         <form method="post" action="<?=$view->action('delete_files')?>">
-            <?=Loader::helper("validation/token")->output('delete_files')?>
+            <?=Loader::helper('validation/token')->output('delete_files')?>
             <input type="hidden" name="id" value="<?=$batch->getID()?>">
             <p><?=t('Are you sure you remove all the files from this batch? They will be deleted from the entire concrete5 site. This cannot be undone.')?></p>
             <div class="dialog-buttons">
@@ -83,7 +83,7 @@ $(function() {
         url: uploadAction,
         dataType: 'json',
         formData: {
-            'ccm_token': '<?=Core::make("token")->generate("upload_files")?>',
+            'ccm_token': '<?=Core::make('token')->generate('upload_files')?>',
             'id': '<?=$batch->getID()?>'
         },
         error: function(r) {

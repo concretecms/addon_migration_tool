@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\AreaLayout;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayout;
@@ -6,7 +7,7 @@ use Concrete\Core\Area\Layout\ThemeGridLayout;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\ThemeGridAreaLayoutColumn;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\ThemeGridAreaLayout;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class ThemeGridAreaLayoutPublisher implements PublisherInterface
 {

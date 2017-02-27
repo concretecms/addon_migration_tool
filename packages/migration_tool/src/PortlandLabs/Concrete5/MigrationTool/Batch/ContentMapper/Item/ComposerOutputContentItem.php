@@ -1,10 +1,11 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item;
 
 use Concrete\Core\Block\Block;
 use Concrete\Core\Page\Type\Composer\FormLayoutSetControl;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class ComposerOutputContentItem extends Item
 {

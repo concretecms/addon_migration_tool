@@ -1,10 +1,10 @@
-<?php defined('C5_EXECUTE') or die("Access Denied.");
+<?php defined('C5_EXECUTE') or die('Access Denied.');
 $dh = Core::make('helper/date');
-/** @var \Concrete\Core\Localization\Service\Date $dh */
+/* @var \Concrete\Core\Localization\Service\Date $dh */
 ?>
 
 <div class="ccm-dashboard-header-buttons">
-    <a href="javascript:void(0)" data-dialog="add-batch" class="btn btn-primary"><?=t("Add Batch")?></a>
+    <a href="javascript:void(0)" data-dialog="add-batch" class="btn btn-primary"><?=t('Add Batch')?></a>
 </div>
 
 <?php if (count($batches)) {
@@ -41,17 +41,17 @@ $dh = Core::make('helper/date');
 <div style="display: none">
     <div id="ccm-dialog-add-batch" class="ccm-ui">
         <form method="post" action="<?=$view->action('add_batch')?>">
-            <?=Loader::helper("validation/token")->output('add_batch')?>
+            <?=Loader::helper('validation/token')->output('add_batch')?>
             <div class="form-group">
-                <?=Loader::helper("form")->label('date', t('Date'))?>
+                <?=Loader::helper('form')->label('date', t('Date'))?>
                 <?=Loader::helper('form')->text('date',
                     Core::make('date')->formatDateTime('now', true),
                     array('disabled' => 'disabled')
                 )?>
             </div>
             <div class="form-group">
-                <?=Loader::helper("form")->label('notes', t('Notes'))?>
-                <?=Loader::helper('form')->textarea('notes', '', array("rows" => "3"))?>
+                <?=Loader::helper('form')->label('notes', t('Notes'))?>
+                <?=Loader::helper('form')->textarea('notes', '', array('rows' => '3'))?>
             </div>
         </form>
         <div class="dialog-buttons">
@@ -68,7 +68,7 @@ $dh = Core::make('helper/date');
                 element: '#ccm-dialog-add-batch',
                 modal: true,
                 width: 320,
-                title: '<?=t("Add Batch")?>',
+                title: '<?=t('Add Batch')?>',
                 height: 'auto'
             });
         });

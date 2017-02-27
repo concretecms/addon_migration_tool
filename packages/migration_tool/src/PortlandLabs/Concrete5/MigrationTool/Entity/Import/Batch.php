@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Concrete\Core\File\Set\Set;
@@ -189,5 +190,4 @@ class Batch implements ValidatorInterface, BatchInterface
     {
         return (string) $this->getID();
     }
-
 }

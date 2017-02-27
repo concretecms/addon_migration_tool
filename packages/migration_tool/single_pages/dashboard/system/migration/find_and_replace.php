@@ -1,6 +1,6 @@
-<?php defined('C5_EXECUTE') or die("Access Denied.");
+<?php defined('C5_EXECUTE') or die('Access Denied.');
 $dh = Core::make('helper/date');
-/** @var \Concrete\Core\Localization\Service\Date $dh */
+/* @var \Concrete\Core\Localization\Service\Date $dh */
 
 ?>
     <div class="ccm-dashboard-header-buttons">

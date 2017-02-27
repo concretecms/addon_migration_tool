@@ -1,10 +1,11 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator;
 
 use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Core\Foundation\Processor\TaskInterface;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 abstract class ValidateProcessor extends AbstractValidator
 {

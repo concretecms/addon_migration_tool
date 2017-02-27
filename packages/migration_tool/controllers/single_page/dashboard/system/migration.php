@@ -1,9 +1,10 @@
 <?php
+
 namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System;
 
 use Concrete\Core\Page\Controller\DashboardPageController;
 
-class Migration extends DashboardPageController
+class migration extends DashboardPageController
 {
     public function view()
     {

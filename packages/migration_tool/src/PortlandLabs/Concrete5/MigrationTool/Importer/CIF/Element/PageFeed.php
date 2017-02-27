@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
@@ -6,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageFeed as CorePageFeed;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageFeedObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class PageFeed implements ElementParserInterface
 {

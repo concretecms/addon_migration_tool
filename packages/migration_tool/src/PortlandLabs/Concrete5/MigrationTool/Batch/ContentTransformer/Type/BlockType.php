@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
@@ -8,17 +9,16 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformableEntityMapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ImportedBlockValue;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class BlockType implements TransformerInterface
 {
     public function getUntransformedEntityObjects(TransformableEntityMapperInterface $mapper, BatchInterface $batch)
     {
         $results = array();
-        foreach($mapper->getTransformableEntityObjects($batch) as $object) {
+        foreach ($mapper->getTransformableEntityObjects($batch) as $object) {
             $value = $object->getBlockValue();
             if ($value instanceof ImportedBlockValue) {
                 $results[] = $value;
@@ -45,7 +45,6 @@ class BlockType implements TransformerInterface
 
     public function transform($entity, MapperInterface $mapper, ItemInterface $item, TargetItem $targetItem, BatchInterface $batch)
     {
-
         $bt = $mapper->getTargetItemContentObject($targetItem);
         if (is_object($bt)) {
             $type = $bt->getBlockTypeHandle();

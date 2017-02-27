@@ -1,13 +1,13 @@
-<?php defined('C5_EXECUTE') or die("Access Denied.");
+<?php defined('C5_EXECUTE') or die('Access Denied.');
 $dh = Core::make('helper/date');
-/** @var \Concrete\Core\Localization\Service\Date $dh */
+/* @var \Concrete\Core\Localization\Service\Date $dh */
 ?>
 <div class="ccm-dashboard-header-buttons">
 <div class="btn-group" role="group">
-    <a href="<?=$view->action('add_to_batch', $batch->getId())?>" class="btn btn-default"><?=t("Add Content to Batch")?></a>
+    <a href="<?=$view->action('add_to_batch', $batch->getId())?>" class="btn btn-default"><?=t('Add Content to Batch')?></a>
     <button data-action="remove-from-batch" disabled class="btn btn-default"><?=t('Remove Selected')?></button>
-    <a href="<?=$view->action('export_batch', $batch->getId())?>" class="btn btn-primary"><?=t("Export Batch")?></a>
-    <a href="javascript:void(0)" data-dialog="delete-batch" data-dialog-title="<?=t('Delete Batch')?>" class="btn btn-danger"><?=t("Delete Batch")?></a>
+    <a href="<?=$view->action('export_batch', $batch->getId())?>" class="btn btn-primary"><?=t('Export Batch')?></a>
+    <a href="javascript:void(0)" data-dialog="delete-batch" data-dialog-title="<?=t('Delete Batch')?>" class="btn btn-danger"><?=t('Delete Batch')?></a>
 </div>
 </div>
 
@@ -15,7 +15,7 @@ $dh = Core::make('helper/date');
 
     <div id="ccm-dialog-delete-batch" class="ccm-ui">
         <form method="post" action="<?=$view->action('delete_batch')?>">
-            <?=Loader::helper("validation/token")->output('delete_batch')?>
+            <?=Loader::helper('validation/token')->output('delete_batch')?>
             <input type="hidden" name="id" value="<?=$batch->getID()?>">
             <p><?=t('Are you sure you want to delete this export batch? This cannot be undone.')?></p>
             <div class="dialog-buttons">
@@ -56,7 +56,7 @@ $dh = Core::make('helper/date');
         ?>
 
                     <h3><?=$itemType->getPluralDisplayName()?></h3>
-                    <?php print $formatter->displayBatchResults()?>
+                    <?php echo $formatter->displayBatchResults()?>
                 <?php 
     }
     ?>

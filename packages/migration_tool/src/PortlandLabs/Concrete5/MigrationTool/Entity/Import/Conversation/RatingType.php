@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;

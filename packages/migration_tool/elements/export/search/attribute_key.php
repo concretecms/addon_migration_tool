@@ -1,5 +1,5 @@
 <?php
-defined('C5_EXECUTE') or die(_("Access Denied."));
+defined('C5_EXECUTE') or die(_('Access Denied.'));
 $form = Core::make('helper/form');
 $categories = array();
 $list = \Concrete\Core\Attribute\Key\Category::getList();

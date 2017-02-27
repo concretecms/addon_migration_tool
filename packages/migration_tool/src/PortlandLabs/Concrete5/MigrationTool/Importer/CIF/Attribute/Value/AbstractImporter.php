@@ -1,14 +1,11 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Value;
 
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\TopicsAttributeValue;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ImporterInterface;
-
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 abstract class AbstractImporter implements ValueInterface
 {
-
     protected $entityManager;
 
     public function __construct()

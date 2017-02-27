@@ -1,11 +1,12 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AddressAttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreeContentItemFormatterInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class AddressFormatter implements TreeContentItemFormatterInterface
 {

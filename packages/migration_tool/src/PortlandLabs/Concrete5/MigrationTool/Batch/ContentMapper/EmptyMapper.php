@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
@@ -8,7 +9,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterfac
 
 class EmptyMapper implements MapperInterface, TransformableEntityMapperInterface
 {
-
     public function getMappedItemPluralName()
     {
         return t('Empty');
@@ -45,11 +45,11 @@ class EmptyMapper implements MapperInterface, TransformableEntityMapperInterface
     }
     public function getMatchedTargetItem(BatchInterface $batch, ItemInterface $item)
     {
-        return null;
+        return;
     }
 
     public function getTargetItemContentObject(TargetItemInterface $targetItem)
     {
-        return null;
+        return;
     }
 }

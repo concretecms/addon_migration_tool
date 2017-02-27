@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
 use Concrete\Core\Block\BlockType\BlockTypeList;
@@ -11,7 +12,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\BlockComposerFormLayoutSetControl;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class BlockType implements MapperInterface, TransformableEntityMapperInterface
 {
@@ -70,6 +71,7 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
                 }
             }
         }
+
         return $blocks;
     }
 
@@ -77,7 +79,7 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
     {
         $types = array();
         $blocks = $this->getTransformableEntityObjects($batch);
-        foreach($blocks as $block) {
+        foreach ($blocks as $block) {
             if ($block->getType() && !in_array($block->getType(), $types)) {
                 $types[] = $block->getType();
             }
@@ -165,6 +167,7 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
                 }
             }
         }
+
         return $items;
     }
 

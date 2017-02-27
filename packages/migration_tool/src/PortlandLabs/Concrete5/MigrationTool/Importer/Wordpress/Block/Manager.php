@@ -1,9 +1,10 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Block;
 
 use Concrete\Core\Support\Manager as CoreManager;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class Manager extends CoreManager
 {

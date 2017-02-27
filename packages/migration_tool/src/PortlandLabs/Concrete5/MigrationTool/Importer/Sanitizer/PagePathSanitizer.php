@@ -1,11 +1,11 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\Sanitizer;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class PagePathSanitizer
 {
-
     public function sanitize($path)
     {
         $parts = explode('/', $path);
@@ -14,9 +14,9 @@ class PagePathSanitizer
             $txt = \Core::make('helper/text');
             $part = $txt->slugSafeString($part);
             $part = str_replace('-', \Config::get('concrete.seo.page_path_separator'), $part);
-            $full .= $part . '/';
+            $full .= $part.'/';
         }
+
         return rtrim($full, '/');
     }
-
 }

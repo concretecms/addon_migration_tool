@@ -1,7 +1,8 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class MessageCollectionFormatter extends MessageFormatter
 {
@@ -35,7 +36,7 @@ class MessageCollectionFormatter extends MessageFormatter
     public function getCollectionStatusIconClass()
     {
         if ($this->collection->count() > 0) {
-            return sprintf("%s %s",
+            return sprintf('%s %s',
                 $this->getLevelClass(),
                 $this->getIconClass()
             );

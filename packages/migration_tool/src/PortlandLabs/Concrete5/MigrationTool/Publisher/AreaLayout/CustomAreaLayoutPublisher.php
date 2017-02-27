@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\AreaLayout;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayout;
@@ -6,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\CustomAreaLayo
 use Concrete\Core\Area\Layout\CustomLayout;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\CustomAreaLayoutColumn;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class CustomAreaLayoutPublisher implements PublisherInterface
 {

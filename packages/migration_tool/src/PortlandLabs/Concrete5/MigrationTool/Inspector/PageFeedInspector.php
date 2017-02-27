@@ -1,9 +1,10 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Inspector;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageFeed;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class PageFeedInspector implements InspectorInterface
 {

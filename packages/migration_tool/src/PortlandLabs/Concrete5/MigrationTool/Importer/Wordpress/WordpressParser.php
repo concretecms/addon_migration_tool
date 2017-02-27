@@ -1,11 +1,12 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress;
 
 use Concrete\Core\Error\Error;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParserInterface;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class WordpressParser implements FileParserInterface
 {
@@ -33,13 +34,13 @@ class WordpressParser implements FileParserInterface
         $XMLErrors = libxml_get_errors();
 
         foreach ($XMLErrors as $XMLError) {
-            $error->add(t('XML format error. ' . $XMLError->message));
+            $error->add(t('XML format error. '.$XMLError->message));
         }
 
         if ($this->wxr) {
             $this->namespaces = $this->wxr->getDocNamespaces();
             $wxrVersion = $this->wxr->xpath('/rss/channel/wp:wxr_version');
-            if (!$wxrVersion || !preg_match('/^\d+\.\d+$/', (string)$wxrVersion[0])) {
+            if (!$wxrVersion || !preg_match('/^\d+\.\d+$/', (string) $wxrVersion[0])) {
                 $error->add(t('Missing or invalid WXR version number'));
             }
         }

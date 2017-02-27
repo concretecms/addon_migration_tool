@@ -1,9 +1,9 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\StandardFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\StandardValidator;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Attribute\StandardInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\ImageFilePublisher;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;

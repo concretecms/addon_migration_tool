@@ -1,7 +1,8 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class UserAccessEntityFormatter extends AccessEntityFormatter
 {

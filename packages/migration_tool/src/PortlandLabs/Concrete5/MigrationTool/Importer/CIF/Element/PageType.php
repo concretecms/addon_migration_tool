@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
@@ -9,7 +10,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\CorePageProperty
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageTypeObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class PageType implements ElementParserInterface
 {

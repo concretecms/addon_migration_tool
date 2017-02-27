@@ -1,7 +1,8 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class AddressFormatter extends AbstractFormatter
 {

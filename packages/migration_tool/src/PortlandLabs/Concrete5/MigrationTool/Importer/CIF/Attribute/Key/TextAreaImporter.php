@@ -1,10 +1,11 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\TextAreaAttributeKey;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class TextAreaImporter implements ImporterInterface
 {
@@ -15,7 +16,7 @@ class TextAreaImporter implements ImporterInterface
 
     /**
      * @param TextAreaAttributeKey $key
-     * @param \SimpleXMLElement $element
+     * @param \SimpleXMLElement    $element
      *
      * @return bool
      */

@@ -1,15 +1,15 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Page\Type\Type;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class CreatePageStructureRoutineAction extends AbstractPageAction
 {
-
     public function execute(BatchInterface $batch)
     {
         $batchParent = $this->getBatchParentPage($batch);
@@ -61,7 +61,7 @@ class CreatePageStructureRoutineAction extends AbstractPageAction
             if (!$parentPath) {
                 $parent = $batchParent;
             } else {
-                $parent = \Page::getByPath('/!import_batches/' . $batch->getID() . $parentPath);
+                $parent = \Page::getByPath('/!import_batches/'.$batch->getID().$parentPath);
             }
         } else {
             $parent = $batchParent;
@@ -72,6 +72,4 @@ class CreatePageStructureRoutineAction extends AbstractPageAction
 
         $parent->add($type, $data);
     }
-
 }
-

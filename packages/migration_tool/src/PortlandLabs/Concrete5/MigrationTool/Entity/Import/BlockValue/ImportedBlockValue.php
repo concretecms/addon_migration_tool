@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\ImportedFormatter;

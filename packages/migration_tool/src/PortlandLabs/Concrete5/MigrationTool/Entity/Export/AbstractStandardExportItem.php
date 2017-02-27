@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
 
 abstract class AbstractStandardExportItem extends ExportItem

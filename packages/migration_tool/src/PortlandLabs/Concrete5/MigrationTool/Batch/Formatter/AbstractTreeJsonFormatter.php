@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageCollection;
@@ -6,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 abstract class AbstractTreeJsonFormatter implements \JsonSerializable
 {

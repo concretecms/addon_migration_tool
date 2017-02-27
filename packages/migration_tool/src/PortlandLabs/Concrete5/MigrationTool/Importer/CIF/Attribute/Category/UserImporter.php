@@ -1,10 +1,11 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Category;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKeyCategoryInstance;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\UserAttributeKeyCategoryInstance;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class UserImporter implements ImporterInterface
 {
@@ -15,7 +16,7 @@ class UserImporter implements ImporterInterface
 
     /**
      * @param UserAttributeKeyCategoryInstance $category
-     * @param \SimpleXMLElement $element
+     * @param \SimpleXMLElement                $element
      */
     public function loadFromXml(AttributeKeyCategoryInstance $category, \SimpleXMLElement $element)
     {

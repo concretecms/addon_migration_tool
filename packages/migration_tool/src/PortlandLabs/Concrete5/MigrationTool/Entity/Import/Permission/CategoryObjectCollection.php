@@ -4,7 +4,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PermissionKeyCategoryFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**

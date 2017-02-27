@@ -1,6 +1,6 @@
 <?php defined('C5_EXECUTE') or die("Access Denied.");
 $dh = Core::make('helper/date');
-/** @var \Concrete\Core\Localization\Service\Date $dh */
+/* @var \Concrete\Core\Localization\Service\Date $dh */
 ?>
 <div class="ccm-dashboard-header-buttons">
 <div class="btn-group" role="group" aria-label="...">
@@ -17,6 +17,7 @@ $dh = Core::make('helper/date');
     ?>
                 <li><a href="<?=$view->action('map_content', $batch->getId(), $mapper->getHandle())?>"><?=$mapper->getMappedItemPluralName()?></a></li>
             <?php
+
 } ?>
             <?php /*
             <li><a href="<?=$view->action('find_and_replace', $batch->getID())?>"><?=t("Find and Replace")?></a></li>
@@ -135,15 +136,19 @@ $dh = Core::make('helper/date');
     <h2><?=t('Batch')?>
         <small><?=$dh->formatDateTime($batch->getDate(), true)?></small></h2>
 
-    <?php if ($batch->getNotes()) { ?>
+    <?php if ($batch->getNotes()) {
+    ?>
         <p><?=$batch->getNotes()?></p>
     <?php
-        }
+
+}
     ?>
 
-    <?php Loader::element('batch', array('batch' => $batch), 'migration_tool'); ?>
+    <?php Loader::element('batch', array('batch' => $batch), 'migration_tool');
+    ?>
 
-<?php } ?>
+<?php 
+} ?>
 
 
 <script type="text/javascript">

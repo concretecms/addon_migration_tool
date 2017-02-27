@@ -108,6 +108,7 @@ class PageTemplate implements MapperInterface
                 }
             }
         }
+
         return $items;
     }
 

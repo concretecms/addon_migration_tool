@@ -16,7 +16,7 @@ class StandardImporter implements ImporterInterface
 
     public function parse(\SimpleXMLElement $node)
     {
-        $content = $node->children( 'http://purl.org/rss/1.0/modules/content/' );
+        $content = $node->children('http://purl.org/rss/1.0/modules/content/');
         $recordData = array('content' => (string) $content->encoded);
 
         $value = $this->createBlockValueObject();

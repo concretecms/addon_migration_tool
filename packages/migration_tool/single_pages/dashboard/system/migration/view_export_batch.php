@@ -1,6 +1,6 @@
 <?php defined('C5_EXECUTE') or die("Access Denied.");
 $dh = Core::make('helper/date');
-/** @var \Concrete\Core\Localization\Service\Date $dh */
+/* @var \Concrete\Core\Localization\Service\Date $dh */
 ?>
 <div class="ccm-dashboard-header-buttons">
 <div class="btn-group" role="group">
@@ -56,7 +56,7 @@ $dh = Core::make('helper/date');
         ?>
 
                     <h3><?=$itemType->getPluralDisplayName()?></h3>
-                    <?php print $formatter->displayBatchResults()?>
+                    <?php echo $formatter->displayBatchResults()?>
                 <?php 
     }
     ?>

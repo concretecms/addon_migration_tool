@@ -211,7 +211,6 @@ class Manager extends CoreManager
         return new Group();
     }
 
-
     public function __construct()
     {
         $this->driver('group');

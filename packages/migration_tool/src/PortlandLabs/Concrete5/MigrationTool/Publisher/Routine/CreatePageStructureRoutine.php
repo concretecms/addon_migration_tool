@@ -1,10 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
-use Concrete\Core\Page\Type\Type;
-use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreatePageStructureRoutine extends AbstractPageRoutine
@@ -13,6 +9,4 @@ class CreatePageStructureRoutine extends AbstractPageRoutine
     {
         return new CreatePageStructureRoutineAction($page);
     }
-
-
 }

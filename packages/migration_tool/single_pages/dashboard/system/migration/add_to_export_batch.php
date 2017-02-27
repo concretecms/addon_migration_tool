@@ -70,7 +70,7 @@
         </div>
 
 
-        <?php print $formatter->displaySearchResults();
+        <?php echo $formatter->displaySearchResults();
     ?>
 
     <?php 

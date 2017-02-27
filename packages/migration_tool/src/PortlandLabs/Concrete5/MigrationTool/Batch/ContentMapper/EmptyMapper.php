@@ -8,7 +8,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterfac
 
 class EmptyMapper implements MapperInterface, TransformableEntityMapperInterface
 {
-
     public function getMappedItemPluralName()
     {
         return t('Empty');

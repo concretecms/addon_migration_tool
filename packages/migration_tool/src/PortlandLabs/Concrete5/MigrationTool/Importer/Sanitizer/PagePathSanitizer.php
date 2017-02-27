@@ -5,7 +5,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class PagePathSanitizer
 {
-
     public function sanitize($path)
     {
         $parts = explode('/', $path);
@@ -16,7 +15,7 @@ class PagePathSanitizer
             $part = str_replace('-', \Config::get('concrete.seo.page_path_separator'), $part);
             $full .= $part . '/';
         }
+
         return rtrim($full, '/');
     }
-
 }

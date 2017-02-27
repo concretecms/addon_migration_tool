@@ -39,7 +39,6 @@ class CIFParser implements FileParserInterface
                 $error->add(t('This does not appear to be a valid concrete5 CIF file.'));
             }
         }
-
     }
 
     public function getContentObjectCollections($file)

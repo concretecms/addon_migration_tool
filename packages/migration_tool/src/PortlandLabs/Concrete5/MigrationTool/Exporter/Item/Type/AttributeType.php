@@ -2,7 +2,6 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
 use Concrete\Core\Attribute\Type;
-use Concrete\Core\Block\BlockType\BlockTypeList;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ExportItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +18,7 @@ class AttributeType extends AbstractType
     public function getResultColumns(ExportItem $exportItem)
     {
         $at = Type::getByID($exportItem->getItemIdentifier());
+
         return array($at->getAttributeTypeName());
     }
 

@@ -4,9 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTypeComposerControlTypeFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
-
 
 /**
  * @Entity

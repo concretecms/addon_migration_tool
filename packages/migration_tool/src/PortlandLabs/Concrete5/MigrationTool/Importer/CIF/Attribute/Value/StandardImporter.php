@@ -2,7 +2,6 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Value;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\StandardAttributeValue;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ImporterInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 

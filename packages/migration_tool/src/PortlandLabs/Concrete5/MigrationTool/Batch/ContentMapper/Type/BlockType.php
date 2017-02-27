@@ -70,6 +70,7 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
                 }
             }
         }
+
         return $blocks;
     }
 
@@ -77,7 +78,7 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
     {
         $types = array();
         $blocks = $this->getTransformableEntityObjects($batch);
-        foreach($blocks as $block) {
+        foreach ($blocks as $block) {
             if ($block->getType() && !in_array($block->getType(), $types)) {
                 $types[] = $block->getType();
             }
@@ -165,6 +166,7 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
                 }
             }
         }
+
         return $items;
     }
 

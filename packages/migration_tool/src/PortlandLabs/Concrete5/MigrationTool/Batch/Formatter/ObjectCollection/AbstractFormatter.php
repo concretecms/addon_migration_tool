@@ -29,7 +29,7 @@ abstract class AbstractFormatter implements FormatterInterface
         $em = \Package::getByHandle('migration_tool')->getEntityManager();
         $r = $em->getRepository("\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch");
         $batch = $r->findFromCollection($this->collection);
-        print \View::element('batch_content_types/'
+        echo \View::element('batch_content_types/'
             . $this->getElement(), array(
             'batch' => $batch,
             'type' => $this->collection->getType(),

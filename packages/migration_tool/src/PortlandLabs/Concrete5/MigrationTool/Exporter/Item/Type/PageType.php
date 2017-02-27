@@ -35,8 +35,10 @@ class PageType extends AbstractType
                     return array($siteType->getSiteTypeName() . ': ' . $t->getPageTypeDisplayName());
                 }
             }
+
             return array($t->getPageTypeDisplayName());
         }
+
         return array();
     }
 

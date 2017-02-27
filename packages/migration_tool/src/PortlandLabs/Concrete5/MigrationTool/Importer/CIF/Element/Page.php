@@ -6,7 +6,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
-
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Sanitizer\PagePathSanitizer;
 

@@ -3,8 +3,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch;
 
 interface BatchInterface
 {
-
-    function getObjectCollections();
-    function getObjectCollection($collection);
-
+    public function getObjectCollections();
+    public function getObjectCollection($collection);
 }

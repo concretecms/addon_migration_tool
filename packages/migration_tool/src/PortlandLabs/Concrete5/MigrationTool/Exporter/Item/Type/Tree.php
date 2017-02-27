@@ -28,6 +28,7 @@ class Tree extends AbstractType
     public function getResultColumns(ExportItem $exportItem)
     {
         $t = \Concrete\Core\Tree\Tree::getByID($exportItem->getItemIdentifier());
+
         return array($t->getTreeDisplayName());
     }
 

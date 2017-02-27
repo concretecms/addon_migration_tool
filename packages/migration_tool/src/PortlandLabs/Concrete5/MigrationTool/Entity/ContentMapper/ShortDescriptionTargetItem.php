@@ -16,5 +16,4 @@ class ShortDescriptionTargetItem extends TargetItem
         $this->setItemId('short_description');
         $this->setItemName(t('Page Short Description'));
     }
-
 }

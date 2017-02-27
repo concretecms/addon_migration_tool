@@ -25,7 +25,7 @@ class Stack extends AbstractType
         $node = $element->addChild('stacks');
         foreach ($collection->getItems() as $item) {
             $c = false;
-            switch($item->getStackType()) {
+            switch ($item->getStackType()) {
                 case STACKS_PAGE_TYPE:
                     $c = \Concrete\Core\Page\Stack\Stack::getByID($item->getItemIdentifier());
                     break;
@@ -41,7 +41,7 @@ class Stack extends AbstractType
 
     public function getResultColumns(ExportItem $exportItem)
     {
-        switch($exportItem->getStackType()) {
+        switch ($exportItem->getStackType()) {
             case STACK_CATEGORY_PAGE_TYPE:
                 $c = StackFolder::getByID($exportItem->getItemIdentifier());
                 if (is_object($c)) {
@@ -94,7 +94,7 @@ class Stack extends AbstractType
     {
         $list = new StackList();
         $stacks = $list->getResults();
-       foreach($stacks as $stack) {
+        foreach ($stacks as $stack) {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\Stack();
             $item->setItemId($stack->getCollectionID());
             $item->setStackType($stack->getCollectionTypeHandle());

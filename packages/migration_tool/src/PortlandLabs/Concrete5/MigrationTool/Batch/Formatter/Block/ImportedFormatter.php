@@ -24,6 +24,7 @@ class ImportedFormatter implements TreeContentItemFormatterInterface
     protected function getColumnValue()
     {
         $div = new Element('div', h($this->value->getValue()), array('class' => 'text-danger'));
+
         return $div;
     }
 

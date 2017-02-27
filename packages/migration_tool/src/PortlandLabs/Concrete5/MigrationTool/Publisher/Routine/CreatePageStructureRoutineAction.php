@@ -9,7 +9,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreatePageStructureRoutineAction extends AbstractPageAction
 {
-
     public function execute(BatchInterface $batch)
     {
         $batchParent = $this->getBatchParentPage($batch);
@@ -72,6 +71,4 @@ class CreatePageStructureRoutineAction extends AbstractPageAction
 
         $parent->add($type, $data);
     }
-
 }
-

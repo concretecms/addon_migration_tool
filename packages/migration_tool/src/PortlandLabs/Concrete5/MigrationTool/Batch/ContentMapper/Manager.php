@@ -16,7 +16,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class Manager extends CoreManager implements MapperManagerInterface
 {
-
     public function createTargetItemList(BatchInterface $batch, MapperInterface $mapper)
     {
         return new TargetItemList($batch, $mapper);

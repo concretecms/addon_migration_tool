@@ -37,6 +37,7 @@ class SinglePage extends Page
         if (isset($node['global']) && $node['global'] == true) {
             $page->setIsGlobal(true);
         }
+
         return $page;
     }
 }

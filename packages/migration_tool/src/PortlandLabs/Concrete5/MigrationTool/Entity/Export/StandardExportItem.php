@@ -6,6 +6,4 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
  */
 class StandardExportItem extends AbstractStandardExportItem
 {
-
-
 }

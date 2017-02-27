@@ -104,7 +104,7 @@ class Page implements PublishableInterface
     protected $normalizePath = true;
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function canNormalizePath()
     {
@@ -112,7 +112,7 @@ class Page implements PublishableInterface
     }
 
     /**
-     * @param boolean $normalizePath
+     * @param bool $normalizePath
      */
     public function setNormalizePath($normalizePath)
     {
@@ -393,5 +393,4 @@ class Page implements PublishableInterface
     {
         $this->is_global = $is_global;
     }
-
 }

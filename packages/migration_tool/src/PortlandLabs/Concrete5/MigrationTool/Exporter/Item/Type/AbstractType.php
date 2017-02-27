@@ -10,7 +10,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 abstract class AbstractType implements TypeInterface, StandardFormatterTypeInterface
 {
-
     public function __construct()
     {
         $this->exporter = new Exporter();

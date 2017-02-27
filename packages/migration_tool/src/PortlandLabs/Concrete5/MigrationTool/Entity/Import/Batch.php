@@ -189,5 +189,4 @@ class Batch implements ValidatorInterface, BatchInterface
     {
         return (string) $this->getID();
     }
-
 }

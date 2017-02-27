@@ -1,7 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**

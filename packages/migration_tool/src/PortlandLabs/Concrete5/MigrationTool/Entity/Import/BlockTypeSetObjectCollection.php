@@ -7,7 +7,6 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BlockTypeSet\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\BlockTypeSetFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
-
 /**
  * @Entity
  */

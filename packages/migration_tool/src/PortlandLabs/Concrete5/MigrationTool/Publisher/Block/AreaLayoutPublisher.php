@@ -7,7 +7,6 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue;
 use Concrete\Core\Page\Page;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\AreaLayoutBlockValue;
-use Concrete\Core\Block\BlockType\BlockType;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\PublisherInterface as BlockPublisherInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\PublishPageContentRoutine;
 

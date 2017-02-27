@@ -23,9 +23,7 @@ class CollectionPublisher implements PublisherInterface
             $key->setIsAttributeKeyInternal($ak->getIsInternal());
             $key->setIsAttributeKeyContentIndexed($ak->getIsIndexed());
             $key->setIsAttributeKeySearchable($ak->getIsSearchable());
-
         } else {
-
             $key = CollectionKey::add($ak->getType(),
                 array(
                     'akHandle' => $ak->getHandle(),

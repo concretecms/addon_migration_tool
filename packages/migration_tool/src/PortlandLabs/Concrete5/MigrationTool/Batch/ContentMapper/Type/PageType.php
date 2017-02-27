@@ -97,6 +97,7 @@ class PageType implements MapperInterface
                 }
             }
         }
+
         return $items;
     }
 

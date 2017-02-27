@@ -3,7 +3,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute;
 
 use Concrete\Attribute\Address\Value;
 use Concrete\Core\Attribute\Key\CollectionKey;
-use Concrete\Core\Attribute\ObjectTrait;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AddressAttributeValue;
 use Concrete\Core\Page\Page;

@@ -3,7 +3,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\GroupValidator;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\JobValidator;
 
 /**
  * @Entity
@@ -36,7 +35,6 @@ class Group implements PublishableInterface
      * @Column(type="string")
      */
     protected $path;
-
 
     /**
      * @Column(type="string", nullable=true)
@@ -142,6 +140,4 @@ class Group implements PublishableInterface
     {
         $this->path = $path;
     }
-
-
 }

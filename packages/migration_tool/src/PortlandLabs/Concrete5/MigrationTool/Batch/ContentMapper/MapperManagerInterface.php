@@ -7,6 +7,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 interface MapperManagerInterface
 {
-    function createTargetItemList(BatchInterface $batch, MapperInterface $mapper);
-    function createBatchTargetItem();
+    public function createTargetItemList(BatchInterface $batch, MapperInterface $mapper);
+    public function createBatchTargetItem();
 }

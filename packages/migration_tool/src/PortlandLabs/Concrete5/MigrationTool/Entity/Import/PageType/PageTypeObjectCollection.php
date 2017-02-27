@@ -5,7 +5,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageType\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTypeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 

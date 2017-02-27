@@ -98,7 +98,7 @@ class Export extends DashboardPageController
             } else {
                 header('Content-type: text/xml');
             }
-            print $exporter->getElement()->asXML();
+            echo $exporter->getElement()->asXML();
             exit;
         } else {
             $this->view();
@@ -216,7 +216,7 @@ class Export extends DashboardPageController
                 }
             }
             $drivers = $exporters->getDrivers();
-            usort($drivers, function($a, $b) {
+            usort($drivers, function ($a, $b) {
                 return strcasecmp($a->getPluralDisplayName(), $b->getPluralDisplayName());
             });
             $this->set('drivers', $drivers);

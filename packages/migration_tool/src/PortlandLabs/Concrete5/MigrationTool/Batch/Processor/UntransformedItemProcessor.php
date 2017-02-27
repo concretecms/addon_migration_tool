@@ -14,7 +14,6 @@ class UntransformedItemProcessor extends ProcessorQueue
 
     protected $itemsPerBatch = 100;
 
-
     public function __construct(TargetInterface $target)
     {
         parent::__construct($target);

@@ -22,13 +22,14 @@ class Stack implements ElementParserInterface
     {
         if ($element->getName() == 'folder') {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\StackFolder();
-        } else if ((string) $element['type'] == 'global_area') {
+        } elseif ((string) $element['type'] == 'global_area') {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\GlobalArea();
         } else {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Stack();
         }
         $item->setName((string) $element['name']);
         $item->setPath((string) $element['path']);
+
         return $item;
     }
 
@@ -70,7 +71,7 @@ class Stack implements ElementParserInterface
                         }
                     }
                 }
-                $position++;
+                ++$position;
                 $collection->getStacks()->add($stack);
                 $stack->setCollection($collection);
             }

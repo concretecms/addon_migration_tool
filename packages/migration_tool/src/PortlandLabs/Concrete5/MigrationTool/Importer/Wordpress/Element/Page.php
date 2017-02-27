@@ -4,7 +4,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Element;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
-
 use PortlandLabs\Concrete5\MigrationTool\Importer\Sanitizer\PagePathSanitizer;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\ElementParserInterface;
 
@@ -52,7 +51,6 @@ class Page implements ElementParserInterface
     {
         $pages = array();
         foreach ($this->simplexml->channel->item as $item) {
-
             $pageType = $this->getPageType($item);
             if ($pageType == 'page' || $pageType == 'blog_entry') {
                 $pages[] = $item;
@@ -65,7 +63,8 @@ class Page implements ElementParserInterface
     private function getItemType(\SimpleXMLElement $node)
     {
         $wp = $node->children($this->namespaces['wp']);
-        return (string)$wp->post_type;
+
+        return (string) $wp->post_type;
     }
 
     private function getPageType($node)
@@ -89,9 +88,9 @@ class Page implements ElementParserInterface
         $pageType = $this->getPageType($node);
 
         $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
-        $page->setName((string)html_entity_decode($node->title));
-        $page->setPublicDate((string)$node->xpath('wp:post_date_gmt')[0]);
-        $page->setDescription((string)html_entity_decode($node->description));
+        $page->setName((string) html_entity_decode($node->title));
+        $page->setPublicDate((string) $node->xpath('wp:post_date_gmt')[0]);
+        $page->setDescription((string) html_entity_decode($node->description));
         $page->setType($pageType);
         $page->setTemplate('blank');
 
@@ -116,7 +115,7 @@ class Page implements ElementParserInterface
 
         if (!$path) {
             // TODO create validation warning on items that have a generated path
-            $path = '/imported-item-without-original-path-' . (string)$node->xpath('wp:post_id')[0];
+            $path = '/imported-item-without-original-path-' . (string) $node->xpath('wp:post_id')[0];
         }
 
         return strtolower($path);
@@ -144,7 +143,7 @@ class Page implements ElementParserInterface
         $pages = array();
         $parentPages = array(
             'posts' => 'Posts',
-            'pages' => 'Pages'
+            'pages' => 'Pages',
         );
 
         foreach ($parentPages as $parentPagePath => $parentPageName) {
@@ -171,7 +170,8 @@ class Page implements ElementParserInterface
     private function getUser(\SimpleXMLElement $node)
     {
         $dc = $node->children('http://purl.org/dc/elements/1.1/');
-        return (string)$dc->creator;
+
+        return (string) $dc->creator;
     }
 
     private function parseArea($node)

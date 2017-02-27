@@ -3,7 +3,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TopicsFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeKey\TopicsValidator;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\TopicsPublisher;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 

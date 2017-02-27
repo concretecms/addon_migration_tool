@@ -2,7 +2,6 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey;
 
 use Concrete\Core\Attribute\Key\Key as CoreAttributeKey;
-use Concrete\Core\Entity\Attribute\Key\Key;
 use Concrete\Core\Entity\Attribute\Key\Type\TopicsType;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\TopicsAttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
@@ -25,6 +24,7 @@ class TopicsPublisher extends AbstractPublisher
             $key_type = new TopicsType();
             $key_type->setParentNodeID($node->getTreeNodeID());
             $key_type->setTopicTreeID($tree->getTreeID());
+
             return $this->publishAttribute($source, $key_type, $destination);
         } else {
             $controller = $destination->getController();

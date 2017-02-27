@@ -22,7 +22,6 @@ class TargetItemList
         $this->repository = 'PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem';
     }
 
-
     public function getMapperCorePropertyTargetItems()
     {
         return $this->mapper->getCorePropertyTargetItems($this->batch);
@@ -32,7 +31,6 @@ class TargetItemList
     {
         return $this->mapper->getInstalledTargetItems($this->batch);
     }
-
 
     public function getMapperBatchTargetItems()
     {

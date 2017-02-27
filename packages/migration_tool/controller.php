@@ -73,11 +73,11 @@ class Controller extends Package
         $db = \Database::connection();
         $db->Execute('SET foreign_key_checks = 0');
         $tables = $db->GetCol("show tables like 'MigrationImport%'");
-        foreach($tables as $table) {
+        foreach ($tables as $table) {
             $db->Execute('drop table ' . $table);
         }
         $tables = $db->GetCol("show tables like 'MigrationExport%'");
-        foreach($tables as $table) {
+        foreach ($tables as $table) {
             $db->Execute('drop table ' . $table);
         }
         $db->Execute('SET foreign_key_checks = 1');
@@ -122,9 +122,8 @@ class Controller extends Package
 
     public function on_start()
     {
-
         require $this->getPackagePath() . '/helpers.php';
-        
+
         \Core::bind('migration/batch/page/validator', function ($app, $batch) {
             if (isset($batch[0])) {
                 $v = new Validator($batch[0]);

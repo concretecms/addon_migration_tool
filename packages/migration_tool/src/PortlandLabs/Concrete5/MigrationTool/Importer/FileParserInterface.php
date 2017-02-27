@@ -1,8 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Importer;
 
-use Concrete\Core\Error\Error;
-
 defined('C5_EXECUTE') or die("Access Denied.");
 
 interface FileParserInterface

@@ -63,7 +63,7 @@ class StandardFormatter implements FormatterInterface
 
     public function displaySearchForm()
     {
-        print \View::element('export/search/' . $this->itemType->getHandle(), array(
+        echo \View::element('export/search/' . $this->itemType->getHandle(), array(
             'formatter' => $this,
             'batch' => $this->batch,
             'collection' => $this->collection,
@@ -73,7 +73,7 @@ class StandardFormatter implements FormatterInterface
 
     public function displayBatchResults()
     {
-        print \View::element('export/results/standard_list', array(
+        echo \View::element('export/results/standard_list', array(
             'formatter' => $this,
             'batch' => $this->batch,
             'collection' => $this->collection,
@@ -86,7 +86,7 @@ class StandardFormatter implements FormatterInterface
 
     public function displaySearchResults()
     {
-        print \View::element('export/results/standard_list', array(
+        echo \View::element('export/results/standard_list', array(
             'formatter' => $this,
             'batch' => $this->batch,
             'collection' => $this->collection,

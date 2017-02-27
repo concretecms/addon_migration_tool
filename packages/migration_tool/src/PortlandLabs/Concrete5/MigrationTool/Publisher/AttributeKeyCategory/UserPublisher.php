@@ -31,7 +31,6 @@ class UserPublisher implements PublisherInterface
             $key->setAttributeKeyEditableOnRegister($category->getEditableInRegistration());
             $key->setAttributeKeyRequiredOnRegister($category->getRequiredInRegistration());
             $key->setAttributeKeyDisplayedOnMemberList($category->getDisplayedInMemberList());
-
         } else {
             // Legacy
 

@@ -39,7 +39,7 @@ class WordpressParser implements FileParserInterface
         if ($this->wxr) {
             $this->namespaces = $this->wxr->getDocNamespaces();
             $wxrVersion = $this->wxr->xpath('/rss/channel/wp:wxr_version');
-            if (!$wxrVersion || !preg_match('/^\d+\.\d+$/', (string)$wxrVersion[0])) {
+            if (!$wxrVersion || !preg_match('/^\d+\.\d+$/', (string) $wxrVersion[0])) {
                 $error->add(t('Missing or invalid WXR version number'));
             }
         }

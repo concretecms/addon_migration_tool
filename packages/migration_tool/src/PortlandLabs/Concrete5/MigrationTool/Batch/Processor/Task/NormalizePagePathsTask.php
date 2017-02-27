@@ -28,10 +28,10 @@ class NormalizePagePathsTask implements TaskInterface
         $common = '';
         $offset = 1;
         if (isset($paths[0]) && $paths[0]) {
-            while (strpos($paths[0], '/', $offset) !== FALSE) {
+            while (strpos($paths[0], '/', $offset) !== false) {
                 $offset = strpos($paths[0], '/', $offset) + 1;
                 $c = substr($paths[0], 0, $offset);
-                for ($i = 1; $i < $n; $i++) {
+                for ($i = 1; $i < $n; ++$i) {
                     if (substr($paths[$i], 0, $offset) !== $c) {
                         break 2;
                     }

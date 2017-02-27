@@ -2,7 +2,6 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey;
 
 use Concrete\Core\Attribute\Key\Key as CoreAttributeKey;
-use Concrete\Core\Entity\Attribute\Key\Key;
 use Concrete\Core\Entity\Attribute\Key\Type\SelectType;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\SelectAttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
@@ -23,6 +22,7 @@ class SelectPublisher extends AbstractPublisher
             $key_type->setAllowMultipleValues($source->getAllowMultipleValues());
             $key_type->setAllowOtherValues($source->getAllowOtherValues());
             $key_type->setDisplayOrder($source->getDisplayOrder());
+
             return $this->publishAttribute($source, $key_type, $destination);
         } else {
             $controller = $destination->getController();

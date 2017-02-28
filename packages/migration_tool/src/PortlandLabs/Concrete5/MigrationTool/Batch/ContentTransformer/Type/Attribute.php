@@ -21,8 +21,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
  * This class is responsible for taking imported attribute values and transforming them based on their imported XML
  * into better data structures. This can't happen at import because we don't necessarily know the type of the attribute
  * being imported until after all the import is complete.
- *
- * @package PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type
  */
 class Attribute implements TransformerInterface
 {

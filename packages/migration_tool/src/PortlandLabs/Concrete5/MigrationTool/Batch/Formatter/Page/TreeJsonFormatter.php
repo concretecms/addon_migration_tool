@@ -19,11 +19,20 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $node->lazy = true;
             $node->nodetype = 'page';
             $node->extraClasses = 'migration-node-main';
+
+            $publisherValidator = $page->getPublisherValidator();
+            $skipItem = $publisherValidator->skipItem();
+            if ($skipItem) {
+                $node->extraClasses .= ' migration-item-skipped';
+            }
+
             $node->id = $page->getId();
             $node->pagePath = '<a href="#" data-editable-property="path" data-type="text" data-pk="' . $page->getID() . '" data-title="' . t('Page Path') . '">' . $page->getBatchPath() . '</a>';
             $node->pageType = $page->getType();
             $node->pageTemplate = $page->getTemplate();
-            $node->statusClass = $formatter->getCollectionStatusIconClass();
+            if (!$skipItem) {
+                $node->statusClass = $formatter->getCollectionStatusIconClass();
+            }
             $response[] = $node;
         }
 

@@ -1,5 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper;
+use Doctrine\ORM\Mapping as ORM;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 

@@ -6,6 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\StandardPublishe
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

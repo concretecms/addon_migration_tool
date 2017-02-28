@@ -6,6 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageFeed\TreeJsonFormat
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageFeed\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageFeedFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

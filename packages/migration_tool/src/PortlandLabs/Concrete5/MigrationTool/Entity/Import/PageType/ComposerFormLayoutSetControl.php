@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

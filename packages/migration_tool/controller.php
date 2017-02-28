@@ -38,8 +38,8 @@ use SinglePage;
 class Controller extends Package
 {
     protected $pkgHandle = 'migration_tool';
-    protected $appVersionRequired = '5.7.5.4a1';
-    protected $pkgVersion = '0.5.4';
+    protected $appVersionRequired = '8.2.0a1';
+    protected $pkgVersion = '0.6.0';
     protected $pkgAutoloaderMapCoreExtensions = true;
     protected $pkgAutoloaderRegistries = array(
         'src/PortlandLabs/Concrete5/MigrationTool' => '\PortlandLabs\Concrete5\MigrationTool',

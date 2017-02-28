@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\DateTimeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\DateTimePublisher;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Tree\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\TreeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

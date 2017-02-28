@@ -1,5 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+use Doctrine\ORM\Mapping as ORM;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThemeValidator;

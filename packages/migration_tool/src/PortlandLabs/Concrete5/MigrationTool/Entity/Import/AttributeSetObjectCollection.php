@@ -6,6 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeSet\TreeJsonFo
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeSet\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\AttributeSetFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

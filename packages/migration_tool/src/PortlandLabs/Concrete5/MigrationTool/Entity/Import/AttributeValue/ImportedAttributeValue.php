@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\ImportedFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\CIFPublisher;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

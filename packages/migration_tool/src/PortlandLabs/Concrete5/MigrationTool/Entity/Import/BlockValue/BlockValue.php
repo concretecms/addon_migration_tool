@@ -1,5 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

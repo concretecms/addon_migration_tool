@@ -1,5 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
+use Doctrine\ORM\Mapping as ORM;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\UserAccessEntityFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\UserAccessEntityValidator;

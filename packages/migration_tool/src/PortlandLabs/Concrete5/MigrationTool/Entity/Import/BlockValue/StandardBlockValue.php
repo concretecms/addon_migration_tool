@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\StandardFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\StandardInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Table(name="MigrationImportStandardBlockValues")

@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TextAreaFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\TextAreaPublisher;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

@@ -5,6 +5,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TopicsForm
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeKey\TopicsValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\TopicsPublisher;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

@@ -6,6 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\StandardValid
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Attribute\StandardInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\ImageFilePublisher;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

@@ -7,6 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\AttributeKeyFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeKey\Validator as AttributeKeyValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

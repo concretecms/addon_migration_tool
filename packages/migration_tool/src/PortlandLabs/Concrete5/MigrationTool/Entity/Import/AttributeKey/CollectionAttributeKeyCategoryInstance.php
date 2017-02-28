@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKeyCategory\CollectionPublisher;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

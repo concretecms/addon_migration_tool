@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKeyCategory\UserFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKeyCategory\UserPublisher;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

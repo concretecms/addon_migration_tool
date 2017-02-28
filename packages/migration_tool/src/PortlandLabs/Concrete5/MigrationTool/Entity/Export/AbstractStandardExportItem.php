@@ -1,5 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
+use Doctrine\ORM\Mapping as ORM;
 
 abstract class AbstractStandardExportItem extends ExportItem
 {

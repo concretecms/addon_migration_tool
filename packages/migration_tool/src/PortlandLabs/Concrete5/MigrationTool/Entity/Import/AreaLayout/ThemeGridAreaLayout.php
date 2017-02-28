@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AreaLayout\ThemeGridAreaLayoutPublisher;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\AreaLayoutFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\AreaLayoutInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\AreaLayoutPublisher;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Table(name="MigrationImportAreaLayoutBlockValues")

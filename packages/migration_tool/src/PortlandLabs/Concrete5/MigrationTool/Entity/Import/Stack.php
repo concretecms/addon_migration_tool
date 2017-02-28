@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Stack\StackFormatter;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Entity

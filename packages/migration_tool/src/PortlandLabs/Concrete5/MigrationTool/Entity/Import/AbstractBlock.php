@@ -140,7 +140,7 @@ class AbstractBlock
     }
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $defaults_output_identifier = null;
 

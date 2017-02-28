@@ -6,24 +6,24 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BannedWordValidator
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportBannedWords")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportBannedWords")
  */
 class BannedWord implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="BannedWordObjectCollection")
+     * @ORM\ManyToOne(targetEntity="BannedWordObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $word;
 

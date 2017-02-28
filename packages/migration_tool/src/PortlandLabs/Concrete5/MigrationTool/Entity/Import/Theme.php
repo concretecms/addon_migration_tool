@@ -6,34 +6,34 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThemeValidator;
 
 /**
- * @Entity
- * @Table(name="MigrationImportPageThemes")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportPageThemes")
  */
 class Theme implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="ThemeObjectCollection")
+     * @ORM\ManyToOne(targetEntity="ThemeObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $handle;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $is_activated = false;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $package = null;
 

@@ -7,12 +7,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType\AllPagesPublis
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class AllPagesPublishTarget extends PublishTarget
 {
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $form_factor;
 

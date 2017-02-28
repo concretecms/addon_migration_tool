@@ -9,12 +9,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\StackF
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class StackObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AbstractStack", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AbstractStack", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $stacks;
 

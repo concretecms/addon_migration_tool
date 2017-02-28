@@ -7,10 +7,10 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\StackValidator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="type", type="string")
- * @Table(name="MigrationImportStacks")
+ * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\Table(name="MigrationImportStacks")
  */
 abstract class AbstractStack implements PublishableInterface
 {
@@ -19,13 +19,13 @@ abstract class AbstractStack implements PublishableInterface
     abstract public function getStackFormatter();
 
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $path;
 
@@ -35,22 +35,22 @@ abstract class AbstractStack implements PublishableInterface
     }
 
     /**
-     * @ManyToOne(targetEntity="StackObjectCollection")
+     * @ORM\ManyToOne(targetEntity="StackObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @OneToMany(targetEntity="StackBlock", mappedBy="stack", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="StackBlock", mappedBy="stack", cascade={"persist", "remove"})
      */
     protected $blocks;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $position;
 

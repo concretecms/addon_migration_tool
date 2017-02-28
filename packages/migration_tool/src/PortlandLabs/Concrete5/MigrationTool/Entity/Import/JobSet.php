@@ -6,34 +6,34 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\JobSetValidator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportJobSets")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportJobSets")
  */
 class JobSet implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="JobSetObjectCollection")
+     * @ORM\ManyToOne(targetEntity="JobSetObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $package = null;
 
     /**
-     * @Column(type="json_array")
+     * @ORM\Column(type="json_array")
      */
     protected $jobs;
 

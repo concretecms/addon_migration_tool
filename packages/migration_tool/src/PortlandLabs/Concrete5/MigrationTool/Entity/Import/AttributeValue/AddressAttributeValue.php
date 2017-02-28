@@ -6,43 +6,43 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\AddressPublisher;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportAttributeAddressValues")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportAttributeAddressValues")
  */
 class AddressAttributeValue extends AttributeValue
 {
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $address1;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $address2;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $address3;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $city;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $state_province;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $country;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $postal_code;
 

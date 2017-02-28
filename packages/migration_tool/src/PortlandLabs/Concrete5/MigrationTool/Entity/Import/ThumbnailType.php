@@ -6,44 +6,44 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThumbnailTypeValidator;
 
 /**
- * @Entity
- * @Table(name="MigrationImportThumbnailTypes")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportThumbnailTypes")
  */
 class ThumbnailType implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\ThumbnailTypeObjectCollection")
+     * @ORM\ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\ThumbnailTypeObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $handle;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $width = 0;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $height;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $is_required = false;
 

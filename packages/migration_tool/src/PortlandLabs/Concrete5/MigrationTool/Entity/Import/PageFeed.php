@@ -7,69 +7,69 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageFeedValidator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportPageFeeds")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportPageFeeds")
  */
 class PageFeed implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageFeedObjectCollection")
+     * @ORM\ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageFeedObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $handle;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $title;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $parent;
 
     /**
-     * @Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $include_all_descendants = false;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $display_aliases = false;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $display_featured_only = false;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $page_type;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $content_type = 'description';
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $content_type_area;
 

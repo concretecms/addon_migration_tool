@@ -5,7 +5,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class CorePagePropertyComposerFormLayoutSetControl extends ComposerFormLayoutSetControl
 {

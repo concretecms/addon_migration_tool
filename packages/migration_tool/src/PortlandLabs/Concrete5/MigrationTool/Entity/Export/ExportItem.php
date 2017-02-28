@@ -3,22 +3,22 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="type", type="string")
- * @Entity
- * @Table(name="MigrationExportItems")
+ * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationExportItems")
  */
 abstract class ExportItem
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection")
+     * @ORM\ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection")
      **/
     protected $collection;
 

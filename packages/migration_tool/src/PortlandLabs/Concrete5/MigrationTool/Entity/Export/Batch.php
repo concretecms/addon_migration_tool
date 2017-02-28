@@ -5,32 +5,32 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity(repositoryClass="\PortlandLabs\Concrete5\MigrationTool\Entity\Export\BatchRepository")
- * @Table(name="MigrationExportBatches")
+ * @ORM\Entity(repositoryClass="\PortlandLabs\Concrete5\MigrationTool\Entity\Export\BatchRepository")
+ * @ORM\Table(name="MigrationExportBatches")
  */
 class Batch
 {
     /**
-     * @Id @Column(type="guid")
-     * @GeneratedValue(strategy="UUID")
+     * @ORM\Id @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $date;
 
     /**
-     * @Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $notes;
 
     /**
-     * @ManyToMany(targetEntity="ObjectCollection", cascade={"persist", "remove"}))
-     * @JoinTable(name="MigrationExportBatchObjectCollections",
-     *      joinColumns={@JoinColumn(name="batch_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="collection_id", referencedColumnName="id", unique=true)}
+     * @ORM\ManyToMany(targetEntity="ObjectCollection", cascade={"persist", "remove"}))
+     * @ORM\JoinTable(name="MigrationExportBatchObjectCollections",
+     *      joinColumns={@ORM\JoinColumn(name="batch_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="collection_id", referencedColumnName="id", unique=true)}
      *      )
      **/
     public $collections;

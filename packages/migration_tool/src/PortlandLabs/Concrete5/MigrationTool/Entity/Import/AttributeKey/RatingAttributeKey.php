@@ -5,8 +5,8 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankForma
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportRatingAttributeKeys")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportRatingAttributeKeys")
  */
 class RatingAttributeKey extends AttributeKey
 {

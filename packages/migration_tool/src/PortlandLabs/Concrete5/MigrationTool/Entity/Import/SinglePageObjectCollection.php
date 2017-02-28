@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\SinglePageFormatter;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class SinglePageObjectCollection extends PageObjectCollection
 {

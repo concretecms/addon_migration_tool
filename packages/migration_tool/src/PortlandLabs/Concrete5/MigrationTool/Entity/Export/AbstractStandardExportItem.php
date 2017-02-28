@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class AbstractStandardExportItem extends ExportItem
 {
     /**
-     * @Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
     protected $item_id;
 

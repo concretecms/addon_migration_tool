@@ -8,34 +8,34 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\TreeValidator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportTrees")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportTrees")
  */
 class Tree implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="TreeObjectCollection")
+     * @ORM\ManyToOne(targetEntity="TreeObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $type;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * @OneToMany(targetEntity="TreeNode", mappedBy="tree", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="TreeNode", mappedBy="tree", cascade={"persist", "remove"})
      **/
     protected $nodes;
 

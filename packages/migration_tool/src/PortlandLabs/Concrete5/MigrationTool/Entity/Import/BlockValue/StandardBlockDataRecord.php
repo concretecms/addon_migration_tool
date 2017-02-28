@@ -3,34 +3,34 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportBlockValueDataRecords")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportBlockValueDataRecords")
  */
 class StandardBlockDataRecord
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @Column(type="json_array")
+     * @ORM\Column(type="json_array")
      */
     protected $data;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $record_table;
 
     /**
-     * @ManyToOne(targetEntity="StandardBlockValue")
+     * @ORM\ManyToOne(targetEntity="StandardBlockValue")
      **/
     protected $value;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $position;
 

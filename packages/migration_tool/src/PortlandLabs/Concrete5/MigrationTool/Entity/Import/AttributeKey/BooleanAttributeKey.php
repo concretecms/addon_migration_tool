@@ -6,13 +6,13 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\BooleanPublisher
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportBooleanAttributeKeys")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportBooleanAttributeKeys")
  */
 class BooleanAttributeKey extends AttributeKey
 {
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $is_checked = false;
 

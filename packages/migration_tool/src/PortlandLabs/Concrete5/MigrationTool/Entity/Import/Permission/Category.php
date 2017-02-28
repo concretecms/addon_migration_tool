@@ -6,29 +6,29 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionKeyCategoryValidator;
 
 /**
- * @Entity
- * @Table(name="MigrationImportPermissionKeyCategories")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportPermissionKeyCategories")
  */
 class Category implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="CategoryObjectCollection")
+     * @ORM\ManyToOne(targetEntity="CategoryObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $handle;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $package = null;
 

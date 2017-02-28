@@ -7,95 +7,95 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageValidator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportPages")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportPages")
  */
 class Page implements PublishableInterface
 {
     /**
-     * @Id @Column(type="guid")
-     * @GeneratedValue(strategy="UUID")
+     * @ORM\Id @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
-     * @Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $original_path;
 
     /**
-     * @Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $batch_path;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $public_date;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $filename;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $type;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $template;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $user;
 
     /**
-     * @Column(type="text")
+     * @ORM\Column(type="text")
      */
     protected $description;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $position;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $package;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $is_at_root = false;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $is_global = false;
 
     /**
-     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute", mappedBy="page", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute", mappedBy="page", cascade={"persist", "remove"})
      **/
     public $attributes;
 
     /**
-     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area", mappedBy="page", cascade={"persist", "remove"})
-     * @OrderBy({"name" = "ASC"})
+     * @ORM\OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area", mappedBy="page", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"name" = "ASC"})
      **/
     public $areas;
 
     /**
-     * @ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection")
+     * @ORM\ManyToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection")
      **/
     protected $collection;
 

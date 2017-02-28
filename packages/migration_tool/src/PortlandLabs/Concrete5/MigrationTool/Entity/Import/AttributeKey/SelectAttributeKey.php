@@ -6,28 +6,28 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\SelectPublisher;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportSelectAttributeKeys")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportSelectAttributeKeys")
  */
 class SelectAttributeKey extends AttributeKey
 {
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $allow_multiple_values = false;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $allow_other_values = false;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $display_order = 'display_asc';
 
     /**
-     * @Column(type="json_array")
+     * @ORM\Column(type="json_array")
      */
     protected $options = array();
 

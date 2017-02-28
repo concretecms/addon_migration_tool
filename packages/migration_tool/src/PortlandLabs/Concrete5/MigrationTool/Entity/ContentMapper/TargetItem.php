@@ -7,31 +7,31 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 defined('C5_EXECUTE') or die("Access Denied.");
 
 /**
- * @Entity
- * @Table(name="MigrationContentMapperTargetItems")
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="entity_type", type="string")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationContentMapperTargetItems")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="entity_type", type="string")
  */
 class TargetItem implements TargetItemInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $source_item_identifier;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $item_id;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $item_type;
 

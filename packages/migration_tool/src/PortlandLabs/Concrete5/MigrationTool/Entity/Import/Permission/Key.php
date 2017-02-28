@@ -8,8 +8,8 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionKeyValidator;
 
 /**
- * @Entity
- * @Table(name="MigrationImportPermissionKeys")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportPermissionKeys")
  */
 class Key implements PublishableInterface
 {
@@ -19,53 +19,53 @@ class Key implements PublishableInterface
     }
 
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="KeyObjectCollection")
+     * @ORM\ManyToOne(targetEntity="KeyObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @OneToMany(targetEntity="AccessEntity", mappedBy="key", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AccessEntity", mappedBy="key", cascade={"persist", "remove"})
      **/
     protected $access_entities;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $handle;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $has_custom_class = false;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $can_trigger_workflow = false;
 
     /**
-     * @Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $category;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $package = null;
 

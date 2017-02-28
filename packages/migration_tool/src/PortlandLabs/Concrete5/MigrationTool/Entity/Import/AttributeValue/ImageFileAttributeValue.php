@@ -9,13 +9,13 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportAttributeImageFileValues")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportAttributeImageFileValues")
  */
 class ImageFileAttributeValue extends AttributeValue
 {
     /**
-     * @Column(type="text")
+     * @ORM\Column(type="text")
      */
     protected $image_file_value;
 

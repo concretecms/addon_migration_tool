@@ -5,12 +5,12 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AreaLayout\ThemeGridAreaLayou
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class ThemeGridAreaLayout extends AreaLayout
 {
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $max_columns = 0;
 

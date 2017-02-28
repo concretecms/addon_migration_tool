@@ -5,21 +5,21 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportAttributeValues")
- * @InheritanceType("JOINED")
- * @DiscriminatorColumn(name="type", type="string")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportAttributeValues")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
  */
 abstract class AttributeValue
 {
     /**
-     * @Id @Column(type="guid")
-     * @GeneratedValue(strategy="UUID")
+     * @ORM\Id @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
-     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute", mappedBy="attribute_value")
+     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute", mappedBy="attribute_value")
      **/
     protected $attribute;
 

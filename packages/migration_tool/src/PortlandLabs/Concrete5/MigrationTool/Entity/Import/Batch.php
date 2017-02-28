@@ -8,38 +8,38 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity(repositoryClass="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchRepository")
- * @Table(name="MigrationImportBatches")
+ * @ORM\Entity(repositoryClass="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchRepository")
+ * @ORM\Table(name="MigrationImportBatches")
  */
 class Batch implements ValidatorInterface, BatchInterface
 {
     /**
-     * @Id @Column(type="guid")
-     * @GeneratedValue(strategy="UUID")
+     * @ORM\Id @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $date;
 
     /**
-     * @Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $notes;
 
     /**
-     * @ManyToMany(targetEntity="ObjectCollection", cascade={"persist", "remove"}))
-     * @JoinTable(name="MigrationImportBatchObjectCollections",
-     *      joinColumns={@JoinColumn(name="batch_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="collection_id", referencedColumnName="id", unique=true)}
+     * @ORM\ManyToMany(targetEntity="ObjectCollection", cascade={"persist", "remove"}))
+     * @ORM\JoinTable(name="MigrationImportBatchObjectCollections",
+     *      joinColumns={@ORM\JoinColumn(name="batch_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="collection_id", referencedColumnName="id", unique=true)}
      *      )
      **/
     public $collections;
 
     /**
-     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem", mappedBy="batch", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem", mappedBy="batch", cascade={"persist", "remove"})
      **/
     public $target_items;
 

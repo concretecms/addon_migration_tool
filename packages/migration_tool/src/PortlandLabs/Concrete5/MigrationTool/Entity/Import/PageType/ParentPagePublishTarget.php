@@ -7,12 +7,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class ParentPagePublishTarget extends PublishTarget
 {
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $path;
 

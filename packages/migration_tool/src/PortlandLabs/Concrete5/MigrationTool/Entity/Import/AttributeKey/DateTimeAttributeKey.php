@@ -6,13 +6,13 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\DateTimePublishe
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportDateTimeAttributeKeys")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportDateTimeAttributeKeys")
  */
 class DateTimeAttributeKey extends AttributeKey
 {
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $mode = '';
 

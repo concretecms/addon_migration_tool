@@ -3,40 +3,40 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportTreeNodes")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportTreeNodes")
  */
 class TreeNode
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="Tree")
+     * @ORM\ManyToOne(targetEntity="Tree")
      **/
     protected $tree;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $title;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $type;
 
     /**
-     * @ManyToOne(targetEntity="TreeNode", inversedBy="children", cascade={"persist", "remove"})
-     * @JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="TreeNode", inversedBy="children", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $parent;
 
     /**
-     * @OneToMany(targetEntity="TreeNode", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="TreeNode", mappedBy="parent")
      */
     protected $children;
 

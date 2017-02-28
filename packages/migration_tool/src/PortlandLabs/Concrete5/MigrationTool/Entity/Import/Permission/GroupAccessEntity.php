@@ -7,19 +7,19 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\GroupAcce
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
- * @Entity
- * @Table(name="MigrationImportGroupPermissionAccessEntities")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportGroupPermissionAccessEntities")
  */
 class GroupAccessEntity extends AccessEntity
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $group_name;
 

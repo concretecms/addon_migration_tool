@@ -5,17 +5,17 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AreaLayout\CustomAreaLayoutPu
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class CustomAreaLayout extends AreaLayout
 {
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $spacing = 0;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $has_custom_widths = false;
 

@@ -5,12 +5,12 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AreaLayout\PresetAreaLayoutPu
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class PresetAreaLayout extends AreaLayout
 {
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $preset;
 

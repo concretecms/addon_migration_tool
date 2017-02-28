@@ -5,24 +5,24 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity
- * @Table(name="MigrationExportObjectCollections")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationExportObjectCollections")
  */
 class ObjectCollection
 {
     /**
-     * @Id @Column(type="guid")
-     * @GeneratedValue(strategy="UUID")
+     * @ORM\Id @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $type;
 
     /**
-     * @OneToMany(targetEntity="ExportItem", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="ExportItem", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $items;
 

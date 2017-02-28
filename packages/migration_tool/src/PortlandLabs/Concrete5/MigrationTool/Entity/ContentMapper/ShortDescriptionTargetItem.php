@@ -7,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 defined('C5_EXECUTE') or die("Access Denied.");
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class ShortDescriptionTargetItem extends TargetItem
 {

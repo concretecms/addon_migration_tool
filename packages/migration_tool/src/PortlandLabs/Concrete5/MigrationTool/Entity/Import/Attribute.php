@@ -3,24 +3,24 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportAttributes")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportAttributes")
  */
 class Attribute
 {
     /**
-     * @Id @Column(type="guid")
-     * @GeneratedValue(strategy="UUID")
+     * @ORM\Id @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $handle;
 
     /**
-     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue", inversedBy="attribute", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue", inversedBy="attribute", cascade={"persist", "remove"})
      **/
     protected $attribute_value;
 

@@ -6,13 +6,13 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportAttributeSelectValues")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportAttributeSelectValues")
  */
 class SelectAttributeValue extends AttributeValue
 {
     /**
-     * @Column(type="json_array")
+     * @ORM\Column(type="json_array")
      */
     protected $select_value;
 

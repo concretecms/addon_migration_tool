@@ -5,7 +5,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Stack\StackFormatter;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class Stack extends AbstractStack
 {

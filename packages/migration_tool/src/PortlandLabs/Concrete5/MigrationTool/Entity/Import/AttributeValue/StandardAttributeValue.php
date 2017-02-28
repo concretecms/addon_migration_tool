@@ -6,13 +6,13 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportAttributeStandardValues")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportAttributeStandardValues")
  */
 class StandardAttributeValue extends AttributeValue
 {
     /**
-     * @Column(type="text")
+     * @ORM\Column(type="text")
      */
     protected $standard_value;
 

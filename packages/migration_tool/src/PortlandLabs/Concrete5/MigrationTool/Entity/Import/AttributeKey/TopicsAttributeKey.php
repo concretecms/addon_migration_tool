@@ -8,18 +8,18 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportTopicsAttributeKeys")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportTopicsAttributeKeys")
  */
 class TopicsAttributeKey extends AttributeKey
 {
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $tree_name = '';
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $node_path = '';
 

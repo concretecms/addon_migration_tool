@@ -5,7 +5,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Stack\GlobalAreaFormatt
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class GlobalArea extends AbstractStack
 {

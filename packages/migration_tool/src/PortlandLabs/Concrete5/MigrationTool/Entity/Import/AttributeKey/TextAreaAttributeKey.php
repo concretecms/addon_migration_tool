@@ -6,13 +6,13 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\TextAreaPublishe
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportTextAreaAttributeKeys")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportTextAreaAttributeKeys")
  */
 class TextAreaAttributeKey extends AttributeKey
 {
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $mode = '';
 

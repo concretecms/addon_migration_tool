@@ -3,12 +3,12 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class CustomAreaLayoutColumn extends AreaLayoutColumn
 {
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $width = 0;
 

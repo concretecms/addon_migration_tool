@@ -7,80 +7,80 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypeValidator;
 
 /**
- * @Entity
- * @Table(name="MigrationImportPageTypes")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportPageTypes")
  */
 class PageType implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="PageTypeObjectCollection")
+     * @ORM\ManyToOne(targetEntity="PageTypeObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @OneToOne(targetEntity="PublishTarget", inversedBy="type", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="PublishTarget", inversedBy="type", cascade={"persist", "remove"})
      **/
     protected $publish_target;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $handle;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $allowed_templates;
 
     /**
-     * @Column(type="json_array")
+     * @ORM\Column(type="json_array")
      */
     protected $templates = array();
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $default_template;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $is_internal = false;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $is_frequently_added = false;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $launch_in_composer = true;
 
     /**
-     * @OneToMany(targetEntity="ComposerFormLayoutSet", mappedBy="type", cascade={"persist", "remove"})
-     * @OrderBy({"position" = "ASC"})
+     * @ORM\OneToMany(targetEntity="ComposerFormLayoutSet", mappedBy="type", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"position" = "ASC"})
      **/
     public $layout_sets;
 
     /**
-     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection", cascade={"persist", "remove"})
      **/
     public $default_page_collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $package = null;
 

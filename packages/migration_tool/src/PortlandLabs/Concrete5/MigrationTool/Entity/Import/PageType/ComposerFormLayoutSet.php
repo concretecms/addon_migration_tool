@@ -5,40 +5,40 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity
- * @Table(name="MigrationImportPageTypeComposerFormLayoutSets")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportPageTypeComposerFormLayoutSets")
  */
 class ComposerFormLayoutSet
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @OneToMany(targetEntity="ComposerFormLayoutSetControl", mappedBy="set", cascade={"persist", "remove"})
-     * @OrderBy({"position" = "ASC"})
+     * @ORM\OneToMany(targetEntity="ComposerFormLayoutSetControl", mappedBy="set", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"position" = "ASC"})
      **/
     public $controls;
 
     /**
-     * @ManyToOne(targetEntity="PageType")
+     * @ORM\ManyToOne(targetEntity="PageType")
      **/
     protected $type;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $position = 0;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $description;
 

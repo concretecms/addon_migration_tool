@@ -3,21 +3,21 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportBlockValues")
- * @InheritanceType("JOINED")
- * @DiscriminatorColumn(name="value_type", type="string")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportBlockValues")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="value_type", type="string")
  */
 abstract class BlockValue
 {
     /**
-     * @Id @Column(type="guid")
-     * @GeneratedValue(strategy="UUID")
+     * @ORM\Id @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
-     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AbstractBlock", mappedBy="block_value")
+     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AbstractBlock", mappedBy="block_value")
      **/
     protected $block;
 

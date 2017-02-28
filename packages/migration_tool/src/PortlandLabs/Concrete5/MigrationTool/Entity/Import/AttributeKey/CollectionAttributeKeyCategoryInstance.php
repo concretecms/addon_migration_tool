@@ -5,7 +5,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKeyCategory\Collecti
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class CollectionAttributeKeyCategoryInstance extends AttributeKeyCategoryInstance
 {

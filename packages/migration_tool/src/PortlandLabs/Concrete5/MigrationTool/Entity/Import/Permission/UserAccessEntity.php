@@ -7,19 +7,19 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\UserAcces
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
- * @Entity
- * @Table(name="MigrationImportUserPermissionAccessEntities")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportUserPermissionAccessEntities")
  */
 class UserAccessEntity extends AccessEntity
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $user_name;
 

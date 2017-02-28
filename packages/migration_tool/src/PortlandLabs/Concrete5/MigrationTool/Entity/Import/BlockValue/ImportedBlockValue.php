@@ -7,13 +7,13 @@ use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\CIFInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\CIFPublisher;
 
 /**
- * @Table(name="MigrationImportImportedBlockValues")
- * @Entity
+ * @ORM\Table(name="MigrationImportImportedBlockValues")
+ * @ORM\Entity
  */
 class ImportedBlockValue extends BlockValue
 {
     /**
-     * @Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $value;
 

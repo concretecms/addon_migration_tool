@@ -10,12 +10,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class PageTypeObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="PageType", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="PageType", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $types;
 

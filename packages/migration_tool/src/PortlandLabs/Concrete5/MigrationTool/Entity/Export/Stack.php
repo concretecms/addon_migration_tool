@@ -3,12 +3,12 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Export;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class Stack extends AbstractStandardExportItem
 {
     /**
-     * @Column(type="string", nullable=false)
+     * @ORM\Column(type="string", nullable=false)
      */
     protected $stack_type;
 

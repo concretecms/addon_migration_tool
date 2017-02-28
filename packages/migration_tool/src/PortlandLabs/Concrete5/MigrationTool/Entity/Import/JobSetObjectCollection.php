@@ -7,12 +7,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class JobSetObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="JobSet", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="JobSet", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $sets;
 

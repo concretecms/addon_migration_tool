@@ -7,12 +7,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\ThemeF
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class ThemeObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="Theme", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Theme", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $themes;
 
@@ -22,7 +22,7 @@ class ThemeObjectCollection extends ObjectCollection
     }
 
     /**
-     * @return mixed
+     * @ORM\return mixed
      */
     public function getThemes()
     {

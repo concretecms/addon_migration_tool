@@ -3,24 +3,24 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportBatchTargetItems")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportBatchTargetItems")
  */
 class BatchTargetItem
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem", cascade={"persist", "remove"})
      **/
     protected $target_item;
 
     /**
-     * @ManyToOne(targetEntity="Batch")
+     * @ORM\ManyToOne(targetEntity="Batch")
      **/
     protected $batch;
 

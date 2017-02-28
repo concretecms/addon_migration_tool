@@ -5,14 +5,14 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AbstractBlock;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class AreaLayoutColumnBlock extends AbstractBlock
 {
     protected $area = null;
 
     /**
-     * @ManyToOne(targetEntity="AreaLayoutColumn")
+     * @ORM\ManyToOne(targetEntity="AreaLayoutColumn")
      **/
     protected $column;
 

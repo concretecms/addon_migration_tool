@@ -5,35 +5,35 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportAreas")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportAreas")
  */
 class Area
 {
     /**
-     * @Id @Column(type="guid")
-     * @GeneratedValue(strategy="UUID")
+     * @ORM\Id @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
-     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block", mappedBy="area", cascade={"persist", "remove"})
-     * @OrderBy({"position" = "ASC"})
+     * @ORM\OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block", mappedBy="area", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"position" = "ASC"})
      **/
     public $blocks;
 
     /**
-     * @ManyToOne(targetEntity="Page")
+     * @ORM\ManyToOne(targetEntity="Page")
      **/
     protected $page;
 
     /**
-     * @OneToOne(targetEntity="StyleSet", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="StyleSet", cascade={"persist", "remove"})
      **/
     protected $style_set;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 

@@ -5,21 +5,21 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="type", type="string")
- * @Table(name="MigrationImportPageTypePublishTargets")
+ * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\Table(name="MigrationImportPageTypePublishTargets")
  */
 abstract class PublishTarget
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @OneToOne(targetEntity="PageType", mappedBy="publish_target")
+     * @ORM\OneToOne(targetEntity="PageType", mappedBy="publish_target")
      **/
     protected $type;
 

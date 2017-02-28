@@ -8,14 +8,14 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Table(name="MigrationImportStandardBlockValues")
- * @Entity
+ * @ORM\Table(name="MigrationImportStandardBlockValues")
+ * @ORM\Entity
  */
 class StandardBlockValue extends BlockValue
 {
     /**
-     * @OneToMany(targetEntity="StandardBlockDataRecord", mappedBy="value", cascade={"persist", "remove"})
-     * @OrderBy({"position" = "ASC"})
+     * @ORM\OneToMany(targetEntity="StandardBlockDataRecord", mappedBy="value", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"position" = "ASC"})
      **/
     public $records;
 

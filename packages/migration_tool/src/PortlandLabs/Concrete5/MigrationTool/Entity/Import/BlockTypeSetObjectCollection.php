@@ -9,12 +9,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class BlockTypeSetObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="BlockTypeSet", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="BlockTypeSet", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $sets;
 

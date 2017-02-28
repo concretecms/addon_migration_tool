@@ -3,17 +3,17 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class ThemeGridAreaLayoutColumn extends AreaLayoutColumn
 {
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $span = 0;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $offset = 0;
 

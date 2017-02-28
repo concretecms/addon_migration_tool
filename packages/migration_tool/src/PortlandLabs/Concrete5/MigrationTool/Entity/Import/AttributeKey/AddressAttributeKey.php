@@ -6,23 +6,23 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\AddressPublisher
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportAddressAttributeKeys")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportAddressAttributeKeys")
  */
 class AddressAttributeKey extends AttributeKey
 {
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $default_country;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $has_custom_countries = false;
 
     /**
-     * @Column(type="json_array")
+     * @ORM\Column(type="json_array")
      */
     protected $custom_countries = array();
 

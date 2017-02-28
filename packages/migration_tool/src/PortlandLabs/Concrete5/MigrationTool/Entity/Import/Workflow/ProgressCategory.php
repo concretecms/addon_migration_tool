@@ -6,29 +6,29 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\WorkflowProgressCat
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportWorkflowProgressCategories")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportWorkflowProgressCategories")
  */
 class ProgressCategory implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="ProgressCategoryObjectCollection")
+     * @ORM\ManyToOne(targetEntity="ProgressCategoryObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $handle;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $package = null;
 

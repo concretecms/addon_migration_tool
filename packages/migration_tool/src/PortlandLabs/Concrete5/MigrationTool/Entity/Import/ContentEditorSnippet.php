@@ -6,39 +6,39 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ContentEditorSnippe
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportContentEditorSnippets")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportContentEditorSnippets")
  */
 class ContentEditorSnippet implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="ContentEditorSnippetObjectCollection")
+     * @ORM\ManyToOne(targetEntity="ContentEditorSnippetObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $handle;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $name;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $is_activated = false;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $package = null;
 

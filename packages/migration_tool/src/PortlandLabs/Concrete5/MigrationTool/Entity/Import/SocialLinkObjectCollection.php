@@ -7,12 +7,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\Social
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class SocialLinkObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="SocialLink", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="SocialLink", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $links;
 

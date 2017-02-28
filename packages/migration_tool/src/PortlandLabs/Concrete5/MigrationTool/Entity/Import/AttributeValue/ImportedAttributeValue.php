@@ -6,13 +6,13 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\CIFPublisher;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportAttributeImportedValues")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportAttributeImportedValues")
  */
 final class ImportedAttributeValue extends AttributeValue
 {
     /**
-     * @Column(type="text")
+     * @ORM\Column(type="text")
      */
     protected $imported_value;
 

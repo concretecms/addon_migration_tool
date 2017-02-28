@@ -3,21 +3,21 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="type", type="string")
- * @Table(name="MigrationImportAttributeKeyCategoryInstances")
+ * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\Table(name="MigrationImportAttributeKeyCategoryInstances")
  */
 abstract class AttributeKeyCategoryInstance
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @OneToOne(targetEntity="AttributeKey", mappedBy="category")
+     * @ORM\OneToOne(targetEntity="AttributeKey", mappedBy="category")
      **/
     protected $key;
 

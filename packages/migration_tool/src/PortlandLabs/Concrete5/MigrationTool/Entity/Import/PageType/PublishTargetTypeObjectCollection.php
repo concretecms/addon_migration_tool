@@ -8,12 +8,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class PublishTargetTypeObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="PublishTargetType", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="PublishTargetType", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $types;
 

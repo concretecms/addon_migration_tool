@@ -8,12 +8,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\Permis
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class CategoryObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="Category", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Category", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $categories;
 

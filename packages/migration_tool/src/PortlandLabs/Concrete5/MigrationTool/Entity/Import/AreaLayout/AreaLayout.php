@@ -5,26 +5,26 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportAreaLayouts")
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="type", type="string")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportAreaLayouts")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
  */
 abstract class AreaLayout
 {
     /**
-     * @Id @Column(type="guid")
-     * @GeneratedValue(strategy="UUID")
+     * @ORM\Id @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
-     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BLockValue\AreaLayoutBlockValue", mappedBy="area_layout")
+     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BLockValue\AreaLayoutBlockValue", mappedBy="area_layout")
      **/
     protected $block_value;
 
     /**
-     * @OneToMany(targetEntity="AreaLayoutColumn", mappedBy="area_layout", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AreaLayoutColumn", mappedBy="area_layout", cascade={"persist", "remove"})
      **/
     protected $columns;
 

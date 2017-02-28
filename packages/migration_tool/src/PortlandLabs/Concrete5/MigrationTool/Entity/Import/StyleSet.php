@@ -5,164 +5,164 @@ use Doctrine\ORM\Mapping as ORM;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\StyleSet\StyleSetPublisher;
 
 /**
- * @Entity
- * @Table(name="MigrationImportStyleSets")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportStyleSets")
  */
 class StyleSet
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $customClass;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $backgroundColor;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $backgroundImage;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $backgroundRepeat = 'no-repeat';
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $borderColor;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $borderStyle;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $borderWidth;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $borderRadius;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $baseFontSize;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $alignment;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $textColor;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $linkColor;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $marginTop;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $marginBottom;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $marginLeft;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $marginRight;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $paddingTop;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $paddingBottom;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $paddingLeft;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $paddingRight;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $rotate;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $boxShadowHorizontal;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $boxShadowVertical;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $boxShadowBlur;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $boxShadowSpread;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $boxShadowColor;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $hideOnExtraSmallDevice = false;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $hideOnSmallDevice = false;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $hideOnMediumDevice = false;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $hideOnLargeDevice = false;
 

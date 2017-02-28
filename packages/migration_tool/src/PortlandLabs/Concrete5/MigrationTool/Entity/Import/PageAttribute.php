@@ -3,24 +3,24 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportPageAttributes")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportPageAttributes")
  */
 class PageAttribute
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @OneToOne(targetEntity="Attribute", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Attribute", cascade={"persist", "remove"})
      **/
     protected $attribute;
 
     /**
-     * @ManyToOne(targetEntity="Page")
+     * @ORM\ManyToOne(targetEntity="Page")
      **/
     protected $page;
 

@@ -3,51 +3,51 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportBlocks")
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="value_type", type="string")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportBlocks")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="value_type", type="string")
  */
 class AbstractBlock
 {
     /**
-     * @Id @Column(type="guid")
-     * @GeneratedValue(strategy="UUID")
+     * @ORM\Id @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $type = null;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $name;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $custom_template;
 
     /**
-     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue", inversedBy="block", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue", inversedBy="block", cascade={"persist", "remove"})
      **/
     protected $block_value;
 
     /**
-     * @OneToOne(targetEntity="StyleSet", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="StyleSet", cascade={"persist", "remove"})
      **/
     protected $style_set;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $position = 0;
 
     /**
-     * @ManyToOne(targetEntity="Area")
+     * @ORM\ManyToOne(targetEntity="Area")
      **/
     protected $area;
 

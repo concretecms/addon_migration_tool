@@ -10,12 +10,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\Permis
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class KeyObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="Key", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Key", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $keys;
 

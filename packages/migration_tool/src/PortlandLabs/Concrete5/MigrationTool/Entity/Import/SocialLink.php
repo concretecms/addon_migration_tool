@@ -6,29 +6,29 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\SocialLinkValidator;
 
 /**
- * @Entity
- * @Table(name="MigrationImportSocialLinks")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportSocialLinks")
  */
 class SocialLink implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="SocialLinkObjectCollection")
+     * @ORM\ManyToOne(targetEntity="SocialLinkObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $service;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $url;
 

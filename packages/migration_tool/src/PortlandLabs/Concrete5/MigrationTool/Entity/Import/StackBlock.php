@@ -3,14 +3,14 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class StackBlock extends AbstractBlock
 {
     protected $area = null;
 
     /**
-     * @ManyToOne(targetEntity="AbstractStack")
+     * @ORM\ManyToOne(targetEntity="AbstractStack")
      **/
     protected $stack;
 

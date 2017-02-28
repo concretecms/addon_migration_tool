@@ -6,13 +6,13 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\SocialLinksPublishe
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportAttributeSocialLinksValues")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportAttributeSocialLinksValues")
  */
 class SocialLinksAttributeValue extends AttributeValue
 {
     /**
-     * @Column(type="json_array")
+     * @ORM\Column(type="json_array")
      */
     protected $links_value;
 

@@ -8,26 +8,26 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Permission\AccessEntityPublis
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
- * @Entity
- * @InheritanceType("JOINED")
- * @DiscriminatorColumn(name="type", type="string")
- * @Table(name="MigrationImportPermissionAccessEntities")
+ * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\Table(name="MigrationImportPermissionAccessEntities")
  */
 class AccessEntity
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="Key")
+     * @ORM\ManyToOne(targetEntity="Key")
      **/
     protected $key;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $entity_type;
 

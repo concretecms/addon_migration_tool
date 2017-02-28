@@ -7,12 +7,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class PackageObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Package", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Package", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $packages;
 

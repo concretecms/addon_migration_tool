@@ -5,8 +5,8 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankForma
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportSocialLinksAttributeKeys")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportSocialLinksAttributeKeys")
  */
 class SocialLinksAttributeKey extends AttributeKey
 {

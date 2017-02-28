@@ -8,12 +8,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class EditorObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\Editor", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\Editor", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $editors;
 

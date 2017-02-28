@@ -7,17 +7,17 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType\PageTypePublis
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class PageTypePublishTarget extends PublishTarget
 {
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $page_type;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $form_factor;
 

@@ -5,7 +5,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKeyCategory\FilePubl
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class FileAttributeKeyCategoryInstance extends AttributeKeyCategoryInstance
 {

@@ -6,34 +6,34 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ConfigValueValidato
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportConfigValues")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportConfigValues")
  */
 class ConfigValue implements PublishableInterface
 {
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @ManyToOne(targetEntity="ConfigValueObjectCollection")
+     * @ORM\ManyToOne(targetEntity="ConfigValueObjectCollection")
      **/
     protected $collection;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      */
     protected $config_key;
 
     /**
-     * @Column(type="text")
+     * @ORM\Column(type="text")
      */
     protected $config_value;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $package = null;
 

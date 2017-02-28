@@ -7,13 +7,13 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\AreaLayoutPublisher;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Table(name="MigrationImportAreaLayoutBlockValues")
- * @Entity
+ * @ORM\Table(name="MigrationImportAreaLayoutBlockValues")
+ * @ORM\Entity
  */
 class AreaLayoutBlockValue extends BlockValue
 {
     /**
-     * @OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayout", inversedBy="block_value", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AreaLayout\AreaLayout", inversedBy="block_value", cascade={"persist", "remove"})
      **/
     protected $area_layout;
 

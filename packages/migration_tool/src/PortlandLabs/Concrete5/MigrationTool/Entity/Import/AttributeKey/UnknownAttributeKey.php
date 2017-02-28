@@ -3,13 +3,13 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="MigrationImportUnknownKeys")
+ * @ORM\Entity
+ * @ORM\Table(name="MigrationImportUnknownKeys")
  */
 class UnknownAttributeKey extends AttributeKey
 {
     /**
-     * @Column(type="text")
+     * @ORM\Column(type="text")
      */
     protected $options_xml = false;
 

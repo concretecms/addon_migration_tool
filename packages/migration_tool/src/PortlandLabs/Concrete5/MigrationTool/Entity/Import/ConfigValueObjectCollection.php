@@ -7,12 +7,12 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class ConfigValueObjectCollection extends ObjectCollection
 {
     /**
-     * @OneToMany(targetEntity="ConfigValue", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="ConfigValue", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $values;
 

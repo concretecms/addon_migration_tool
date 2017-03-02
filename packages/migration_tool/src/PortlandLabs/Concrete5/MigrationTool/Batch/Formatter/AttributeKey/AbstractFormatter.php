@@ -19,7 +19,7 @@ abstract class AbstractFormatter implements TreeContentItemFormatterInterface
     {
         $node = new \stdClass();
         $node->title = t('Data');
-        $node->iconclass = 'fa fa-database';
+        $node->icon = 'fa fa-database';
         $node->children = $children;
 
         return $node;

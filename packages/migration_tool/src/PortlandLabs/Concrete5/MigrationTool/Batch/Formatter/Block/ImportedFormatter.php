@@ -16,7 +16,7 @@ class ImportedFormatter implements TreeContentItemFormatterInterface
         $node = new \stdClass();
         $node->title = $this->value->getBlock()->getType();
         $node->itemvalue = (string) $this->getColumnValue();
-        $node->iconclass = 'fa fa-cog';
+        $node->icon = 'fa fa-cog';
 
         return $node;
     }

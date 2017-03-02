@@ -18,7 +18,7 @@ class TreeJsonFormatter implements TreeContentItemFormatterInterface
     public function getBatchTreeNodeJsonObject()
     {
         $styleSetHolderNode = new \stdClass();
-        $styleSetHolderNode->iconclass = 'fa fa-paint-brush';
+        $styleSetHolderNode->icon = 'fa fa-paint-brush';
         $styleSetHolderNode->title = t('Style Set');
         $styleSetHolderNode->children = array();
 

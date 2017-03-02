@@ -23,13 +23,13 @@ class TreePageJsonFormatter implements \JsonSerializable
         $r = \Package::getByHandle('migration_tool')->getEntityManager()->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
 
         $descriptionNode = new \stdClass();
-        $descriptionNode->iconclass = 'fa fa-quote-left';
+        $descriptionNode->icon = 'fa fa-quote-left';
         $descriptionNode->title = t('Description');
         $descriptionNode->itemvalue = $this->page->getDescription();
         $nodes[] = $descriptionNode;
 
         $dateNode = new \stdClass();
-        $dateNode->iconclass = 'fa fa-calendar';
+        $dateNode->icon = 'fa fa-calendar';
         $dateNode->title = t('Date');
         $dateNode->itemvalue = $this->page->getPublicDate();
         $nodes[] = $dateNode;
@@ -39,12 +39,12 @@ class TreePageJsonFormatter implements \JsonSerializable
         $messages = $validator->validate($page);
         if ($messages->count()) {
             $messageHolderNode = new \stdClass();
-            $messageHolderNode->iconclass = $messages->getFormatter()->getCollectionStatusIconClass();
+            $messageHolderNode->icon = $messages->getFormatter()->getCollectionStatusIconClass();
             $messageHolderNode->title = t('Errors');
             $messageHolderNode->children = array();
             foreach ($messages as $m) {
                 $messageNode = new \stdClass();
-                $messageNode->iconclass = $m->getFormatter()->getIconClass();
+                $messageNode->icon = $m->getFormatter()->getIconClass();
                 $messageNode->title = $m->getFormatter()->output();
                 $messageHolderNode->children[] = $messageNode;
             }
@@ -52,7 +52,7 @@ class TreePageJsonFormatter implements \JsonSerializable
         }
         if ($page->getAttributes()->count()) {
             $attributeHolderNode = new \stdClass();
-            $attributeHolderNode->iconclass = 'fa fa-cogs';
+            $attributeHolderNode->icon = 'fa fa-cogs';
             $attributeHolderNode->title = t('Attributes');
             $attributeHolderNode->children = array();
             foreach ($page->getAttributes() as $attribute) {
@@ -67,12 +67,12 @@ class TreePageJsonFormatter implements \JsonSerializable
         }
         if ($page->getAreas()->count()) {
             $areaHolderNode = new \stdClass();
-            $areaHolderNode->iconclass = 'fa fa-code';
+            $areaHolderNode->icon = 'fa fa-code';
             $areaHolderNode->title = t('Areas');
             $areaHolderNode->children = array();
             foreach ($page->getAreas() as $area) {
                 $areaNode = new \stdClass();
-                $areaNode->iconclass = 'fa fa-cubes';
+                $areaNode->icon = 'fa fa-cubes';
                 $areaNode->title = $area->getName();
                 if ($styleSet = $area->getStyleSet()) {
                     $styleSetFormatter = new StyleSetTreeJsonFormatter($styleSet);

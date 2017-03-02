@@ -19,7 +19,7 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $node->title = $stack->getName();
             $node->stackType = $stack->getType();
             $node->pagePath = $stack->getPath();
-            $node->iconclass = $stackFormatter->getIconClass();
+            $node->icon = $stackFormatter->getIconClass();
             $node->nodetype = 'stack';
             $node->exists = $stack->getPublisherValidator()->skipItem();
             $node->extraClasses = 'migration-node-main';

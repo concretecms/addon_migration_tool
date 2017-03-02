@@ -23,12 +23,12 @@ abstract class AbstractTreeJsonFormatter implements \JsonSerializable
     {
         if ($messages->count()) {
             $messageHolderNode = new \stdClass();
-            $messageHolderNode->iconclass = $node->statusClass;
+            $messageHolderNode->icon = $node->statusClass;
             $messageHolderNode->title = t('Errors');
             $messageHolderNode->children = array();
             foreach ($messages as $m) {
                 $messageNode = new \stdClass();
-                $messageNode->iconclass = $m->getFormatter()->getIconClass();
+                $messageNode->icon = $m->getFormatter()->getIconClass();
                 $messageNode->title = $m->getFormatter()->output();
                 $messageHolderNode->children[] = $messageNode;
             }

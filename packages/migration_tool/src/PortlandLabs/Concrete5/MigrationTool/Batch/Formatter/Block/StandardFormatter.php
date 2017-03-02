@@ -9,12 +9,12 @@ class StandardFormatter extends ImportedFormatter
     {
         $node = new \stdClass();
         $node->title = $this->value->getBlock()->getType();
-        $node->iconclass = 'fa fa-cube';
+        $node->icon = 'fa fa-cube';
         $node->children = array();
         foreach ($this->value->getRecords() as $record) {
             $node2 = new \stdClass();
             $node2->title = $record->getTable();
-            $node2->iconclass = 'fa fa-database';
+            $node2->icon = 'fa fa-database';
             $node2->children = array();
             foreach ($record->getData() as $key => $value) {
                 $child = new \stdClass();

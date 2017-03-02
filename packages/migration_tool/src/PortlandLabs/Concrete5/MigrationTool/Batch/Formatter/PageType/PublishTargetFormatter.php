@@ -21,12 +21,12 @@ abstract class PublishTargetFormatter implements TreeContentItemFormatterInterfa
     {
         $node2 = new \stdClass();
         $node2->title = $this->getTreeNodeTitle();
-        $node2->iconclass = 'fa fa-share-alt';
+        $node2->icon = 'fa fa-share-alt';
         $node2->children = $children;
 
         $node1 = new \stdClass();
         $node1->title = t('Publish Target');
-        $node1->iconclass = 'fa fa-database';
+        $node1->icon = 'fa fa-database';
         $node1->children = array($node2);
 
         return $node1;

@@ -15,7 +15,7 @@ class SocialLinksFormatter implements TreeContentItemFormatterInterface
     {
         $node = new \stdClass();
         $node->title = t('Social Links');
-        $node->iconclass = 'fa fa-link';
+        $node->icon = 'fa fa-link';
         $node->children = array();
         foreach ($this->value->getValue() as $links) {
             $child = new \stdClass();

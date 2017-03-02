@@ -15,7 +15,7 @@ class AddressFormatter implements TreeContentItemFormatterInterface
     {
         $node = new \stdClass();
         $node->title = t('Address');
-        $node->iconclass = 'fa fa-location-arrow';
+        $node->icon = 'fa fa-location-arrow';
         $node->children = array();
         $labels = array();
         $labels[] = array('field' => t('Address 1'), 'value' => $this->value->getAddress1());

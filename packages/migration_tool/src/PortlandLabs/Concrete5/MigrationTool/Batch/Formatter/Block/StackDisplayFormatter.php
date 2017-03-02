@@ -9,7 +9,7 @@ class StackDisplayFormatter extends ImportedFormatter
     {
         $node = new \stdClass();
         $node->title = t('core_stack_display');
-        $node->iconclass = 'fa fa-clipboard';
+        $node->icon = 'fa fa-clipboard';
         $node->children = array();
         $node->itemvalue = h($this->value->getStack());
         return $node;

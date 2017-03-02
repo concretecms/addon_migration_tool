@@ -15,7 +15,7 @@ class SelectFormatter implements TreeContentItemFormatterInterface
         $node = new \stdClass();
         $node->title = $this->value->getAttribute()->getHandle();
         $node->itemvalue = h(implode(', ', $this->value->getValue()));
-        $node->iconclass = 'fa fa-list';
+        $node->icon = 'fa fa-list';
 
         return $node;
     }

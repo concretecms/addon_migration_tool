@@ -9,7 +9,7 @@ class AreaLayoutFormatter extends ImportedFormatter
     {
         $node = new \stdClass();
         $node->title = t('Layout');
-        $node->iconclass = 'fa fa-columns';
+        $node->icon = 'fa fa-columns';
         $node->children = array();
 
         $layout = $this->value->getAreaLayout();
@@ -18,7 +18,7 @@ class AreaLayoutFormatter extends ImportedFormatter
         foreach ($columns as $column) {
             $columnNode = new \stdClass();
             $columnNode->title = t('Column %s', $i);
-            $columnNode->iconclass = 'fa fa-align-justify';
+            $columnNode->icon = 'fa fa-align-justify';
             $columnNode->children = array();
             $blocks = $column->getBlocks();
             foreach ($blocks as $block) {

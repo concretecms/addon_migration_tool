@@ -16,6 +16,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageP
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTemplatesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateReferencedContentItemsTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateReferencedStacksTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateUsersTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchRecordsTask;
@@ -150,6 +151,7 @@ class Controller extends Package
             if (isset($batch[0])) {
                 $v = new CollectionValidator($batch[0]);
                 $v->registerTask(new ValidateBlockTypesTask());
+                $v->registerTask(new ValidateReferencedStacksTask());
                 $v->registerTask(new ValidateReferencedContentItemsTask());
 
                 return $v;

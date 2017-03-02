@@ -11,7 +11,7 @@ class StackDisplayFormatter extends ImportedFormatter
         $node->title = t('core_stack_display');
         $node->icon = 'fa fa-clipboard';
         $node->children = array();
-        $node->itemvalue = h($this->value->getStack());
+        $node->itemvalue = h($this->value->getStackPath());
         return $node;
     }
 }

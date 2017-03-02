@@ -11,7 +11,7 @@ class StackDisplayImporter extends AbstractImporter
     {
         $value = new StackDisplayBlockValue();
         $stack = (string) $node->stack;
-        $value->setStack($stack);
+        $value->setStackPath($stack);
         return $value;
     }
 }

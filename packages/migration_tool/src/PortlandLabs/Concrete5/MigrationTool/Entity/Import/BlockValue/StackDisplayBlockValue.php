@@ -17,22 +17,22 @@ class StackDisplayBlockValue extends BlockValue
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $stack;
+    protected $stack_path;
 
     /**
      * @return mixed
      */
-    public function getStack()
+    public function getStackPath()
     {
-        return $this->stack;
+        return $this->stack_path;
     }
 
     /**
      * @param mixed $stack
      */
-    public function setStack($stack)
+    public function setStackPath($stack_path)
     {
-        $this->stack = $stack;
+        $this->stack_path = $stack_path;
     }
 
 
@@ -48,6 +48,7 @@ class StackDisplayBlockValue extends BlockValue
 
     public function getPublisher()
     {
-        return new AreaLayoutPublisher();
+        $manager = \Core::make('migration/manager/publisher/block');
+        return $manager->driver('core_stack_display');
     }
 }

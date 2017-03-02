@@ -16,7 +16,7 @@ abstract class AbstractPageAction implements RoutineActionInterface
     protected $page;
     protected $page_id;
 
-    public function __construct(Page $page)
+    public function __construct($page) // can't type hint, might be a stack. probably should have an interface.
     {
         $this->page = $page;
         $this->page_id = $page->getID();

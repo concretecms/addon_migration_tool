@@ -30,9 +30,7 @@ class PublishStackContentRoutineAction extends AbstractPageAction
                 if (is_object($bt)) {
                     $value = $block->getBlockValue();
                     $publisher = $value->getPublisher();
-                    $area = new Area();
-                    $area->setName(STACKS_AREA_NAME);
-                    $b = $publisher->publish($batch, $bt, $s, $area, $value);
+                    $b = $publisher->publish($batch, $bt, $s, STACKS_AREA_NAME, $value);
                     $styleSet = $block->getStyleSet();
                     if (is_object($styleSet)) {
                         $styleSetPublisher = $styleSet->getPublisher();

@@ -29,6 +29,14 @@ class Attribute implements TransformerInterface
         $this->entityManager = \Database::connection()->getEntityManager();
     }
 
+    public function getUntransformedEntityById($entityID)
+    {
+        $em = \Database::connection()->getEntityManager();
+        return $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\ImportedAttributeValue')
+            ->findOneById($entityID);
+    }
+
+
     public function getUntransformedEntityObjects(TransformableEntityMapperInterface $mapper, BatchInterface $batch)
     {
         $results = array();

@@ -27,6 +27,13 @@ class BlockType implements TransformerInterface
         return $results;
     }
 
+    public function getUntransformedEntityById($entityID)
+    {
+        $em = \Database::connection()->getEntityManager();
+        return $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ImportedBlockValue')
+            ->findOneById($entityID);
+    }
+
     public function getItem($block_value)
     {
         if ($block_value && $block_value->getBlock()) {

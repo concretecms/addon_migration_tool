@@ -14,4 +14,6 @@ interface TransformerInterface
     public function getItem($entity);
     public function getDriver();
     public function transform($entity, MapperInterface $mapper, ItemInterface $item, TargetItem $targetItem, BatchInterface $batch);
+    public function getUntransformedEntityById($entityID);
+
 }

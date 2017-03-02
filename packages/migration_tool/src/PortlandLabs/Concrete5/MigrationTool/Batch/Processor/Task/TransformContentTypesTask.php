@@ -28,21 +28,21 @@ class TransformContentTypesTask implements TaskInterface
 
         $transformers = \Core::make('migration/manager/transforms');
         $transformer = $transformers->driver($subject['transformer']);
-        $entity = $subject['entity'];
-        $entity = $em->merge($entity);
-        $em->refresh($entity);
-        $item = $transformer->getItem($entity);
+        $entity = $transformer->getUntransformedEntityByID($subject['entity']);
+        if (is_object($entity)) {
+            $item = $transformer->getItem($entity);
 
-        // Since batch is serialized we do this:
-        $batch = $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch')->findOneById($batch->getId());
-        $mapper = $this->mappers->driver($subject['mapper']);
+            // Since batch is serialized we do this:
+            $batch = $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch')->findOneById($batch->getId());
+            $mapper = $this->mappers->driver($subject['mapper']);
 
-        if (is_object($item)) {
-            $targetItemList = $this->mappers->createTargetItemList($batch, $mapper);
-            $targetItem = $targetItemList->getSelectedTargetItem($item);
-            if (is_object($targetItem)) {
-                if (!($targetItem instanceof UnmappedTargetItem || $target instanceof IgnoredTargetItem)) {
-                    $transformer->transform($entity, $mapper, $item, $targetItem, $batch);
+            if (is_object($item)) {
+                $targetItemList = $this->mappers->createTargetItemList($batch, $mapper);
+                $targetItem = $targetItemList->getSelectedTargetItem($item);
+                if (is_object($targetItem)) {
+                    if (!($targetItem instanceof UnmappedTargetItem || $target instanceof IgnoredTargetItem)) {
+                        $transformer->transform($entity, $mapper, $item, $targetItem, $batch);
+                    }
                 }
             }
         }

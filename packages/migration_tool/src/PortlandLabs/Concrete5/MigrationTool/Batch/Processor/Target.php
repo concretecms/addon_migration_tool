@@ -82,7 +82,7 @@ class Target implements TargetInterface
                     $untransformed = $transformer->getUntransformedEntityObjects($mapper, $this->batch);
                     foreach ($untransformed as $entity) {
                         $items[] = array(
-                            'entity' => $entity,
+                            'entity' => $entity->getID(),
                             'mapper' => $mapper->getHandle(),
                             'transformer' => $transformer->getDriver(),
                         );

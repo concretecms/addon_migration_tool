@@ -15,7 +15,13 @@ class TopicsImporter extends AbstractImporter
             foreach ($node->topics->topic as $topic) {
                 $topics[] = (string) $topic;
             }
+        } else if ($node->value->option) {
+            // This lets us transform a select value into a topics value
+            foreach ($node->value->option as $option) {
+                $topics[] = '/' . (string) $option;
+            }
         }
+        
         $value->setValue($topics);
 
         return $value;

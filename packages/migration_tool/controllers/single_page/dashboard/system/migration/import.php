@@ -27,7 +27,10 @@ class Import extends DashboardPageController
         if (!$this->error->has()) {
             $batch = new Batch();
             $batch->setNotes($this->request->request->get('notes'));
-            $site = $this->app->make('site')->getByID($this->request->request->get('siteID'));
+            $site = null;
+            if ($this->request->request->has('siteID')) {
+                $site = $this->app->make('site')->getByID($this->request->request->get('siteID'));
+            }
             if (!is_object($site)) {
                 $site = $this->app->make('site')->getDefault();
             }

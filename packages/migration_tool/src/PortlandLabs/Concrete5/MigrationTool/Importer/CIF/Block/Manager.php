@@ -38,6 +38,11 @@ class Manager extends CoreManager
         return new AreaLayoutImporter();
     }
 
+    public function createCoreStackDisplayDriver()
+    {
+        return new StackDisplayImporter();
+    }
+
     public function createSocialLinksDriver()
     {
         return new SocialLinksImporter();

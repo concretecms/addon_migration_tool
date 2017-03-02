@@ -21,7 +21,7 @@ class TopicsImporter extends AbstractImporter
                 $topics[] = '/' . (string) $option;
             }
         }
-        
+
         $value->setValue($topics);
 
         return $value;

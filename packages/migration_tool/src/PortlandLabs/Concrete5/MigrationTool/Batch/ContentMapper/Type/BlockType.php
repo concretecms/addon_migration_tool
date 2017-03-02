@@ -50,8 +50,8 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
         $stacks = $batch->getObjectCollection('stack');
         if (is_object($stacks)) {
             foreach ($stacks->getStacks() as $stack) {
-                $blocks = $stack->getBlocks();
-                foreach ($blocks as $block) {
+                $stackBlocks = $stack->getBlocks();
+                foreach ($stackBlocks as $block) {
                     $blocks[] = $block;
                 }
             }

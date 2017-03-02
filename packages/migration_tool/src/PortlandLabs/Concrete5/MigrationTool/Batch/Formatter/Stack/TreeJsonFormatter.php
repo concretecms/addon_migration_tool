@@ -26,7 +26,29 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $node->id = $stack->getId();
             $node->statusClass = $formatter->getCollectionStatusIconClass();
             $this->addMessagesNode($node, $messages);
+            $node->children = [];
+
+            if (count($stack->getBlocks()) > 0) {
+                $holderNode = new \stdClass();
+                $holderNode->icon = 'fa fa-cubes';
+                $holderNode->title = t('Blocks');
+                foreach ($stack->getBlocks() as $block) {
+                    $value = $block->getBlockValue();
+                    if (is_object($value)) {
+                        $blockFormatter = $value->getFormatter();
+                        $blockNode = $blockFormatter->getBatchTreeNodeJsonObject();
+                        if ($styleSet = $block->getStyleSet()) {
+                            $styleSetFormatter = new StyleSetTreeJsonFormatter($styleSet);
+                            $blockNode->children[] = $styleSetFormatter->getBatchTreeNodeJsonObject();
+                        }
+                        $holderNode->children[] = $blockNode;
+                    }
+                }
+                $node->children[] = $holderNode;
+            }
+
             $response[] = $node;
+
         }
 
         return $response;

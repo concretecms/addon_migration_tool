@@ -49,6 +49,16 @@ $dh = Core::make('helper/date');
                     array('disabled' => 'disabled')
                 )?>
             </div>
+            <?php if (count($sites) > 1) { ?>
+            <div class="form-group">
+                <?=Loader::helper("form")->label('siteID', t('Site'))?>
+                <select name="siteID" class="form-control">
+                    <?php foreach($sites as $site) { ?>
+                         <option value="<?=$site->getSiteID()?>"><?=$site->getSiteName()?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <?php } ?>
             <div class="form-group">
                 <?=Loader::helper("form")->label('notes', t('Notes'))?>
                 <?=Loader::helper('form')->textarea('notes', '', array("rows" => "3"))?>

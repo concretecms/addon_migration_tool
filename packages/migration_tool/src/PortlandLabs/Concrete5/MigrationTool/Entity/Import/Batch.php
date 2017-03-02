@@ -30,6 +30,12 @@ class Batch implements ValidatorInterface, BatchInterface
     protected $notes;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\Site\Site")
+     * @ORM\JoinColumn(name="siteID", referencedColumnName="siteID")
+     **/
+    protected $site;
+
+    /**
      * @ORM\ManyToMany(targetEntity="ObjectCollection", cascade={"persist", "remove"}))
      * @ORM\JoinTable(name="MigrationImportBatchObjectCollections",
      *      joinColumns={@ORM\JoinColumn(name="batch_id", referencedColumnName="id")},
@@ -80,6 +86,22 @@ class Batch implements ValidatorInterface, BatchInterface
     public function setDate($date)
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param mixed $site
+     */
+    public function setSite($site)
+    {
+        $this->site = $site;
     }
 
     /**

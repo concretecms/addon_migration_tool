@@ -5,4 +5,5 @@ interface BatchInterface
 {
     public function getObjectCollections();
     public function getObjectCollection($collection);
+    public function getSite();
 }

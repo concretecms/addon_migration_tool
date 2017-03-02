@@ -108,7 +108,7 @@ class PageType implements MapperInterface
 
     public function getInstalledTargetItems(BatchInterface $batch)
     {
-        $types = Type::getList();
+        $types = Type::getList(false, $batch->getSite()->getType());
         usort($types, function ($a, $b) {
             return strcasecmp($a->getPageTypeName(), $b->getPageTypeName());
         });

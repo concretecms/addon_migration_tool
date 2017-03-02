@@ -27,6 +27,11 @@ class Import extends DashboardPageController
         if (!$this->error->has()) {
             $batch = new Batch();
             $batch->setNotes($this->request->request->get('notes'));
+            $site = $this->app->make('site')->getByID($this->request->request->get('siteID'));
+            if (!is_object($site)) {
+                $site = $this->app->make('site')->getDefault();
+            }
+            $batch->setSite($site);
             $this->entityManager->persist($batch);
             $this->entityManager->flush();
             $this->flash('success', t('Batch added successfully.'));
@@ -307,6 +312,7 @@ class Import extends DashboardPageController
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batches = $r->findAll(array(), array('date' => 'desc'));
         $this->set('batches', $batches);
+        $this->set('sites', $this->app->make('site')->getList());
         $this->set('batchEmptyMessage', t('You have not created any import batches. Create a batch and add content records to it.'));
         $this->render('/dashboard/system/migration/view_batches');
     }

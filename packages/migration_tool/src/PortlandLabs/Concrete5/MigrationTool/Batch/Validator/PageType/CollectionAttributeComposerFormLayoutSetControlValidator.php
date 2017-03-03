@@ -17,7 +17,8 @@ class CollectionAttributeComposerFormLayoutSetControlValidator extends AbstractV
     public function validate($control)
     {
         $messages = new MessageCollection();
-        $attributeMapper = new Attribute();
+        $manager = \Core::make('migration/manager/import/attribute/category');
+        $attributeMapper = $manager->getAttributeCategoryMapper('collection');
         $targetItemList = new TargetItemList($this->getBatch(), $attributeMapper);
         $item = new Item($control->getItemIdentifier());
         $targetItem = $targetItemList->getSelectedTargetItem($item);

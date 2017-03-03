@@ -19,6 +19,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateRefer
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateReferencedStacksTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateUsersTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Site\SiteValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchRecordsTask;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Value\Manager as AttributeValueManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key\Manager as AttributeKeyManager;
@@ -136,6 +137,14 @@ class Controller extends Package
                 $v->registerTask(new ValidateBlocksTask());
                 $v->registerTask(new ValidateAreasTask());
 
+                return $v;
+            }
+        });
+
+        \Core::bind('migration/batch/site/validator', function ($app, $batch) {
+            if (isset($batch[0])) {
+                $v = new SiteValidator($batch[0]);
+                $v->registerTask(new ValidateAttributesTask());
                 return $v;
             }
         });

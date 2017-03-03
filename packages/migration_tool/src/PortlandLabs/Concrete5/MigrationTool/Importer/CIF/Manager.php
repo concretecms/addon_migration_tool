@@ -29,6 +29,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\PermissionAccessEn
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\PermissionKey;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\PermissionKeyCategory;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\SinglePage;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Site;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\SocialLink;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Stack;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Theme;
@@ -51,7 +52,12 @@ class Manager extends CoreManager
         return new AttributeKey();
     }
 
-    public function createSinglePagedriver()
+    public function createSiteDriver()
+    {
+        return new Site();
+    }
+
+    public function createSinglePageDriver()
     {
         return new SinglePage();
     }
@@ -239,6 +245,7 @@ class Manager extends CoreManager
         $this->driver('block_type_set');
         $this->driver('stack');
         $this->driver('single_page');
+        $this->driver('site');
         $this->driver('page_type');
         $this->driver('page');
         $this->driver('page_template');

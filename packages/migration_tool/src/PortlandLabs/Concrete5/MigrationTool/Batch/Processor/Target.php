@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Processor;
 
 use Concrete\Core\Foundation\Processor\TargetInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\EmptyMapper;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");

@@ -8,6 +8,7 @@ use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Site\TreeSiteJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublisherRoutineProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\TargetItemProcessor;
@@ -512,6 +513,19 @@ class Import extends DashboardPageController
             return new JsonResponse($formatter);
         }
     }
+
+    public function load_batch_site_data()
+    {
+        session_write_close();
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Site');
+        $site = $r->findOneById($this->request->get('id'));
+        if (is_object($site)) {
+            $formatter = new TreeSiteJsonFormatter($site);
+
+            return new JsonResponse($formatter);
+        }
+    }
+
 
     public function update_page_path()
     {

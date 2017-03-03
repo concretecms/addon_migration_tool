@@ -9,33 +9,14 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class ValidatorTarget implements ValidatorTargetInterface
+class ValidatorTarget extends \PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorTarget
 {
     protected $page;
-    protected $messages;
-    protected $batch;
 
     public function __construct(Batch $batch, Page $page)
     {
+        parent::__construct($batch);
         $this->page = $page;
-        $this->batch = $batch;
-        $this->messages = new MessageCollection();
-    }
-
-    /**
-     * @return Batch
-     */
-    public function getBatch()
-    {
-        return $this->batch;
-    }
-
-    /**
-     * @param Batch $batch
-     */
-    public function setBatch($batch)
-    {
-        $this->batch = $batch;
     }
 
     public function getItems()
@@ -43,13 +24,4 @@ class ValidatorTarget implements ValidatorTargetInterface
         return array($this->page);
     }
 
-    public function addMessage(Message $message)
-    {
-        $this->messages->add($message);
-    }
-
-    public function getMessages()
-    {
-        return $this->messages;
-    }
 }

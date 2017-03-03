@@ -22,7 +22,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
  * into better data structures. This can't happen at import because we don't necessarily know the type of the attribute
  * being imported until after all the import is complete.
  */
-class Attribute implements TransformerInterface
+abstract class Attribute implements TransformerInterface
 {
     public function __construct()
     {
@@ -60,18 +60,7 @@ class Attribute implements TransformerInterface
         }
     }
 
-    protected function getPageAttribute(ImportedAttributeValue $entity)
-    {
-        $attribute = $entity->getAttribute();
-        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute');
-
-        return $r->findOneByAttribute($attribute);
-    }
-
-    public function getDriver()
-    {
-        return 'attribute';
-    }
+    abstract public function getDriver();
 
     /**
      * @param ImportedAttributeValue $entity
@@ -82,20 +71,16 @@ class Attribute implements TransformerInterface
      */
     public function transform($entity, MapperInterface $mapper, ItemInterface $item, TargetItem $targetItem, BatchInterface $batch)
     {
-        if ($targetItem instanceof ShortDescriptionTargetItem) {
-            $driver = new StandardImporter();
+        $ak = $mapper->getTargetItemContentObject($targetItem);
+        if (is_object($ak)) {
+            $type = $ak->getAttributeType()->getAttributeTypeHandle();
         } else {
-            $ak = $mapper->getTargetItemContentObject($targetItem);
-            if (is_object($ak)) {
-                $type = $ak->getAttributeType()->getAttributeTypeHandle();
-            } else {
-                $collection = $batch->getObjectCollection('attribute_key');
-                if (is_object($collection)) {
-                    foreach ($collection->getKeys() as $key) {
-                        if ($key->getHandle() == $item->getIdentifier()) {
-                            $type = $key->getType();
-                            break;
-                        }
+            $collection = $batch->getObjectCollection('attribute_key');
+            if (is_object($collection)) {
+                foreach ($collection->getKeys() as $key) {
+                    if ($key->getHandle() == $item->getIdentifier()) {
+                        $type = $key->getType();
+                        break;
                     }
                 }
             }
@@ -111,25 +96,7 @@ class Attribute implements TransformerInterface
 
         if (isset($driver)) {
             $xml = simplexml_load_string($entity->getValue());
-            if ($targetItem instanceof ShortDescriptionTargetItem) {
-                /**
-                 * @var StandardAttributeValue
-                 */
-                $value = $driver->parse($xml);
-                $pageAttribute = $this->getPageAttribute($entity);
-                if (is_object($pageAttribute)) {
-                    $page = $pageAttribute->getPage();
-                    /*
-                     * @var $page Page
-                     */
-                    $page->setDescription($value->getValue());
-                    $this->entityManager->persist($page);
-                    $this->entityManager->remove($pageAttribute);
-                    $this->entityManager->flush();
-                }
-            } else {
-                $driver->import($xml, $entity);
-            }
+            $driver->import($xml, $entity);
         }
     }
 }

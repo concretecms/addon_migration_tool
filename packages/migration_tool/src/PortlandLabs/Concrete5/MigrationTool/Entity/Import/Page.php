@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\ValidatableAttributesInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPages")
  */
-class Page implements PublishableInterface
+class Page implements PublishableInterface, ValidatableAttributesInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="guid")
@@ -324,6 +325,11 @@ class Page implements PublishableInterface
     public function setAttributes($attributes)
     {
         $this->attributes = $attributes;
+    }
+
+    public function getAttributeValidatorDriver()
+    {
+        return 'page_attribute';
     }
 
     /**

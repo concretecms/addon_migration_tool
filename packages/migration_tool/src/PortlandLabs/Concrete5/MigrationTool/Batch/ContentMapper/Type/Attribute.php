@@ -1,7 +1,9 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
+use Concrete\Core\Attribute\Key\Category;
 use Concrete\Core\Attribute\Key\CollectionKey;
+use Concrete\Core\Attribute\Key\SiteKey;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformableEntityMapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\ShortDescriptionTargetItem;
@@ -14,47 +16,11 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterfac
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class Attribute implements MapperInterface, TransformableEntityMapperInterface
+abstract class Attribute implements MapperInterface, TransformableEntityMapperInterface
 {
-    public function getMappedItemPluralName()
-    {
-        return t('Attributes');
-    }
 
-    public function getHandle()
-    {
-        return 'attribute';
-    }
-
-    public function getTransformableEntityObjects(BatchInterface $batch)
-    {
-        $attributes = array();
-        foreach ($batch->getPages() as $page) {
-            foreach ($page->getAttributes() as $attribute) {
-                if (is_object($attribute->getAttribute())) {
-                    $attributes[] = $attribute->getAttribute();
-                }
-            }
-        }
-
-        $pageTypes = $batch->getObjectCollection('page_type');
-        if (is_object($pageTypes)) {
-            foreach ($pageTypes->getTypes() as $type) {
-                $defaults = $type->getDefaultPageCollection();
-                foreach ($defaults->getPages() as $page) {
-                    foreach ($page->getAttributes() as $attribute) {
-                        if (is_object($attribute->getAttribute())) {
-                            $attributes[] = $attribute->getAttribute();
-                        }
-                    }
-                }
-            }
-        }
-
-        return $attributes;
-    }
-
-    public function getItems(BatchInterface $batch)
+    abstract public function getAttributeKeyCategoryHandle();
+    public function getAttributeItemHandles(BatchInterface $batch)
     {
         $handles = array();
         $attributes = $this->getTransformableEntityObjects($batch);
@@ -63,51 +29,44 @@ class Attribute implements MapperInterface, TransformableEntityMapperInterface
                 $handles[] = $attribute->getHandle();
             }
         }
+        return $handles;
+    }
 
-        $pageTypes = $batch->getObjectCollection('page_type');
-        if (is_object($pageTypes)) {
-            foreach ($pageTypes->getTypes() as $type) {
-                foreach ($type->getLayoutSets() as $set) {
-                    foreach ($set->getControls() as $control) {
-                        if ($control instanceof CollectionAttributeComposerFormLayoutSetControl) {
-                            if (!in_array($control->getItemIdentifier(), $handles)) {
-                                $handles[] = $control->getItemIdentifier();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
+    public function getItems(BatchInterface $batch)
+    {
+        $handles = $this->getAttributeItemHandles($batch);
         $items = array();
         foreach ($handles as $handle) {
             $item = new Item();
             $item->setIdentifier($handle);
             $items[] = $item;
         }
-
         return $items;
     }
 
     public function getMatchedTargetItem(BatchInterface $batch, ItemInterface $item)
     {
-        $ak = CollectionKey::getByHandle($item->getIdentifier());
+        $controller = Category::getByHandle($this->getAttributeKeyCategoryHandle())
+            ->getController();
+        $ak = $controller->getByHandle($item->getIdentifier());
+
         if (is_object($ak)) {
             $targetItem = new TargetItem($this);
             $targetItem->setItemId($ak->getAttributeKeyHandle());
             $targetItem->setItemName($ak->getAttributeKeyDisplayName());
-
             return $targetItem;
         } else { // we check the current batch.
             $collection = $batch->getObjectCollection('attribute_key');
             if (is_object($collection)) {
                 foreach ($collection->getKeys() as $key) {
-                    if ($key->getHandle() == $item->getIdentifier()) {
-                        $targetItem = new TargetItem($this);
-                        $targetItem->setItemId($key->getHandle());
-                        $targetItem->setItemName($key->getHandle());
-
-                        return $targetItem;
+                    $category = $key->getCategory();
+                    if ($category == $this->getAttributeKeyCategoryHandle()) {
+                        if ($key->getHandle() == $item->getIdentifier()) {
+                            $targetItem = new TargetItem($this);
+                            $targetItem->setItemId($key->getHandle());
+                            $targetItem->setItemName($key->getHandle());
+                            return $targetItem;
+                        }
                     }
                 }
             }
@@ -134,14 +93,14 @@ class Attribute implements MapperInterface, TransformableEntityMapperInterface
 
     public function getCorePropertyTargetItems(BatchInterface $batch)
     {
-        $items = array(new ShortDescriptionTargetItem($this));
-
-        return $items;
+        return array();
     }
 
     public function getInstalledTargetItems(BatchInterface $batch)
     {
-        $keys = CollectionKey::getList();
+        $controller = Category::getByHandle($this->getAttributeKeyCategoryHandle())
+            ->getController();
+        $keys = $controller->getList();
         usort($keys, function ($a, $b) {
             return strcasecmp($a->getAttributeKeyName(), $b->getAttributeKeyName());
         });
@@ -158,6 +117,8 @@ class Attribute implements MapperInterface, TransformableEntityMapperInterface
 
     public function getTargetItemContentObject(TargetItemInterface $targetItem)
     {
-        return CollectionKey::getByHandle($targetItem->getItemID());
+        $controller = Category::getByHandle($this->getAttributeKeyCategoryHandle())
+            ->getController();
+        return $controller->getByHandle($targetItem->getItemID());
     }
 }

@@ -16,7 +16,8 @@ class Validator extends AbstractValidator
     public function validate($set)
     {
         $messages = new MessageCollection();
-        $mapper = new Attribute();
+        $manager = \Core::make('migration/manager/import/attribute/category');
+        $mapper = $manager->getAttributeCategoryMapper($set->getCategory());
         $targetItemList = new TargetItemList($this->getBatch(), $mapper);
         foreach ($set->getAttributes() as $attribute) {
             $item = new Item($attribute);

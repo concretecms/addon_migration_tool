@@ -4,7 +4,8 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper;
 use Concrete\Core\Support\Manager as CoreManager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Area;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Attribute;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\SiteAttribute;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\ComposerOutputContent;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageTemplate;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageType;
@@ -26,9 +27,14 @@ class Manager extends CoreManager implements MapperManagerInterface
         return new BatchTargetItem();
     }
 
-    protected function createAttributeDriver()
+    protected function createPageAttributeDriver()
     {
-        return new Attribute();
+        return new PageAttribute();
+    }
+
+    protected function createSiteAttributeDriver()
+    {
+        return new SiteAttribute();
     }
 
     protected function createPageTemplateDriver()
@@ -64,7 +70,8 @@ class Manager extends CoreManager implements MapperManagerInterface
     public function __construct()
     {
         $this->driver('area');
-        $this->driver('attribute');
+        $this->driver('page_attribute');
+        $this->driver('site_attribute');
         $this->driver('block_type');
         $this->driver('composer_output_content');
         $this->driver('page_template');

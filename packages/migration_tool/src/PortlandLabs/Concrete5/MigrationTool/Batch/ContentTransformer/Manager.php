@@ -2,16 +2,22 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer;
 
 use Concrete\Core\Support\Manager as CoreManager;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type\Attribute;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type\PageAttribute;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type\SiteAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type\BlockType;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class Manager extends CoreManager
 {
-    protected function createAttributeDriver()
+    protected function createPageAttributeDriver()
     {
-        return new Attribute();
+        return new PageAttribute();
+    }
+
+    protected function createSiteAttributeDriver()
+    {
+        return new SiteAttribute();
     }
 
     protected function createBlockTypeDriver()
@@ -22,7 +28,8 @@ class Manager extends CoreManager
     public function __construct($app)
     {
         parent::__construct($app);
-        $this->driver('attribute');
+        $this->driver('page_attribute');
+        $this->driver('site_attribute');
         $this->driver('block_type');
     }
 }

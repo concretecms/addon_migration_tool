@@ -14,7 +14,7 @@ class PublishPageContentRoutineAction extends AbstractPageAction
         $concretePage = $this->getPageByPath($batch, $page->getBatchPath());
 
         foreach ($page->attributes as $attribute) {
-            $ak = $this->getTargetItem($batch, 'attribute', $attribute->getAttribute()->getHandle());
+            $ak = $this->getTargetItem($batch, 'page_attribute', $attribute->getAttribute()->getHandle());
             if (is_object($ak)) {
                 $value = $attribute->getAttribute()->getAttributeValue();
                 $publisher = $value->getPublisher();

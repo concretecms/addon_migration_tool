@@ -187,6 +187,11 @@ class Manager extends CoreManager
         return new CreateGroupsRoutine();
     }
 
+    public function createSitesDriver()
+    {
+        return new CreateSitesRoutine();
+    }
+
     public function __construct()
     {
         $this->driver('clear_batch');
@@ -221,11 +226,16 @@ class Manager extends CoreManager
         $this->driver('create_stack_structure');
         $this->driver('create_single_page_structure');
         $this->driver('create_page_structure');
-        //$this->driver('create_page_type_targets');
+        // @TODO
+        ////$this->driver('create_page_type_targets');
         $this->driver('create_page_feeds');
-        //$this->driver('publish_page_type_content');
+        // @TODO
+        ////$this->driver('publish_page_type_content');
         $this->driver('publish_stack_content');
         $this->driver('publish_single_page_content');
         $this->driver('publish_page_content');
+
+        $this->driver('sites');
+
     }
 }

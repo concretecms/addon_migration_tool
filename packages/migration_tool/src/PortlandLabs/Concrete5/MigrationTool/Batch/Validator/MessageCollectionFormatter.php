@@ -32,6 +32,31 @@ class MessageCollectionFormatter extends MessageFormatter
         return $severity;
     }
 
+    public function getSortedMessages()
+    {
+        // First, we filter out the duplicates
+        $messageObjects = array();
+        foreach (array_unique($this->collection->toArray()) as $message) {
+            $messageObjects[] = $message;
+        }
+
+        // Now, we sort based on priority
+        usort($messageObjects, function($m1, $m2) {
+            /**
+             * @var $m1 Message
+             */
+            if ($m1->getSeverity() > $m2->getSeverity()) {
+                return -1;
+            } else if ($m2->getSeverity() > $m1->getSeverity()) {
+                return 1;
+            } else {
+                return strnatcasecmp($m1->getText(), $m2->getText());
+            }
+        });
+
+        return $messageObjects;
+    }
+
     public function getCollectionStatusIconClass()
     {
         if ($this->collection->count() > 0) {

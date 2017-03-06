@@ -10,7 +10,7 @@ $dh = Core::make('helper/date');
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                    <?= t('Edit Batch') ?>
+                    <?= t('Edit') ?>
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
@@ -22,13 +22,20 @@ $dh = Core::make('helper/date');
                         <?php
 
                     } ?>
-                    <?php /*
-            <li><a href="<?=$view->action('find_and_replace', $batch->getID())?>"><?=t("Find and Replace")?></a></li>
- */ ?>
-
                     <li class="divider"></li>
                     <li><a href="javascript:void(0)" data-action="rescan-batch"
                            data-dialog-title="<?= t('Rescan Batch') ?>" class=""><?= t("Rescan Batch") ?></a>
+                    <li class="divider"></li>
+                    <li><a href="<?=URL::to('/dashboard/system/migration/import', 'settings', $batch->getID())?>" class=""><?= t("Settings") ?></a>
+                </ul>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    <?= t('Delete') ?>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
                     <li><a href="javascript:void(0)" data-dialog="clear-batch"
                            data-dialog-title="<?= t('Clear Batch') ?>" class=""><span
                                 class="text-danger"><?= t("Clear Batch") ?></span></a>
@@ -38,6 +45,7 @@ $dh = Core::make('helper/date');
                                 class="text-danger"><?= t("Delete Batch") ?></span></a></li>
                 </ul>
             </div>
+
             <a href="javascript:void(0)" class="btn btn-primary" data-dialog="create-content"
                data-dialog-title="<?= t('Import Batch to Site') ?>" class=""><?= t("Import Batch to Site") ?></a>
 

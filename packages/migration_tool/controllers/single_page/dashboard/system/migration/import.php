@@ -6,6 +6,7 @@ use Concrete\Core\File\Set\Set;
 use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Exporter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Site\TreeSiteJsonFormatter;
@@ -17,6 +18,8 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\UntransformedItemProces
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class Import extends DashboardPageController
 {
@@ -369,6 +372,22 @@ class Import extends DashboardPageController
         }
     }
 
+    public function settings($id = null)
+    {
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($id);
+        if (is_object($batch)) {
+            $this->set('batch', $batch);
+            $this->set('pageTitle', t('Settings'));
+            $this->set('sites', $this->app->make('site')->getList());
+            $this->render('/dashboard/system/migration/batch_settings');
+        } else {
+            $this->view();
+        }
+    }
+
+
+
     public function upload_files()
     {
         $files = array();
@@ -407,6 +426,58 @@ class Import extends DashboardPageController
         $r->setFiles($files);
         $r->outputJSON();
     }
+
+    public function save_batch_settings()
+    {
+        if (!$this->token->validate('save_batch_settings')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($this->request->request->get('id'));
+        if (!is_object($batch)) {
+            $this->error->add(t('Invalid batch.'));
+        }
+
+        if (!$this->error->has()) {
+
+            if ($this->request->request->has('download_mappings') && $this->request->request->get('download_mappings')) {
+                // download the mapping files
+
+                $exporter = new Exporter($batch);
+
+                $response = new Response($exporter->getElement()->asXML(), Response::HTTP_OK, array(
+                    'content-type' => 'text/xml'
+                    )
+                );
+
+                $disposition = $response->headers->makeDisposition(
+                    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                    'mappings.xml'
+                );
+
+                $response->headers->set('Content-Disposition', $disposition);
+
+                return $response;
+
+            } else {
+                $batch->setNotes($this->request->request->get('notes'));
+                $site = null;
+                if ($this->request->request->has('siteID')) {
+                    $site = $this->app->make('site')->getByID($this->request->request->get('siteID'));
+                }
+                if (!is_object($site)) {
+                    $site = $this->app->make('site')->getDefault();
+                }
+                $batch->setSite($site);
+                $this->entityManager->persist($batch);
+                $this->entityManager->flush();
+                $this->flash('success', t('Batch updated successfully.'));
+                $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
+            }
+        }
+    }
+
 
     public function find_and_replace($id = null)
     {

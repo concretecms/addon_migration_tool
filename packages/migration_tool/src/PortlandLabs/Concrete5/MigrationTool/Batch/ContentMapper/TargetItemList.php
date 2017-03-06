@@ -72,7 +72,7 @@ class TargetItemList
         return $targetItem;
     }
 
-    public function getSelectedTargetItem(ItemInterface $item)
+    public function getSelectedTargetItem(ItemInterface $item, $returnUnmapped = true)
     {
         $query = $this->entityManager->createQuery(
             "select ti from {$this->repository} bti
@@ -84,7 +84,11 @@ class TargetItemList
         $query->setParameter('type', $this->mapper->getHandle());
         $targetItem = $query->getResult();
         if (!is_object($targetItem[0])) {
-            return new UnmappedTargetItem($this->mapper);
+            if ($returnUnmapped) {
+                return new UnmappedTargetItem($this->mapper);
+            } else {
+                return null;
+            }
         }
 
         return $targetItem[0];

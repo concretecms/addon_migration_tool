@@ -30,15 +30,19 @@ class MapContentTypesTask implements TaskInterface
         $mapper = $this->mappers->driver($subject['mapper']);
         $targetItemList = $this->mappers->createTargetItemList($batch, $mapper);
         $item = new Item($subject['item']);
-        $targetItem = $targetItemList->getMatchedTargetItem($item);
-        if (is_object($targetItem)) {
-            $batchTargetItem = $this->mappers->createBatchTargetItem();
-            $batchTargetItem->setBatch($batch);
-            $batchTargetItem->setTargetItem($targetItem);
-            $em->persist($batchTargetItem);
-            $batch->target_items->add($batchTargetItem);
-            $em->persist($batch);
-            $em->flush();
+        $selectedTargetItem = $targetItemList->getSelectedTargetItem($item, false);
+        if (!is_object($selectedTargetItem)) {
+            // We're dealing with a new one that we haven't seen, so we try and assign it.
+            $targetItem = $targetItemList->getMatchedTargetItem($item);
+            if (is_object($targetItem)) {
+                $batchTargetItem = $this->mappers->createBatchTargetItem();
+                $batchTargetItem->setBatch($batch);
+                $batchTargetItem->setTargetItem($targetItem);
+                $em->persist($batchTargetItem);
+                $batch->target_items->add($batchTargetItem);
+                $em->persist($batch);
+                $em->flush();
+            }
         }
     }
 

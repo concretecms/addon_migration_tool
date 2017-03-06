@@ -21,7 +21,10 @@ class StackItemValidator implements ValidatorInterface
 
         $stacks = $batch->getObjectCollection('stack');
         foreach ($stacks->getStacks() as $stack) {
-            if ($stack->getPath() == $item->getReference()) {
+            if ($stack->getPath() && $stack->getPath() == $item->getReference()) {
+                return true;
+            }
+            if ($stack->getName() && $stack->getName() == $item->getReference()) {
                 return true;
             }
         }

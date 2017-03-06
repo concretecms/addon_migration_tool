@@ -1,4 +1,4 @@
-<table data-migration-tree="<?=$collection->getID()?>" class="migration-table table table-bordered table-striped">
+<table data-migration-tree="<?=$identifier?>" class="migration-table table table-bordered table-striped">
     <colgroup>
         <col width="300"></col>
         <col width="*"></col>
@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
     $(function() {
-        $("[data-migration-tree=<?=$collection->getID()?>]").migrationBatchTableTree({
+        $("[data-migration-tree=<?=$identifier?>]").migrationBatchTableTree({
             columnKey: 'page',
             init: function() {
                 $('[data-editable-property=path]').editable({

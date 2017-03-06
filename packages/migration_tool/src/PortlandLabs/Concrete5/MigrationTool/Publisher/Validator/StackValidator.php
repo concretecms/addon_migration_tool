@@ -7,7 +7,11 @@ class StackValidator extends AbstractValidator
 {
     public function skipItem()
     {
-        $c = Stack::getByPath($this->object->getPath());
+        if ($this->object->getPath()) {
+            $c = Stack::getByPath($this->object->getPath());
+        } else {
+            $c = Stack::getByName($this->object->getName());
+        }
         if (is_object($c)) {
             $blocks = $c->getBlocks();
             if (count($blocks)) {

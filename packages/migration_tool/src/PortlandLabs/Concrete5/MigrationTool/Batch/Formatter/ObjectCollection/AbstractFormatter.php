@@ -27,6 +27,7 @@ abstract class AbstractFormatter implements FormatterInterface
     public function displayObjectCollection()
     {
         $em = \Package::getByHandle('migration_tool')->getEntityManager();
+        $identifier = \Core::make('helper/validation/identifier');
         $r = $em->getRepository("\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch");
         $batch = $r->findFromCollection($this->collection);
         echo \View::element('batch_content_types/'
@@ -34,6 +35,7 @@ abstract class AbstractFormatter implements FormatterInterface
             'batch' => $batch,
             'type' => $this->collection->getType(),
             'collection' => $this->collection,
+            'identifier' => $identifier->getString(32)
         ), $this->getPackageHandle());
     }
 }

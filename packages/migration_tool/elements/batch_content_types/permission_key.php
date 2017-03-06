@@ -1,4 +1,4 @@
-<table id="migration-tree-table-<?=$type?>" class="migration-table table table-bordered table-striped">
+<table id="migration-tree-table-<?=$identifier?>" class="migration-table table table-bordered table-striped">
     <colgroup>
         <col width="300"></col>
         <col width="300"></col>
@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
     $(function() {
-        $("#migration-tree-table-<?=$type?>").migrationBatchTableTree({
+        $("#migration-tree-table-<?=$identifier?>").migrationBatchTableTree({
             columnKey: 'permission_key',
             renderInitialColumnData: function(cells, data) {
                 var node = data.node;

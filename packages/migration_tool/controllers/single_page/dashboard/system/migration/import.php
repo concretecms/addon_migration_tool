@@ -156,7 +156,16 @@ class Import extends DashboardPageController
             }
 
             foreach ($importer->getContentObjectCollections($_FILES['file']['tmp_name']) as $collection) {
-                $batch->getObjectCollections()->add($collection);
+                // does this already exist ?
+                $existingCollection = $batch->getObjectCollection($collection->getType());
+                if (is_object($existingCollection)) {
+                    foreach($collection->getRecords() as $record) {
+                        $record->setCollection($existingCollection);
+                        $existingCollection->getRecords()->add($record);
+                    }
+                } else {
+                    $batch->getObjectCollections()->add($collection);
+                }
             }
 
             $this->entityManager->flush();

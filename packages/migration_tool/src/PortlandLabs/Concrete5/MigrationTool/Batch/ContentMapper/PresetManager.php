@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper;
 use Concrete\Core\Support\Manager as CoreManager;
 use Doctrine\ORM\EntityManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Area;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\SiteAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageAttribute;
@@ -52,6 +53,24 @@ class PresetManager
             $this->entityManager->persist($item);
         }
         $this->entityManager->flush();
+    }
+
+    public function getMatchedTargetItem(MapperInterface $mapper, Batch $batch, ItemInterface $item)
+    {
+        $query = $this->entityManager->createQuery(
+            "select ti from PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchPresetTargetItem bpti
+            join PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem ti
+            where bpti.batch = :batch and bpti.target_item = ti and ti.item_type = :type and ti.source_item_identifier = :source_item_identifier"
+        );
+        $query->setParameter('batch', $batch);
+        $query->setParameter('source_item_identifier', $item->getIdentifier());
+        $query->setParameter('type', $mapper->getHandle());
+        $targetItem = $query->getResult();
+        if (is_object($targetItem[0])) {
+            // We need to return a NEW target item based off of this preset
+            return clone $targetItem[0];
+        }
+
     }
 
 }

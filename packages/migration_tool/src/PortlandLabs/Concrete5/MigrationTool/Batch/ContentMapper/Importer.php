@@ -42,9 +42,9 @@ class Importer
         if ($simplexml->mapping->item) {
             foreach ($simplexml->mapping->item as $item) {
                 $item_id = (string) $item->item_id;
-                if ($item_id === '0') {
+                if ($item_id === '-1') {
                     $targetItem = new IgnoredTargetItem();
-                } else if ($item_id === '-1') {
+                } else if ($item_id === '0') {
                     $targetItem = new UnmappedTargetItem();
                 } else {
                     $targetItem = new TargetItem();

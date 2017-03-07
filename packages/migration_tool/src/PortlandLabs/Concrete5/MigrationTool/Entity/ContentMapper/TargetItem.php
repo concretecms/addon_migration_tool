@@ -125,4 +125,12 @@ class TargetItem implements TargetItemInterface
     {
         return true;
     }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+    }
+
 }

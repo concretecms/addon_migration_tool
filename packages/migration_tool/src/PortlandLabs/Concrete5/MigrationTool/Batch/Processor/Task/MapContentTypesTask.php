@@ -5,6 +5,7 @@ use Concrete\Core\Foundation\Processor\ActionInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\PresetManager;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -33,7 +34,11 @@ class MapContentTypesTask implements TaskInterface
         $selectedTargetItem = $targetItemList->getSelectedTargetItem($item, false);
         if (!is_object($selectedTargetItem)) {
             // We're dealing with a new one that we haven't seen, so we try and assign it.
-            $targetItem = $targetItemList->getMatchedTargetItem($item);
+            $presetManager = new PresetManager($em);
+            $targetItem = $presetManager->getMatchedTargetItem($mapper, $batch, $item);
+            if (!is_object($targetItem)) {
+                $targetItem = $targetItemList->getMatchedTargetItem($item);
+            }
             if (is_object($targetItem)) {
                 $batchTargetItem = $this->mappers->createBatchTargetItem();
                 $batchTargetItem->setBatch($batch);

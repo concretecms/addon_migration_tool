@@ -46,10 +46,10 @@ class CreateStackStructureRoutineAction extends AbstractPageAction
                 }
                 break;
             case 'global_area':
-                $s = Stack::getByName($stack->getName());
+                $s = Stack::getByName($stack->getName(), 'RECENT', $batch->getSite()->getSiteTreeObject());
                 if (!is_object($s)) {
                     if (method_exists('\Concrete\Core\Page\Stack\Stack', 'addGlobalArea')) {
-                        Stack::addGlobalArea($stack->getName());
+                        Stack::addGlobalArea($stack->getName(), $batch->getSite()->getSiteTreeObject());
                     } else {
                         //legacy
                         Stack::addStack($stack->getName(), 'global_area');
@@ -58,13 +58,13 @@ class CreateStackStructureRoutineAction extends AbstractPageAction
                 break;
             default:
                 //stack
-                if (method_exists('\Concrete\Core\Page\Stack\Stack', 'getByPath')) {
-                    $s = Stack::getByPath($stack->getPath());
+                if (method_exists('\Concrete\Core\Page\Stack\Stack', 'getByPath') && $stack->getPath()) {
+                    $s = Stack::getByPath($stack->getPath(), 'RECENT', $batch->getSite()->getSiteTreeObject());
                     if (!is_object($s)) {
                         Stack::addStack($stack->getName(), $parent);
                     }
                 } else {
-                    $s = Stack::getByName($stack->getName());
+                    $s = Stack::getByName($stack->getName(), 'RECENT', $batch->getSite()->getSiteTreeObject());
                     if (!is_object($s)) {
                         // legacy, so no folder support
                         Stack::addStack($stack->getName());

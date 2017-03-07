@@ -19,10 +19,10 @@ class PublishStackContentRoutineAction extends AbstractPageAction
     public function execute(BatchInterface $batch)
     {
         $stack = $this->page;
-        if (method_exists('\Concrete\Core\Page\Stack\Stack', 'getByPath')) {
-            $s = Stack::getByPath($stack->getPath());
+        if (method_exists('\Concrete\Core\Page\Stack\Stack', 'getByPath') && $stack->getPath()) {
+            $s = Stack::getByPath($stack->getPath(), 'RECENT', $batch->getSite()->getSiteTreeObject());
         } else {
-            $s = Stack::getByName($stack->getName());
+            $s = Stack::getByName($stack->getName(), 'RECENT', $batch->getSite()->getSiteTreeObject());
         }
         if (is_object($s)) {
             foreach ($stack->getBlocks() as $block) {

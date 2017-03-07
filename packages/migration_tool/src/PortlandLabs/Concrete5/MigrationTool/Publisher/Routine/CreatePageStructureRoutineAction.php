@@ -14,7 +14,7 @@ class CreatePageStructureRoutineAction extends AbstractPageAction
         $batchParent = $this->getBatchParentPage($batch);
         if (!is_object($batchParent)) {
             // First, create the top level page for the batch.
-            $batches = \Page::getByPath('/!import_batches');
+            $batches = \Page::getByPath('/!import_batches', 'RECENT', $batch->getSite()->getSiteTreeObject());
             $type = Type::getByHandle('import_batch');
             $batchParent = $batches->add($type, array(
                 'cName' => $batch->getID(),
@@ -60,7 +60,8 @@ class CreatePageStructureRoutineAction extends AbstractPageAction
             if (!$parentPath) {
                 $parent = $batchParent;
             } else {
-                $parent = \Page::getByPath('/!import_batches/' . $batch->getID() . $parentPath);
+                $parent = \Page::getByPath('/!import_batches/' . $batch->getID() . $parentPath, 'RECENT',
+                    $batch->getSite()->getSiteTreeObject());
             }
         } else {
             $parent = $batchParent;

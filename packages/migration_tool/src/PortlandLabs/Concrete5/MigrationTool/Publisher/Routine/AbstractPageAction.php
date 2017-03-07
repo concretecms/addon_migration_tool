@@ -34,7 +34,10 @@ abstract class AbstractPageAction implements RoutineActionInterface
 
     protected function getPageByPath(Batch $batch, $path)
     {
-        return \Page::getByPath('/!import_batches/' . $batch->getID() . $path, 'RECENT');
+        return \Page::getByPath('/!import_batches/' . $batch->getID() . $path,
+            'RECENT',
+            $batch->getSite()->getSiteTreeObject()
+        );
     }
 
     public function populatePageObject($id)
@@ -63,7 +66,7 @@ abstract class AbstractPageAction implements RoutineActionInterface
 
     protected function getBatchParentPage(BatchInterface $batch)
     {
-        $page = \Page::getByPath('/!import_batches/' . $batch->getID());
+        $page = \Page::getByPath('/!import_batches/' . $batch->getID(), 'RECENT', $batch->getSite()->getSiteTreeObject());
         if (is_object($page) && !$page->isError()) {
             return $page;
         }

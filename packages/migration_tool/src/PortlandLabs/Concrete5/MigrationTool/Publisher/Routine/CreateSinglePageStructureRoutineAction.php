@@ -20,8 +20,7 @@ class CreateSinglePageStructureRoutineAction extends AbstractPageAction
             if ($page->getIsGlobal()) {
                 $c = Single::addGlobal($page->getOriginalPath(), $pkg);
             } else {
-                $home = \Page::getByID(HOME_CID);
-                $siteTree = $home->getSiteTreeObject();
+                $siteTree = $batch->getSite()->getSiteTreeObject();
                 $c = Single::createPageInTree($page->getOriginalPath(), $siteTree, $page->getIsAtRoot(), $pkg);
             }
         } else {

@@ -107,19 +107,6 @@ class Controller extends Package
                 $pp->update(array('cName' => $title));
             }
         }
-
-        $batches = \Page::getByPath('/!import_batches');
-        if (!is_object($batches) || $batches->isError()) {
-            if (compat_is_version_8()) {
-                $c = SinglePage::addGlobal('/!import_batches', $pkg);
-            } else {
-                $c = SinglePage::add('/!import_batches', $pkg);
-                $c->moveToRoot();
-            }
-            $c->update(array('cName' => 'Import Batches'));
-            $c->setOverrideTemplatePermissions(1);
-            $c->setAttribute('icon_dashboard', 'fa fa-cubes');
-        }
     }
 
     public function on_start()

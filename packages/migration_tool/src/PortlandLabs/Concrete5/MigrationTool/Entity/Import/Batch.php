@@ -49,6 +49,11 @@ class Batch implements ValidatorInterface, BatchInterface
      **/
     public $target_items;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchPresetTargetItem", mappedBy="batch", cascade={"persist", "remove"})
+     **/
+    public $preset_target_items;
+
     public function __construct()
     {
         $this->date = new \DateTime();

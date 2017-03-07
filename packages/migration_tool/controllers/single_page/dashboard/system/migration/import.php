@@ -6,6 +6,7 @@ use Concrete\Core\File\Set\Set;
 use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Exporter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\PresetManager;
@@ -30,18 +31,12 @@ class Import extends DashboardPageController
             $this->error->add($this->token->getErrorMessage());
         }
         if (!$this->error->has()) {
-            $batch = new Batch();
-            $batch->setNotes($this->request->request->get('notes'));
+            $service = new BatchService($this->app, $this->entityManager);
             $site = null;
             if ($this->request->request->has('siteID')) {
                 $site = $this->app->make('site')->getByID($this->request->request->get('siteID'));
             }
-            if (!is_object($site)) {
-                $site = $this->app->make('site')->getDefault();
-            }
-            $batch->setSite($site);
-            $this->entityManager->persist($batch);
-            $this->entityManager->flush();
+            $batch = $service->addBatch($this->request->request->get('notes'), $site);
             $this->flash('success', t('Batch added successfully.'));
             $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
         }

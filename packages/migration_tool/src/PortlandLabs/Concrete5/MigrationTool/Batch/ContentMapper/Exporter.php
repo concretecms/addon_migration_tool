@@ -19,12 +19,15 @@ class Exporter
     {
         $this->element = new \SimpleXMLElement("<?xml version=\"1.0\" encoding=\"UTF-8\"?><concrete5-migrator></concrete5-migrator>");
         $this->element->addAttribute('version', '1.0');
+
+        $mapping = $this->element->addChild('mapping');
+
         foreach($this->batch->getTargetItems() as $item) {
             $item = $item->getTargetItem();
             /**
              * @var $item TargetItem
              */
-            $node = $this->element->addChild('item');
+            $node = $mapping->addChild('item');
             $node->addChild('source_item_identifier', $item->getSourceItemIdentifier());
             $node->addChild('item_id', $item->getItemId());
             $node->addChild('item_type', $item->getItemType());

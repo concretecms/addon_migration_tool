@@ -8,6 +8,7 @@ use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Exporter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\PresetManager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Site\TreeSiteJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublisherRoutineProcessor;
@@ -377,8 +378,10 @@ class Import extends DashboardPageController
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
         if (is_object($batch)) {
+            $presetManager = new PresetManager($this->entityManager);
             $this->set('batch', $batch);
             $this->set('pageTitle', t('Settings'));
+            $this->set('presetMappings', $presetManager->getPresets($batch));
             $this->set('sites', $this->app->make('site')->getList());
             $this->render('/dashboard/system/migration/batch_settings');
         } else {
@@ -439,6 +442,11 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
 
+        if ($this->request->files->has('mappingFile')) {
+            $importer = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Importer();
+            $importer->validateUploadedFile($_FILES['mappingFile'], $this->error);
+        }
+
         if (!$this->error->has()) {
 
             if ($this->request->request->has('download_mappings') && $this->request->request->get('download_mappings')) {
@@ -460,6 +468,14 @@ class Import extends DashboardPageController
 
                 return $response;
 
+            } else if ($this->request->request->has('delete_mapping_presets') && $this->request->request->get('delete_mapping_presets')) {
+
+
+                $presetManager = new PresetManager($this->entityManager);
+                $presetManager->clearPresets($batch);
+                $this->flash('success', t('Batch presets removed successfully.'));
+                $this->redirect('/dashboard/system/migration/import', 'settings', $batch->getId());
+
             } else {
                 $batch->setNotes($this->request->request->get('notes'));
                 $site = null;
@@ -470,12 +486,20 @@ class Import extends DashboardPageController
                     $site = $this->app->make('site')->getDefault();
                 }
                 $batch->setSite($site);
+                if ($this->request->files->has('mappingFile')) {
+                    $importer = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Importer();
+                    $mappings = $importer->getMappings($_FILES['mappingFile']['tmp_name']);
+                    $presetManager = new PresetManager($this->entityManager);
+                    $presetManager->clearPresets($batch);
+                    $presetManager->savePresets($batch, $mappings);
+                }
                 $this->entityManager->persist($batch);
                 $this->entityManager->flush();
                 $this->flash('success', t('Batch updated successfully.'));
                 $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
             }
         }
+        $this->settings($this->request->request->get('id'));
     }
 
 

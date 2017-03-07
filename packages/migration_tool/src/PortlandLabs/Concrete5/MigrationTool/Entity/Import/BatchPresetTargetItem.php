@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  */
-class BatchTargetItem extends AbstractBatchTargetItem
+class BatchPresetTargetItem extends AbstractBatchTargetItem
 {
 
 }

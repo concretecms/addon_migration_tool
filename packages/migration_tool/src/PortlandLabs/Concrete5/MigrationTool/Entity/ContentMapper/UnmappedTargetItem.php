@@ -11,7 +11,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
  */
 class UnmappedTargetItem extends TargetItem
 {
-    public function __construct(MapperInterface $mapper)
+    public function __construct(MapperInterface $mapper = null)
     {
         parent::__construct($mapper);
         $this->setItemId(0);

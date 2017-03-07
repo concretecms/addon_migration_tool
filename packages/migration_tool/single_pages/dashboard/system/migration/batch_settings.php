@@ -7,7 +7,7 @@ $dh = Core::make('helper/date');
 </div>
 
 
-<form method="post" action="<?=$view->action('save_batch_settings')?>">
+<form method="post" action="<?=$view->action('save_batch_settings')?>" enctype="multipart/form-data">
     <?=$token->output('save_batch_settings')?>
     <?=$form->hidden('id', $batch->getID())?>
 
@@ -36,6 +36,22 @@ $dh = Core::make('helper/date');
         <label class="control-label launch-tooltip" title="<?=t('Downloads all the current mappings as an XML file. This file can then be reused across multiple batches to save time.')?>"><?=t('Download Mappings')?></label>
         <div><button type="submit" name="download_mappings" value="1" class="btn btn-default"><?=t('Download Current Definitions')?></div>
     </div>
+
+
+    <div class="form-group">
+        <label class="control-label"><?=t('Upload Mapping File')?></label>
+
+        <?php if (count($presetMappings)) { ?>
+
+            <div class="alert alert-info"><?=t2('You have uploaded a preset mapping file containing %s preset', 'You have uploaded a preset mapping file containing %s presets', count($presetMappings))?>
+                <button class="btn btn-xs btn-default pull-right" type="submit" name="delete_mapping_presets" value="1"><?=t('Clear Presets')?></button>
+            </div>
+        <?php } else { ?>
+            <?=$form->file('mappingFile')?>
+
+        <?php } ?>
+    </div>
+
 </fieldset>
 
     <div class="ccm-dashboard-form-actions-wrapper">

@@ -25,6 +25,9 @@ class StackDisplayPublisher implements PublisherInterface
         $data = array();
         $data['stID'] = 0;
         $stack = Stack::getByPath($value->getStackPath());
+        if (!is_object($stack)) {
+            $stack = Stack::getByName($value->getStackPath());
+        }
         if (is_object($stack)) {
             $data['stID'] = $stack->getCollectionID();
             $b = $page->addBlock($bt, $area, $data);

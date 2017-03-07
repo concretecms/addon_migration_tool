@@ -34,13 +34,13 @@ class CreateStackStructureRoutineAction extends AbstractPageAction
             $lastSlash = strrpos($stack->getPath(), '/');
             $parentPath = substr($stack->getPath(), 0, $lastSlash);
             if ($parentPath) {
-                $parent = \Concrete\Core\Support\Facade\StackFolder::getByPath($parentPath);
+                $parent = \Concrete\Core\Support\Facade\StackFolder::getByPath($parentPath, 'RECENT', $batch->getSite()->getSiteTreeObject());
             }
         }
 
         switch ($stack->getType()) {
             case 'folder':
-                $folder = \Concrete\Core\Support\Facade\StackFolder::getByPath($stack->getName());
+                $folder = \Concrete\Core\Support\Facade\StackFolder::getByPath($stack->getName(), $batch->getSite()->getSiteTreeObject());
                 if (!is_object($folder)) {
                     \Concrete\Core\Support\Facade\StackFolder::add($stack->getName(), $parent);
                 }

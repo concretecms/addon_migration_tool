@@ -11,6 +11,9 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
     public function jsonSerialize()
     {
         $response = array();
+
+        $r = \Database::connection()->getEntityManager()->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+
         foreach ($this->collection->getStacks() as $stack) {
             $messages = $this->validator->validate($stack);
             $stackFormatter = $stack->getStackFormatter();
@@ -27,6 +30,23 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $node->statusClass = $formatter->getCollectionStatusIconClass();
             $this->addMessagesNode($node, $messages);
             $node->children = [];
+
+            $batch = $r->findFromCollection($this->collection);
+            $validator = $this->collection->getRecordValidator($batch);
+            $messages = $validator->validate($stack);
+            if ($messages->count()) {
+                $messageHolderNode = new \stdClass();
+                $messageHolderNode->icon = $messages->getFormatter()->getCollectionStatusIconClass();
+                $messageHolderNode->title = t('Errors');
+                $messageHolderNode->children = array();
+                foreach ($messages as $m) {
+                    $messageNode = new \stdClass();
+                    $messageNode->icon = $m->getFormatter()->getIconClass();
+                    $messageNode->title = $m->getFormatter()->output();
+                    $messageHolderNode->children[] = $messageNode;
+                }
+                $node->children[] = $messageHolderNode;
+            }
 
             if (count($stack->getBlocks()) > 0) {
                 $holderNode = new \stdClass();

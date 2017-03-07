@@ -437,7 +437,7 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
 
-        if ($this->request->files->has('mappingFile')) {
+        if ($_FILES['mappingFile']['tmp_name']) {
             $importer = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Importer();
             $importer->validateUploadedFile($_FILES['mappingFile'], $this->error);
         }
@@ -481,7 +481,7 @@ class Import extends DashboardPageController
                     $site = $this->app->make('site')->getDefault();
                 }
                 $batch->setSite($site);
-                if ($this->request->files->has('mappingFile')) {
+                if ($_FILES['mappingFile']['tmp_name']) {
                     $importer = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Importer();
                     $mappings = $importer->getMappings($_FILES['mappingFile']['tmp_name']);
                     $presetManager = new PresetManager($this->entityManager);

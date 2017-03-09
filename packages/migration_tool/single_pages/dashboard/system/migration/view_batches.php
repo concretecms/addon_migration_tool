@@ -40,7 +40,7 @@ $dh = Core::make('helper/date');
 
 <div style="display: none">
     <div id="ccm-dialog-add-batch" class="ccm-ui">
-        <form method="post" action="<?=$view->action('add_batch')?>">
+        <form method="post" action="<?=$view->action('add_batch')?>" enctype="multipart/form-data">
             <?=Loader::helper("validation/token")->output('add_batch')?>
             <div class="form-group">
                 <?=Loader::helper("form")->label('date', t('Date'))?>
@@ -63,6 +63,14 @@ $dh = Core::make('helper/date');
                 <?=Loader::helper("form")->label('notes', t('Notes'))?>
                 <?=Loader::helper('form')->textarea('notes', '', array("rows" => "3"))?>
             </div>
+
+            <fieldset>
+                <legend><?=t('Advanced')?></legend>
+                <div class="form-group">
+                    <?=Loader::helper("form")->label('mappingFile', t('Provide Mapping Presets'))?>
+                    <?=Loader::helper('form')->file('mappingFile')?>
+                </div>
+            </fieldset>
         </form>
         <div class="dialog-buttons">
             <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>

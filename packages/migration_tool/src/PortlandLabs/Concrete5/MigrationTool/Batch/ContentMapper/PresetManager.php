@@ -43,6 +43,15 @@ class PresetManager
         $this->entityManager->flush();
     }
 
+    public function clearBatchMappings(Batch $batch)
+    {
+        $r = $this->entityManager->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem');
+        foreach($r->findByBatch($batch) as $targetItem) {
+            $this->entityManager->remove($targetItem);
+        }
+        $this->entityManager->flush();
+    }
+
     public function savePresets(Batch $batch, $items)
     {
         foreach($items as $item) {

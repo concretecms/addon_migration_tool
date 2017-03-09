@@ -30,6 +30,10 @@ class Import extends DashboardPageController
         if (!$this->token->validate('add_batch')) {
             $this->error->add($this->token->getErrorMessage());
         }
+        if ($_FILES['mappingFile']['tmp_name']) {
+            $importer = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Importer();
+            $importer->validateUploadedFile($_FILES['mappingFile'], $this->error);
+        }
         if (!$this->error->has()) {
             $service = new BatchService($this->app, $this->entityManager);
             $site = null;
@@ -37,6 +41,12 @@ class Import extends DashboardPageController
                 $site = $this->app->make('site')->getByID($this->request->request->get('siteID'));
             }
             $batch = $service->addBatch($this->request->request->get('notes'), $site);
+            if ($_FILES['mappingFile']['tmp_name']) {
+                $importer = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Importer();
+                $mappings = $importer->getMappings($_FILES['mappingFile']['tmp_name']);
+                $presetManager = new PresetManager($this->entityManager);
+                $presetManager->savePresets($batch, $mappings);
+            }
             $this->flash('success', t('Batch added successfully.'));
             $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
         }
@@ -487,10 +497,13 @@ class Import extends DashboardPageController
                     $presetManager = new PresetManager($this->entityManager);
                     $presetManager->clearPresets($batch);
                     $presetManager->savePresets($batch, $mappings);
+                    $presetManager->clearBatchMappings($batch);
+                    $this->flash('success', t('Batch updated successfully. Since you uploaded presets, existing mappings were removed. Please rescan the batch.'));
+                } else {
+                    $this->flash('success', t('Batch updated successfully.'));
                 }
                 $this->entityManager->persist($batch);
                 $this->entityManager->flush();
-                $this->flash('success', t('Batch updated successfully.'));
                 $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
             }
         }

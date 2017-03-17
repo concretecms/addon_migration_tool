@@ -50,6 +50,9 @@ class Controller extends Package
     protected $singlePages = array(
         '/dashboard/system/migration',
         '/dashboard/system/migration/import',
+        '/dashboard/system/migration/import/settings',
+        '/dashboard/system/migration/import/settings/basics',
+        '/dashboard/system/migration/import/settings/files',
         '/dashboard/system/migration/export',
     );
 

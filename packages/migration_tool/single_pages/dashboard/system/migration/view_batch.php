@@ -3,11 +3,11 @@ $dh = Core::make('helper/date');
 /* @var \Concrete\Core\Localization\Service\Date $dh */
 ?>
     <div class="ccm-dashboard-header-buttons">
-        <div class="btn-group" role="group" aria-label="...">
+        <div class="btn-group btn-group-sm" role="group" aria-label="...">
             <a href="javascript:void(0)" data-dialog="add-to-batch" data-dialog-title="<?= t('Add Content') ?>"
                class="btn btn-default"><?= t("Add Content to Batch") ?></a>
             <a href="<?= $view->action('batch_files', $batch->getID()) ?>" class="btn btn-default"><?= t('Files') ?></a>
-            <div class="btn-group" role="group">
+            <div class="btn-group btn-group-sm" role="group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                     <?= t('Edit') ?>
@@ -25,11 +25,24 @@ $dh = Core::make('helper/date');
                     <li class="divider"></li>
                     <li><a href="javascript:void(0)" data-action="rescan-batch"
                            data-dialog-title="<?= t('Rescan Batch') ?>" class=""><?= t("Rescan Batch") ?></a>
-                    <li class="divider"></li>
-                    <li><a href="<?=URL::to('/dashboard/system/migration/import', 'settings', $batch->getID())?>" class=""><?= t("Settings") ?></a>
                 </ul>
             </div>
-            <div class="btn-group" role="group">
+            <div class="btn-group btn-group-sm" role="group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    <?= t('Settings') ?>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="<?=URL::to('/dashboard/system/migration/import/settings/basics', $batch->getID())?>" class=""><?= t("Basics") ?></a>
+                    <li class="divider"></li>
+                    <li class="dropdown-header"><?= t('Content Types') ?></li>
+                    <?php foreach($settings as $setting) { ?>
+                    <li><a href="<?=URL::to($setting, $batch->getID())?>" class=""><?= t($setting->getCollectionName())?></a>
+                    <?php } ?>
+                </ul>
+            </div>
+            <div class="btn-group btn-group-sm" role="group">
                 <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                     <?= t('Delete') ?>

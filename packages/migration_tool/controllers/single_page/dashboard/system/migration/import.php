@@ -6,6 +6,7 @@ use Concrete\Core\File\Set\Set;
 use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
+use Concrete\Core\Page\PageList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Exporter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
@@ -357,6 +358,19 @@ class Import extends DashboardPageController
             $this->set('pageTitle', t('Import Batch'));
             $this->set('mappers', \Core::make('migration/manager/mapping'));
             $this->set('formats', $formats);
+
+            $list = new PageList();
+            $list->filterByPath('/dashboard/system/migration/import/settings');
+            $list->ignorePermissions();
+            $list->sortByDisplayOrder();
+
+            $settings = array();
+            foreach($list->getResults() as $setting) {
+                if ($setting->getCollectionHandle() != 'basics') {
+                    $settings[] = $setting;
+                }
+            }
+            $this->set('settings', $settings);
             $this->render('/dashboard/system/migration/view_batch');
         } else {
             $this->view();
@@ -377,24 +391,6 @@ class Import extends DashboardPageController
             $this->view();
         }
     }
-
-    public function settings($id = null)
-    {
-        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
-        $batch = $r->findOneById($id);
-        if (is_object($batch)) {
-            $presetManager = new PresetManager($this->entityManager);
-            $this->set('batch', $batch);
-            $this->set('pageTitle', t('Settings'));
-            $this->set('presetMappings', $presetManager->getPresets($batch));
-            $this->set('sites', $this->app->make('site')->getList());
-            $this->render('/dashboard/system/migration/batch_settings');
-        } else {
-            $this->view();
-        }
-    }
-
-
 
     public function upload_files()
     {
@@ -434,82 +430,6 @@ class Import extends DashboardPageController
         $r->setFiles($files);
         $r->outputJSON();
     }
-
-    public function save_batch_settings()
-    {
-        if (!$this->token->validate('save_batch_settings')) {
-            $this->error->add($this->token->getErrorMessage());
-        }
-
-        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
-        $batch = $r->findOneById($this->request->request->get('id'));
-        if (!is_object($batch)) {
-            $this->error->add(t('Invalid batch.'));
-        }
-
-        if ($_FILES['mappingFile']['tmp_name']) {
-            $importer = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Importer();
-            $importer->validateUploadedFile($_FILES['mappingFile'], $this->error);
-        }
-
-        if (!$this->error->has()) {
-
-            if ($this->request->request->has('download_mappings') && $this->request->request->get('download_mappings')) {
-                // download the mapping files
-
-                $exporter = new Exporter($batch);
-
-                $response = new Response($exporter->getElement()->asXML(), Response::HTTP_OK, array(
-                    'content-type' => 'text/xml'
-                    )
-                );
-
-                $disposition = $response->headers->makeDisposition(
-                    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-                    'mappings.xml'
-                );
-
-                $response->headers->set('Content-Disposition', $disposition);
-
-                return $response;
-
-            } else if ($this->request->request->has('delete_mapping_presets') && $this->request->request->get('delete_mapping_presets')) {
-
-
-                $presetManager = new PresetManager($this->entityManager);
-                $presetManager->clearPresets($batch);
-                $this->flash('success', t('Batch presets removed successfully.'));
-                $this->redirect('/dashboard/system/migration/import', 'settings', $batch->getId());
-
-            } else {
-                $batch->setNotes($this->request->request->get('notes'));
-                $site = null;
-                if ($this->request->request->has('siteID')) {
-                    $site = $this->app->make('site')->getByID($this->request->request->get('siteID'));
-                }
-                if (!is_object($site)) {
-                    $site = $this->app->make('site')->getDefault();
-                }
-                $batch->setSite($site);
-                if ($_FILES['mappingFile']['tmp_name']) {
-                    $importer = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Importer();
-                    $mappings = $importer->getMappings($_FILES['mappingFile']['tmp_name']);
-                    $presetManager = new PresetManager($this->entityManager);
-                    $presetManager->clearPresets($batch);
-                    $presetManager->savePresets($batch, $mappings);
-                    $presetManager->clearBatchMappings($batch);
-                    $this->flash('success', t('Batch updated successfully. Since you uploaded presets, existing mappings were removed. Please rescan the batch.'));
-                } else {
-                    $this->flash('success', t('Batch updated successfully.'));
-                }
-                $this->entityManager->persist($batch);
-                $this->entityManager->flush();
-                $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
-            }
-        }
-        $this->settings($this->request->request->get('id'));
-    }
-
 
     public function find_and_replace($id = null)
     {

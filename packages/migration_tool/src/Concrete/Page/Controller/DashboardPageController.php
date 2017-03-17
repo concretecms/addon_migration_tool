@@ -5,11 +5,11 @@ use Concrete\Core\Package\Package;
 
 class DashboardPageController extends \Concrete\Core\Page\Controller\DashboardPageController
 {
-    public function on_start()
+
+    protected function getBatch($id)
     {
-        parent::on_start();
-        $this->entityManager = Package::getByHandle('migration_tool')->getEntityManager();
-        ini_set('memory_limit', -1);
-        set_time_limit(0);
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+        $batch = $r->findOneById($id);
+        return $batch;
     }
 }

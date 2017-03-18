@@ -36,6 +36,11 @@ class Batch implements ValidatorInterface, BatchInterface
     protected $site;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    protected $file_folder_id = 0;
+
+    /**
      * @ORM\ManyToMany(targetEntity="ObjectCollection", cascade={"persist", "remove"}))
      * @ORM\JoinTable(name="MigrationImportBatchObjectCollections",
      *      joinColumns={@ORM\JoinColumn(name="batch_id", referencedColumnName="id")},
@@ -177,6 +182,23 @@ class Batch implements ValidatorInterface, BatchInterface
             }
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFileFolderID()
+    {
+        return $this->file_folder_id;
+    }
+
+    /**
+     * @param mixed $fileFolderID
+     */
+    public function setFileFolderID($file_folder_id)
+    {
+        $this->file_folder_id = $file_folder_id;
+    }
+
 
     /**
      * @param mixed $target_items

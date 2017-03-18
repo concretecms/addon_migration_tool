@@ -12,13 +12,18 @@ $dh = Core::make('helper/date');
     <div class="form-group">
         <label class="control-label"><?=t('Folder')?></label>
 
+        <?php
+            $selector = new \Concrete\Core\Form\Service\Widget\FileFolderSelector();
+            print $selector->selectFileFolder('folderID', $folderID);
+        ?>
+
     </div>
 
 </fieldset>
 
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-            <a href="<?=$view->action('view_batch', $batch->getID())?>" class="btn btn-default"><?=t('Cancel')?></a>
+            <a href="<?=URL::to('/dashboard/system/migration/import', 'view_batch', $batch->getID())?>" class="btn btn-default"><?=t('Cancel')?></a>
             <button class="pull-right btn btn-primary" type="submit"><?=t('Save')?></button>
         </div>
     </div>

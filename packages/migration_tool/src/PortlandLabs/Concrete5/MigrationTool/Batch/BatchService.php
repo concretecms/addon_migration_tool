@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch;
 
 use Concrete\Core\Application\Application;
 use Concrete\Core\Entity\Site\Site;
+use Concrete\Core\File\Filesystem;
 use Concrete\Core\Page\Single;
 use Doctrine\ORM\EntityManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -12,11 +13,13 @@ class BatchService
 
     protected $entityManager;
     protected $application;
+    protected $filesystem;
 
-    public function __construct(Application $application, EntityManagerInterface $entityManager)
+    public function __construct(Application $application, EntityManagerInterface $entityManager, Filesystem $filesystem)
     {
         $this->application = $application;
         $this->entityManager = $entityManager;
+        $this->filesystem = $filesystem;
     }
 
     public function addBatch($notes, Site $site = null)
@@ -27,6 +30,7 @@ class BatchService
             $site = $this->application->make('site')->getDefault();
         }
         $batch->setSite($site);
+        $batch->setFileFolderID($this->filesystem->getRootFolder()->getTreeNodeID());
         $this->entityManager->persist($batch);
         $this->entityManager->flush();
 

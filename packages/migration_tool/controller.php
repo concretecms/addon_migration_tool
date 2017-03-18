@@ -57,6 +57,7 @@ class Controller extends Package
     );
 
     protected $singlePagesToExclude = array(
+        '/dashboard/system/migration/import/settings',
     );
 
     protected function getSinglePageTitle($path)

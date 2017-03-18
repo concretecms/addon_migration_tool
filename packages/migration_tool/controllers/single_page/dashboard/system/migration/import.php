@@ -1,6 +1,7 @@
 <?php
 namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\Migration;
 
+use Concrete\Core\File\Filesystem;
 use Concrete\Core\File\Importer;
 use Concrete\Core\File\Set\Set;
 use Concrete\Core\Foundation\Processor\Processor;
@@ -36,7 +37,7 @@ class Import extends DashboardPageController
             $importer->validateUploadedFile($_FILES['mappingFile'], $this->error);
         }
         if (!$this->error->has()) {
-            $service = new BatchService($this->app, $this->entityManager);
+            $service = $this->app->make(BatchService::class);
             $site = null;
             if ($this->request->request->has('siteID')) {
                 $site = $this->app->make('site')->getByID($this->request->request->get('siteID'));
@@ -406,7 +407,13 @@ class Import extends DashboardPageController
                         throw new \Exception(Importer::getErrorMessage(Importer::E_FILE_INVALID_EXTENSION));
                     } else {
                         $ih = new Importer();
-                        $response = $ih->import($_FILES['file']['tmp_name'], $_FILES['file']['name']);
+                        $filesystem = new Filesystem();
+                        $folder = $filesystem->getFolder($batch->getFileFolderID());
+                        if (!is_object($folder)) {
+                            $folder = $filesystem->getRootFolder();
+                        }
+
+                        $response = $ih->import($_FILES['file']['tmp_name'], $_FILES['file']['name'], $folder);
                         if (!($response instanceof \Concrete\Core\File\Version) && !compat_is_version_8()) {
                             throw new \Exception(Importer::getErrorMessage($response));
                         } elseif (!($response instanceof \Concrete\Core\Entity\File\Version) && compat_is_version_8()) {

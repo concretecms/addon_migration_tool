@@ -11,12 +11,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class MapContentTypesTask implements TaskInterface
 {
-    protected $mappers;
-
-    public function __construct(MapperManagerInterface $mappers)
-    {
-        $this->mappers = $mappers;
-    }
 
     public function execute(ActionInterface $action)
     {
@@ -28,8 +22,9 @@ class MapContentTypesTask implements TaskInterface
         $em = \Database::connection()->getEntityManager();
         $batch = $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch')->findOneById($batch->getId());
 
-        $mapper = $this->mappers->driver($subject['mapper']);
-        $targetItemList = $this->mappers->createTargetItemList($batch, $mapper);
+        $mappers = \Core::make('migration/manager/mapping');
+        $mapper = $mappers->driver($subject['mapper']);
+        $targetItemList = $mappers->createTargetItemList($batch, $mapper);
         $item = new Item($subject['item']);
         $selectedTargetItem = $targetItemList->getSelectedTargetItem($item, false);
         if (!is_object($selectedTargetItem)) {
@@ -40,7 +35,7 @@ class MapContentTypesTask implements TaskInterface
                 $targetItem = $targetItemList->getMatchedTargetItem($item);
             }
             if (is_object($targetItem)) {
-                $batchTargetItem = $this->mappers->createBatchTargetItem();
+                $batchTargetItem = $mappers->createBatchTargetItem();
                 $batchTargetItem->setBatch($batch);
                 $batchTargetItem->setTargetItem($targetItem);
                 $em->persist($batchTargetItem);

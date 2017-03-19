@@ -48,7 +48,7 @@ abstract class Attribute implements MapperInterface, TransformableEntityMapperIn
     {
         $controller = Category::getByHandle($this->getAttributeKeyCategoryHandle())
             ->getController();
-        $ak = $controller->getByHandle($item->getIdentifier());
+        $ak = $controller->getAttributeKeyByHandle($item->getIdentifier());
 
         if (is_object($ak)) {
             $targetItem = new TargetItem($this);
@@ -119,6 +119,6 @@ abstract class Attribute implements MapperInterface, TransformableEntityMapperIn
     {
         $controller = Category::getByHandle($this->getAttributeKeyCategoryHandle())
             ->getController();
-        return $controller->getByHandle($targetItem->getItemID());
+        return $controller->getAttributeKeyByHandle($targetItem->getItemID());
     }
 }

@@ -11,14 +11,6 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class TransformContentTypesTask implements TaskInterface
 {
-    protected $mappers;
-    protected $transformers;
-
-    public function __construct(MapperManagerInterface $mappers)
-    {
-        $this->mappers = $mappers;
-    }
-
     public function execute(ActionInterface $action)
     {
         $em = \Database::connection()->getEntityManager();
@@ -27,6 +19,7 @@ class TransformContentTypesTask implements TaskInterface
         $batch = $target->getBatch();
 
         $transformers = \Core::make('migration/manager/transforms');
+        $mappers = \Core::make('migration/manager/mapping');
         $transformer = $transformers->driver($subject['transformer']);
         $entity = $transformer->getUntransformedEntityByID($subject['entity']);
         if (is_object($entity)) {
@@ -34,10 +27,10 @@ class TransformContentTypesTask implements TaskInterface
 
             // Since batch is serialized we do this:
             $batch = $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch')->findOneById($batch->getId());
-            $mapper = $this->mappers->driver($subject['mapper']);
+            $mapper = $mappers->driver($subject['mapper']);
 
             if (is_object($item)) {
-                $targetItemList = $this->mappers->createTargetItemList($batch, $mapper);
+                $targetItemList = $mappers->createTargetItemList($batch, $mapper);
                 $targetItem = $targetItemList->getSelectedTargetItem($item);
                 if (is_object($targetItem)) {
                     if (!($targetItem instanceof UnmappedTargetItem || $target instanceof IgnoredTargetItem)) {

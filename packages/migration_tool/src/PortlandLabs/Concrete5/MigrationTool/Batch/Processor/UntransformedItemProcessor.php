@@ -17,8 +17,7 @@ class UntransformedItemProcessor extends ProcessorQueue
     public function __construct(TargetInterface $target)
     {
         parent::__construct($target);
-        $mappers = \Core::make('migration/manager/mapping');
         $this->setQueue(Queue::get('untransformed_item_processor'));
-        $this->registerTask(new TransformContentTypesTask($mappers));
+        $this->registerTask(new TransformContentTypesTask());
     }
 }

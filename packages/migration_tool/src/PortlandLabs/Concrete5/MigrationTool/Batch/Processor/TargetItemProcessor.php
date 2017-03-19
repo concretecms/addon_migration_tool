@@ -15,8 +15,7 @@ class TargetItemProcessor extends ProcessorQueue
     public function __construct(TargetInterface $target)
     {
         parent::__construct($target);
-        $mappers = \Core::make('migration/manager/mapping');
         $this->setQueue(Queue::get('target_item_processor'));
-        $this->registerTask(new MapContentTypesTask($mappers));
+        $this->registerTask(new MapContentTypesTask());
     }
 }

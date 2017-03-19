@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\TreeNode;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\TreeObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Workflow\Type;
@@ -27,7 +28,7 @@ class Tree implements ElementParserInterface
         }
     }
 
-    public function getObjectCollection(\SimpleXMLElement $element)
+    public function getObjectCollection(\SimpleXMLElement $element, Batch $batch)
     {
         $collection = new TreeObjectCollection();
         if ($element->trees->tree) {

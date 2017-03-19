@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission\Key;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission\KeyObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
@@ -9,7 +10,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class PermissionKey implements ElementParserInterface
 {
-    public function getObjectCollection(\SimpleXMLElement $element)
+    public function getObjectCollection(\SimpleXMLElement $element, Batch $batch)
     {
         $manager = \Core::make('migration/manager/import/permission/access_entity');
         $collection = new KeyObjectCollection();

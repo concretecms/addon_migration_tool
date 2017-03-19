@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF;
 
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParserInterface;
 
@@ -41,13 +42,13 @@ class CIFParser implements FileParserInterface
         }
     }
 
-    public function getContentObjectCollections($file)
+    public function getContentObjectCollections($file, Batch $batch)
     {
         $manager = \Core::make('migration/manager/importer/cif');
         $simplexml = simplexml_load_file($file);
         $collections = array();
         foreach ($manager->getDrivers() as $driver) {
-            $collection = $driver->getObjectCollection($simplexml);
+            $collection = $driver->getObjectCollection($simplexml, $batch);
             if ($collection) {
                 if (!($collection instanceof ObjectCollection)) {
                     throw new \RuntimeException(t('Driver %s getObjectCollection did not return an object of the ObjectCollection type', get_class($driver)));

@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\RatingType;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation\RatingTypeObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
@@ -11,7 +12,7 @@ class ConversationRatingType implements ElementParserInterface
 {
     protected $simplexml;
 
-    public function getObjectCollection(\SimpleXMLElement $element)
+    public function getObjectCollection(\SimpleXMLElement $element, Batch $batch)
     {
         $this->simplexml = $element;
         $collection = new RatingTypeObjectCollection();

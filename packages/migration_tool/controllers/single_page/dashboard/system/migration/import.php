@@ -166,7 +166,7 @@ class Import extends DashboardPageController
                 $this->clearContent($batch);
             }
 
-            foreach ($importer->getContentObjectCollections($_FILES['file']['tmp_name']) as $collection) {
+            foreach ($importer->getContentObjectCollections($_FILES['file']['tmp_name'], $batch) as $collection) {
                 // does this already exist ?
                 $existingCollection = $batch->getObjectCollection($collection->getType());
                 if (is_object($existingCollection)) {

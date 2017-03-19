@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\BlockComposerFormLayoutSetControl;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\CollectionAttributeComposerFormLayoutSetControl;
@@ -25,7 +26,7 @@ class PageType implements ElementParserInterface
         }
     }
 
-    public function getObjectCollection(\SimpleXMLElement $element)
+    public function getObjectCollection(\SimpleXMLElement $element, Batch $batch)
     {
         $collection = new PageTypeObjectCollection();
         $targets = \Core::make('migration/manager/import/page_type/publish_target');

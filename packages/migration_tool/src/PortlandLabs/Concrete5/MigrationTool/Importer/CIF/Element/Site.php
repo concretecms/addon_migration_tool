@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\SiteAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\SiteObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
@@ -18,7 +19,7 @@ class Site implements ElementParserInterface
         $this->attributeImporter = \Core::make('migration/manager/import/attribute/value');
     }
 
-    public function getObjectCollection(\SimpleXMLElement $element)
+    public function getObjectCollection(\SimpleXMLElement $element, Batch $batch)
     {
         $collection = new SiteObjectCollection();
         if ($element->sites->site) {

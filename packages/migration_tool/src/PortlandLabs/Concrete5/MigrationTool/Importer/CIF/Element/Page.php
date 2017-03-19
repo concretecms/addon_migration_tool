@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
@@ -35,7 +36,7 @@ class Page implements ElementParserInterface
         return $this->simplexml->pages->page;
     }
 
-    public function getObjectCollection(\SimpleXMLElement $element)
+    public function getObjectCollection(\SimpleXMLElement $element, Batch $batch)
     {
         $this->simplexml = $element;
         $i = 0;

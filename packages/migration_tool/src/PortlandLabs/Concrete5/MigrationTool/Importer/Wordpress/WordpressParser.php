@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress;
 
 use Concrete\Core\Error\Error;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParserInterface;
 
@@ -46,7 +47,7 @@ class WordpressParser implements FileParserInterface
     }
 
     // TODO maybe $file can't be null and we need to reparse the xml inside this function too
-    public function getContentObjectCollections($file = null)
+    public function getContentObjectCollections($file = null, Batch $batch)
     {
         $manager = \Core::make('migration/manager/importer/wordpress');
 //        $simplexml = simplexml_load_file($file);

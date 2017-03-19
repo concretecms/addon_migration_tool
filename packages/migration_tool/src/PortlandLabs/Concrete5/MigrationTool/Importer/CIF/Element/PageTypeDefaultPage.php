@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\PageType as PageTypeEntity;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -24,9 +25,9 @@ class PageTypeDefaultPage extends Page
         return $this->simplexml->page;
     }
 
-    public function getObjectCollection(\SimpleXMLElement $element)
+    public function getObjectCollection(\SimpleXMLElement $element, Batch $batch)
     {
-        $collection = parent::getObjectCollection($element);
+        $collection = parent::getObjectCollection($element, $batch);
         foreach ($collection->getPages() as $page) {
             $page->setType($this->pageType->getHandle());
         }

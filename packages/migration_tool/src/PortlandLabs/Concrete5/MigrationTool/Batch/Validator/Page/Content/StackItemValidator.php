@@ -15,17 +15,19 @@ class StackItemValidator implements ValidatorInterface
 {
     public function itemExists(ItemInterface $item, Batch $batch)
     {
-        if (is_object($item->getContentObject())) {
-            return true;
-        }
-
-        $stacks = $batch->getObjectCollection('stack');
-        foreach ($stacks->getStacks() as $stack) {
-            if ($stack->getPath() && $stack->getPath() == $item->getReference()) {
+        if ($item->getReference()) {
+            if (is_object($item->getContentObject())) {
                 return true;
             }
-            if ($stack->getName() && $stack->getName() == $item->getReference()) {
-                return true;
+
+            $stacks = $batch->getObjectCollection('stack');
+            foreach ($stacks->getStacks() as $stack) {
+                if ($stack->getPath() && $stack->getPath() == $item->getReference()) {
+                    return true;
+                }
+                if ($stack->getName() && $stack->getName() == $item->getReference()) {
+                    return true;
+                }
             }
         }
 

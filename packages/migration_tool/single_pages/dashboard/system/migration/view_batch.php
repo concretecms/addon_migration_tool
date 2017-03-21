@@ -15,7 +15,7 @@ $dh = Core::make('helper/date');
                 </button>
                 <ul class="dropdown-menu">
                     <li class="dropdown-header"><?= t('Map Content') ?></li>
-                    <?php foreach ($mappers->getDrivers() as $mapper) {
+                    <?php foreach ($mapperDrivers as $mapper) {
                         ?>
                         <li><a href="<?= $view->action('map_content', $batch->getId(),
                                 $mapper->getHandle()) ?>"><?= $mapper->getMappedItemPluralName() ?></a></li>

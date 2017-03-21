@@ -127,13 +127,6 @@ class Import extends DashboardPageController
                         $f->delete();
                     }
                 }
-                $fs = $batch->getFileSet();
-                if (is_object($fs)) {
-                    $fsp = new \Permissions($fs);
-                    if ($fsp->canDeleteFileSet()) {
-                        $fs->delete();
-                    }
-                }
                 $this->flash('success', t('Batch files deleted successfully.'));
                 $this->redirect('/dashboard/system/migration/import', 'batch_files', $batch->getId());
             }
@@ -357,7 +350,11 @@ class Import extends DashboardPageController
             }
             $this->set('batch', $batch);
             $this->set('pageTitle', t('Import Batch'));
-            $this->set('mappers', \Core::make('migration/manager/mapping'));
+            $mapperDrivers = \Core::make('migration/manager/mapping')->getDrivers();
+            usort($mapperDrivers, function($a, $b) {
+                return strnatcasecmp($a->getMappedItemPluralName(), $b->getMappedItemPluralName());
+            });
+            $this->set('mapperDrivers', $mapperDrivers);
             $this->set('formats', $formats);
 
             $list = new PageList();

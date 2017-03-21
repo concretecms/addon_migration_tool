@@ -20,10 +20,6 @@ class ValidateReferencedStacksTask implements TaskInterface
                 $value = $block->getBlockValue();
                 if (is_object($value)) {
                     $stack = $value->getStackPath();
-                    if (!$stack) {
-                        $stack = $value->getStackName();
-                    }
-
                     $validator = new StackItemValidator();
                     $item = new StackItem($stack);
                     if (!$validator->itemExists($item, $target->getBatch())) {

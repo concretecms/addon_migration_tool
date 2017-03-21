@@ -31,9 +31,12 @@ class ValidatePagePathTask implements TaskInterface
                 $r = $em->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page');
                 $page = $r->findOneBy(array('batch_path' => $container));
                 if (!is_object($page)) {
-                    $action->getTarget()->addMessage(
-                        new Message(t('Container path %s not found in import batch. This page cannot be created until its parent path exists.', $container))
-                    );
+                    $page = \Page::getByPath($container, 'RECENT', $target->getBatch()->getSite());
+                    if (!is_object($page) || $page->isError()) {
+                        $action->getTarget()->addMessage(
+                            new Message(t('Container path %s not found in import batch or current site. This page cannot be created until its parent path exists.', $container))
+                        );
+                    }
                 }
             }
         }

@@ -36,8 +36,10 @@ class StackItemValidator implements ValidatorInterface
 
     public function addMissingItemMessage(ItemInterface $item, MessageCollection $messages)
     {
-        $messages->add(
-            new \PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message(t('Referenced stack %s cannot be found in the site or in the current content batch.', $item->getReference()))
-        );
+        if ($item->getReference()) {
+            $messages->add(
+                new \PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message(t('Referenced stack %s cannot be found in the site or in the current content batch.', $item->getReference()))
+            );
+        }
     }
 }

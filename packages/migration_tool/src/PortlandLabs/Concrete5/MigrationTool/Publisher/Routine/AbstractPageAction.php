@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
+use Concrete\Core\Page\Type\Type;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
@@ -70,5 +71,16 @@ abstract class AbstractPageAction implements RoutineActionInterface
         if (is_object($page) && !$page->isError()) {
             return $page;
         }
+    }
+
+    protected function addBatchParent(BatchInterface $batch, $path, $name)
+    {
+        $holder = \Page::getByPath($path, 'RECENT', $batch->getSite()->getSiteTreeObject());
+        $type = Type::getByHandle('import_batch');
+        return $holder->add($type, array(
+            'cName' => $name,
+            'pkgID' => \Package::getByHandle('migration_tool')->getPackageID(),
+        ));
+
     }
 }

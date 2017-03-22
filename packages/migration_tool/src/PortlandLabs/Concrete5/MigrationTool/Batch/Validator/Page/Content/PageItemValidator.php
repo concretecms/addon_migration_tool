@@ -20,6 +20,9 @@ class PageItemValidator implements ValidatorInterface
             if ($page->getBatchPath() == $item->getReference()) {
                 return true;
             }
+            if ($page->getOriginalPath() == $item->getReference()) {
+                return true;
+            }
         }
     }
 

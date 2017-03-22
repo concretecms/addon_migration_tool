@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 use Concrete\Core\Page\Stack\Stack;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggerInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -16,7 +17,7 @@ class PublishStackContentRoutineAction extends AbstractPageAction
         $this->page = $r->findOneById($id);
     }
 
-    public function execute(BatchInterface $batch)
+    public function execute(BatchInterface $batch, LoggerInterface $logger)
     {
         $stack = $this->page;
         if ($stack->getPath() || $stack->getName()) {

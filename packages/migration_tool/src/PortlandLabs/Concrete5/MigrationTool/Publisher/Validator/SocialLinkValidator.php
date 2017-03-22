@@ -7,8 +7,8 @@ class SocialLinkValidator extends AbstractValidator
 {
     public function skipItem()
     {
-        $link = Link::getByServiceHandle($this->object->getService());
-
+        $site = $this->getBatch($this->object)->getSite();
+        $link = Link::getByServiceHandle($this->object->getService(), $site);
         return is_object($link);
     }
 }

@@ -15,12 +15,15 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\PresetManager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Site\TreeSiteJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublisherRoutineProcessor;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublishTarget;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\TargetItemProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\UntransformedItemProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Logger;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggerFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -288,8 +291,7 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
         if (!$this->error->has()) {
-            $target = new Target($batch);
-            $target->returnPublisherItems();
+            $target = new PublishTarget($batch);
             $processor = new PublisherRoutineProcessor($target);
             if ($_POST['process']) {
                 foreach ($processor->receive() as $task) {

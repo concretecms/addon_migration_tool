@@ -3,12 +3,13 @@ namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Page\Template;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggerInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreatePageTypesRoutine extends AbstractRoutine
 {
-    public function execute(BatchInterface $batch)
+    public function execute(BatchInterface $batch, LoggerInterface $logger)
     {
         $types = $batch->getObjectCollection('page_type');
         /*

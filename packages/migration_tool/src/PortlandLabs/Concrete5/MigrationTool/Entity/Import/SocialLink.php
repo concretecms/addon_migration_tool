@@ -1,5 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
@@ -9,14 +10,8 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\SocialLinkValidator
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportSocialLinks")
  */
-class SocialLink implements PublishableInterface
+class SocialLink extends PublishableObject
 {
-    /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
     /**
      * @ORM\ManyToOne(targetEntity="SocialLinkObjectCollection")
      **/
@@ -99,5 +94,13 @@ class SocialLink implements PublishableInterface
     public function getPublisherValidator()
     {
         return new SocialLinkValidator($this);
+    }
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+            $this->collection = null;
+        }
     }
 }

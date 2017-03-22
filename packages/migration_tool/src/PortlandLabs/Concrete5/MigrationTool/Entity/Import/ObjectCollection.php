@@ -1,8 +1,12 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use Concrete\Core\Application\Application;
+use Concrete\Core\Support\Facade\Facade;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\StandardItemLogger;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\StandardLogger;
 
 /**
  * @ORM\Entity
@@ -37,4 +41,10 @@ abstract class ObjectCollection
     abstract public function getRecords();
 
     abstract public function getRecordValidator(ValidatorInterface $batch);
+
+    public function getPublisherItemLogger()
+    {
+        $app = Facade::getFacadeApplication();
+        return $app->make(StandardItemLogger::class);
+    }
 }

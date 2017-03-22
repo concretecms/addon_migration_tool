@@ -95,7 +95,7 @@ class PageType implements ElementParserInterface
                 if (isset($node->composer->output->pagetemplate)) {
                     $pi = new PageTypeDefaultPage($type);
                     foreach ($node->composer->output->pagetemplate as $pagetemplate) {
-                        $pageCollection = $pi->getObjectCollection($pagetemplate);
+                        $pageCollection = $pi->getObjectCollection($pagetemplate, $batch);
                         $type->setDefaultPageCollection($pageCollection);
                     }
                 }

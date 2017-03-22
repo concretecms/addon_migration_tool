@@ -15,7 +15,6 @@ class Target implements TargetInterface
     const RETURN_PAGES = 1;
     const RETURN_MAPPED_ITEMS = 2;
     const RETURN_UNTRANSFORMED_ITEMS = 3;
-    const RETURN_PUBLISHER_ITEMS = 4;
 
     public function __construct(Batch $batch, $itemsToReturn = self::RETURN_PAGES)
     {
@@ -31,11 +30,6 @@ class Target implements TargetInterface
     public function returnUntransformedItems()
     {
         $this->itemsToReturn = self::RETURN_UNTRANSFORMED_ITEMS;
-    }
-
-    public function returnPublisherItems()
-    {
-        $this->itemsToReturn = self::RETURN_PUBLISHER_ITEMS;
     }
 
     /**
@@ -87,17 +81,6 @@ class Target implements TargetInterface
                             'mapper' => $mapper->getHandle(),
                             'transformer' => $transformer->getDriver(),
                         );
-                    }
-                }
-
-                return $items;
-            case self::RETURN_PUBLISHER_ITEMS:
-                // loops through all publisher categories and adds them procedurally to the queue.
-                $items = array();
-                $publishers = \Core::make('migration/manager/publisher');
-                foreach ($publishers->getDrivers() as $driver) {
-                    foreach ($driver->getPublisherRoutineActions($this->batch) as $action) {
-                        $items[] = $action;
                     }
                 }
 

@@ -7,13 +7,14 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggerInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreateSitesRoutine extends AbstractRoutine
 {
 
-    public function execute(BatchInterface $batch)
+    public function execute(BatchInterface $batch, LoggerInterface $logger)
     {
         $sites = $batch->getObjectCollection('site');
 

@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\ValidatableAttributesInterface;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPages")
  */
-class Page implements PublishableInterface, ValidatableAttributesInterface
+class Page implements PublishableInterface, ValidatableAttributesInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="guid")
@@ -400,4 +401,14 @@ class Page implements PublishableInterface, ValidatableAttributesInterface
     {
         $this->is_global = $is_global;
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Page();
+        $object->setName($this->getName());
+        $object->setBatchPath($this->getBatchPath());
+        $object->setOriginalPath($this->getOriginalPath());
+        return $object;
+    }
+
 }

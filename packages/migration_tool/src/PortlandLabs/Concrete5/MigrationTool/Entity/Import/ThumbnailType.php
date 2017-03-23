@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\ORM\Mapping as ORM;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThumbnailTypeValidator;
 
@@ -9,7 +10,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThumbnailTypeValida
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportThumbnailTypes")
  */
-class ThumbnailType implements PublishableInterface
+class ThumbnailType implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -163,4 +164,13 @@ class ThumbnailType implements PublishableInterface
     {
         return new ThumbnailTypeValidator($this);
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\ThumbnailType();
+        $object->setName($this->getName());
+        $object->setHandle($this->getHandle());
+        return $object;
+    }
+
 }

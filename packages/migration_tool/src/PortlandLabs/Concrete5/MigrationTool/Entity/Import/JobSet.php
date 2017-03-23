@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\JobSetValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportJobSets")
  */
-class JobSet implements PublishableInterface
+class JobSet implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -137,4 +138,12 @@ class JobSet implements PublishableInterface
     {
         return new JobSetValidator($this);
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\JobSet();
+        $object->setName($this->getName());
+        return $object;
+    }
+
 }

@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\TreeValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportTrees")
  */
-class Tree implements PublishableInterface
+class Tree implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -134,5 +135,12 @@ class Tree implements PublishableInterface
         $criteria = Criteria::create()->where(Criteria::expr()->eq("parent", null));
 
         return $this->nodes->matching($criteria);
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Tree();
+        $object->setName($this->getName());
+        return $object;
     }
 }

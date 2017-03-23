@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\ValidatableAttributesInterface;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +13,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\SiteValidator;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportSites")
  */
-class Site implements PublishableInterface, ValidatableAttributesInterface
+class Site implements PublishableInterface, ValidatableAttributesInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="guid")
@@ -175,6 +176,14 @@ class Site implements PublishableInterface, ValidatableAttributesInterface
     public function getAttributeValidatorDriver()
     {
         return 'site_attribute';
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Site();
+        $object->setName($this->getName());
+        $object->setHandle($this->getHandle());
+        return $object;
     }
 
 

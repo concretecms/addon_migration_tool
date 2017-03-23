@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTemplateValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPageTemplates")
  */
-class PageTemplate implements PublishableInterface
+class PageTemplate implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -163,4 +164,13 @@ class PageTemplate implements PublishableInterface
     {
         return new PageTemplateValidator($this);
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\PageTemplate();
+        $object->setHandle($this->getHandle());
+        $object->setName($this->getName());
+        return $object;
+    }
+
 }

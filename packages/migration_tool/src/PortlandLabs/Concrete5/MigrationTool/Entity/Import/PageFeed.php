@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use PortlandLabs\Concrete5\MigrationTool\Inspector\PageFeedInspector;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageFeedValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPageFeeds")
  */
-class PageFeed implements PublishableInterface
+class PageFeed implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -274,4 +275,13 @@ class PageFeed implements PublishableInterface
     {
         return new PageFeedInspector($this);
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\PageFeed();
+        $object->setTitle($this->getTitle());
+        $object->setHandle($this->getHandle());
+        return $object;
+    }
+
 }

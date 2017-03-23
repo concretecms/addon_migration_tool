@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PackageValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPackages")
  */
-class Package implements PublishableInterface
+class Package implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -78,5 +79,12 @@ class Package implements PublishableInterface
     public function getPublisherValidator()
     {
         return new PackageValidator($this);
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Package();
+        $object->setHandle($this->getHandle());
+        return $object;
     }
 }

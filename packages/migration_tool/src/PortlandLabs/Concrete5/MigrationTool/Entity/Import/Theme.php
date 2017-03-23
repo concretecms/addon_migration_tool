@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\ORM\Mapping as ORM;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThemeValidator;
 
@@ -9,7 +10,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ThemeValidator;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPageThemes")
  */
-class Theme implements PublishableInterface
+class Theme implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -121,4 +122,12 @@ class Theme implements PublishableInterface
     {
         $this->is_activated = $is_activated;
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Theme();
+        $object->setHandle($this->getHandle());
+        return $object;
+    }
+
 }

@@ -8,12 +8,9 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-interface LoggerInterface
+interface LoggableInterface
 {
 
-    function openLog(Batch $batch, User $user = null);
-    function closeLog(Batch $batch);
-    function logPublished(LoggableInterface $object, $mixed);
-    function logSkipped(LoggableInterface $object);
+    function createPublisherLogObject($publishedObject = null);
 
 }

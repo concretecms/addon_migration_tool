@@ -18,7 +18,7 @@ class Export extends DashboardPageController
         }
         if (!$this->error->has()) {
             $batch = new Batch();
-            $batch->setNotes($this->request->request->get('notes'));
+            $batch->setName($this->request->request->get('name'));
             $this->entityManager->persist($batch);
             $this->entityManager->flush();
             $this->flash('success', t('Batch added successfully.'));

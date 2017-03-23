@@ -34,12 +34,16 @@ $dh = Core::make('helper/date');
     <h2><?=t('Batch')?>
         <small><?=$dh->formatDateTime($batch->getDate(), true)?></small></h2>
 
-    <?php if ($batch->getNotes()) {
+    <h3><?=t('Name')?></h3>
+
+    <?php if ($batch->getName()) {
     ?>
-        <p><?=$batch->getNotes()?></p>
+        <p><?=$batch->getName()?></p>
     <?php 
-}
+} else {
     ?>
+        <p><?=t('None')?></p>
+    <?php } ?>
 
     <?php if ($batch->hasRecords()) {
     ?>

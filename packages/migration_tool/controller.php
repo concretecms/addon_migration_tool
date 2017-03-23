@@ -54,6 +54,7 @@ class Controller extends Package
         '/dashboard/system/migration/import/settings/basics',
         '/dashboard/system/migration/import/settings/files',
         '/dashboard/system/migration/export',
+        '/dashboard/system/migration/logs',
     );
 
     protected $singlePagesToExclude = array(
@@ -69,6 +70,8 @@ class Controller extends Package
                 return t('Import Content');
             case '/dashboard/system/migration/export':
                 return t('Export Content');
+            case '/dashboard/system/migration/logs':
+                return t('Publish Logs');
         }
     }
 

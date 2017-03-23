@@ -21,12 +21,23 @@ class Log
     protected $id;
 
     /**
+     * @ORM\Column(type="guid")
+     */
+    protected $batch_id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $batch_name;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     protected $date_started;
 
     /**
      * @ORM\OneToMany(targetEntity="Entry", mappedBy="log", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"timestamp" = "ASC"})
      **/
     protected $entries;
 
@@ -35,6 +46,12 @@ class Log
      * @ORM\JoinColumn(name="uID", referencedColumnName="uID")
      **/
     protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\Site\Site")
+     * @ORM\JoinColumn(name="siteID", referencedColumnName="siteID")
+     **/
+    protected $site;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -125,6 +142,57 @@ class Log
     {
         $this->user = $user;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param mixed $site
+     */
+    public function setSite($site)
+    {
+        $this->site = $site;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBatchId()
+    {
+        return $this->batch_id;
+    }
+
+    /**
+     * @param mixed $batch_id
+     */
+    public function setBatchId($batch_id)
+    {
+        $this->batch_id = $batch_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBatchName()
+    {
+        return $this->batch_name;
+    }
+
+    /**
+     * @param mixed $batch_name
+     */
+    public function setBatchName($batch_name)
+    {
+        $this->batch_name = $batch_name;
+    }
+
+
+
 
 
 

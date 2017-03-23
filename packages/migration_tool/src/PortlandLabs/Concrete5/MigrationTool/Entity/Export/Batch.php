@@ -22,9 +22,9 @@ class Batch
     protected $date;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
-    protected $notes;
+    protected $name;
 
     /**
      * @ORM\ManyToMany(targetEntity="ObjectCollection", cascade={"persist", "remove"}))
@@ -76,17 +76,17 @@ class Batch
     /**
      * @return mixed
      */
-    public function getNotes()
+    public function getName()
     {
-        return $this->notes;
+        return $this->name;
     }
 
     /**
-     * @param mixed $notes
+     * @param mixed $name
      */
-    public function setNotes($notes)
+    public function setName($name)
     {
-        $this->notes = $notes;
+        $this->name = $name;
     }
 
     /**

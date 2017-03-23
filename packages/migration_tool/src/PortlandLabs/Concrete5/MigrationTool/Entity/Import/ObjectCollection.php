@@ -42,9 +42,4 @@ abstract class ObjectCollection
 
     abstract public function getRecordValidator(ValidatorInterface $batch);
 
-    public function getPublisherItemLogger()
-    {
-        $app = Facade::getFacadeApplication();
-        return $app->make(StandardItemLogger::class);
-    }
 }

@@ -1,13 +1,8 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\ValidatableAttributesInterface;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PublishableObject;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageValidator;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\LoggableObject;
 use Doctrine\ORM\Mapping as ORM;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\SiteValidator;
 
 /**
  * @ORM\Entity
@@ -33,14 +28,14 @@ abstract class Entry
      **/
     protected $log;
 
-    public function __construct(PublishableObject $object = null)
+    public function __construct(LoggableObject $object = null)
     {
         $this->timestamp = new \DateTime();
         $this->object = $object;
     }
 
     /**
-     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\PublishableObject", cascade={"persist","remove"})
+     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\LoggableObject", cascade={"persist","remove"})
      **/
     protected $object;
 
@@ -76,6 +71,21 @@ abstract class Entry
         $this->log = $log;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTimestamp()
+    {
+        return $this->timestamp;
+    }
+
+    /**
+     * @param mixed $timestamp
+     */
+    public function setTimestamp($timestamp)
+    {
+        $this->timestamp = $timestamp;
+    }
 
 
 

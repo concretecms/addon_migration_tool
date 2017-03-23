@@ -22,10 +22,10 @@ class BatchService
         $this->filesystem = $filesystem;
     }
 
-    public function addBatch($notes, Site $site = null)
+    public function addBatch($name, Site $site = null)
     {
         $batch = new Batch();
-        $batch->setNotes($notes);
+        $batch->setName($name);
         if (!is_object($site)) {
             $site = $this->application->make('site')->getDefault();
         }

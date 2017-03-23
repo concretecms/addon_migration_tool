@@ -25,9 +25,9 @@ class Batch implements ValidatorInterface, BatchInterface
     protected $date;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
-    protected $notes;
+    protected $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\Site\Site")
@@ -117,17 +117,17 @@ class Batch implements ValidatorInterface, BatchInterface
     /**
      * @return mixed
      */
-    public function getNotes()
+    public function getName()
     {
-        return $this->notes;
+        return $this->name;
     }
 
     /**
-     * @param mixed $notes
+     * @param mixed $name
      */
-    public function setNotes($notes)
+    public function setName($name)
     {
-        $this->notes = $notes;
+        $this->name = $name;
     }
 
     /**
@@ -217,7 +217,7 @@ class Batch implements ValidatorInterface, BatchInterface
 
     public function __sleep()
     {
-        return array('id', 'date', 'notes');
+        return array('id', 'date', 'name');
     }
 
     public function getFiles()

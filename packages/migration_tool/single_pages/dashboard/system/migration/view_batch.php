@@ -175,13 +175,17 @@ $dh = Core::make('helper/date');
     <h2><?= t('Batch') ?>
         <small><?= $dh->formatDateTime($batch->getDate(), true) ?></small>
     </h2>
-    <?php if ($batch->getNotes()) { ?>
-        <p><?= $batch->getNotes() ?></p>
+
+    <h3><?=t('Name')?></h3>
+    <?php if ($batch->getName()) { ?>
+        <p><?= $batch->getName() ?></p>
+    <?php } else { ?>
+        <p><?=t('None')?></p>
     <?php }
 
     $site = $batch->getSite();
     if (is_object($site) && !$site->isDefault()) { ?>
-        <h2><?= t('Site') ?></h2>
+        <h3><?= t('Site') ?></h3>
         <p><?= $site->getSiteName() ?></p>
     <?php } ?>
 

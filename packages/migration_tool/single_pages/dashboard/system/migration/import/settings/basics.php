@@ -4,6 +4,14 @@ $dh = Core::make('helper/date');
 ?>
 
 <form method="post" action="<?=$view->action('save_batch_settings')?>" enctype="multipart/form-data">
+
+    <div class="ccm-dashboard-form-actions-wrapper">
+        <div class="ccm-dashboard-form-actions">
+            <a href="<?=$view->action('view_batch', $batch->getID())?>" class="btn btn-default"><?=t('Cancel')?></a>
+            <button class="pull-right btn btn-primary" type="submit"><?=t('Save')?></button>
+        </div>
+    </div>
+
     <?=$token->output('save_batch_settings')?>
     <?=$form->hidden('id', $batch->getID())?>
 
@@ -21,8 +29,8 @@ $dh = Core::make('helper/date');
         </div>
     <?php } ?>
     <div class="form-group">
-        <?=Loader::helper("form")->label('notes', t('Notes'))?>
-        <?=Loader::helper('form')->textarea('notes', $batch->getNotes(), array("rows" => "3"))?>
+        <?=Loader::helper("form")->label('name', t('Name'))?>
+        <?=Loader::helper('form')->text('name', $batch->getName())?>
     </div>
 </fieldset>
 
@@ -50,10 +58,4 @@ $dh = Core::make('helper/date');
 
 </fieldset>
 
-    <div class="ccm-dashboard-form-actions-wrapper">
-        <div class="ccm-dashboard-form-actions">
-            <a href="<?=$view->action('view_batch', $batch->getID())?>" class="btn btn-default"><?=t('Cancel')?></a>
-            <button class="pull-right btn btn-primary" type="submit"><?=t('Save')?></button>
-        </div>
-    </div>
 </form>

@@ -14,7 +14,7 @@ $dh = Core::make('helper/date');
         <thead>
         <tr>
             <th><?=t('Batch')?></th>
-            <th><?=t('Notes')?></th>
+            <th><?=t('Name')?></th>
         </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@ $dh = Core::make('helper/date');
     ?>
             <tr>
                 <td style="white-space: nowrap"><a href="<?=$view->action('view_batch', $batch->getID())?>"><?=$dh->formatDateTime($batch->getDate(), true)?></a></td>
-                <td width="100%"><?=$batch->getNotes()?></td>
+                <td width="100%"><?=$batch->getName()?></td>
             </tr>
         <?php 
 }
@@ -60,8 +60,8 @@ $dh = Core::make('helper/date');
             </div>
             <?php } ?>
             <div class="form-group">
-                <?=Loader::helper("form")->label('notes', t('Notes'))?>
-                <?=Loader::helper('form')->textarea('notes', '', array("rows" => "3"))?>
+                <?=Loader::helper("form")->label('name', t('Name'))?>
+                <?=Loader::helper('form')->text('name', '')?>
             </div>
 
             <fieldset>

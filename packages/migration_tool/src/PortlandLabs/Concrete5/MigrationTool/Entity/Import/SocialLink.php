@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\SocialLinkValidator;
 
@@ -10,22 +11,16 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\SocialLinkValidator
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportSocialLinks")
  */
-class SocialLink extends PublishableObject
+class SocialLink implements PublishableInterface, LoggableInterface
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="SocialLinkObjectCollection")
-     **/
-    protected $collection;
+
+    use \PortlandLabs\Concrete5\MigrationTool\Entity\Traits\SocialLink;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $service;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $url;
+    protected $id;
 
     /**
      * @return mixed
@@ -44,6 +39,11 @@ class SocialLink extends PublishableObject
     }
 
     /**
+     * @ORM\ManyToOne(targetEntity="SocialLinkObjectCollection")
+     **/
+    protected $collection;
+
+    /**
      * @return mixed
      */
     public function getCollection()
@@ -59,37 +59,6 @@ class SocialLink extends PublishableObject
         $this->collection = $collection;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    /**
-     * @param mixed $service
-     */
-    public function setService($service)
-    {
-        $this->service = $service;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param mixed $url
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
 
     public function getPublisherValidator()
     {
@@ -102,5 +71,14 @@ class SocialLink extends PublishableObject
             $this->id = null;
             $this->collection = null;
         }
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\SocialLink();
+        $object->setService($this->getService());
+        $object->setUrl($this->getUrl());
+        $object->setLink($publishedObject);
+        return $object;
     }
 }

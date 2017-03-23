@@ -89,7 +89,7 @@ class Basics extends DashboardMigrationSettingsController
                 $this->redirect('/dashboard/system/migration/import', 'settings', $batch->getId());
 
             } else {
-                $batch->setNotes($this->request->request->get('notes'));
+                $batch->setName($this->request->request->get('name'));
                 $site = null;
                 if ($this->request->request->has('siteID')) {
                     $site = $this->app->make('site')->getByID($this->request->request->get('siteID'));

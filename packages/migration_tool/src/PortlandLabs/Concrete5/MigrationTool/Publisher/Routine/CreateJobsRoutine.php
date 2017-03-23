@@ -28,6 +28,9 @@ class CreateJobsRoutine extends AbstractRoutine
                 } else {
                     Job::installByHandle($job->getHandle());
                 }
+                $logger->logPublished($job);
+            } else {
+                $logger->logSkipped($job);
             }
         }
     }

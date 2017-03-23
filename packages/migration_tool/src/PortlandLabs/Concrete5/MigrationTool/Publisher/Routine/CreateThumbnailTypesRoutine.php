@@ -27,6 +27,9 @@ class CreateThumbnailTypesRoutine extends AbstractRoutine
                     $t->requireType();
                 }
                 $t->save();
+                $logger->logPublished($t);
+            } else {
+                $logger->logSkipped($t);
             }
         }
     }

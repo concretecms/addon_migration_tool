@@ -27,6 +27,9 @@ class CreateCaptchaLibrariesRoutine extends AbstractRoutine
                 if ($library->getIsActivated()) {
                     $l->activate();
                 }
+                $logger->logPublished($l);
+            } else {
+                $logger->logSkipped($l);
             }
         }
     }

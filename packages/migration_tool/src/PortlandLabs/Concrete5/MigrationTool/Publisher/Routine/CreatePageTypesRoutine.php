@@ -64,6 +64,9 @@ class CreatePageTypesRoutine extends AbstractRoutine
                         $setControl->updateFormLayoutSetControlDescription($controlEntity->getDescription());
                     }
                 }
+                $logger->logPublished($type, $pageType);
+            } else {
+                $logger->logSkipped($type);
             }
         }
     }

@@ -64,7 +64,7 @@ class Logger implements LoggerInterface
         $this->log->getEntries()->add($entry);
     }
 
-    public function logPublished(LoggableInterface $object, $mixed)
+    public function logPublished(LoggableInterface $object, $mixed = null)
     {
         $this->logEntry(new PublishedEntry($object->createPublisherLogObject($mixed)));
     }

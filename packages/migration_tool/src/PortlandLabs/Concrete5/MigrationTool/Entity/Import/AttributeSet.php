@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeSetValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportAttributeSets")
  */
-class AttributeSet implements PublishableInterface
+class AttributeSet implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -184,4 +185,12 @@ class AttributeSet implements PublishableInterface
     {
         return new AttributeSetValidator($this);
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $set = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\AttributeSet();
+        $set->setName($this->getName());
+        return $set;
+    }
+
 }

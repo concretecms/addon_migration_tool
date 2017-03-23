@@ -37,6 +37,9 @@ class CreateSinglePageStructureRoutineAction extends AbstractPageAction
             $data['name'] = $page->getName();
             $data['description'] = $page->getDescription();
             $c->update($data);
+            $logger->logPublished($page, $c);
+        } else {
+            $logger->logSkipped($page);
         }
     }
 }

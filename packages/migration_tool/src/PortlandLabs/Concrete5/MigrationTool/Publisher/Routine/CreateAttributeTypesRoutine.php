@@ -32,6 +32,9 @@ class CreateAttributeTypesRoutine extends AbstractRoutine
                         $co->associateAttributeKeyType($attributeType);
                     }
                 }
+                $logger->logPublished($type);
+            } else {
+                $logger->logSkipped($type);
             }
         }
     }

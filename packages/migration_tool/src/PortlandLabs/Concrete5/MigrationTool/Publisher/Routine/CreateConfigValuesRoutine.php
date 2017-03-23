@@ -27,6 +27,9 @@ class CreateConfigValuesRoutine extends AbstractRoutine
                 } else {
                     \Config::save($value->getConfigKey(), $value->getConfigValue());
                 }
+                $logger->logPublished($value);
+            } else {
+                $logger->logSkipped($value);
             }
         }
     }

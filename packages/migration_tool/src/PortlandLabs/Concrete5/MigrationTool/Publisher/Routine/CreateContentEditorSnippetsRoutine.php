@@ -24,9 +24,12 @@ class CreateContentEditorSnippetsRoutine extends AbstractRoutine
                     $pkg = \Package::getByHandle($snippet->getPackage());
                 }
                 $t = Snippet::add($snippet->getHandle(), $snippet->getNAme(), $pkg);
+                $logger->logPublished($t);
                 if ($snippet->getIsActivated()) {
                     $t->activate();
                 }
+            } else {
+                $logger->logSkipped($t);
             }
         }
     }

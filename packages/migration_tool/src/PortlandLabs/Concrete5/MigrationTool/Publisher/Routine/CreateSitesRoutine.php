@@ -51,6 +51,9 @@ class CreateSitesRoutine extends AbstractRoutine
                         }
                     }
                 }
+                $logger->logPublished($site, $siteObject);
+            } else {
+                $logger->logPublished($site);
             }
         }
     }

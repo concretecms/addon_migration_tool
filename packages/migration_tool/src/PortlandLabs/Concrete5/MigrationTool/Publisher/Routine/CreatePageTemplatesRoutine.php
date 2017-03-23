@@ -24,6 +24,9 @@ class CreatePageTemplatesRoutine extends AbstractRoutine
                     $pkg = \Package::getByHandle($template->getPackage());
                 }
                 Template::add($template->getHandle(), $template->getName(), $template->getIcon(), $pkg, $template->getIsInternal());
+                $logger->logPublished($template);
+            } else {
+                $logger->logSkipped($template);
             }
         }
     }

@@ -27,6 +27,9 @@ class CreateThemesRoutine extends AbstractRoutine
                 if ($theme->getIsActivated()) {
                     $t->applyToSite();
                 }
+                $logger->logPublished($theme);
+            } else {
+                $logger->logSkipped($theme);
             }
         }
     }

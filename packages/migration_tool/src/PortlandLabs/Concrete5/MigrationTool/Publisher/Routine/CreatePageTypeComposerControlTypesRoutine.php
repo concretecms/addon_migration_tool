@@ -23,6 +23,9 @@ class CreatePageTypeComposerControlTypesRoutine extends AbstractRoutine
                     $pkg = \Package::getByHandle($type->getPackage());
                 }
                 \Concrete\Core\Page\Type\Composer\Control\Type\Type::add($type->getHandle(), $type->getName(), $pkg);
+                $logger->logPublished($type);
+            } else {
+                $logger->logSkipped($type);
             }
         }
     }

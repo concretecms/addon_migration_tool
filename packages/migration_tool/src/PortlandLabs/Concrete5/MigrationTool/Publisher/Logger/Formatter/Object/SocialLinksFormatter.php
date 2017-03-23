@@ -11,17 +11,11 @@ defined('C5_EXECUTE') or die("Access Denied.");
 class SocialLinksFormatter extends AbstractStandardFormatter
 {
 
-    /**
-     * @param $object SocialLink
-     */
     public function getSkippedDescription(LoggableObject $object)
     {
         return t('Social Link for service %s (%s) already exists.', $object->getService(), $object->getUrl());
     }
 
-    /**
-     * @param $object SocialLink
-     */
     public function getPublishedDescription(LoggableObject $object)
     {
         $a = new Link(

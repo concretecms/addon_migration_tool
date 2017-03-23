@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyCategoryValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportAttributeKeyCategories")
  */
-class AttributeKeyCategory implements PublishableInterface
+class AttributeKeyCategory implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -120,5 +121,12 @@ class AttributeKeyCategory implements PublishableInterface
     public function getPublisherValidator()
     {
         return new AttributeKeyCategoryValidator($this);
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $category = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\AttributeKeyCategory();
+        $category->setHandle($this->getHandle());
+        return $category;
     }
 }

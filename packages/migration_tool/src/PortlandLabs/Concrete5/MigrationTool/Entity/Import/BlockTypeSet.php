@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BlockTypeSetValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportBlockTypeSets")
  */
-class BlockTypeSet implements PublishableInterface
+class BlockTypeSet implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -142,4 +143,12 @@ class BlockTypeSet implements PublishableInterface
     {
         return new BlockTypeSetValidator($this);
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $set = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\BlockTypeSet();
+        $set->setHandle($this->getHandle());
+        return $set;
+    }
+
 }

@@ -24,6 +24,9 @@ class CreateWorkflowTypesRoutine extends AbstractRoutine
                     $pkg = \Package::getByHandle($type->getPackage());
                 }
                 Type::add($type->getHandle(), $type->getName(), $pkg);
+                $logger->logPublished($type);
+            } else {
+                $logger->logSkipped($type);
             }
         }
     }

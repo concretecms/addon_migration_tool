@@ -24,6 +24,9 @@ class CreatePermissionCategoriesRoutine extends AbstractRoutine
                     $pkg = \Package::getByHandle($category->getPackage());
                 }
                 Category::add($category->getHandle(), $pkg);
+                $logger->logPublished($category);
+            } else {
+                $logger->logSkipped($category);
             }
         }
     }

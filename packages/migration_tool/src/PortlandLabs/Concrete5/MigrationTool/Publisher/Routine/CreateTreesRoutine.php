@@ -44,8 +44,10 @@ class CreateTreesRoutine extends AbstractRoutine
                 foreach ($children as $child) {
                     $child->delete();
                 }
+                $logger->logSkipped($t);
             } else {
                 $tree = Topic::add($name);
+                $logger->logPublished($t, $tree);
             }
             $parent = $tree->getRootTreeNodeObject();
             foreach ($t->getRootNodes() as $node) {

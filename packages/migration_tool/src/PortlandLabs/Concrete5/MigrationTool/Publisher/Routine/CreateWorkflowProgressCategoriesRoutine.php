@@ -23,6 +23,9 @@ class CreateWorkflowProgressCategoriesRoutine extends AbstractRoutine
                     $pkg = \Package::getByHandle($category->getPackage());
                 }
                 \Concrete\Core\Workflow\Progress\Category::add($category->getHandle(), $pkg);
+                $logger->logPublished($category);
+            } else {
+                $logger->logSkipped($category);
             }
         }
     }

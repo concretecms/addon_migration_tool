@@ -30,21 +30,26 @@ class CreateGroupsRoutine extends AbstractRoutine
         });
 
         foreach ($groups as $group) {
-            $parent = null;
-            if ($group->getPath() != '') {
-                $lastSlash = strrpos($group->getPath(), '/');
-                $parentPath = substr($group->getPath(), 0, $lastSlash);
-                if ($parentPath) {
-                    $parent = \Concrete\Core\User\Group\Group::getByPath($parentPath);
+            if (!$group->getPublisherValidator()->skipItem()) {
+                $parent = null;
+                if ($group->getPath() != '') {
+                    $lastSlash = strrpos($group->getPath(), '/');
+                    $parentPath = substr($group->getPath(), 0, $lastSlash);
+                    if ($parentPath) {
+                        $parent = \Concrete\Core\User\Group\Group::getByPath($parentPath);
+                    }
                 }
-            }
 
-            $pkg = null;
-            if ($group->getPackage()) {
-                $pkg = \Package::getByHandle($group->getPackage());
-            }
+                $pkg = null;
+                if ($group->getPackage()) {
+                    $pkg = \Package::getByHandle($group->getPackage());
+                }
 
-            \Concrete\Core\User\Group\Group::add($group->getName(), $group->getDescription(), $parent, $pkg);
+                \Concrete\Core\User\Group\Group::add($group->getName(), $group->getDescription(), $parent, $pkg);
+                $logger->logPublished($group);
+            } else {
+                $logger->logSkipped($group);
+            }
         }
     }
 }

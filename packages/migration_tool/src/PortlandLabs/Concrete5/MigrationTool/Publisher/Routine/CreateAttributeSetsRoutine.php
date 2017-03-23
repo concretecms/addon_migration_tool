@@ -25,7 +25,9 @@ class CreateAttributeSetsRoutine extends AbstractRoutine
                     $pkg = \Package::getByHandle($set->getPackage());
                 }
                 $setObject = $akc->addSet($set->getHandle(), $set->getName(), $pkg, intval($set->getIsLocked()));
+                $logger->logPublished($set);
             } else {
+                $logger->logSkipped($category);
                 $setObject = \Concrete\Core\Attribute\Set::getByHandle($set->getHandle());
             }
 

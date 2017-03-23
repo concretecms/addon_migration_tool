@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\GroupValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportGroups")
  */
-class Group implements PublishableInterface
+class Group implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -141,4 +142,14 @@ class Group implements PublishableInterface
     {
         $this->path = $path;
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $group = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Group();
+        $group->setName($this->getName());
+        $group->setPath($this->getPath());
+        return $group;
+    }
+
+
 }

@@ -44,17 +44,22 @@ class CreateStackStructureRoutineAction extends AbstractPageAction
                 case 'folder':
                     $folder = \Concrete\Core\Support\Facade\StackFolder::getByPath($stack->getName(), $batch->getSite()->getSiteTreeObject());
                     if (!is_object($folder)) {
-                        \Concrete\Core\Support\Facade\StackFolder::add($stack->getName(), $parent);
+                        $folder = \Concrete\Core\Support\Facade\StackFolder::add($stack->getName(), $parent);
+                        $logger->logPublished($stack, $folder);
+                    } else {
+                        $logger->logSkipped($stack);
                     }
                     break;
                 case 'global_area':
                     $s = Stack::getByName($stack->getName(), 'RECENT', $batch->getSite()->getSiteTreeObject());
                     if (!is_object($s)) {
                         if (method_exists('\Concrete\Core\Page\Stack\Stack', 'addGlobalArea')) {
-                            Stack::addGlobalArea($stack->getName(), $batch->getSite()->getSiteTreeObject());
+                            $s = Stack::addGlobalArea($stack->getName(), $batch->getSite()->getSiteTreeObject());
+                            $logger->logPublished($stack, $s);
                         } else {
                             //legacy
-                            Stack::addStack($stack->getName(), 'global_area');
+                            $s = Stack::addStack($stack->getName(), 'global_area');
+                            $logger->logPublished($stack, $s);
                         }
                     }
                     break;
@@ -63,13 +68,19 @@ class CreateStackStructureRoutineAction extends AbstractPageAction
                     if (method_exists('\Concrete\Core\Page\Stack\Stack', 'getByPath') && $stack->getPath()) {
                         $s = Stack::getByPath($stack->getPath(), 'RECENT', $batch->getSite()->getSiteTreeObject());
                         if (!is_object($s)) {
-                            Stack::addStack($stack->getName(), $parent);
+                            $s = Stack::addStack($stack->getName(), $parent);
+                            $logger->logPublished($stack, $s);
+                        } else {
+                            $logger->logSkipped($stack);
                         }
                     } else {
                         $s = Stack::getByName($stack->getName(), 'RECENT', $batch->getSite()->getSiteTreeObject());
                         if (!is_object($s)) {
                             // legacy, so no folder support
-                            Stack::addStack($stack->getName());
+                            $s = Stack::addStack($stack->getName());
+                            $logger->logPublished($stack, $s);
+                        } else {
+                            $logger->logSkipped($stack);
                         }
                     }
                     break;

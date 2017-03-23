@@ -28,6 +28,9 @@ class CreatePermissionsRoutine extends AbstractRoutine
                     $publisher = $entity->getPublisher();
                     $publisher->publish($p, $entity);
                 }
+                $logger->logPublished($key);
+            } else {
+                $logger->logSkipped($key);
             }
         }
     }

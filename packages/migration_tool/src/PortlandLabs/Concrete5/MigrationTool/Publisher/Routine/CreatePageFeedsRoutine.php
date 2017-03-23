@@ -37,6 +37,9 @@ class CreatePageFeedsRoutine extends AbstractRoutine
                     $f->displayAreaContent($feed->getContentTypeArea());
                 }
                 $f->save();
+                $logger->logPublished($f);
+            } else {
+                $logger->logSkipped($f);
             }
         }
     }

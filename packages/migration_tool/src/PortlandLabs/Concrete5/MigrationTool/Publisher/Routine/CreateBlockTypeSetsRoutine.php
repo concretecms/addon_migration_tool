@@ -25,6 +25,7 @@ class CreateBlockTypeSetsRoutine extends AbstractRoutine
                     $pkg = \Package::getByHandle($set->getPackage());
                 }
                 $set = Set::add($set->getHandle(), $set->getName(), $pkg);
+                $logger->logPublished($set);
                 $types = $set->getTypes();
                 foreach ($types as $handle) {
                     $bt = BlockType::getByHandle($handle);
@@ -32,6 +33,8 @@ class CreateBlockTypeSetsRoutine extends AbstractRoutine
                         $set->addBlockType($bt);
                     }
                 }
+            } else {
+                $logger->logSkipped($set);
             }
         }
     }

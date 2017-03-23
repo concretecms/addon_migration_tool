@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\BlankFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\StandardPublisher;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
@@ -14,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\Table(name="MigrationImportAttributeKeys")
  */
-abstract class AttributeKey implements PublishableInterface
+abstract class AttributeKey implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -229,5 +230,14 @@ abstract class AttributeKey implements PublishableInterface
     public function getTypePublisher()
     {
         return new StandardPublisher();
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $value = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\AttributeKey();
+        $value->setName($this->getName());
+        $value->setType($this->getType());
+        $value->setCategory($this->getCategory());
+        return $value;
     }
 }

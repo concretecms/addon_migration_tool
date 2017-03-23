@@ -22,6 +22,9 @@ class CreatePackagesRoutine extends AbstractRoutine
                 if (!$pkg->isPackageInstalled()) {
                     $pkg->install();
                 }
+                $logger->logPublished($package);
+            } else {
+                $logger->logSkipped($package);
             }
         }
     }

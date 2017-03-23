@@ -22,9 +22,12 @@ class CreateConversationDataRoutine extends AbstractRoutine
                     }
                     $ce = Editor::add($editor->getHandle(),
                         $editor->getName(), $pkg);
+                    $logger->logPublished($ce);
                     if ($editor->getIsActive()) {
                         $ce->activate();
                     }
+                } else {
+                    $logger->logSkipped($ce);
                 }
             }
         }
@@ -39,6 +42,9 @@ class CreateConversationDataRoutine extends AbstractRoutine
                         $pkg = \Package::getByHandle($type->getPackage());
                     }
                     $ce = \Concrete\Core\Conversation\FlagType\FlagType::add($type->getHandle());
+                    $logger->logPublished($ce);
+                } else {
+                    $logger->logSkipped($ce);
                 }
             }
         }
@@ -56,6 +62,9 @@ class CreateConversationDataRoutine extends AbstractRoutine
                         $type->getHandle(), $type->getName(), $type->getPoints(),
                         $pkg
                     );
+                    $logger->logPublished($type);
+                } else {
+                    $logger->logSkipped($type);
                 }
             }
         }

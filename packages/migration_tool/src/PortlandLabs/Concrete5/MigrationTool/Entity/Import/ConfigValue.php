@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ConfigValueValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportConfigValues")
  */
-class ConfigValue implements PublishableInterface
+class ConfigValue implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -120,5 +121,12 @@ class ConfigValue implements PublishableInterface
     public function setConfigValue($value)
     {
         $this->config_value = $value;
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $value = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\ConfigValue();
+        $value->setConfigKey($this->getConfigKey());
+        return $value;
     }
 }

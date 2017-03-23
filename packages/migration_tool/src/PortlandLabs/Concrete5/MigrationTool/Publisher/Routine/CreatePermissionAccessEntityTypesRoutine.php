@@ -32,6 +32,9 @@ class CreatePermissionAccessEntityTypesRoutine extends AbstractRoutine
                         $co->associateAccessEntityType($type);
                     }
                 }
+                $logger->logPublished($type);
+            } else {
+                $logger->logSkipped($type);
             }
         }
     }

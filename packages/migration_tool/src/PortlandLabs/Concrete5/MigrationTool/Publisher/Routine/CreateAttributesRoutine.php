@@ -33,7 +33,10 @@ class CreateAttributesRoutine extends AbstractRoutine
                     $o = $publisher->publish($key, $pkg);
                     $typePublisher = $key->getTypePublisher();
                     $typePublisher->publish($key, $o);
+                    $logger->logPublished($key);
                 }
+            } else {
+                $logger->logSkipped($key);
             }
         }
     }

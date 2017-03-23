@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ContentEditorSnippetValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportContentEditorSnippets")
  */
-class ContentEditorSnippet implements PublishableInterface
+class ContentEditorSnippet implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -141,5 +142,12 @@ class ContentEditorSnippet implements PublishableInterface
     public function setPackage($package)
     {
         $this->package = $package;
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $value = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\ContentEditorSnippet();
+        $value->setHandle($this->getHandle());
+        return $value;
     }
 }

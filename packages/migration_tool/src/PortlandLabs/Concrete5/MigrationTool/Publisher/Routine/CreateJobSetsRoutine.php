@@ -31,6 +31,9 @@ class CreateJobSetsRoutine extends AbstractRoutine
                         $set->addJob($j);
                     }
                 }
+                $logger->logPublished($set);
+            } else {
+                $logger->logSkipped($set);
             }
         }
     }

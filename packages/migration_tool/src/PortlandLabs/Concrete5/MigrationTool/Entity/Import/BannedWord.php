@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\BannedWordValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportBannedWords")
  */
-class BannedWord implements PublishableInterface
+class BannedWord implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -79,4 +80,12 @@ class BannedWord implements PublishableInterface
     {
         $this->word = $word;
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $word = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\BannedWord();
+        $word->setWord($this->getWord());
+        return $word;
+    }
+
 }

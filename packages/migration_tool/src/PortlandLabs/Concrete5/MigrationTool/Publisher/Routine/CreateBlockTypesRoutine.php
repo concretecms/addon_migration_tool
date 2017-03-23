@@ -28,6 +28,9 @@ class CreateBlockTypesRoutine extends AbstractRoutine
                 } else {
                     BlockType::installBlockType($type->getHandle());
                 }
+                $logger->logPublished($type);
+            } else {
+                $logger->logSkipped($type);
             }
         }
     }

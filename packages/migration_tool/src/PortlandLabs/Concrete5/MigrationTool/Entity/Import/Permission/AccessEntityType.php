@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 use Doctrine\ORM\Mapping as ORM;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEntityTypeValidator;
 
@@ -9,7 +10,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionAccessEnt
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPermissionAccessEntityTypes")
  */
-class AccessEntityType implements PublishableInterface
+class AccessEntityType implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -142,4 +143,12 @@ class AccessEntityType implements PublishableInterface
     {
         return new PermissionAccessEntityTypeValidator($this);
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\AccessEntityType();
+        $object->setHandle($this->getHandle());
+        return $object;
+    }
+
 }

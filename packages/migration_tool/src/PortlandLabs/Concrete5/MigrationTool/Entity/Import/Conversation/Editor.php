@@ -1,6 +1,8 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation;
 
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationEditor;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ConversationEditorValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportConversationEditors")
  */
-class Editor implements PublishableInterface
+class Editor implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -142,4 +144,12 @@ class Editor implements PublishableInterface
     {
         return new ConversationEditorValidator($this);
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\ConversationEditor();
+        $object->setHandle($this->getHandle());
+        return $object;
+    }
+
 }

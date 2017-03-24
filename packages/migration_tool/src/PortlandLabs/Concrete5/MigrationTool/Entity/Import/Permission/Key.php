@@ -4,6 +4,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\TreeJsonFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionKeyValidator;
 
@@ -11,7 +12,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PermissionKeyValida
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPermissionKeys")
  */
-class Key implements PublishableInterface
+class Key implements PublishableInterface, LoggableInterface
 {
     public function __construct()
     {
@@ -238,4 +239,13 @@ class Key implements PublishableInterface
     {
         return new TreeJsonFormatter($this);
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\PermissionKey();
+        $object->setHandle($this->getHandle());
+        $object->setName($this->getName());
+        return $object;
+    }
+
 }

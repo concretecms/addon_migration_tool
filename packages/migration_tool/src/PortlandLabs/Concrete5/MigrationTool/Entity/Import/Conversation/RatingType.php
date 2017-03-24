@@ -1,6 +1,8 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Conversation;
 
+use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\ConversationRatingType;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ConversationRatingTypeValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportConversationRatingTypes")
  */
-class RatingType implements PublishableInterface
+class RatingType implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -141,5 +143,12 @@ class RatingType implements PublishableInterface
     public function setPoints($points)
     {
         $this->points = $points;
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new ConversationRatingType();
+        $object->setHandle($this->getHandle());
+        return $object;
     }
 }

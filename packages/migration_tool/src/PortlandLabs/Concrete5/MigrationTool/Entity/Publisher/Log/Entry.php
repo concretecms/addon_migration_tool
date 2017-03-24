@@ -13,8 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class Entry
 {
     /**
-     * @ORM\Id @ORM\Column(type="guid")
-     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Id @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 

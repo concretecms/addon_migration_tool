@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey;
 
+use Concrete\Core\Entity\Attribute\Key\Settings\DateTimeSettings;
 use Concrete\Core\Entity\Attribute\Key\Type\DateTimeType;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\DateTimeAttributeKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\AttributeKey;
@@ -14,17 +15,9 @@ class DateTimePublisher extends AbstractPublisher
      */
     public function publish(AttributeKey $source, $destination)
     {
-        if (class_exists('\Concrete\Core\Entity\Attribute\Key\Type\Type')) {
-            // version 8
-            $key_type = new DateTimeType();
-            $key_type->setMode($source->getMode());
-
-            return $this->publishAttribute($source, $key_type, $destination);
-        } else {
-            $controller = $destination->getController();
-            $data = array();
-            $data['akDateDisplayMode'] = $source->getMode();
-            $controller->saveKey($data);
-        }
+        // version 8
+        $settings = new DateTimeSettings();
+        $settings->setMode($source->getMode());
+        return $this->publishAttribute($source, $settings, $destination);
     }
 }

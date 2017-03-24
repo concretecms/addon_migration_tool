@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
@@ -110,4 +111,20 @@ class TargetItemList
 
         return $item;
     }
-}
+
+    public static function getBatchTargetItem($batch, $mapper, $subject)
+    {
+        if ($subject) {
+            /**
+             * @var MapperManagerInterface
+             */
+            $mappers = \Core::make('migration/manager/mapping');
+            $mapper = $mappers->driver($mapper);
+            $list = $mappers->createTargetItemList($batch, $mapper);
+            $item = new Item($subject);
+            $targetItem = $list->getSelectedTargetItem($item);
+            if (!($targetItem instanceof UnmappedTargetItem || $targetItem instanceof IgnoredTargetItem)) {
+                return $mapper->getTargetItemContentObject($targetItem);
+            }
+        }
+    }}

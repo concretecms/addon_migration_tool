@@ -37,7 +37,7 @@ class PageType extends LoggableObject
     /**
      * @ORM\Column(type="integer")
      */
-    protected $ptID;
+    protected $ptID = 0;
 
     /**
      * @return mixed

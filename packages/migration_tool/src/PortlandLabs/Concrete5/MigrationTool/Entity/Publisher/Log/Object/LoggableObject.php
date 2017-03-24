@@ -8,7 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\FormatterInt
  * @ORM\Entity
  * @ORM\Table(name="MigrationPublisherLogObjects")
  * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorColumn(name="objectType", type="string")
  */
 abstract class LoggableObject
 {

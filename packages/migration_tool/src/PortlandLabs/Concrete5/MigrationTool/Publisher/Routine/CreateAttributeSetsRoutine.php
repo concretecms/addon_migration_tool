@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Attribute\Key\Category;
+use Concrete\Core\Attribute\SetManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggerInterface;
 
@@ -27,16 +28,21 @@ class CreateAttributeSetsRoutine extends AbstractRoutine
                 $setObject = $akc->addSet($set->getHandle(), $set->getName(), $pkg, intval($set->getIsLocked()));
                 $logger->logPublished($set);
             } else {
-                $logger->logSkipped($category);
+                $logger->logSkipped($set);
                 $setObject = \Concrete\Core\Attribute\Set::getByHandle($set->getHandle());
             }
 
             if (is_object($setObject)) {
+                $controller = $akc->getController();
                 $attributes = $set->getAttributes();
+                /**
+                 * @var $setManager SetManagerInterface
+                 */
+                $setManager = $controller->getSetManager();
                 foreach ($attributes as $handle) {
-                    $ak = $akc->getAttributeKeyByHandle($handle);
+                    $ak = $controller->getAttributeKeyByHandle($handle);
                     if (is_object($ak)) {
-                        $setObject->addKey($ak);
+                        $setManager->addKey($setObject, $ak);
                     }
                 }
             }

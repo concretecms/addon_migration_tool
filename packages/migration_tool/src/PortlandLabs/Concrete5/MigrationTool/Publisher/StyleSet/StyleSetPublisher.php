@@ -2,8 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\StyleSet;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\StyleSet;
-use Concrete\Core\StyleCustomizer\Inline\StyleSet as CoreStyleSet;
-
+use Concrete\Core\Entity\StyleCustomizer\Inline\StyleSet as CoreStyleSet;
 class StyleSetPublisher
 {
     protected $styleSet;

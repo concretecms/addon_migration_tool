@@ -19,7 +19,7 @@ class StackFormatter extends AbstractStandardFormatter
     public function getPublishedDescription(LoggableObject $object)
     {
         $a = new Link(
-            \URL::to('/dashboard/blocks/stacks', 'view_details', $object->getPublishedStackID()),
+            \URL::to('/dashboard/blocks/stacks', 'view_details', $object->getPublishedPageID()),
             t('Stack %s (%s) published.', $object->getName(), $object->getPath())
         );
         return $a;

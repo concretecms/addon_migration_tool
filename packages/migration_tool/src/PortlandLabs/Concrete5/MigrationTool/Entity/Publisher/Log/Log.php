@@ -37,7 +37,7 @@ class Log
 
     /**
      * @ORM\OneToMany(targetEntity="Entry", mappedBy="log", cascade={"persist", "remove"})
-     * @ORM\OrderBy({"timestamp" = "ASC"})
+     * @ORM\OrderBy({"id" = "ASC"})
      **/
     protected $entries;
 

@@ -17,6 +17,7 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $node = new \stdClass();
             $node->title = $set->getName();
             $node->handle = $set->getHandle();
+            $node->exists = $set->getPublisherValidator()->skipItem();
             $node->attributes = implode(', ', $set->getAttributes());
             $node->nodetype = 'attribute_set';
             $node->extraClasses = 'migration-node-main';

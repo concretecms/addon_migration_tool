@@ -1,22 +1,9 @@
 <?php
-namespace PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object;
+namespace PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Traits;
 
-use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\LoggableObject;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\Object\AttributeKeyCategoryFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\Object\AttributeSetFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\Object\GroupFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\Object\PageFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyCategoryValidator;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\Table(name="MigrationPublisherLogStacks")
- */
-abstract class AbstractStack extends LoggableObject
+trait StackTrait
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")

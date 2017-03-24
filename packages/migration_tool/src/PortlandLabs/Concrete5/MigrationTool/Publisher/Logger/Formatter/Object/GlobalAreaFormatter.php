@@ -19,7 +19,7 @@ class GlobalAreaFormatter extends AbstractStandardFormatter
     public function getPublishedDescription(LoggableObject $object)
     {
         $a = new Link(
-            \URL::to('/dashboard/blocks/stacks', 'view_details', $object->getPublishedStackID()),
+            \URL::to('/dashboard/blocks/stacks', 'view_details', $object->getPublishedPageID()),
             t('Global Area %s (%s) published.', $object->getName(), $object->getPath())
         );
         return $a;

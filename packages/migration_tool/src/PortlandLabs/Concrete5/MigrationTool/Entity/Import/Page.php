@@ -408,6 +408,9 @@ class Page implements PublishableInterface, ValidatableAttributesInterface, Logg
         $object->setName($this->getName());
         $object->setBatchPath($this->getBatchPath());
         $object->setOriginalPath($this->getOriginalPath());
+        if (is_object($publishedObject)) {
+            $object->setPublishedPageID($publishedObject->getCollectionID());
+        }
         return $object;
     }
 

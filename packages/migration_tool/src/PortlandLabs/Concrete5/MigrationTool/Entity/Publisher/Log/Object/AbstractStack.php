@@ -12,9 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="MigrationPublisherLogPages")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\Table(name="MigrationPublisherLogStacks")
  */
-class Page extends LoggableObject
+abstract class AbstractStack extends LoggableObject
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -30,18 +32,12 @@ class Page extends LoggableObject
     /**
      * @ORM\Column(type="text")
      */
-    protected $batch_path;
+    protected $path;
 
     /**
      * @ORM\Column(type="integer")
      */
     protected $cID;
-
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    protected $original_path;
 
     /**
      * @return mixed
@@ -62,39 +58,19 @@ class Page extends LoggableObject
     /**
      * @return mixed
      */
-    public function getBatchPath()
+    public function getPath()
     {
-        return $this->batch_path;
+        return $this->path;
     }
 
     /**
-     * @param mixed $batch_path
+     * @param mixed $path
      */
-    public function setBatchPath($batch_path)
+    public function setPath($path)
     {
-        $this->batch_path = $batch_path;
+        $this->path = $path;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOriginalPath()
-    {
-        return $this->original_path;
-    }
-
-    /**
-     * @param mixed $original_path
-     */
-    public function setOriginalPath($original_path)
-    {
-        $this->original_path = $original_path;
-    }
-
-    public function getLogFormatter()
-    {
-        return new PageFormatter();
-    }
 
     /**
      * @return mixed

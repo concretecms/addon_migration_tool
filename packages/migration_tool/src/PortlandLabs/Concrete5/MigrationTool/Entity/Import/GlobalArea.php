@@ -18,4 +18,10 @@ class GlobalArea extends AbstractStack
     {
         return new GlobalAreaFormatter($this);
     }
+
+    public function createStackPublisherLogObject()
+    {
+        return new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\GlobalArea();
+    }
+
 }

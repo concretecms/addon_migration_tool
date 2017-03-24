@@ -18,4 +18,10 @@ class Stack extends AbstractStack
     {
         return new StackFormatter($this);
     }
+
+    public function createStackPublisherLogObject()
+    {
+        return new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Stack();
+    }
+
 }

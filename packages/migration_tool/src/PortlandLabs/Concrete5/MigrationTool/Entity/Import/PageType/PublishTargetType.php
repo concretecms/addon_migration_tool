@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 use Doctrine\ORM\Mapping as ORM;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypePublishTargetTypeValidator;
 
@@ -9,7 +10,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypePublishTarg
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPageTypePublishTargetTypes")
  */
-class PublishTargetType implements PublishableInterface
+class PublishTargetType implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -120,5 +121,13 @@ class PublishTargetType implements PublishableInterface
     public function setPackage($package)
     {
         $this->package = $package;
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\PublishTargetType();
+        $object->setName($this->getName());
+        $object->setHandle($this->getHandle());
+        return $object;
     }
 }

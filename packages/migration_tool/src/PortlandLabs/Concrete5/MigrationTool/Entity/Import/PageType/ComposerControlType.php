@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 use Doctrine\ORM\Mapping as ORM;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypeComposerControlTypeValidator;
 
@@ -9,7 +10,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypeComposerCon
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPageTypeComposerControlTypes")
  */
-class ComposerControlType implements PublishableInterface
+class ComposerControlType implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -120,5 +121,13 @@ class ComposerControlType implements PublishableInterface
     public function getPublisherValidator()
     {
         return new PageTypeComposerControlTypeValidator($this);
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $type = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\ComposerControlType();
+        $type->setName($this->getName());
+        $type->setHandle($this->getHandle());
+        return $type;
     }
 }

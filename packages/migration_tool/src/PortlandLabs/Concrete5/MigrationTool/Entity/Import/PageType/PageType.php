@@ -3,6 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypeValidator;
 
@@ -10,7 +11,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\PageTypeValidator;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPageTypes")
  */
-class PageType implements PublishableInterface
+class PageType implements PublishableInterface, LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -318,4 +319,16 @@ class PageType implements PublishableInterface
     {
         $this->default_page_collection = $default_page_collection;
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $type = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\PageType();
+        $type->setName($this->getName());
+        $type->setHandle($this->getHandle());
+        if (is_object($publishedObject)) {
+            $type->setPublishedPageTypeID($publishedObject->getPageTypeID());
+        }
+        return $type;
+    }
+
 }

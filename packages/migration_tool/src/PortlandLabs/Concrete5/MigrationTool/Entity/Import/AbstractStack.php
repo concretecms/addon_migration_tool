@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\StackValidator;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,9 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\Table(name="MigrationImportStacks")
  */
-abstract class AbstractStack implements PublishableInterface
+abstract class AbstractStack implements PublishableInterface, LoggableInterface
 {
     abstract public function getType();
+    abstract public function createStackPublisherLogObject();
 
     abstract public function getStackFormatter();
 
@@ -161,4 +163,16 @@ abstract class AbstractStack implements PublishableInterface
         // but oh well.
         return $this->getPath();
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = $this->createStackPublisherLogObject();
+        $object->setName($this->getName());
+        $object->setPath($this->getPath());
+        if (is_object($publishedObject)) {
+            $object->setPublishedPageID($publishedObject->getCollectionID());
+        }
+        return $object;
+    }
+
 }

@@ -86,7 +86,7 @@ class Basics extends DashboardMigrationSettingsController
                 $presetManager = new PresetManager($this->entityManager);
                 $presetManager->clearPresets($batch);
                 $this->flash('success', t('Batch presets removed successfully.'));
-                $this->redirect('/dashboard/system/migration/import', 'settings', $batch->getId());
+                $this->redirect('/dashboard/system/migration/import/settings/basics', $batch->getId());
 
             } else {
                 $batch->setName($this->request->request->get('name'));

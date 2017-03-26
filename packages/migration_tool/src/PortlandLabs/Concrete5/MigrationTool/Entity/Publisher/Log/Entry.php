@@ -32,10 +32,11 @@ abstract class Entry
     {
         $this->timestamp = new \DateTime();
         $this->object = $object;
+        $this->object->setEntry($this);
     }
 
     /**
-     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\LoggableObject", cascade={"persist","remove"})
+     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\LoggableObject", mappedBy="entry",  cascade={"persist","remove"})
      **/
     protected $object;
 

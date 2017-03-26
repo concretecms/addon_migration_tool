@@ -13,7 +13,7 @@ class StandardPublisher implements PublisherInterface
     public function publish(Batch $batch, $bt, Page $page, $area, BlockValue $value)
     {
         $records = $value->getRecords();
-        $inspector = \Core::make('import/value_inspector');
+        $inspector = \Core::make('migration/import/value_inspector', array($batch));
         if (count($records) == 1) {
             $data = array();
             foreach ($records[0]->getData() as $key => $value) {

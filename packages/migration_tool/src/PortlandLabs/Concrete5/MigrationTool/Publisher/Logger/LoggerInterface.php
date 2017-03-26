@@ -11,6 +11,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 interface LoggerInterface
 {
 
+    function getLog();
     function openLog(Batch $batch, User $user = null);
     function closeLog(Batch $batch);
     function logPublished(LoggableInterface $object, $mixed = null);

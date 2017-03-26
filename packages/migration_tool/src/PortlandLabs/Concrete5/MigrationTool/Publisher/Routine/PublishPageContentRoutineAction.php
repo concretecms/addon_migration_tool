@@ -19,7 +19,7 @@ class PublishPageContentRoutineAction extends AbstractPageAction
             if (is_object($ak)) {
                 $value = $attribute->getAttribute()->getAttributeValue();
                 $publisher = $value->getPublisher();
-                $publisher->publish($ak, $concretePage, $value);
+                $publisher->publish($batch, $ak, $concretePage, $value);
             }
         }
 

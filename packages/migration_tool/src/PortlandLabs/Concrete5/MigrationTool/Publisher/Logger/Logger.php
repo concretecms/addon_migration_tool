@@ -39,6 +39,14 @@ class Logger implements LoggerInterface
         $this->log = $this->entityManager->getRepository(Log::class)->findOneById($this->logID);
     }
 
+    /**
+     * @return Log
+     */
+    public function getLog()
+    {
+        return $this->log;
+    }
+
     public function openLog(Batch $batch, User $user = null)
     {
         $log = new Log();

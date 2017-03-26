@@ -36,6 +36,28 @@ abstract class LoggableObject
     }
 
     /**
+     * @return mixed
+     */
+    public function getEntry()
+    {
+        return $this->entry;
+    }
+
+    /**
+     * @param mixed $entry
+     */
+    public function setEntry($entry)
+    {
+        $this->entry = $entry;
+    }
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Entry", inversedBy="object")
+     **/
+    protected $entry;
+
+    /**
      * @return FormatterInterface
      */
     abstract public function getLogFormatter();

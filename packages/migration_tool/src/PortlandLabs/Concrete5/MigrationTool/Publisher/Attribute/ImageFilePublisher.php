@@ -3,14 +3,15 @@ namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute;
 
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\FileItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class ImageFilePublisher implements PublisherInterface
 {
-    public function publish($ak, $subject, AttributeValue $value)
+    public function publish(Batch $batch, $ak, $subject, AttributeValue $value)
     {
-        $inspector = \Core::make('import/value_inspector');
+        $inspector = \Core::make('migration/import/value_inspector', array($batch));
         $result = $inspector->inspect($value->getValue());
         $items = $result->getMatchedItems();
 

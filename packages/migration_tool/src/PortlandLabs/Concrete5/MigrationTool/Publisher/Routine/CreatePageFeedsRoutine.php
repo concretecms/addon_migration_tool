@@ -11,7 +11,7 @@ class CreatePageFeedsRoutine extends AbstractRoutine
 {
     public function execute(BatchInterface $batch, LoggerInterface $logger)
     {
-        $inspector = \Core::make('import/value_inspector');
+        $inspector = \Core::make('migration/import/value_inspector', array($batch));
         $feeds = $batch->getObjectCollection('page_feed');
 
         if (!$feeds) {

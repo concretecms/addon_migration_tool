@@ -46,7 +46,7 @@ class CreateSitesRoutine extends AbstractRoutine
                             if (is_object($ak)) {
                                 $value = $attribute->getAttribute()->getAttributeValue();
                                 $publisher = $value->getPublisher();
-                                $publisher->publish($ak, $siteObject, $value);
+                                $publisher->publish($batch, $ak, $siteObject, $value);
                             }
                         }
                     }

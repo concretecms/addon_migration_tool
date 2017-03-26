@@ -6,6 +6,7 @@ use Concrete\Core\Attribute\Key\CollectionKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AddressAttributeValue;
 use Concrete\Core\Page\Page;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -16,7 +17,7 @@ class AddressPublisher implements PublisherInterface
      * @param Page $page
      * @param AddressAttributeValue $address
      */
-    public function publish($ak, $subject, AttributeValue $address)
+    public function publish(Batch $batch, $ak, $subject, AttributeValue $address)
     {
         $value = new Value();
         $value->address1 = $address->getAddress1();

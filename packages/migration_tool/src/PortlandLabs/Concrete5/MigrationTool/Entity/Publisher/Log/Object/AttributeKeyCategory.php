@@ -13,11 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AttributeKeyCategory extends LoggableObject
 {
-    /**
-     * @ORM\Id @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
 
     /**
      * @ORM\Column(type="string")

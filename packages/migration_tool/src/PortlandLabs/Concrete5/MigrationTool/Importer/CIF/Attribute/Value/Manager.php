@@ -69,4 +69,15 @@ class Manager extends \Concrete\Core\Support\Manager
     {
         return new AddressImporter();
     }
+
+    public function createPageDriver()
+    {
+        return new PageImporter();
+    }
+
+    public function createPageSelectorDriver()
+    {
+        return new PageImporter();
+    }
+
 }

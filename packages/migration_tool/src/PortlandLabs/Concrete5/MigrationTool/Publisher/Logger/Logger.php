@@ -67,7 +67,7 @@ class Logger implements LoggerInterface
         $this->entityManager->flush();
     }
 
-    protected function logEntry(Entry $entry)
+    public function logEntry(Entry $entry)
     {
         $entry->setLog($this->log);
         $this->log->getEntries()->add($entry);

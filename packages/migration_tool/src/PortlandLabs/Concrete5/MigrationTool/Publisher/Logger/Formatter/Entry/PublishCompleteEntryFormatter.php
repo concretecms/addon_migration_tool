@@ -9,7 +9,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 class PublishCompleteEntryFormatter extends AbstractEntryFormatter
 {
 
-    public function getEntryStatusElement(LoggableObject $object)
+    public function getEntryStatusElement(LoggableObject $object = null)
     {
         $div = new Element('div', '', ['class' => 'text-success']);
         $div->appendChild(new Element('span', t('Complete')));
@@ -18,7 +18,7 @@ class PublishCompleteEntryFormatter extends AbstractEntryFormatter
         return $div;
     }
 
-    public function getDescriptionElement(LoggableObject $object)
+    public function getDescriptionElement(LoggableObject $object = null)
     {
         $formatter = $object->getLogFormatter();
         $div = new Element('div', $formatter->getPublishCompleteDescription($object), ['class' => 'text-success']);

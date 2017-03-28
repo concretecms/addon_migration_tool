@@ -8,8 +8,8 @@ defined('C5_EXECUTE') or die("Access Denied.");
 interface FormatterInterface
 {
 
-    function getEntryStatusElement(LoggableObject $object);
-    function getDescriptionElement(LoggableObject $object);
+    function getEntryStatusElement(LoggableObject $object = null);
+    function getDescriptionElement(LoggableObject $object = null);
 
 
 }

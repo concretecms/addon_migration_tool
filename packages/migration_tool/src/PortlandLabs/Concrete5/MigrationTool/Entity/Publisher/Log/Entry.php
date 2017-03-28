@@ -32,8 +32,10 @@ abstract class Entry
     public function __construct(LoggableObject $object = null)
     {
         $this->timestamp = new \DateTime();
-        $this->object = $object;
-        $this->object->setEntry($this);
+        if (is_object($object)) {
+            $this->object = $object;
+            $this->object->setEntry($this);
+        }
     }
 
     /**

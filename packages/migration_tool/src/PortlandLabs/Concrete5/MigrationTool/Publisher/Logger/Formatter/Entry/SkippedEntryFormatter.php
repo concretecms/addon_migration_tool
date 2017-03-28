@@ -9,7 +9,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 class SkippedEntryFormatter extends AbstractEntryFormatter
 {
 
-    public function getEntryStatusElement(LoggableObject $object)
+    public function getEntryStatusElement(LoggableObject $object = null)
     {
         $div = new Element('div', '', ['class' => 'text-muted']);
         $div->appendChild(new Element('span', t('Skipped')));
@@ -18,7 +18,7 @@ class SkippedEntryFormatter extends AbstractEntryFormatter
         return $div;
     }
 
-    public function getDescriptionElement(LoggableObject $object)
+    public function getDescriptionElement(LoggableObject $object = null)
     {
         $formatter = $object->getLogFormatter();
         $div = new Element('div', $formatter->getSkippedDescription($object), ['class' => 'text-muted']);

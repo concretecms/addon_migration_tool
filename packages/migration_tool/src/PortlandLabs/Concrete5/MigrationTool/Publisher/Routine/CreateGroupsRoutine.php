@@ -31,6 +31,7 @@ class CreateGroupsRoutine extends AbstractRoutine
 
         foreach ($groups as $group) {
             if (!$group->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($group);
                 $parent = null;
                 if ($group->getPath() != '') {
                     $lastSlash = strrpos($group->getPath(), '/');
@@ -46,7 +47,7 @@ class CreateGroupsRoutine extends AbstractRoutine
                 }
 
                 \Concrete\Core\User\Group\Group::add($group->getName(), $group->getDescription(), $parent, $pkg);
-                $logger->logPublished($group);
+                $logger->logPublishComplete($group);
             } else {
                 $logger->logSkipped($group);
             }

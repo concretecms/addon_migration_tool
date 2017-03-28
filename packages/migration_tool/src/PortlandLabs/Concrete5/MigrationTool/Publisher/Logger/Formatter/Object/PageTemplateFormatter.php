@@ -15,10 +15,16 @@ class PageTemplateFormatter extends AbstractStandardFormatter
         return t('Page template %s (%s) already exists.', $object->getName(), $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Pagetemplate %s (%s) created.', $object->getName(),  $object->getHandle());
+        return t('Installing page template %s (%s).', $object->getName(),  $object->getHandle());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Page template %s (%s) created.', $object->getName(),  $object->getHandle());
+    }
+
 
 
 }

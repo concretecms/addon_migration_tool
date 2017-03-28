@@ -18,6 +18,7 @@ class CreateThumbnailTypesRoutine extends AbstractRoutine
 
         foreach ($types->getTypes() as $type) {
             if (!$type->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($type);
                 $t = new \Concrete\Core\File\Image\Thumbnail\Type\Type();
                 $t->setName($type->getName());
                 $t->setHandle($type->getHandle());
@@ -27,9 +28,9 @@ class CreateThumbnailTypesRoutine extends AbstractRoutine
                     $t->requireType();
                 }
                 $t->save();
-                $logger->logPublished($t);
+                $logger->logPublishComplete($type, $t);
             } else {
-                $logger->logSkipped($t);
+                $logger->logSkipped($type);
             }
         }
     }

@@ -16,18 +16,19 @@ class CreateConversationDataRoutine extends AbstractRoutine
         if ($editors) {
             foreach ($editors->getEditors() as $editor) {
                 if (!$editor->getPublisherValidator()->skipItem()) {
+                    $logger->logPublishStarted($editor);
                     $pkg = null;
                     if ($editor->getPackage()) {
                         $pkg = \Package::getByHandle($editor->getPackage());
                     }
                     $ce = Editor::add($editor->getHandle(),
                         $editor->getName(), $pkg);
-                    $logger->logPublished($ce);
+                    $logger->logPublishComplete($editor, $ce);
                     if ($editor->getIsActive()) {
                         $ce->activate();
                     }
                 } else {
-                    $logger->logSkipped($ce);
+                    $logger->logSkipped($editor);
                 }
             }
         }
@@ -37,14 +38,15 @@ class CreateConversationDataRoutine extends AbstractRoutine
         if ($types) {
             foreach ($types->getTypes() as $type) {
                 if (!$type->getPublisherValidator()->skipItem()) {
+                    $logger->logPublishStarted($type);
                     $pkg = null;
                     if ($type->getPackage()) {
                         $pkg = \Package::getByHandle($type->getPackage());
                     }
                     $ce = \Concrete\Core\Conversation\FlagType\FlagType::add($type->getHandle());
-                    $logger->logPublished($ce);
+                    $logger->logPublishComplete($type, $ce);
                 } else {
-                    $logger->logSkipped($ce);
+                    $logger->logSkipped($type);
                 }
             }
         }
@@ -54,6 +56,7 @@ class CreateConversationDataRoutine extends AbstractRoutine
         if ($types) {
             foreach ($types->getTypes() as $type) {
                 if (!$type->getPublisherValidator()->skipItem()) {
+                    $logger->logPublishStarted($type);
                     $pkg = null;
                     if ($type->getPackage()) {
                         $pkg = \Package::getByHandle($type->getPackage());
@@ -62,7 +65,7 @@ class CreateConversationDataRoutine extends AbstractRoutine
                         $type->getHandle(), $type->getName(), $type->getPoints(),
                         $pkg
                     );
-                    $logger->logPublished($type);
+                    $logger->logPublishComplete($type);
                 } else {
                     $logger->logSkipped($type);
                 }

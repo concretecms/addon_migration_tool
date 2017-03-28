@@ -14,10 +14,16 @@ class WorkflowProgressCategoryFormatter extends AbstractStandardFormatter
         return t('Workflow progress category %s already exists.', $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Installing workflow progress category %s.', $object->getHandle());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         return t('Workflow progress category %s published.', $object->getHandle());
     }
+
 
 
 }

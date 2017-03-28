@@ -19,6 +19,7 @@ class CreateBlockTypesRoutine extends AbstractRoutine
 
         foreach ($types->getTypes() as $type) {
             if (!$type->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($type);
                 $pkg = null;
                 if ($type->getPackage()) {
                     $pkg = \Package::getByHandle($type->getPackage());
@@ -28,7 +29,7 @@ class CreateBlockTypesRoutine extends AbstractRoutine
                 } else {
                     BlockType::installBlockType($type->getHandle());
                 }
-                $logger->logPublished($type);
+                $logger->logPublishComplete($type);
             } else {
                 $logger->logSkipped($type);
             }

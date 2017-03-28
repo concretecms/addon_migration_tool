@@ -14,10 +14,16 @@ class BlockTypeSetFormatter extends AbstractStandardFormatter
         return t('Block type set %s already exists.', $object->getName());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Block type set %s published.', $object->getName());
+        return t('Began installing block type set %s.', $object->getName());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Block type set %s installed.', $object->getName());
+    }
+
 
 
 }

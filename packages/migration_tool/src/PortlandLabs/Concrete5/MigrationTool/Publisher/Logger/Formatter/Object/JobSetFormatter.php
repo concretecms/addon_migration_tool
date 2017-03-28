@@ -14,10 +14,16 @@ class JobSetFormatter extends AbstractStandardFormatter
         return t('Job set %s already exists.', $object->getName());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Job set %s published.', $object->getName());
+        return t('Installing Job Set %s.', $object->getName());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Job set %s installed.', $object->getName());
+    }
+
 
 
 }

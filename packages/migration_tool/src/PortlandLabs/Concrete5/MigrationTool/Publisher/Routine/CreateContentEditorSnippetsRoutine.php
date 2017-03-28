@@ -19,17 +19,18 @@ class CreateContentEditorSnippetsRoutine extends AbstractRoutine
 
         foreach ($snippets->getSnippets() as $snippet) {
             if (!$snippet->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($snippet);
                 $pkg = null;
                 if ($snippet->getPackage()) {
                     $pkg = \Package::getByHandle($snippet->getPackage());
                 }
                 $t = Snippet::add($snippet->getHandle(), $snippet->getNAme(), $pkg);
-                $logger->logPublished($t);
+                $logger->logPublishComplete($snippet, $t);
                 if ($snippet->getIsActivated()) {
                     $t->activate();
                 }
             } else {
-                $logger->logSkipped($t);
+                $logger->logSkipped($snippet);
             }
         }
     }

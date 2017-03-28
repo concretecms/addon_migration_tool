@@ -16,7 +16,12 @@ class GlobalAreaFormatter extends AbstractStandardFormatter
         return t('Global Area %s (%s) already exists.', $object->getName(), $object->getPath());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Installing Global Area %s (%s).', $object->getName(), $object->getPath());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         $a = new Link(
             \URL::to('/dashboard/blocks/stacks', 'view_details', $object->getPublishedPageID()),
@@ -24,6 +29,7 @@ class GlobalAreaFormatter extends AbstractStandardFormatter
         );
         return $a;
     }
+
 
 
 }

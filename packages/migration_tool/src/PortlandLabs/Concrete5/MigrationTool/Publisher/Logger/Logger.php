@@ -10,7 +10,8 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Entry;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Log;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\PublishedEntry;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\PublishCompleteEntry;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\PublishStartedEntry;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\SkippedEntry;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -72,9 +73,14 @@ class Logger implements LoggerInterface
         $this->log->getEntries()->add($entry);
     }
 
-    public function logPublished(LoggableInterface $object, $mixed = null)
+    public function logPublishStarted(LoggableInterface $object, $mixed = null)
     {
-        $this->logEntry(new PublishedEntry($object->createPublisherLogObject($mixed)));
+        $this->logEntry(new PublishStartedEntry($object->createPublisherLogObject($mixed)));
+    }
+
+    public function logPublishComplete(LoggableInterface $object, $mixed = null)
+    {
+        $this->logEntry(new PublishCompleteEntry($object->createPublisherLogObject($mixed)));
     }
 
     public function logSkipped(LoggableInterface $object)

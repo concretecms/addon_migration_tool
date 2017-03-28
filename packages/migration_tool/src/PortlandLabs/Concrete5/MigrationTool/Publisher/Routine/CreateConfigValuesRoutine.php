@@ -18,6 +18,7 @@ class CreateConfigValuesRoutine extends AbstractRoutine
 
         foreach ($values->getValues() as $value) {
             if (!$value->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($value);
                 $pkg = null;
                 if ($value->getPackage()) {
                     $pkg = \Package::getByHandle($value->getPackage());
@@ -27,7 +28,7 @@ class CreateConfigValuesRoutine extends AbstractRoutine
                 } else {
                     \Config::save($value->getConfigKey(), $value->getConfigValue());
                 }
-                $logger->logPublished($value);
+                $logger->logPublishComplete($value);
             } else {
                 $logger->logSkipped($value);
             }

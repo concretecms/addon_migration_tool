@@ -13,6 +13,7 @@ class CreateSinglePageStructureRoutineAction extends AbstractPageAction
     {
         $pkg = null;
         $page = $this->page;
+        $logger->logPublishStarted($page);
         if ($page->getPackage()) {
             $pkg = \Package::getByHandle($page->getPackage());
         }
@@ -37,7 +38,7 @@ class CreateSinglePageStructureRoutineAction extends AbstractPageAction
             $data['name'] = $page->getName();
             $data['description'] = $page->getDescription();
             $c->update($data);
-            $logger->logPublished($page, $c);
+            $logger->logPublishComplete($page, $c);
         } else {
             $logger->logSkipped($page);
         }

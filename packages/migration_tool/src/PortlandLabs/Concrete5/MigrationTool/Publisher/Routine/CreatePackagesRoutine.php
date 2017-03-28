@@ -18,11 +18,12 @@ class CreatePackagesRoutine extends AbstractRoutine
 
         foreach ($packages->getPackages() as $package) {
             if (!$package->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($package);
                 $pkg = \Package::getClass($package->getHandle());
                 if (!$pkg->isPackageInstalled()) {
                     $pkg->install();
                 }
-                $logger->logPublished($package);
+                $logger->logPublishComplete($package);
             } else {
                 $logger->logSkipped($package);
             }

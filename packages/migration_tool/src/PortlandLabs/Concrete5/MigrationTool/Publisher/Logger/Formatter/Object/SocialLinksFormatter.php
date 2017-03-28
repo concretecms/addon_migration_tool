@@ -16,7 +16,12 @@ class SocialLinksFormatter extends AbstractStandardFormatter
         return t('Social Link for service %s (%s) already exists.', $object->getService(), $object->getUrl());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Creating Social Link for service %s (%s).', $object->getService(), $object->getUrl());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         $a = new Link(
             \URL::to('/dashboard/system/basics/social', 'edit', $object->getLink()->getID()),

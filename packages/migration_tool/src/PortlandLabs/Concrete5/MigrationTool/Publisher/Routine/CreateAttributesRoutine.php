@@ -22,6 +22,7 @@ class CreateAttributesRoutine extends AbstractRoutine
 
         foreach ($keys->getKeys() as $key) {
             if (!$key->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($key);
                 $pkg = null;
                 if ($key->getPackage()) {
                     $pkg = \Package::getByHandle($key->getPackage());
@@ -33,7 +34,7 @@ class CreateAttributesRoutine extends AbstractRoutine
                     $o = $publisher->publish($key, $pkg);
                     $typePublisher = $key->getTypePublisher();
                     $typePublisher->publish($key, $o);
-                    $logger->logPublished($key);
+                    $logger->logPublishComplete($key);
                 }
             } else {
                 $logger->logSkipped($key);

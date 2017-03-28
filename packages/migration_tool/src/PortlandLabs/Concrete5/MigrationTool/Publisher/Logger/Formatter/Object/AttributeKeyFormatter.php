@@ -16,10 +16,16 @@ class AttributeKeyFormatter extends AbstractStandardFormatter
         return t('Attribute key %s (type: %s, category: %s) already exists.', $object->getName(), $object->getType(), $object->getCategory());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Began publishing attribute key %s (type: %s, category: %s).', $object->getName(), $object->getType(), $object->getCategory());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         return t('Attribute key %s (type: %s, category: %s) successfully imported.', $object->getName(), $object->getType(), $object->getCategory());
     }
+
 
 
 }

@@ -15,10 +15,16 @@ class PermissionKeyFormatter extends AbstractStandardFormatter
         return t('Permission key %s (%s) already exists.', $object->getName(), $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Permission key %s (%s) created.', $object->getName(),  $object->getHandle());
+        return t('Installing Permission key %s (%s).', $object->getName(),  $object->getHandle());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Created Permission key %s (%s).', $object->getName(),  $object->getHandle());
+    }
+
 
 
 }

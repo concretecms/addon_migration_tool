@@ -14,7 +14,8 @@ interface LoggerInterface
     function getLog();
     function openLog(Batch $batch, User $user = null);
     function closeLog(Batch $batch);
-    function logPublished(LoggableInterface $object, $mixed = null);
+    function logPublishStarted(LoggableInterface $object, $mixed = null);
+    function logPublishComplete(LoggableInterface $object, $mixed = null);
     function logSkipped(LoggableInterface $object);
 
 }

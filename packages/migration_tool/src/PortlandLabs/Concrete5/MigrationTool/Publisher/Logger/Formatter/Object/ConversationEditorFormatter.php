@@ -15,10 +15,16 @@ class ConversationEditorFormatter extends AbstractStandardFormatter
         return t('Conversation editor %s (%s) already exists.', $object->getName(), $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Installing conversation editor type %s (%s).', $object->getName(),  $object->getHandle());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         return t('Conversation editor type %s (%s) installed.', $object->getName(),  $object->getHandle());
     }
+
 
 
 }

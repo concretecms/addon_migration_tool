@@ -19,12 +19,13 @@ class CreateAttributeCategoriesRoutine extends AbstractRoutine
 
         foreach ($categories->getCategories() as $category) {
             if (!$category->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($category);
                 $pkg = null;
                 if ($category->getPackage()) {
                     $pkg = \Package::getByHandle($category->getPackage());
                 }
                 Category::add($category->getHandle(), $category->getAllowSets(), $pkg);
-                $logger->logPublished($category);
+                $logger->logPublishComplete($category);
             } else {
                 $logger->logSkipped($category);
             }

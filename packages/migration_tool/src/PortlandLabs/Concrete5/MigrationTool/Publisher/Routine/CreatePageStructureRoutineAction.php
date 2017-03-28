@@ -12,6 +12,9 @@ class CreatePageStructureRoutineAction extends AbstractPageAction
 {
     public function execute(BatchInterface $batch, LoggerInterface $logger)
     {
+        $page = $this->page;
+        $logger->logPublishStarted($page);
+
         $batchParent = $this->getBatchParentPage($batch);
         if (!is_object($batchParent)) {
             // First, create the top level page for the batch.
@@ -25,7 +28,6 @@ class CreatePageStructureRoutineAction extends AbstractPageAction
         }
 
         $data = array();
-        $page = $this->page;
 
         $ui = $this->getTargetItem($batch, 'user', $page->getUser());
         if ($ui != '') {
@@ -72,6 +74,6 @@ class CreatePageStructureRoutineAction extends AbstractPageAction
         $data['cDescription'] = $page->getDescription();
 
         $newPage = $parent->add($type, $data);
-        $logger->logPublished($page, $newPage);
+        $logger->logPublishComplete($page, $newPage);
     }
 }

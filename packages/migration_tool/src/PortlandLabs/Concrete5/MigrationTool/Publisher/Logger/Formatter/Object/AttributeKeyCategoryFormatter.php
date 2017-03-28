@@ -14,10 +14,16 @@ class AttributeKeyCategoryFormatter extends AbstractStandardFormatter
         return t('Attribute key category %s already exists.', $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Attribute key category %s published.', $object->getHandle());
+        return t('Began installing attribute category %s.', $object->getHandle());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Attribute key category %s installed.', $object->getHandle());
+    }
+
 
 
 }

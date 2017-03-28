@@ -14,10 +14,16 @@ class WorkflowTypeFormatter extends AbstractStandardFormatter
         return t('Workflow type %s already exists.', $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Installing workflow type %s.', $object->getHandle());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         return t('Workflow type %s installed.', $object->getHandle());
     }
+
 
 
 }

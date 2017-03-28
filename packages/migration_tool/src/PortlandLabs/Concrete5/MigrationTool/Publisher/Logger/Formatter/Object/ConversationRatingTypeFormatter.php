@@ -15,10 +15,16 @@ class ConversationRatingTypeFormatter extends AbstractStandardFormatter
         return t('Conversation rating type %s (%s) already exists.', $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Converstaion rating type %s (%s) published.', $object->getHandle());
+        return t('Installing conversation rating type %s (%s).', $object->getHandle());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Conversation rating type %s (%s) installed.', $object->getHandle());
+    }
+
 
 
 }

@@ -21,12 +21,13 @@ class CreateAttributeSetsRoutine extends AbstractRoutine
         foreach ($sets->getSets() as $set) {
             $akc = Category::getByHandle($set->getCategory());
             if (!$set->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($set);
                 $pkg = null;
                 if ($set->getPackage()) {
                     $pkg = \Package::getByHandle($set->getPackage());
                 }
                 $setObject = $akc->addSet($set->getHandle(), $set->getName(), $pkg, intval($set->getIsLocked()));
-                $logger->logPublished($set);
+                $logger->logPublishComplete($set);
             } else {
                 $logger->logSkipped($set);
                 $setObject = \Concrete\Core\Attribute\Set::getByHandle($set->getHandle());

@@ -15,10 +15,16 @@ class PackageFormatter extends AbstractStandardFormatter
         return t('Package %s already installed.', $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Installing package %s.', $object->getHandle());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         return t('Package %s installed.', $object->getHandle());
     }
+
 
 
 }

@@ -16,7 +16,12 @@ class StackFormatter extends AbstractStandardFormatter
         return t('Stack %s (%s) already exists.', $object->getName(), $object->getPath());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Creating stack %s (%s).', $object->getName(), $object->getPath());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         $a = new Link(
             \URL::to('/dashboard/blocks/stacks', 'view_details', $object->getPublishedPageID()),
@@ -24,6 +29,7 @@ class StackFormatter extends AbstractStandardFormatter
         );
         return $a;
     }
+
 
 
 }

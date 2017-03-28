@@ -15,10 +15,16 @@ class PublishTargetTypeFormatter extends AbstractStandardFormatter
         return t('Publish target type %s already exists.', $object->getName());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Publish target type %s created.', $object->getName());
+        return t('Installing Publish target type %s.', $object->getName());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Publish target type %s installed.', $object->getName());
+    }
+
 
 
 }

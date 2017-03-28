@@ -14,10 +14,14 @@ class AttributeSetFormatter extends AbstractStandardFormatter
         return t('Attribute set %s already exists.', $object->getName());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
-        return t('Attribute set %s published.', $object->getName());
+        return t('Attribute set %s installed.', $object->getName());
     }
 
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Began publishing attribute set %s.', $object->getName());
+    }
 
 }

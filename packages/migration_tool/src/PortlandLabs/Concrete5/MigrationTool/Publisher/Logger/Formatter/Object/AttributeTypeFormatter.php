@@ -14,10 +14,14 @@ class AttributeTypeFormatter extends AbstractStandardFormatter
         return t('Attribute type %s already exists.', $object->getName());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         return t('Attribute type %s published.', $object->getName());
     }
 
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Began publishing attribute type %s.', $object->getName());
+    }
 
 }

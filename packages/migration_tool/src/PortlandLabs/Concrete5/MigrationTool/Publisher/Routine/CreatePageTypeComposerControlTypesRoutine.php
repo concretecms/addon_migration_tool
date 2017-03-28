@@ -18,12 +18,13 @@ class CreatePageTypeComposerControlTypesRoutine extends AbstractRoutine
 
         foreach ($types->getTypes() as $type) {
             if (!$type->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($type);
                 $pkg = false;
                 if ($type->getPackage()) {
                     $pkg = \Package::getByHandle($type->getPackage());
                 }
                 \Concrete\Core\Page\Type\Composer\Control\Type\Type::add($type->getHandle(), $type->getName(), $pkg);
-                $logger->logPublished($type);
+                $logger->logPublishComplete($type);
             } else {
                 $logger->logSkipped($type);
             }

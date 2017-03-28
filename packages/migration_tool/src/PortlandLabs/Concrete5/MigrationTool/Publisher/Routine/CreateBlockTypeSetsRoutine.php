@@ -20,12 +20,13 @@ class CreateBlockTypeSetsRoutine extends AbstractRoutine
 
         foreach ($sets->getSets() as $set) {
             if (!$set->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($set);
                 $pkg = null;
                 if ($set->getPackage()) {
                     $pkg = \Package::getByHandle($set->getPackage());
                 }
                 $set = Set::add($set->getHandle(), $set->getName(), $pkg);
-                $logger->logPublished($set);
+                $logger->logPublishComplete($set);
                 $types = $set->getTypes();
                 foreach ($types as $handle) {
                     $bt = BlockType::getByHandle($handle);

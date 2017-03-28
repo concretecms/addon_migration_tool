@@ -20,6 +20,7 @@ class CreatePageFeedsRoutine extends AbstractRoutine
 
         foreach ($feeds->getFeeds() as $feed) {
             if (!$feed->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($feed);
                 $f = new Feed();
                 $parentID = intval($inspector->inspect($feed->getParent())->getReplacedValue());
                 $pageType = intval($inspector->inspect($feed->getPageType())->getReplacedValue());
@@ -37,7 +38,7 @@ class CreatePageFeedsRoutine extends AbstractRoutine
                     $f->displayAreaContent($feed->getContentTypeArea());
                 }
                 $f->save();
-                $logger->logPublished($feed, $f);
+                $logger->logPublishComplete($feed, $f);
             } else {
                 $logger->logSkipped($feed);
             }

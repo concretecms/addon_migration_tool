@@ -15,10 +15,16 @@ class PageTypeFormatter extends AbstractStandardFormatter
         return t('Page type %s already exists.', $object->getName());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Page type %s published.', $object->getName());
+        return t('Installingn page type %s.', $object->getName());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Page type %s installed.', $object->getName());
+    }
+
 
 
 }

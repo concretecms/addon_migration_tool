@@ -15,10 +15,16 @@ class TreeFormatter extends AbstractStandardFormatter
         return t('Tree %s already exists.', $object->getName());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Installing tree %s.', $object->getName());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         return t('Tree %s created.', $object->getName());
     }
+
 
 
 }

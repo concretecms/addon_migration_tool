@@ -15,10 +15,16 @@ class SiteFormatter extends AbstractStandardFormatter
         return t('Site %s (%s) already exists.', $object->getName(), $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Creating site %s (%s).', $object->getName(),  $object->getHandle());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         return t('Site %s (%s) created.', $object->getName(),  $object->getHandle());
     }
+
 
 
 }

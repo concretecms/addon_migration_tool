@@ -14,10 +14,16 @@ class BannedWordFormatter extends AbstractStandardFormatter
         return t('Banned word %s already imported.', $object->getWord());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Banned word %s published.', $object->getWord());
+        return t('Began installing banned word %s.', $object->getWord());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Banned word %s installed.', $object->getWord());
+    }
+
 
 
 }

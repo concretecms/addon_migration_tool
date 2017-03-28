@@ -22,6 +22,7 @@ class CreatePageTypesRoutine extends AbstractRoutine
 
         foreach ($types->getTypes() as $type) {
             if (!$type->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($type);
                 $pkg = null;
                 if ($type->getPackage()) {
                     $pkg = \Package::getByHandle($type->getPackage());
@@ -64,7 +65,7 @@ class CreatePageTypesRoutine extends AbstractRoutine
                         $setControl->updateFormLayoutSetControlDescription($controlEntity->getDescription());
                     }
                 }
-                $logger->logPublished($type, $pageType);
+                $logger->logPublishComplete($type, $pageType);
             } else {
                 $logger->logSkipped($type);
             }

@@ -16,7 +16,12 @@ class StackFolderFormatter extends AbstractStandardFormatter
         return t('Stack Folder %s (%s) already exists.', $object->getName(), $object->getPath());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Creating Stack Folder %s (%s).', $object->getName(), $object->getPath());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         $a = new Link(
             \URL::to('/dashboard/blocks/stacks', 'view_details', $object->getPublishedPageID()),

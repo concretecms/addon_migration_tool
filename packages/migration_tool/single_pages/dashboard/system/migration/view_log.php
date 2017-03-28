@@ -49,17 +49,17 @@ $dateHelper = new \Concrete\Core\Localization\Service\Date();
             </tr>
 
             <?php foreach($entries as $entry) {
+                $formatter = $entry->getEntryFormatter();
                 $object = $entry->getObject();
-                $formatter = $object->getLogFormatter();
                 ?>
                 <tr>
                     <td style="white-space: nowrap">
                         <?=$entry->getTimestamp() ? $dateHelper->formatTime($entry->getTimestamp(), 'long') : t('N/A') ?>
                     </td>
-                    <td style="white-space: nowrap"><?=$formatter->getEntryStatusElement($entry)?></td>
+                    <td style="white-space: nowrap"><?=$formatter->getEntryStatusElement($object)?></td>
                     <td width="100%">
                         <?php
-                            print $formatter->getDescriptionElement($entry);
+                            print $formatter->getDescriptionElement($object);
                         ?>
                     </td>
                 </tr>

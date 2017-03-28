@@ -19,8 +19,9 @@ class CreateBannedWordsRoutine extends AbstractRoutine
 
         foreach ($words->getWords() as $word) {
             if (!$word->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($word);
                 BannedWord::add(str_rot13($word->getWord()));
-                $logger->logPublished($word);
+                $logger->logPublishComplete($word);
             } else {
                 $logger->logSkipped($word);
             }

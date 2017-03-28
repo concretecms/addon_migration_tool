@@ -15,10 +15,16 @@ class PageFeedFormatter extends AbstractStandardFormatter
         return t('Page feed %s (%s) already exists.', $object->getTitle(), $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Creating page feed %s (%s).', $object->getTitle(),  $object->getHandle());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         return t('Page feed %s (%s) created.', $object->getTitle(),  $object->getHandle());
     }
+
 
 
 }

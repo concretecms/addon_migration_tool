@@ -17,8 +17,14 @@ class CaptchaFormatter extends AbstractStandardFormatter
 
     public function getPublishedDescription(LoggableObject $object)
     {
-        return t('Captcha %s published.', $object->getHandle());
+        return t('Installing captcha %s.', $object->getHandle());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Captcha %s installed.', $object->getHandle());
+    }
+
 
 
 }

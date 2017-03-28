@@ -15,10 +15,16 @@ class ThumbnailTypeFormatter extends AbstractStandardFormatter
         return t('Thumbnail type %s (%s) already exists.', $object->getName(), $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Thumbnail type %s (%s) published.', $object->getName(),  $object->getHandle());
+        return t('Installing thumbnail type %s (%s).', $object->getName(),  $object->getHandle());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Thumbnail type %s (%s) installed.', $object->getName(),  $object->getHandle());
+    }
+
 
 
 }

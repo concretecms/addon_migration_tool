@@ -19,12 +19,13 @@ class CreateSocialLinksRoutine extends AbstractRoutine
 
         foreach ($links->getLinks() as $link) {
             if (!$link->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($link);
                 $l = new Link();
                 $l->setServiceHandle($link->getService());
                 $l->setSite($batch->getSite());
                 $l->setURL($link->getURL());
                 $l->save();
-                $logger->logPublished($link, $l);
+                $logger->logPublishComplete($link, $l);
             } else {
                 $logger->logSkipped($link);
             }

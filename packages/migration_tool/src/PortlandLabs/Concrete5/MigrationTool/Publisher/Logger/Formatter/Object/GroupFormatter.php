@@ -15,10 +15,16 @@ class GroupFormatter extends AbstractStandardFormatter
         return t('Group %s (Path: %s) already exists.', $object->getName(), $object->getPath());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Group %s (Path: %s) published.', $object->getName(), $object->getPath());
+        return t('Installing Group %s (Path: %s) published.', $object->getName(), $object->getPath());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Group %s (Path: %s) installed.', $object->getName(), $object->getPath());
+    }
+
 
 
 }

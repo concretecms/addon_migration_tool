@@ -31,6 +31,7 @@ class CreateStackStructureRoutineAction extends AbstractPageAction
     {
         $parent = null;
         $stack = $this->page;
+        $logger->logPublishStarted($stack);
         if ($stack->getPath() || $stack->getName()) {
             if ($stack->getPath() != '') {
                 $lastSlash = strrpos($stack->getPath(), '/');
@@ -45,7 +46,7 @@ class CreateStackStructureRoutineAction extends AbstractPageAction
                     $folder = \Concrete\Core\Support\Facade\StackFolder::getByPath($stack->getName(), $batch->getSite()->getSiteTreeObject());
                     if (!is_object($folder)) {
                         $folder = \Concrete\Core\Support\Facade\StackFolder::add($stack->getName(), $parent);
-                        $logger->logPublished($stack, $folder);
+                        $logger->logPublishComplete($stack, $folder);
                     } else {
                         $logger->logSkipped($stack);
                     }
@@ -55,11 +56,11 @@ class CreateStackStructureRoutineAction extends AbstractPageAction
                     if (!is_object($s)) {
                         if (method_exists('\Concrete\Core\Page\Stack\Stack', 'addGlobalArea')) {
                             $s = Stack::addGlobalArea($stack->getName(), $batch->getSite()->getSiteTreeObject());
-                            $logger->logPublished($stack, $s);
+                            $logger->logPublishComplete($stack, $s);
                         } else {
                             //legacy
                             $s = Stack::addStack($stack->getName(), 'global_area');
-                            $logger->logPublished($stack, $s);
+                            $logger->logPublishComplete($stack, $s);
                         }
                     }
                     break;
@@ -69,7 +70,7 @@ class CreateStackStructureRoutineAction extends AbstractPageAction
                         $s = Stack::getByPath($stack->getPath(), 'RECENT', $batch->getSite()->getSiteTreeObject());
                         if (!is_object($s)) {
                             $s = Stack::addStack($stack->getName(), $parent);
-                            $logger->logPublished($stack, $s);
+                            $logger->logPublishComplete($stack, $s);
                         } else {
                             $logger->logSkipped($stack);
                         }
@@ -78,7 +79,7 @@ class CreateStackStructureRoutineAction extends AbstractPageAction
                         if (!is_object($s)) {
                             // legacy, so no folder support
                             $s = Stack::addStack($stack->getName());
-                            $logger->logPublished($stack, $s);
+                            $logger->logPublishComplete($stack, $s);
                         } else {
                             $logger->logSkipped($stack);
                         }

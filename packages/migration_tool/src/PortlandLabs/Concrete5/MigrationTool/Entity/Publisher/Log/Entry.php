@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log;
 
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\Entry\FormatterInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\LoggableObject;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -87,6 +88,11 @@ abstract class Entry
     {
         $this->timestamp = $timestamp;
     }
+
+    /**
+     * @return FormatterInterface
+     */
+    abstract public function getEntryFormatter();
 
 
 

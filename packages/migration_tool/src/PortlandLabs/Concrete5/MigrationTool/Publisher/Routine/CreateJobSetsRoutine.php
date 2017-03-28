@@ -19,6 +19,7 @@ class CreateJobSetsRoutine extends AbstractRoutine
 
         foreach ($sets->getSets() as $set) {
             if (!$set->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($set);
                 $pkg = null;
                 if ($set->getPackage()) {
                     $pkg = \Package::getByHandle($set->getPackage());
@@ -31,7 +32,7 @@ class CreateJobSetsRoutine extends AbstractRoutine
                         $set->addJob($j);
                     }
                 }
-                $logger->logPublished($set);
+                $logger->logPublishComplete($set);
             } else {
                 $logger->logSkipped($set);
             }

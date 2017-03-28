@@ -19,6 +19,7 @@ class CreateCaptchaLibrariesRoutine extends AbstractRoutine
 
         foreach ($libraries->getLibraries() as $library) {
             if (!$library->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($library);
                 $pkg = null;
                 if ($library->getPackage()) {
                     $pkg = \Package::getByHandle($library->getPackage());
@@ -27,9 +28,9 @@ class CreateCaptchaLibrariesRoutine extends AbstractRoutine
                 if ($library->getIsActivated()) {
                     $l->activate();
                 }
-                $logger->logPublished($l);
+                $logger->logPublishComplete($library, $l);
             } else {
-                $logger->logSkipped($l);
+                $logger->logSkipped($library);
             }
         }
     }

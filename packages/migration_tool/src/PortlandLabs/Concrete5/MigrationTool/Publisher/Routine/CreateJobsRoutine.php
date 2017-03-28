@@ -19,6 +19,7 @@ class CreateJobsRoutine extends AbstractRoutine
 
         foreach ($jobs->getJobs() as $job) {
             if (!$job->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($job);
                 $pkg = null;
                 if ($job->getPackage()) {
                     $pkg = \Package::getByHandle($job->getPackage());
@@ -28,7 +29,7 @@ class CreateJobsRoutine extends AbstractRoutine
                 } else {
                     Job::installByHandle($job->getHandle());
                 }
-                $logger->logPublished($job);
+                $logger->logPublishComplete($job);
             } else {
                 $logger->logSkipped($job);
             }

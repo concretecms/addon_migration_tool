@@ -15,10 +15,16 @@ class ConversationFlagTypeFormatter extends AbstractStandardFormatter
         return t('Conversation flag type %s (%s) already exists.', $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Converstaion flag type %s (%s) published.', $object->getHandle());
+        return t('Installing conversation flag type %s (%s).', $object->getHandle());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Conversation flag type %s (%s) published.', $object->getHandle());
+    }
+
 
 
 }

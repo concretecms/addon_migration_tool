@@ -28,6 +28,7 @@ class CreateSitesRoutine extends AbstractRoutine
 
         foreach ($sites->getSites() as $site) {
             if (!$site->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($site);
                 $type = $typeService->getByHandle($site->getType());
                 if (is_object($type)) {
                     $theme = Theme::getByID($type->getSiteTypeThemeID());
@@ -51,9 +52,9 @@ class CreateSitesRoutine extends AbstractRoutine
                         }
                     }
                 }
-                $logger->logPublished($site, $siteObject);
+                $logger->logPublishComplete($site, $siteObject);
             } else {
-                $logger->logPublished($site);
+                $logger->logSkipped($site);
             }
         }
     }

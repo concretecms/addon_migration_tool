@@ -19,6 +19,7 @@ class CreateThemesRoutine extends AbstractRoutine
 
         foreach ($themes->getThemes() as $theme) {
             if (!$theme->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($theme);
                 $pkg = null;
                 if ($theme->getPackage()) {
                     $pkg = \Package::getByHandle($theme->getPackage());
@@ -27,7 +28,7 @@ class CreateThemesRoutine extends AbstractRoutine
                 if ($theme->getIsActivated()) {
                     $t->applyToSite();
                 }
-                $logger->logPublished($theme);
+                $logger->logPublishComplete($theme);
             } else {
                 $logger->logSkipped($theme);
             }

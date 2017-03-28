@@ -15,10 +15,16 @@ class AccessEntityTypeFormatter extends AbstractStandardFormatter
         return t('Access entity type %s (%s) already exists.', $object->getName(), $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Access entity type %s (%s) published.', $object->getName(),  $object->getHandle());
+        return t('Began installing access entity type %s (%s).', $object->getName(),  $object->getHandle());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Access entity type %s (%s) installed.', $object->getName(),  $object->getHandle());
+    }
+
 
 
 }

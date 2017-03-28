@@ -15,10 +15,16 @@ class ConfigValueFormatter extends AbstractStandardFormatter
         return t('Config value for key %s already exists.', $object->getConfigKey());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Config value for key %s published.', $object->getConfigKey());
+        return t('Installing config value for key %s.', $object->getConfigKey());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Config value for key %s installed.', $object->getConfigKey());
+    }
+
 
 
 }

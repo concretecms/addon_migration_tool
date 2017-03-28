@@ -46,8 +46,9 @@ class CreateTreesRoutine extends AbstractRoutine
                 }
                 $logger->logSkipped($t);
             } else {
+                $logger->logPublishStarted($t);
                 $tree = Topic::add($name);
-                $logger->logPublished($t, $tree);
+                $logger->logPublishComplete($t, $tree);
             }
             $parent = $tree->getRootTreeNodeObject();
             foreach ($t->getRootNodes() as $node) {

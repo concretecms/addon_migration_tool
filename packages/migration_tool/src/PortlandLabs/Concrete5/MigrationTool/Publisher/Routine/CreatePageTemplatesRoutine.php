@@ -19,12 +19,13 @@ class CreatePageTemplatesRoutine extends AbstractRoutine
 
         foreach ($templates->getTemplates() as $template) {
             if (!$template->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($template);
                 $pkg = null;
                 if ($template->getPackage()) {
                     $pkg = \Package::getByHandle($template->getPackage());
                 }
                 Template::add($template->getHandle(), $template->getName(), $template->getIcon(), $pkg, $template->getIsInternal());
-                $logger->logPublished($template);
+                $logger->logPublishComplete($template);
             } else {
                 $logger->logSkipped($template);
             }

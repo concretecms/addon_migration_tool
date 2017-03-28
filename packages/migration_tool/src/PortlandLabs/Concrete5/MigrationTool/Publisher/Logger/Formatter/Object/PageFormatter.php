@@ -20,10 +20,16 @@ class PageFormatter extends AbstractStandardFormatter
      * @param Page $object
      * @return string
      */
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Creating page %s (Path: %s)', $object->getName(), $object->getBatchPath());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         return t('Page %s (Path: %s) created at ID %s.', $object->getName(), $object->getBatchPath(), $object->getPublishedPageID());
     }
+
 
 
 }

@@ -15,10 +15,16 @@ class ComposerControlTypeFormatter extends AbstractStandardFormatter
         return t('Composer control type %s already exists.', $object->getName());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Composer control type %s created.', $object->getName());
+        return t('Installing composer control type %s.', $object->getName());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Composer control type %s installed.', $object->getName());
+    }
+
 
 
 }

@@ -15,10 +15,16 @@ class ContentEditorSnippetFormatter extends AbstractStandardFormatter
         return t('Content editor snippet %s (%s) already exists.', $object->getName(), $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Content editor snippet %s (%s) published.', $object->getName(),  $object->getHandle());
+        return t('Installing conversation editor snippet %s (%s).', $object->getName(),  $object->getHandle());
     }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
+    {
+        return t('Content editor snippet %s (%s) installed.', $object->getName(),  $object->getHandle());
+    }
+
 
 
 }

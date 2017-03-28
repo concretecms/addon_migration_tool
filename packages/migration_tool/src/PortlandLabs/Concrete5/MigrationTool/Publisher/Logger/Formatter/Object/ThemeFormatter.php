@@ -15,10 +15,16 @@ class ThemeFormatter extends AbstractStandardFormatter
         return t('Theme %s already exists.', $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
+    {
+        return t('Creating theme %s.', $object->getHandle());
+    }
+
+    public function getPublishCompleteDescription(LoggableObject $object)
     {
         return t('Theme %s created.', $object->getHandle());
     }
+
 
 
 }

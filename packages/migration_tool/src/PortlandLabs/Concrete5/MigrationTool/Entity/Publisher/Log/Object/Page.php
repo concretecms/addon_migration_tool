@@ -30,7 +30,7 @@ class Page extends LoggableObject
     /**
      * @ORM\Column(type="integer")
      */
-    protected $cID;
+    protected $cID = 0;
 
 
     /**

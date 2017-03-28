@@ -15,7 +15,7 @@ class CaptchaFormatter extends AbstractStandardFormatter
         return t('Captcha %s already exists.', $object->getHandle());
     }
 
-    public function getPublishedDescription(LoggableObject $object)
+    public function getPublishStartedDescription(LoggableObject $object)
     {
         return t('Installing captcha %s.', $object->getHandle());
     }

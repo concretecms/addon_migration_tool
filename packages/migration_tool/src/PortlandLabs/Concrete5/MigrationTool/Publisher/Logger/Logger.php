@@ -71,6 +71,8 @@ class Logger implements LoggerInterface
     {
         $entry->setLog($this->log);
         $this->log->getEntries()->add($entry);
+        $this->entityManager->persist($this->log);
+        $this->entityManager->flush();
     }
 
     public function logPublishStarted(LoggableInterface $object, $mixed = null)
@@ -80,6 +82,15 @@ class Logger implements LoggerInterface
 
     public function logPublishComplete(LoggableInterface $object, $mixed = null)
     {
+        $lastEntry = $this->log->getEntries()->last();
+        if ($lastEntry && get_class($lastEntry->getObject()) == get_class($object->createPublisherLogObject($mixed))) {
+
+            // Remove the "creating item..." message because it's been successful.
+
+            $lastEntry->setLog(null);
+            $this->entityManager->remove($lastEntry);
+            $this->entityManager->flush();
+        }
         $this->logEntry(new PublishCompleteEntry($object->createPublisherLogObject($mixed)));
     }
 

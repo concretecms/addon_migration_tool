@@ -7,6 +7,7 @@ use Concrete\Core\Permission\Access\Entity\Entity;
 use Concrete\Core\Support\Facade\Facade;
 use Doctrine\ORM\EntityManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Entry;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Log;
@@ -24,6 +25,14 @@ class Logger implements LoggerInterface
     protected $log;
 
     public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
+    public function setEntityManager($entityManager)
     {
         $this->entityManager = $entityManager;
     }
@@ -48,6 +57,16 @@ class Logger implements LoggerInterface
         return $this->log;
     }
 
+    public function logMessage(Message $message)
+    {
+        $entry = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Message();
+        $entry->setMessage($message);
+        $entry->setLog($this->log);
+        $this->log->getMessages()->add($entry);
+        $this->entityManager->persist($this->log);
+        $this->entityManager->flush();
+    }
+
     public function openLog(Batch $batch, User $user = null)
     {
         $log = new Log();
@@ -58,6 +77,7 @@ class Logger implements LoggerInterface
         $this->entityManager->persist($log);
         $this->entityManager->flush();
         $this->logID = $log->getID();
+        $this->log = $log;
     }
 
     public function closeLog(Batch $batch)

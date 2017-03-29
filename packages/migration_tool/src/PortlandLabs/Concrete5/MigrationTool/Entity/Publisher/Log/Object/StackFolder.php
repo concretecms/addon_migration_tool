@@ -7,6 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\Object\Stack
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="MigrationPublisherLogStackFolders")
  */
 class StackFolder extends LoggableObject
 {

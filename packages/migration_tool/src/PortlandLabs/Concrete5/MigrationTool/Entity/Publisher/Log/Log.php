@@ -42,6 +42,12 @@ class Log
     protected $entries;
 
     /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="log", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "ASC"})
+     **/
+    protected $messages;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\User\User")
      * @ORM\JoinColumn(name="uID", referencedColumnName="uID")
      **/
@@ -62,6 +68,7 @@ class Log
     {
         $this->date_started = new \DateTime();
         $this->entries = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     /**
@@ -157,6 +164,22 @@ class Log
     public function setSite($site)
     {
         $this->site = $site;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * @param mixed $messages
+     */
+    public function setMessages($messages)
+    {
+        $this->messages = $messages;
     }
 
     /**

@@ -3,7 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class Message implements \JsonSerializable
+class Message implements \JsonSerializable, \Serializable
 {
     const E_INFO = 1;
     const E_WARNING = 5;
@@ -17,6 +17,22 @@ class Message implements \JsonSerializable
     {
         $this->severity = $severity;
         $this->text = $text;
+    }
+
+    public function serialize()
+    {
+        return serialize([
+            $this->severity,
+            $this->text
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+            $this->severity,
+            $this->text,
+            ) = unserialize($serialized);
     }
 
     /**
@@ -58,7 +74,7 @@ class Message implements \JsonSerializable
 
     public function __toString()
     {
-        return $this->text;
+        return (string) $this->text;
     }
 
     public function jsonSerialize()
@@ -67,4 +83,6 @@ class Message implements \JsonSerializable
 
         return $formatter->jsonSerialize();
     }
+
+
 }

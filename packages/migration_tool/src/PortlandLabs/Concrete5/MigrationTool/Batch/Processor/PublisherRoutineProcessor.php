@@ -33,6 +33,14 @@ class PublisherRoutineProcessor extends ProcessorQueue
          * @var $logger Logger
          */
         $logger->openLog($this->target->getBatch(), $user);
+
+        $validator = \Core::make('migration/batch/validator');
+        $messages = $validator->validate($this->target->getBatch());
+        $formatter = $validator->getFormatter($messages);
+        foreach($formatter->getSortedMessages($messages) as $message) {
+            $logger->logMessage($message);
+        }
+
         $this->target->setLogger($logger);
         parent::process();
     }

@@ -27,10 +27,9 @@ $dateHelper = new \Concrete\Core\Localization\Service\Date();
 
 </div>
 
+<h4 style="margin-top: 0px"><?=t('Log Entries')?></h4>
 
 <?php if (count($entries)) { ?>
-
-    <h3 style="margin-top: 0px"><?=t('Log Entries')?></h3>
 
     <div class="table-responsive">
         <table id="ccm-conversation-messages" class="table table-striped table-bordered">
@@ -73,7 +72,6 @@ $dateHelper = new \Concrete\Core\Localization\Service\Date();
         </table>
     </div>
 
-    <h3><span class="launch-tooltip" title="<?=t('These are not errors while publishing – these are errors that were reported just prior to beginning the publishing process.')?>"><?=t('Original Batch Errors')?></span></h3>
 
 <?php } else { ?>
 
@@ -81,4 +79,19 @@ $dateHelper = new \Concrete\Core\Localization\Service\Date();
 
 <?php } ?>
 
+<h4><span class="launch-tooltip" title="<?=t('These are not errors or messages while publishing – these are messages that were reported just prior to beginning the publishing process.')?>"><?=t('Batch Messages')?></span></h4>
 
+<?php if (count($messages)) { ?>
+
+    <ul class="list-unstyled">
+        <?php foreach($messages as $batchMessage) {
+            $formatter = new \PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageFormatter($batchMessage->getMessage()); ?>
+            <li class="text-<?=$formatter->getLevelClass()?>"><i class="<?=$formatter->getIconClass()?>"></i> <?=$batchMessage->getMessage()->getText()?></li>
+        <?php } ?>
+    </ul>
+
+<?php } else { ?>
+
+    <p><?=t('There are no messages in this log.')?></p>
+
+<?php } ?>

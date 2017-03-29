@@ -19,7 +19,7 @@ trait StackTrait
     /**
      * @ORM\Column(type="integer")
      */
-    protected $cID;
+    protected $cID = 0;
 
     /**
      * @return mixed

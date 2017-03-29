@@ -17,7 +17,7 @@ class FatalErrorEntry extends Entry
 {
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $message = '';
 

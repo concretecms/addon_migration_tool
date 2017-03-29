@@ -36,7 +36,7 @@ class ValidateAreasTask implements TaskInterface
 
                 if (isset($batchTemplate) && is_object($batchTemplate)) {
                     $action->getTarget()->addMessage(
-                        new Message(t('Area <strong>%s</strong> does not exist in site. If the area is page of the new page template this message can be disregarded.', $item->getIdentifier()), Message::E_INFO)
+                        new Message(t('Area <strong>%s</strong> does not exist in site. If this area is in a new page template this message can be disregarded.', $item->getIdentifier()), Message::E_INFO)
                     );
                 } else {
                     $action->getTarget()->addMessage(

@@ -40,6 +40,7 @@ class Logs extends DashboardPageController
         if (is_object($log)) {
             $this->set('log', $log);
             $this->set('entries', $log->getEntries());
+            $this->set('messages', $log->getMessages());
             $this->set('pageTitle', t('View Log'));
             $this->render('/dashboard/system/migration/view_log');
         } else {

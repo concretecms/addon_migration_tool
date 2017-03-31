@@ -81,11 +81,16 @@ class Controller extends Package
         parent::uninstall();
         $db = \Database::connection();
         $db->Execute('SET foreign_key_checks = 0');
+        $db->Execute('drop table MigrationContentMapperTargetItems');
         $tables = $db->GetCol("show tables like 'MigrationImport%'");
         foreach ($tables as $table) {
             $db->Execute('drop table ' . $table);
         }
         $tables = $db->GetCol("show tables like 'MigrationExport%'");
+        foreach ($tables as $table) {
+            $db->Execute('drop table ' . $table);
+        }
+        $tables = $db->GetCol("show tables like 'MigrationPublisher%'");
         foreach ($tables as $table) {
             $db->Execute('drop table ' . $table);
         }

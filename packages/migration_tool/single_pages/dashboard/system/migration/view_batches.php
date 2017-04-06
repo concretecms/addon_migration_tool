@@ -64,6 +64,7 @@ $dh = Core::make('helper/date');
                 <?=Loader::helper('form')->text('name', '')?>
             </div>
 
+            <?php if ($batchType == 'import') { ?>
             <fieldset>
                 <legend><?=t('Advanced')?></legend>
                 <div class="form-group">
@@ -71,6 +72,7 @@ $dh = Core::make('helper/date');
                     <?=Loader::helper('form')->file('mappingFile')?>
                 </div>
             </fieldset>
+            <?php } ?>
         </form>
         <div class="dialog-buttons">
             <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>

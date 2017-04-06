@@ -55,6 +55,7 @@ class Export extends DashboardPageController
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch');
         $batches = $r->findAll(array(), array('date' => 'desc'));
         $this->set('batches', $batches);
+        $this->set('batchType', 'export');
         $this->set('batchEmptyMessage', t('You have not created any export batches.'));
         $this->render('/dashboard/system/migration/view_batches');
     }

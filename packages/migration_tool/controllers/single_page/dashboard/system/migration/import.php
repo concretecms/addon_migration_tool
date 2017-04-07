@@ -14,6 +14,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterf
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\PresetManager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Site\TreeSiteJsonFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\User\TreeUserJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublisherRoutineProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublishTarget;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
@@ -331,6 +332,7 @@ class Import extends DashboardPageController
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batches = $r->findAll(array(), array('date' => 'desc'));
         $this->set('batches', $batches);
+        $this->set('batchType', 'import');
         $this->set('sites', $this->app->make('site')->getList());
         $this->set('batchEmptyMessage', t('You have not created any import batches. Create a batch and add content records to it.'));
         $this->render('/dashboard/system/migration/view_batches');
@@ -558,6 +560,19 @@ class Import extends DashboardPageController
             return new JsonResponse($formatter);
         }
     }
+
+    public function load_batch_user_data()
+    {
+        session_write_close();
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\User');
+        $user = $r->findOneById($this->request->get('id'));
+        if (is_object($user)) {
+            $formatter = new TreeUserJsonFormatter($user);
+
+            return new JsonResponse($formatter);
+        }
+    }
+
 
 
     public function update_page_path()

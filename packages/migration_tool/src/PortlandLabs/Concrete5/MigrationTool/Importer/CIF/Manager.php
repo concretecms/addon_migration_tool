@@ -16,6 +16,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationEditor
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationFlagType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationRatingType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Group;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\User;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Job;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\JobSet;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Package;
@@ -45,6 +46,11 @@ class Manager extends CoreManager
     public function createPageDriver()
     {
         return new Page();
+    }
+
+    public function createUserDriver()
+    {
+        return new User();
     }
 
     public function createAttributeKeyDriver()
@@ -239,6 +245,7 @@ class Manager extends CoreManager
         $this->driver('conversation_rating_type');
         $this->driver('attribute_key');
         $this->driver('attribute_set');
+        $this->driver('user');
         $this->driver('job');
         $this->driver('job_set');
         $this->driver('block_type');

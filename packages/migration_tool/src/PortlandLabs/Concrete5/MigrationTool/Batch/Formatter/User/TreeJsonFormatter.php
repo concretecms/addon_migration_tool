@@ -1,5 +1,5 @@
 <?php
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Site;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\User;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AbstractTreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
@@ -11,18 +11,17 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
     public function jsonSerialize()
     {
         $response = array();
-        foreach ($this->collection->getSites() as $site) {
-
-            $messages = $this->validator->validate($site);
+        foreach ($this->collection->getUsers() as $user) {
+            $messages = $this->validator->validate($user);
             $formatter = $messages->getFormatter();
 
             $node = new \stdClass();
-            $node->title = $site->getName();
+            $node->title = $user->getName();
             $node->lazy = true;
             $node->nodetype = 'site';
             $node->extraClasses = 'migration-node-main';
 
-            $publisherValidator = $site->getPublisherValidator();
+            $publisherValidator = $user->getPublisherValidator();
             $skipItem = $publisherValidator->skipItem();
             if ($skipItem) {
                 $node->extraClasses .= ' migration-item-skipped';
@@ -30,9 +29,8 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
                 $node->statusClass = $formatter->getCollectionStatusIconClass();
             }
 
-            $node->id = $site->getId();
-            $node->siteHandle = $site->getHandle();
-            $node->siteType = $site->getType();
+            $node->id = $user->getId();
+            $node->uEmail = $user->getEmail();
             $response[] = $node;
         }
 

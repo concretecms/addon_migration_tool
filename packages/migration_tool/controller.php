@@ -19,6 +19,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateRefer
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateReferencedStacksTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateUsersTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\UserValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Site\SiteValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchRecordsTask;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Value\Manager as AttributeValueManager;
@@ -41,7 +42,7 @@ class Controller extends Package
 {
     protected $pkgHandle = 'migration_tool';
     protected $appVersionRequired = '8.2.0a1';
-    protected $pkgVersion = '0.7.0';
+    protected $pkgVersion = '0.7.5';
     protected $pkgAutoloaderMapCoreExtensions = true;
     protected $pkgAutoloaderRegistries = array(
         'src/PortlandLabs/Concrete5/MigrationTool' => '\PortlandLabs\Concrete5\MigrationTool',
@@ -147,6 +148,15 @@ class Controller extends Package
                 return $v;
             }
         });
+
+        \Core::bind('migration/batch/user/validator', function ($app, $batch) {
+            if (isset($batch[0])) {
+                $v = new UserValidator($batch[0]);
+                $v->registerTask(new ValidateAttributesTask());
+                return $v;
+            }
+        });
+
 
         \Core::bindShared('migration/batch/validator', function () {
             $v = new BatchValidator();

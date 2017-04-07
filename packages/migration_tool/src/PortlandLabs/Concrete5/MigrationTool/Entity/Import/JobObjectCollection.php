@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class JobObjectCollection extends ObjectCollection
 {
     /**
-     * @ORM\OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Job", mappedBy="collection", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Job", mappedBy="collection", cascade={"persist", "remove"})
      **/
     public $jobs;
 
@@ -22,12 +22,21 @@ class JobObjectCollection extends ObjectCollection
     }
 
     /**
-     * @return ArrayCollection
+     * @return mixed
      */
     public function getJobs()
     {
         return $this->jobs;
     }
+
+    /**
+     * @param mixed $jobs
+     */
+    public function setJobs($jobs)
+    {
+        $this->jobs = $jobs;
+    }
+
 
     public function getFormatter()
     {

@@ -8,6 +8,7 @@ use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Concrete\Core\Page\PageList;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Exporter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
@@ -86,8 +87,18 @@ class Import extends DashboardPageController
         $this->view();
     }
 
+    protected function clearBatchMappings($batch)
+    {
+        $r = $this->entityManager->getRepository(BatchTargetItem::class);
+        foreach($r->findByBatch($batch) as $item) {
+            $this->entityManager->remove($item);
+        }
+        $this->entityManager->flush();
+    }
+
     protected function clearContent($batch)
     {
+        $this->clearBatchMappings($batch);
         foreach ($batch->getObjectCollections() as $collection) {
             $this->entityManager->remove($collection);
         }
@@ -97,6 +108,23 @@ class Import extends DashboardPageController
             $this->entityManager->remove($targetItem);
         }
         $this->entityManager->flush();
+    }
+
+    public function clear_batch_mappings()
+    {
+        if (!$this->token->validate('clear_batch_mappings')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+        if (!$this->error->has()) {
+            $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+            $batch = $r->findOneById($this->request->request->get('id'));
+            if (is_object($batch)) {
+                $this->clearBatchMappings($batch);
+                $this->flash('success', t('Batch mappings cleared successfully. You may now rescan the batch.'));
+                $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
+            }
+        }
+        $this->view();
     }
 
     public function clear_batch()

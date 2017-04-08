@@ -60,16 +60,41 @@ class User implements MapperInterface
         $user = UserInfo::getByUserName($item->getIdentifier());
         if (is_object($user)) {
             $targetItem = new TargetItem($this);
-            $targetItem->setItemId($user->getUserID());
+            $targetItem->setItemId($user->getUserName());
             $targetItem->setItemName($user->getUserDisplayName());
 
             return $targetItem;
+        } else { // we check the current batch.
+            $collection = $batch->getObjectCollection('user');
+            if (is_object($collection)) {
+                foreach ($collection->getUsers() as $user) {
+                    if ($user->getName() == $item->getIdentifier()) {
+                        $targetItem = new TargetItem($this);
+                        $targetItem->setItemId($user->getName());
+                        $targetItem->setItemName($user->getName());
+                        return $targetItem;
+                    }
+                }
+            }
         }
     }
 
     public function getBatchTargetItems(BatchInterface $batch)
     {
-        return array();
+        $collection = $batch->getObjectCollection('user');
+        $items = array();
+        if ($collection) {
+            foreach ($collection->getUsers() as $user) {
+                if (!$user->getPublisherValidator()->skipItem()) {
+                    $item = new TargetItem($this);
+                    $item->setItemId($user->getName());
+                    $item->setItemName($user->getName());
+                    $items[] = $item;
+                }
+            }
+        }
+
+        return $items;
     }
 
     public function getCorePropertyTargetItems(BatchInterface $batch)
@@ -85,7 +110,7 @@ class User implements MapperInterface
         $items = array();
         foreach ($users as $user) {
             $item = new TargetItem($this);
-            $item->setItemId($user->getUserID());
+            $item->setItemId($user->getUserName());
             $item->setItemName($user->getUserDisplayName());
             $items[] = $item;
         }
@@ -95,6 +120,6 @@ class User implements MapperInterface
 
     public function getTargetItemContentObject(TargetItemInterface $targetItem)
     {
-        return \UserInfo::getByID($targetItem->getItemID());
+        return \UserInfo::getByUserName($targetItem->getItemID());
     }
 }

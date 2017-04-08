@@ -8,6 +8,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\UserAttribute;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\UserGroup;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\UserObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\ElementParserInterface;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Sanitizer\PagePathSanitizer;
@@ -33,16 +34,36 @@ class User implements ElementParserInterface
                 $user->setName((string) $node['username']);
                 $user->setEmail((string) $node['email']);
 
+                if ((string) $node['inactive']) {
+                    $user->setIsActive(false);
+                }
+
+                if ((string) $node['unvalidated']) {
+                    $user->setIsValidated(false);
+                }
+
+                $user->setTimezone((string) $node['timezone']);
+                $user->setLanguage((string) $node['language']);
+
                 // Parse attributes
                 if ($node->attributes->attributekey) {
-                    $i = 0;
                     foreach ($node->attributes->attributekey as $keyNode) {
                         $attribute = $this->parseAttribute($keyNode);
                         $userAttribute = new UserAttribute();
                         $userAttribute->setAttribute($attribute);
                         $userAttribute->setUser($user);
                         $user->getAttributes()->add($userAttribute);
-                        ++$i;
+                    }
+                }
+
+                // Groups
+                if ($node->groups->group) {
+                    foreach ($node->groups->group as $groupNode) {
+                        $userGroup = new UserGroup();
+                        $userGroup->setName((string) $groupNode['name']);
+                        $userGroup->setPath((string) $groupNode['path']);
+                        $userGroup->setUser($user);
+                        $user->getGroups()->add($userGroup);
                     }
                 }
 

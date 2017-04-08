@@ -19,6 +19,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateRefer
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateReferencedStacksTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateUsersTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\Task\ValidateGroupsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\UserValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Site\SiteValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchRecordsTask;
@@ -153,6 +154,7 @@ class Controller extends Package
             if (isset($batch[0])) {
                 $v = new UserValidator($batch[0]);
                 $v->registerTask(new ValidateAttributesTask());
+                $v->registerTask(new ValidateGroupsTask());
                 return $v;
             }
         });

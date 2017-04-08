@@ -23,6 +23,8 @@ $dh = Core::make('helper/date');
 
                     } ?>
                     <li class="divider"></li>
+                    <li><a href="javascript:void(0)" data-dialog="clear-batch-mappings"
+                           data-dialog-title="<?= t('Clear Batch Mappings') ?>" class=""><?= t("Clear Batch Mappings") ?></a>
                     <li><a href="javascript:void(0)" data-action="rescan-batch"
                            data-dialog-title="<?= t('Rescan Batch') ?>" class=""><?= t("Rescan Batch") ?></a>
                 </ul>
@@ -35,10 +37,12 @@ $dh = Core::make('helper/date');
                 </button>
                 <ul class="dropdown-menu">
                     <li><a href="<?=URL::to('/dashboard/system/migration/import/settings/basics', $batch->getID())?>" class=""><?= t("Basics") ?></a>
-                    <li class="divider"></li>
-                    <li class="dropdown-header"><?= t('Content Types') ?></li>
-                    <?php foreach($settings as $setting) { ?>
-                    <li><a href="<?=URL::to($setting, $batch->getID())?>" class=""><?= t($setting->getCollectionName())?></a>
+                    <?php if (count($settings)) { ?>
+                        <li class="divider"></li>
+                        <li class="dropdown-header"><?= t('Content Types') ?></li>
+                        <?php foreach($settings as $setting) { ?>
+                        <li><a href="<?=URL::to($setting, $batch->getID())?>" class=""><?= t($setting->getCollectionName())?></a>
+                        <?php } ?>
                     <?php } ?>
                 </ul>
             </div>
@@ -105,6 +109,21 @@ $dh = Core::make('helper/date');
                 </div>
             </form>
         </div>
+
+        <div id="ccm-dialog-clear-batch-mappings" class="ccm-ui">
+            <form method="post" action="<?= $view->action('clear_batch_mappings') ?>">
+                <?= Loader::helper("validation/token")->output('clear_batch_mappings') ?>
+                <input type="hidden" name="id" value="<?= $batch->getID() ?>">
+                <p><?= t('Are you sure you reset all mapped content items for this batch? Any presets you have uploaded will not be removed.') ?></p>
+                <div class="dialog-buttons">
+                    <button class="btn btn-default pull-left"
+                            onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
+                    <button class="btn btn-danger pull-right"
+                            onclick="$('#ccm-dialog-clear-batch-mappings form').submit()"><?= t('Clear Batch Mappings') ?></button>
+                </div>
+            </form>
+        </div>
+
 
         <div id="ccm-dialog-create-content" class="ccm-ui">
             <form method="post">

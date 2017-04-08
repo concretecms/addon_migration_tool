@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
+use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
@@ -93,6 +94,22 @@ class TargetItemList
         }
 
         return $targetItem[0];
+    }
+
+    public function getBatchTargetItemFromTargetItem(TargetItem $item)
+    {
+        $query = $this->entityManager->createQuery(
+            "select bti from {$this->repository} bti
+            join PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem ti
+            where bti.batch = :batch and ti = :targetItem"
+        );
+        $query->setParameter('batch', $this->batch);
+        $query->setParameter('targetItem', $item);
+        $targetItem = $query->getResult();
+        if (is_object($targetItem[0])) {
+            return $targetItem[0];
+        }
+        return null;
     }
 
     public function getTargetItem($identifier)

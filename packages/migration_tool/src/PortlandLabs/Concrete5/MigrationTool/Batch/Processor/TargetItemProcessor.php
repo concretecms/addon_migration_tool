@@ -18,4 +18,5 @@ class TargetItemProcessor extends ProcessorQueue
         $this->setQueue(Queue::get('target_item_processor'));
         $this->registerTask(new MapContentTypesTask());
     }
+
 }

@@ -38,6 +38,43 @@ class TreeUserJsonFormatter implements \JsonSerializable
             $nodes[] = $messageHolderNode;
         }
 
+        $detailsHolderNode = new \stdClass();
+        $detailsHolderNode->icon = 'fa fa-user';
+        $detailsHolderNode->title = t('Details');
+        $detailsHolderNode->children = array();
+
+        $detailNode = new \stdClass();
+        $detailNode->title = t('Username');
+        $detailNode->itemvalue = $user->getName();
+        $detailsHolderNode->children[] = $detailNode;
+
+        $detailNode = new \stdClass();
+        $detailNode->title = t('Email');
+        $detailNode->itemvalue = $user->getEmail();
+        $detailsHolderNode->children[] = $detailNode;
+
+        $detailNode = new \stdClass();
+        $detailNode->title = t('Active');
+        $detailNode->itemvalue = $user->getIsActive() ? t('Yes') : t('No');
+        $detailsHolderNode->children[] = $detailNode;
+
+        $detailNode = new \stdClass();
+        $detailNode->title = t('Validated');
+        $detailNode->itemvalue = $user->getIsValidated() ? t('Yes') : t('No');
+        $detailsHolderNode->children[] = $detailNode;
+
+        $detailNode = new \stdClass();
+        $detailNode->title = t('Timezone');
+        $detailNode->itemvalue = $user->getTimezone();
+        $detailsHolderNode->children[] = $detailNode;
+
+        $detailNode = new \stdClass();
+        $detailNode->title = t('Language');
+        $detailNode->itemvalue = $user->getLanguage();
+        $detailsHolderNode->children[] = $detailNode;
+
+        $nodes[] = $detailsHolderNode;
+
         if ($user->getAttributes()->count()) {
             $attributeHolderNode = new \stdClass();
             $attributeHolderNode->icon = 'fa fa-cogs';
@@ -53,6 +90,24 @@ class TreeUserJsonFormatter implements \JsonSerializable
             }
             $nodes[] = $attributeHolderNode;
         }
+
+        if ($user->getGroups()->count()) {
+            $groupHolderNode = new \stdClass();
+            $groupHolderNode->icon = 'fa fa-users';
+            $groupHolderNode->title = t('Groups');
+            $groupHolderNode->children = array();
+            foreach ($user->getGroups() as $group) {
+                $groupNode = new \stdClass();
+                if ($group->getPath()) {
+                    $groupNode->title = $group->getPath();
+                } else {
+                    $groupNode->title = $group->getName();
+                }
+                $groupHolderNode->children[] = $groupNode;
+            }
+            $nodes[] = $groupHolderNode;
+        }
+
 
         return $nodes;
     }

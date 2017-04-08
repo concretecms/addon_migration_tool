@@ -11,6 +11,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\ComposerOutput
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageTemplate;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageType;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\User;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\UserGroup;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 
@@ -31,6 +32,11 @@ class Manager extends CoreManager implements MapperManagerInterface
     protected function createPageAttributeDriver()
     {
         return new PageAttribute();
+    }
+
+    protected function createUserGroupDriver()
+    {
+        return new UserGroup();
     }
 
     protected function createSiteAttributeDriver()
@@ -84,5 +90,6 @@ class Manager extends CoreManager implements MapperManagerInterface
         $this->driver('page_template');
         $this->driver('page_type');
         $this->driver('user');
+        $this->driver('user_group');
     }
 }

@@ -127,6 +127,45 @@ class Import extends DashboardPageController
         $this->view();
     }
 
+    public function delete_batch_items()
+    {
+        if (!$this->token->validate('delete_batch_items')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+        if (!$this->error->has()) {
+            $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+            $batch = $r->findOneById($this->request->request->get('id'));
+
+            if (is_object($batch)) {
+                foreach($_REQUEST['item'] as $type => $items) {
+                    $existingCollection = $batch->getObjectCollection($type);
+                    if (is_object($existingCollection)) {
+                        foreach($items as $id) {
+                            $record = $existingCollection->getRecordByID($id);
+                            if ($record) {
+                                $this->entityManager->remove($record);
+                            }
+                        }
+                    }
+                }
+                $this->entityManager->flush();
+
+                // clear empty object collections
+                foreach ($batch->getObjectCollections() as $collection) {
+                    if (count($collection->getRecords()) < 1) {
+                        $this->entityManager->remove($collection);
+                    }
+                }
+
+                $this->entityManager->flush();
+                $this->flash('success', t('Items removed successfully.'));
+                return new JsonResponse();
+            }
+        }
+        $this->view();
+    }
+
+
     public function clear_batch()
     {
         if (!$this->token->validate('clear_batch')) {

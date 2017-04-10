@@ -2,6 +2,7 @@
     <thead>
     <tr>
         <th><?=t('Handle')?></th>
+        <th width="1"><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>
@@ -13,6 +14,7 @@
 }
     ?>>
         <td><?=$type->getHandle()?></td>
+        <td><input data-checkbox="select-item" type="checkbox" name="item[conversation_flag_type][]" value="<?=$type->getID()?>"></td>
     </tr>
     <?php 
 } ?>

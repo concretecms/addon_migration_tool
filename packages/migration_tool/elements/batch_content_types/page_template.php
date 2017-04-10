@@ -4,6 +4,7 @@
         <th><?=t('Handle')?></th>
         <th style="width: 100%"><?=t('Name')?></th>
         <th><?=t('Icon')?></th>
+        <th width="1"><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>
@@ -17,7 +18,8 @@
         <td><?=$template->getHandle()?></td>
         <td><?=$template->getName()?></td>
         <td><?=$template->getIcon()?></td>
-    <?php 
+        <td><input data-checkbox="select-item" type="checkbox" name="item[page_template][]" value="<?=$template->getID()?>"></td>
+    <?php
 } ?>
     </tbody>
 </table>

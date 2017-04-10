@@ -11,7 +11,7 @@ $dh = Core::make('helper/date');
     </span>
 </div>
 
-<div style="display: none">
+<div style="display: none" data-dialog-wrapper="delete-files">
 
     <div id="ccm-dialog-delete-files" class="ccm-ui">
         <form method="post" action="<?=$view->action('delete_files')?>">
@@ -65,16 +65,6 @@ $dh = Core::make('helper/date');
 <script type="text/javascript">
 
 $(function() {
-    $('[data-dialog]').on('click', function() {
-        var element = '#ccm-dialog-' + $(this).attr('data-dialog');
-        jQuery.fn.dialog.open({
-            element: element,
-            modal: true,
-            width: 320,
-            title: $(this).attr('data-dialog-title'),
-            height: 'auto'
-        });
-    });
     var $uploader = $('span[data-upload-action]'),
         uploadAction = $uploader.attr('data-upload-action'),
         files = [], errors = [];

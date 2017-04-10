@@ -3,6 +3,7 @@
     <tr>
         <th><?=t('Handle')?></th>
         <th><?=t('Activated')?></th>
+        <th width="1"><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>
@@ -15,6 +16,7 @@
     ?>>
             <td><?=$theme->getHandle()?></td>
             <td><?=$theme->getIsActivated() ? t("Yes") : t("No") ?></td>
+            <td><input data-checkbox="select-item" type="checkbox" name="item[theme][]" value="<?=$theme->getID()?>"></td>
         </tr>
     <?php 
 } ?>

@@ -2,6 +2,7 @@
     <thead>
     <tr>
         <th><?=t('Word')?></th>
+        <th width="1"><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>
@@ -13,6 +14,7 @@
 }
     ?>>
             <td><?=$word->getWord()?></td>
+            <td><input data-checkbox="select-item" type="checkbox" name="item[banned_word][]" value="<?=$word->getID()?>"></td>
         </tr>
     <?php 
 } ?>

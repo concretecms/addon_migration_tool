@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Processor;
 use Concrete\Core\Foundation\Processor\ProcessorQueue as ProcessorQueue;
 use Concrete\Core\Foundation\Processor\TargetInterface;
 use Concrete\Core\Foundation\Queue\Queue;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\PublishContentTask;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Logger;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggerInterface;
@@ -28,7 +29,11 @@ class PublisherRoutineProcessor extends ProcessorQueue
         $u = new \User();
         $user = $u->getUserInfoObject()->getEntityObject();
 
+        $batchService = \Core::make(BatchService::class);
         $logger = \Core::make(Logger::class);
+
+        $batchService->createImportNode($this->target->getBatch()->getSite());
+
         /**
          * @var $logger Logger
          */

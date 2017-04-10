@@ -4,6 +4,7 @@
         <th><?=t('Handle')?></th>
         <th><?=t('Name')?></th>
         <th><?=t('Categories')?></th>
+        <th width="1"><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>
@@ -17,7 +18,8 @@
         <td><?=$type->getHandle()?></td>
         <td><?=$type->getName()?></td>
         <td><?=implode(', ', $type->getCategories())?></td>
-    <?php 
+        <td><input data-checkbox="select-item" type="checkbox" name="item[attribute_type][]" value="<?=$type->getID()?>"></td>
+    <?php
 } ?>
     </tbody>
 </table>

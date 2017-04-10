@@ -2,6 +2,7 @@
     <thead>
     <tr>
         <th><?=t('Handle')?></th>
+        <th width="1"><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>
@@ -13,7 +14,8 @@
 }
     ?>>
         <td><?=$job->getHandle()?></td>
-    <?php 
+        <td><input data-checkbox="select-item" type="checkbox" name="item[job][]" value="<?=$job->getID()?>"></td>
+    <?php
 } ?>
     </tbody>
 </table>

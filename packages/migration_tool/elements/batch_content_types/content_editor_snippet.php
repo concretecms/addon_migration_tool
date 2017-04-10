@@ -4,6 +4,7 @@
         <th><?=t('Handle')?></th>
         <th><?=t('Name')?></th>
         <th><?=t('Activated')?></th>
+        <th width="1"><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>
@@ -17,6 +18,7 @@
             <td><?=$snippet->getHandle()?></td>
             <td><?=$snippet->getName()?></td>
             <td><?=$snippet->getIsActivated() ? t("Yes") : t("No") ?></td>
+            <td><input data-checkbox="select-item" type="checkbox" name="item[content_editor_snippet][]" value="<?=$snippet->getID()?>"></td>
         </tr>
     <?php 
 } ?>

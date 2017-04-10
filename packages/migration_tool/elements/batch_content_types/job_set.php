@@ -3,6 +3,7 @@
     <tr>
         <th><?=t('Name')?></th>
         <th><?=t('Categories')?></th>
+        <th width="1"><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>
@@ -15,7 +16,8 @@
     ?>>
         <td><?=$set->getName()?></td>
         <td><?=implode(', ', $set->getJobs())?></td>
-        <?php 
+        <td><input data-checkbox="select-item" type="checkbox" name="item[job_set][]" value="<?=$set->getID()?>"></td>
+        <?php
 } ?>
     </tbody>
 </table>

@@ -53,13 +53,15 @@ $dh = Core::make('helper/date');
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
+                    <li class="disabled"><a disabled="disabled" href="javascript:void(0)" data-dialog="delete-batch-items"
+                           data-dialog-title="<?= t('Delete Selected') ?>"><?= t("Delete Selected") ?></a>
+                    </li>
+                    <li class="divider"></li>
                     <li><a href="javascript:void(0)" data-dialog="clear-batch"
-                           data-dialog-title="<?= t('Clear Batch') ?>" class=""><span
-                                class="text-danger"><?= t("Clear Batch") ?></span></a>
+                           data-dialog-title="<?= t('Clear Batch') ?>" class=""><?= t("Clear Batch") ?></a>
                     </li>
                     <li><a href="javascript:void(0)" data-dialog="delete-batch"
-                           data-dialog-title="<?= t('Delete Batch') ?>"><span
-                                class="text-danger"><?= t("Delete Batch") ?></span></a></li>
+                           data-dialog-title="<?= t('Delete Batch') ?>"><?= t("Delete Batch") ?></a></li>
                 </ul>
             </div>
 
@@ -82,6 +84,7 @@ $dh = Core::make('helper/date');
             </div>
         </div>
 
+        <div data-dialog-wrapper="delete-batch"">
         <div id="ccm-dialog-delete-batch" class="ccm-ui">
             <form method="post" action="<?= $view->action('delete_batch') ?>">
                 <?= Loader::helper("validation/token")->output('delete_batch') ?>
@@ -95,7 +98,10 @@ $dh = Core::make('helper/date');
                 </div>
             </form>
         </div>
+        </div>
 
+
+        <div data-dialog-wrapper="clear-batch">
         <div id="ccm-dialog-clear-batch" class="ccm-ui">
             <form method="post" action="<?= $view->action('clear_batch') ?>">
                 <?= Loader::helper("validation/token")->output('clear_batch') ?>
@@ -109,7 +115,26 @@ $dh = Core::make('helper/date');
                 </div>
             </form>
         </div>
+        </div>
 
+        <div data-dialog-wrapper="delete-batch-items">
+        <div id="ccm-dialog-delete-batch-items" class="ccm-ui">
+            <form method="post" action="<?= $view->action('delete_batch_items') ?>">
+                <?= Loader::helper("validation/token")->output('delete_batch_items') ?>
+                <input type="hidden" name="id" value="<?= $batch->getID() ?>">
+                <p><?= t('Are you sure you remove selected content from this import batch? This cannot be undone.') ?></p>
+                <div class="dialog-buttons">
+                    <button class="btn btn-default pull-left"
+                            onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
+                    <button class="btn btn-danger pull-right"
+                            data-action="remove-selected-items"><?= t('Delete Selected') ?></button>
+                </div>
+            </form>
+        </div>
+        </div>
+
+
+        <div data-dialog-wrapper="clear-batch-mappings">
         <div id="ccm-dialog-clear-batch-mappings" class="ccm-ui">
             <form method="post" action="<?= $view->action('clear_batch_mappings') ?>">
                 <?= Loader::helper("validation/token")->output('clear_batch_mappings') ?>
@@ -123,8 +148,10 @@ $dh = Core::make('helper/date');
                 </div>
             </form>
         </div>
+        </div>
 
 
+        <div data-dialog-wrapper="create-content">
         <div id="ccm-dialog-create-content" class="ccm-ui">
             <form method="post">
                 <p data-description="create-content"><?= t('Create site content from the contents of this batch?') ?></p>
@@ -145,8 +172,10 @@ $dh = Core::make('helper/date');
                 </div>
             </form>
         </div>
+        </div>
 
 
+        <div data-dialog-wrapper="add-to-batch">
         <div id="ccm-dialog-add-to-batch" class="ccm-ui">
             <form method="post" action="<?= $view->action('add_content_to_batch') ?>" enctype="multipart/form-data">
                 <?= Loader::helper("validation/token")->output('add_content_to_batch') ?>
@@ -184,6 +213,7 @@ $dh = Core::make('helper/date');
                         onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
                 <button class="btn btn-primary pull-right" data-action="add-content"><?= t('Add Content') ?></button>
             </div>
+        </div>
         </div>
     </div>
 
@@ -309,6 +339,21 @@ $dh = Core::make('helper/date');
                 $('div[data-progress-bar-wrapper=create-content]')
             );
         });
+
+        $('button[data-action=remove-selected-items]').on('click', function (e) {
+            var data = $('input[data-checkbox=select-item]').serializeArray();
+            jQuery.fn.dialog.showLoader();
+            data.push({'name': 'id', 'value': '<?=$batch->getID()?>'});
+            data.push({'name': 'ccm_token', 'value': '<?=Loader::helper('validation/token')->generate('delete_batch_items')?>'});
+            $.concreteAjax({
+                data: data,
+                url: '<?=$view->action('delete_batch_items')?>',
+                success: function() {
+                    window.location.reload();
+                }
+            });
+        });
+
 
         var uploadErrors = [];
 

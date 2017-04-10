@@ -4,6 +4,7 @@
         <col width="*"></col>
         <col width="*"></col>
         <col width="30px"></col>
+        <col width="30px"></col>
     </colgroup>
     <thead>
     <tr>
@@ -11,6 +12,7 @@
         <th><?=t('Handle')?></th>
         <th><?=t('Types')?></th>
         <th></th>
+        <th><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>

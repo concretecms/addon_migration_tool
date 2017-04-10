@@ -3,6 +3,7 @@
     <tr>
         <th><?=t('Name')?></th>
         <th><?=t('Path')?></th>
+        <th width="1"><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>
@@ -15,6 +16,7 @@
     ?>>
         <td><?=$group->getName()?></td>
         <td><?=$group->getPath()?></td>
+        <td><input data-checkbox="select-item" type="checkbox" name="item[group][]" value="<?=$group->getID()?>"></td>
     <?php
 
 } ?>

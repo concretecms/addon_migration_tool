@@ -43,8 +43,8 @@ class Batch implements ValidatorInterface, BatchInterface
     /**
      * @ORM\ManyToMany(targetEntity="ObjectCollection", cascade={"persist", "remove"}))
      * @ORM\JoinTable(name="MigrationImportBatchObjectCollections",
-     *      joinColumns={@ORM\JoinColumn(name="batch_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="collection_id", referencedColumnName="id", unique=true)}
+     *      joinColumns={@ORM\JoinColumn(name="batch_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="collection_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}
      *      )
      **/
     public $collections;

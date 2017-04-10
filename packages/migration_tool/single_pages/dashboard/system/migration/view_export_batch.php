@@ -86,17 +86,6 @@ $dh = Core::make('helper/date');
 
 <script type="text/javascript">
     $(function() {
-        $('a[data-dialog]').on('click', function() {
-            var element = '#ccm-dialog-' + $(this).attr('data-dialog');
-            jQuery.fn.dialog.open({
-                element: element,
-                modal: true,
-                width: 320,
-                title: $(this).attr('data-dialog-title'),
-                height: 'auto'
-            });
-        });
-
         $('input[data-action=select-all]').on('click', function() {
             if ($(this).is(':checked')) {
                 $(this).closest('table').find('tbody input[type=checkbox]:enabled').prop('checked', true);

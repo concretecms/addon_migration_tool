@@ -3,6 +3,7 @@
     <tr>
         <th><?=t('Service')?></th>
         <th><?=t('URL')?></th>
+        <th width="1"><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>
@@ -15,6 +16,7 @@
     ?>>
             <td><?=$link->getService()?></td>
             <td><?=$link->getURL()?></td>
+            <td><input data-checkbox="select-item" type="checkbox" name="item[social_link][]" value="<?=$link->getID()?>"></td>
         </tr>
     <?php 
 } ?>

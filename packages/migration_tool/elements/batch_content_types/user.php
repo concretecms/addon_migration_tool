@@ -3,9 +3,10 @@
         <col width="300"></col>
         <col width="*"></col>
         <col width="30px"></col>
+        <col width="30px"></col>
     </colgroup>
     <thead>
-    <tr> <th><?=t('Username')?></th> <th><?=t('Email')?></th> <th> </th> </tr>
+    <tr> <th><?=t('Username')?></th> <th><?=t('Email')?></th> <th> </th> <th><input type="checkbox" data-checkbox="toggle-all"></th> </tr>
     </thead>
     <tbody>
     </tbody>
@@ -14,7 +15,7 @@
 <script type="text/javascript">
     $(function() {
         $("[data-migration-tree=<?=$identifier?>]").migrationBatchTableTree({
-            columnKey: 'site',
+            columnKey: 'user',
             lazyLoad: function(event, data) {
                 data.result = {
                     url: '<?=$view->action('load_batch_user_data')?>',

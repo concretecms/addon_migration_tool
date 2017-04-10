@@ -18,7 +18,7 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $node = new \stdClass();
             $node->title = $user->getName();
             $node->lazy = true;
-            $node->nodetype = 'site';
+            $node->nodetype = 'user';
             $node->extraClasses = 'migration-node-main';
 
             $publisherValidator = $user->getPublisherValidator();

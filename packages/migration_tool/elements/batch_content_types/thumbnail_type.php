@@ -6,6 +6,7 @@
         <th><?=t('Width')?></th>
         <th><?=t('Height')?></th>
         <th><?=t('Required')?></th>
+        <th width="1"><input type="checkbox" data-checkbox="toggle-all"></th>
     </tr>
     </thead>
     <tbody>
@@ -21,7 +22,8 @@
         <td><?=$type->getWidth()?></td>
         <td><?=$type->getHeight()?></td>
         <td><?=$type->getIsRequired() ? t('Yes') : t('No') ?></td>
-    <?php 
+        <td><input data-checkbox="select-item" type="checkbox" name="item[thumbnail_type][]" value="<?=$type->getID()?>"></td>
+    <?php
 } ?>
     </tbody>
 </table>

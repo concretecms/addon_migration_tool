@@ -41,6 +41,24 @@
                     }
                 }
             });
+
+            $('input[data-checkbox=toggle-all]').on('click', function() {
+                var $table = $(this).closest('table.migration-table');
+                if ($(this).is(':checked')) {
+                    $table.find('input[data-checkbox=select-item]').prop('checked', true).trigger('change');
+                } else {
+                    $table.find('input[data-checkbox=select-item]').prop('checked', false).trigger('change');
+                }
+            });
+
+            $('table.migration-table').on('change', 'input[data-checkbox=select-item]', function() {
+                var checkboxes = $('input[data-checkbox=select-item]:checked').length;
+                if (checkboxes > 0) {
+                    $('a[data-dialog=delete-batch-items]').removeAttr('disabled').parent().removeClass('disabled');
+                } else {
+                    $('a[data-dialog=delete-batch-items]').attr('disabled', 'disabled').parent().addClass('disabled');
+                }
+            });
         });
     </script>
 
@@ -85,22 +103,3 @@
 
 }
 ?>
-
-<script type="text/javascript">
-    $(function() {
-        $('div#ccm-dashboard-page').on('click', '[data-dialog]', function() {
-            var width = $(this).attr('data-dialog-width');
-            if (!width) {
-                width = 320;
-            }
-            var element = '#ccm-dialog-' + $(this).attr('data-dialog');
-            jQuery.fn.dialog.open({
-                element: element,
-                modal: true,
-                width: width,
-                title: $(this).attr('data-dialog-title'),
-                height: 'auto'
-            });
-        });
-    });
-</script>

@@ -40,6 +40,15 @@ abstract class ObjectCollection
 
     abstract public function getRecords();
 
+    public function getRecordByID($id)
+    {
+        foreach($this->getRecords() as $record) {
+            if ($record->getID() == $id) {
+                return $record;
+            }
+        }
+    }
+
     abstract public function getRecordValidator(ValidatorInterface $batch);
 
 }

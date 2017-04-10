@@ -1,9 +1,12 @@
 <table id="migration-tree-table-<?=$identifier?>" class="migration-table table table-bordered table-striped">
     <colgroup>
         <col width="*"></col>
+        <col width="30px"></col>
     </colgroup>
     <thead>
-    <tr> <th><?=t('Tree')?></th> </tr>
+    <tr> <th><?=t('Tree')?></th>
+        <th><input type="checkbox" data-checkbox="toggle-all"></th>
+    </tr>
     </thead>
     <tbody>
     </tbody>

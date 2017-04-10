@@ -4,9 +4,10 @@
         <col width="*"></col>
         <col width="120px"></col>
         <col width="30px"></col>
+        <col width="30px"></col>
     </colgroup>
     <thead>
-    <tr> <th><?=t('Page')?></th> <th><?=t('Path')?></th> <th><?=t('Type')?></th> <th> </th> </tr>
+    <tr> <th><?=t('Page')?></th> <th><?=t('Path')?></th> <th><?=t('Type')?></th> <th> </th> <th><input type="checkbox" data-checkbox="toggle-all"></th> </tr>
     </thead>
     <tbody>
     </tbody>

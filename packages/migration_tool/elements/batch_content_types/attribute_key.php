@@ -5,9 +5,10 @@
         <col width="120px"></col>
         <col width="120px"></col>
         <col width="30px"></col>
+        <col width="30px"></col>
     </colgroup>
     <thead>
-    <tr> <th><?=t('Name')?></th> <th><?=t('Handle')?></th> <th><?=t('Type')?></th> <th><?=t('Category')?></th> <th> </th> </tr>
+    <tr> <th><?=t('Name')?></th> <th><?=t('Handle')?></th> <th><?=t('Type')?></th> <th><?=t('Category')?></th> <th> </th> <th><input type="checkbox" data-checkbox="toggle-all"></th> </tr>
     </thead>
     <tbody>
     </tbody>

@@ -64,6 +64,7 @@
 		}
 		if (node.data.nodetype == my.options.columnKey) {
 			my.options.renderInitialColumnData(cells, data);
+			cells.eq(cells.length - 1).html('<input data-checkbox="select-item" type="checkbox" name="item[' + my.options.columnKey + '][]" value="' + data.node.data.id + '">');
 		} else if (node.data.itemvalue) {
 			var colspan = cells.length - 1;
 			cells.eq(1).html(node.data.itemvalue);

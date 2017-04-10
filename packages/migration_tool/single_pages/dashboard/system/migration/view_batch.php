@@ -14,36 +14,18 @@ $dh = Core::make('helper/date');
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li class="dropdown-header"><?= t('Map Content') ?></li>
-                    <?php foreach ($mapperDrivers as $mapper) {
-                        ?>
-                        <li><a href="<?= $view->action('map_content', $batch->getId(),
-                                $mapper->getHandle()) ?>"><?= $mapper->getMappedItemPluralName() ?></a></li>
-                        <?php
-
-                    } ?>
+                    <li><a href="<?= $view->action('map_content', $batch->getId())?>"><?=t('Map Content')?></a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header"><?= t('Settings') ?></li>
+                    <li><a href="<?=URL::to('/dashboard/system/migration/import/settings/basics', $batch->getID())?>" class=""><?= t("Basics") ?></a>
+                    <?php foreach($settings as $setting) { ?>
+                        <li><a href="<?=URL::to($setting, $batch->getID())?>" class=""><?= t($setting->getCollectionName())?></a>
+                            <?php } ?>
                     <li class="divider"></li>
                     <li><a href="javascript:void(0)" data-dialog="clear-batch-mappings"
                            data-dialog-title="<?= t('Clear Batch Mappings') ?>" class=""><?= t("Clear Batch Mappings") ?></a>
                     <li><a href="javascript:void(0)" data-action="rescan-batch"
                            data-dialog-title="<?= t('Rescan Batch') ?>" class=""><?= t("Rescan Batch") ?></a>
-                </ul>
-            </div>
-            <div class="btn-group btn-group-sm" role="group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    <?= t('Settings') ?>
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="<?=URL::to('/dashboard/system/migration/import/settings/basics', $batch->getID())?>" class=""><?= t("Basics") ?></a>
-                    <?php if (count($settings)) { ?>
-                        <li class="divider"></li>
-                        <li class="dropdown-header"><?= t('Content Types') ?></li>
-                        <?php foreach($settings as $setting) { ?>
-                        <li><a href="<?=URL::to($setting, $batch->getID())?>" class=""><?= t($setting->getCollectionName())?></a>
-                        <?php } ?>
-                    <?php } ?>
                 </ul>
             </div>
             <div class="btn-group btn-group-sm" role="group">

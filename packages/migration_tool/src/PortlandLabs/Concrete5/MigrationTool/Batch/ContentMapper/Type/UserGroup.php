@@ -133,6 +133,6 @@ class UserGroup implements MapperInterface
 
     public function getTargetItemContentObject(TargetItemInterface $targetItem)
     {
-        return $targetItem->getItemID();
+        return Group::getByPath($targetItem->getItemID());
     }
 }

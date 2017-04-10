@@ -7,6 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\UserValidator;
 use Doctrine\ORM\Mapping as ORM;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\User as UserLogger;
 
 /**
  * @ORM\Entity
@@ -239,8 +240,11 @@ class User implements PublishableInterface, LoggableInterface, ValidatableAttrib
 
     public function createPublisherLogObject($publishedObject = null)
     {
-        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Job();
-        $object->setHandle($this->getHandle());
+        $object = new UserLogger();
+        $object->setName($this->getName());
+        if ($publishedObject) {
+            $object->setCoreUser($publishedObject);
+        }
         return $object;
     }
 

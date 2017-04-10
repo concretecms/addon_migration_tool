@@ -30,6 +30,10 @@ foreach ($mappers->getDrivers() as $mapper) {
 
         ?>
 
+        <div>
+
+        <button class="btn btn-default btn-sm pull-right" data-action="set-unmapped-to-ignored" type="button"><?=t("Set Un-Mapped to Ignored")?></button>
+
         <h4><?= $mapper->getMappedItemPluralName() ?></h4>
 
          <table class="table table-striped">
@@ -123,6 +127,8 @@ foreach ($mappers->getDrivers() as $mapper) {
                 ?>
                 </tbody>
             </table>
+            </div>
+
             <div class="ccm-dashboard-form-actions-wrapper">
                 <div class="ccm-dashboard-form-actions">
                     <a href="<?= $view->action('view_batch', $batch->getID()) ?>"
@@ -131,6 +137,17 @@ foreach ($mappers->getDrivers() as $mapper) {
                 </div>
             </div>
 
+        <script type="text/javascript">
+            $(function() {
+                $('button[data-action=set-unmapped-to-ignored]').on('click', function() {
+                    $(this).parent().find('select').each(function() {
+                        if ($(this).val() == '0') {
+                            $(this).find('option[value=-1]').prop('selected', true);
+                        }
+                    });
+                });
+            });
+        </script>
         <?php
         }
 

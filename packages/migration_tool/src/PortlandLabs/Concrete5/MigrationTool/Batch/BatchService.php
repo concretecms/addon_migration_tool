@@ -39,7 +39,7 @@ class BatchService
         return $batch;
     }
 
-    protected function createImportNode(Site $site)
+    public function createImportNode(Site $site)
     {
         $batches = \Page::getByPath('/!import_batches', 'RECENT', $site->getSiteTreeObject()
         );

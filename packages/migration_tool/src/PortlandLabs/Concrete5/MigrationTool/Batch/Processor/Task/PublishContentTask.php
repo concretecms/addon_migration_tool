@@ -15,6 +15,9 @@ class PublishContentTask implements TaskInterface
 
     public function execute(ActionInterface $action)
     {
+
+        ini_set('max_execution_time', 0);
+
         $target = $action->getTarget();
         $subject = $action->getSubject();
 

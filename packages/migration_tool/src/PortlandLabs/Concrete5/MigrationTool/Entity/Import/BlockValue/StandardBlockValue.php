@@ -6,6 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Block\StandardFormatter
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\StandardInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager;
 use Doctrine\ORM\Mapping as ORM;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 
 /**
  * @ORM\Table(name="MigrationImportStandardBlockValues")
@@ -28,7 +29,13 @@ class StandardBlockValue extends BlockValue
     {
         $manager = \Core::make('migration/manager/publisher/block');
         $type = $this->getBlock()->getType();
+        return $manager->driver($type);
+    }
 
+    public function getRecordValidator(ValidatorInterface $batch)
+    {
+        $manager = \Core::make('migration/manager/validator/block/value');
+        $type = $this->getBlock()->getType();
         return $manager->driver($type);
     }
 

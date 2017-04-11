@@ -15,6 +15,11 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class BlockType implements MapperInterface, TransformableEntityMapperInterface
 {
+
+    protected $predefinedMappers = [
+        'slideshow' => 'image_slider',
+    ];
+
     public function getMappedItemPluralName()
     {
         return t('Block Types');
@@ -111,11 +116,16 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
     public function getMatchedTargetItem(BatchInterface $batch, ItemInterface $item)
     {
         $bt = \Concrete\Core\Block\BlockType\BlockType::getByHandle($item->getIdentifier());
-        if (is_object($bt)) {
+        if (!$bt) {
+            if (array_key_exists($item->getIdentifier(), $this->predefinedMappers)) {
+                $bt = \Concrete\Core\Block\BlockType\BlockType::getByHandle($this->predefinedMappers[$item->getIdentifier()]);
+            }
+        }
+
+        if ($bt) {
             $targetItem = new TargetItem($this);
             $targetItem->setItemId($bt->getBlockTypeHandle());
             $targetItem->setItemName($bt->getBlockTypeName());
-
             return $targetItem;
         } else { // we check the current batch.
             $collection = $batch->getObjectCollection('block_type');

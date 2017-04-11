@@ -12,6 +12,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAttri
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlocksTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockTypesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockValuesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePagePathTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTemplatesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTypesTask;
@@ -38,12 +39,13 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherM
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager as BlockPublisherManager;
 use PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type\Manager as ExporterItemTypeManager;
 use SinglePage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Block\Manager as ValidatorBlockValueManager;
 
 class Controller extends Package
 {
     protected $pkgHandle = 'migration_tool';
     protected $appVersionRequired = '8.2.0a1';
-    protected $pkgVersion = '0.7.5';
+    protected $pkgVersion = '0.8.0';
     protected $pkgAutoloaderMapCoreExtensions = true;
     protected $pkgAutoloaderRegistries = array(
         'src/PortlandLabs/Concrete5/MigrationTool' => '\PortlandLabs\Concrete5\MigrationTool',
@@ -173,9 +175,13 @@ class Controller extends Package
                 $v->registerTask(new ValidateBlockTypesTask());
                 $v->registerTask(new ValidateReferencedStacksTask());
                 $v->registerTask(new ValidateReferencedContentItemsTask());
-
+                $v->registerTask(new ValidateBlockValuesTask());
                 return $v;
             }
+        });
+
+        \Core::bindShared('migration/manager/validator/block/value', function ($app) {
+            return new ValidatorBlockValueManager($app);
         });
 
         \Core::bindShared('migration/manager/mapping', function ($app) {

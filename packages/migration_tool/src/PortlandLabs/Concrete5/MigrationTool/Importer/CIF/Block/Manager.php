@@ -47,4 +47,10 @@ class Manager extends CoreManager
     {
         return new SocialLinksImporter();
     }
+
+    public function createImageSliderDriver()
+    {
+        return new ImageSliderImporter();
+    }
+
 }

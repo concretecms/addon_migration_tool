@@ -10,7 +10,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\StandardBlockV
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class LegacySlideshowValidator implements ItemValidatorInterface
+class ImageSliderValidator implements ItemValidatorInterface
 {
     /**
      * @param $value StandardBlockValue

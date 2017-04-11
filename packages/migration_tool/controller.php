@@ -39,7 +39,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherM
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager as BlockPublisherManager;
 use PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type\Manager as ExporterItemTypeManager;
 use SinglePage;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Block\Manager as ValidatorBlockValueManager;
 
 class Controller extends Package
 {
@@ -178,10 +177,6 @@ class Controller extends Package
                 $v->registerTask(new ValidateBlockValuesTask());
                 return $v;
             }
-        });
-
-        \Core::bindShared('migration/manager/validator/block/value', function ($app) {
-            return new ValidatorBlockValueManager($app);
         });
 
         \Core::bindShared('migration/manager/mapping', function ($app) {

@@ -192,7 +192,7 @@ class Page implements ElementParserInterface
         $block = new Block();
         $block->setType('Content');
         $block->setName('Content');
-        $value = $this->blockImporter->driver('standard')->parse($node);
+        $value = $this->blockImporter->driver('unmapped')->parse($node);
         $block->setBlockValue($value);
         $block->setPosition(1);
 

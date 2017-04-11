@@ -32,13 +32,6 @@ class StandardBlockValue extends BlockValue
         return $manager->driver($type);
     }
 
-    public function getRecordValidator(ValidatorInterface $batch)
-    {
-        $manager = \Core::make('migration/manager/validator/block/value');
-        $type = $this->getBlock()->getType();
-        return $manager->driver($type);
-    }
-
     /**
      * @return mixed
      */

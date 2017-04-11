@@ -39,5 +39,8 @@ class Manager extends CoreManager
         $this->extend('core_stack_display', function () {
             return new StackDisplayPublisher();
         });
+        $this->extend('image_slider', function () {
+            return new ImageSliderPublisher();
+        });
     }
 }

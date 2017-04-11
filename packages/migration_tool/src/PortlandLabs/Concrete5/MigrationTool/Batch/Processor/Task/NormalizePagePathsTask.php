@@ -62,11 +62,11 @@ class NormalizePagePathsTask implements TaskInterface
                         $value = $block->getBlockValue();
                         if ($value instanceof ImportedBlockValue) {
                             $content = preg_replace($contentSearchURL, $contentReplaceURL, $value->getValue());
-                            $query = $entityManager->createQuery("update \PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\ImportedBlockValue v
-                            set v.value = :value where v.id = :primary");
-                            $query->setParameter('primary', $value->getID());
-                            $query->setParameter('value', $content);
-                            $query->execute();
+                            // doctrine is doing some dumb shit here so let's do a direct query
+                            $db = $entityManager->getConnection();
+                            $db->executeQuery('update MigrationImportImportedBlockValues set value = ? where id = ?',
+                                array($content, $value->getID())
+                            );
                         }
                     }
                 }

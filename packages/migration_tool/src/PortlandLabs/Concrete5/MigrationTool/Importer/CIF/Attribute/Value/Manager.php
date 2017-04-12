@@ -75,6 +75,21 @@ class Manager extends \Concrete\Core\Support\Manager
         return new PageImporter();
     }
 
+    public function createEmailDriver()
+    {
+        return new StandardImporter();
+    }
+
+    public function createUrlDriver()
+    {
+        return new StandardImporter();
+    }
+
+    public function createTelephoneDriver()
+    {
+        return new StandardImporter();
+    }
+
     public function createPageSelectorDriver()
     {
         return new PageImporter();

@@ -5,7 +5,6 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AbstractValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ItemValidatorInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content\Factory;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\StandardBlockValue;
 
 defined('C5_EXECUTE') or die("Access Denied.");

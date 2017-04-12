@@ -56,10 +56,12 @@ class BlockType implements TransformerInterface
             $type = $bt->getBlockTypeHandle();
         } else {
             $collection = $batch->getObjectCollection('block_type');
-            foreach ($collection->getTypes() as $blockType) {
-                if ($blockType->getHandle() == $item->getIdentifier()) {
-                    $type = $blockType->getType();
-                    break;
+            if ($collection) {
+                foreach ($collection->getTypes() as $blockType) {
+                    if ($blockType->getHandle() == $item->getIdentifier()) {
+                        $type = $blockType->getType();
+                        break;
+                    }
                 }
             }
         }

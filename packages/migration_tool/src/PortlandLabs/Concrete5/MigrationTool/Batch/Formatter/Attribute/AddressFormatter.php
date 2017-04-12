@@ -14,7 +14,7 @@ class AddressFormatter implements TreeContentItemFormatterInterface
     public function getBatchTreeNodeJsonObject()
     {
         $node = new \stdClass();
-        $node->title = t('Address');
+        $node->title = $this->value->getAttribute()->getHandle();
         $node->icon = 'fa fa-location-arrow';
         $node->children = array();
         $labels = array();

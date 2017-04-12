@@ -4,7 +4,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\StackItem;
 use Concrete\Core\Foundation\Processor\ActionInterface;
 use Concrete\Core\Foundation\Processor\TaskInterface;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content\Factory;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content\StackItemValidator;
 
 defined('C5_EXECUTE') or die("Access Denied.");

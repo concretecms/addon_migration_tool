@@ -12,7 +12,7 @@ class Validator extends AbstractValidator
     public function validate($feed)
     {
         $messages = new MessageCollection();
-        $items = $feed->getInspector()->getMatchedItems();
+        $items = $feed->getInspector()->getMatchedItems($this->batch);
         foreach ($items as $item) {
             $validatorFactory = new Factory($item);
             $validator = $validatorFactory->getValidator();

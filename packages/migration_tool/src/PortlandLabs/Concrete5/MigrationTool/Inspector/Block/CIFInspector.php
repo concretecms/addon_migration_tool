@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Inspector\Block;
 
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\InspectorInterface;
 
@@ -15,10 +16,10 @@ class CIFInspector implements InspectorInterface
         $this->value = $value;
     }
 
-    public function getMatchedItems()
+    public function getMatchedItems(Batch $batch)
     {
         $value = $this->value->getValue();
-        $inspector = \Core::make('import/value_inspector');
+        $inspector = \Core::make('migration/import/value_inspector', array($batch));
         $result = $inspector->inspect($value);
         $items = $result->getMatchedItems();
 

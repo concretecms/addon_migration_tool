@@ -1,7 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute;
 
-use Concrete\Attribute\Address\Value;
+use Concrete\Core\Entity\Attribute\Value\Value\AddressValue;
 use Concrete\Core\Attribute\Key\CollectionKey;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AddressAttributeValue;
@@ -19,7 +19,7 @@ class AddressPublisher implements PublisherInterface
      */
     public function publish(Batch $batch, $ak, $subject, AttributeValue $address)
     {
-        $value = new Value();
+        $value = new AddressValue();
         $value->address1 = $address->getAddress1();
         $value->address2 = $address->getAddress2();
         $value->address3 = $address->getAddress3();

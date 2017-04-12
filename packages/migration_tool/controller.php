@@ -225,12 +225,9 @@ class Controller extends Package
         });
 
         \Core::bind('migration/import/value_inspector', function ($app, $args) {
-            if (isset($args[0])) {
-                $inspector = $app->make('import/value_inspector');
-                $inspector->registerInspectionRoutine(new BatchPageRoutine($args[0]));
-
-                return $inspector;
-            }
+            $inspector = $app->make('import/value_inspector');
+            $inspector->registerInspectionRoutine(new BatchPageRoutine($args[0]));
+            return $inspector;
         });
 
         \Core::bindShared('migration/manager/exporters', function ($app) {

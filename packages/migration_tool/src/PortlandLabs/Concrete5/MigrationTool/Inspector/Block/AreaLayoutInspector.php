@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Inspector\Block;
 
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\AreaLayoutBlockValue;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\InspectorInterface;
 
@@ -15,7 +16,7 @@ class AreaLayoutInspector implements InspectorInterface
         $this->value = $value;
     }
 
-    public function getMatchedItems()
+    public function getMatchedItems(Batch $batch)
     {
         $layout = $this->value->getAreaLayout();
         $columns = $layout->getColumns();
@@ -25,7 +26,7 @@ class AreaLayoutInspector implements InspectorInterface
             foreach ($blocks as $block) {
                 $value = $block->getBlockValue();
                 $inspector = $value->getInspector();
-                $items = array_merge($items, $inspector->getMatchedItems());
+                $items = array_merge($items, $inspector->getMatchedItems($batch));
             }
         }
 

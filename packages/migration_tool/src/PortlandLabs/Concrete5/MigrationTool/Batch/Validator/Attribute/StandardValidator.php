@@ -12,7 +12,7 @@ class StandardValidator extends AbstractValidator
     public function validate($value)
     {
         $messages = new MessageCollection();
-        $items = $value->getInspector()->getMatchedItems();
+        $items = $value->getInspector()->getMatchedItems($this->getBatch());
         foreach ($items as $item) {
             $validatorFactory = new Factory($item);
             $validator = $validatorFactory->getValidator();

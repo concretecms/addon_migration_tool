@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Inspector\Attribute;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\AttributeValue;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\InspectorInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -15,10 +16,10 @@ class StandardInspector implements InspectorInterface
         $this->value = $value;
     }
 
-    public function getMatchedItems()
+    public function getMatchedItems(Batch $batch)
     {
         $value = $this->value->getValue();
-        $inspector = \Core::make('import/value_inspector');
+        $inspector = \Core::make('migration/import/value_inspector', array($batch));
         $result = $inspector->inspect($value);
         $items = $result->getMatchedItems();
 

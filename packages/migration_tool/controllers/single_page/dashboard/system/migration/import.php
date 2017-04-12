@@ -432,6 +432,7 @@ class Import extends DashboardPageController
             $list->filterByPath('/dashboard/system/migration/import/settings');
             $list->ignorePermissions();
             $list->sortByDisplayOrder();
+            $list->includeSystemPages();
 
             $settings = array();
             foreach($list->getResults() as $setting) {

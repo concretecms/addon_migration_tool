@@ -27,20 +27,6 @@ class UserGroup implements MapperInterface
         return 'user_group';
     }
 
-    protected function getGroups()
-    {
-        $cache = \Core::make('cache/request');
-        $item = $cache->getItem('migration/mapper/groups');
-        if (!$item->isMiss()) {
-            $groups = $item->get();
-        } else {
-            $list = new GroupList();
-            $groups = $list->getResults();
-            $cache->save($item->set($groups));
-        }
-        return $groups;
-    }
-
     public function getItems(BatchInterface $batch)
     {
         $groups = array();
@@ -128,14 +114,21 @@ class UserGroup implements MapperInterface
 
     public function getInstalledTargetItems(BatchInterface $batch)
     {
-        $items = array();
-        foreach($this->getGroups() as $group) {
-            $targetItem = new TargetItem($this);
-            $targetItem->setItemId($group->getGroupPath());
-            $targetItem->setItemName($group->getGroupDisplayName());
-            $items[] = $targetItem;
+        $cache = \Core::make('cache/request');
+        $item = $cache->getItem(sprintf('migration/mapper/group/target_items/%s', $batch->getID()));
+        if (!$item->isMiss()) {
+            $items = $item->get();
+        } else {
+            $list = new GroupList();
+            $groups = $list->getResults();
+            foreach($groups as $group) {
+                $targetItem = new TargetItem($this);
+                $targetItem->setItemId($group->getGroupPath());
+                $targetItem->setItemName($group->getGroupDisplayName());
+                $items[] = $targetItem;
+            }
+            $cache->save($item->set($items));
         }
-
         return $items;
     }
 

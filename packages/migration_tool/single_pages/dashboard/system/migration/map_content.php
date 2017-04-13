@@ -50,7 +50,7 @@ foreach ($mappers->getDrivers() as $mapper) {
                     <tr>
                         <td style="white-space: nowrap; vertical-align: middle"><?= $item->getDisplayName() ?></td>
                         <td>
-                            <select name="targetItem[<?=$mapper->getHandle()?>][<?= $item->getIdentifier() ?>]" class="form-control">
+                            <select name="targetItem[<?=$mapper->getHandle()?>][<?= $item->getIdentifier() ?>]" data-selector="target-item">
                                 <?php foreach ($targetItemList->getInternalTargetItems() as $targetItem) {
                                     ?>
                                     <option
@@ -139,6 +139,7 @@ foreach ($mappers->getDrivers() as $mapper) {
 
         <script type="text/javascript">
             $(function() {
+                $('select[data-selector=target-item]').selectize();
                 $('button[data-action=set-unmapped-to-ignored]').on('click', function() {
                     $(this).parent().find('select').each(function() {
                         if ($(this).val() == '0') {

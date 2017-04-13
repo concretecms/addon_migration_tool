@@ -648,6 +648,7 @@ class Import extends DashboardPageController
     {
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
+        $this->requireAsset('selectize');
         $mappers = \Core::make('migration/manager/mapping');
         if (is_object($batch)) {
             $this->set('batch', $batch);

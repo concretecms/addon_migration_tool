@@ -51,22 +51,24 @@ foreach ($mappers->getDrivers() as $mapper) {
                         <td style="white-space: nowrap; vertical-align: middle"><?= $item->getDisplayName() ?></td>
                         <td>
                             <select name="targetItem[<?=$mapper->getHandle()?>][<?= $item->getIdentifier() ?>]" data-selector="target-item">
-                                <?php foreach ($targetItemList->getInternalTargetItems() as $targetItem) {
-                                    ?>
-                                    <option
-                                        <?php if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) {
-                                        ?>selected="selected" <?php
+                                <optgroup label="<?=t('Unknown')?>">
+                                    <?php foreach ($targetItemList->getInternalTargetItems() as $targetItem) {
+                                        ?>
+                                        <option
+                                            <?php if (is_object($selectedTargetItem) && $selectedTargetItem->matches($targetItem)) {
+                                            ?>selected="selected" <?php
+                                        }
+                                        ?>
+                                            value="<?= $targetItem->getItemID() ?>"><?= $targetItem->getItemName() ?></option>
+                                        <?php
                                     }
                                     ?>
-                                        value="<?= $targetItem->getItemID() ?>"><?= $targetItem->getItemName() ?></option>
-                                    <?php
-                                }
-                                ?>
+                                </optgroup>
 
                                 <?php if (count($targetItemList->getMapperCorePropertyTargetItems())) {
                                     ?>
-                                    <optgroup label="** <?= t('Installed %s',
-                                        $mapper->getMappedItemPluralName()) ?>"></optgroup>
+                                    <optgroup label="<?= t('Installed %s',
+                                        $mapper->getMappedItemPluralName()) ?>">
                                     <?php foreach ($targetItemList->getMapperCorePropertyTargetItems() as $targetItem) {
                                         ?>
                                         <option
@@ -78,15 +80,17 @@ foreach ($mappers->getDrivers() as $mapper) {
                                             value="<?= $targetItem->getItemID() ?>"><?= $targetItem->getItemName() ?></option>
                                         <?php
 
-                                    }
+                                    } ?>
+                                    </optgroup>
+                                <?php
                                 }
                                 ?>
 
 
                                 <?php if (count($targetItemList->getMapperInstalledTargetItems())) {
                                     ?>
-                                    <optgroup label="** <?= t('Installed %s',
-                                        $mapper->getMappedItemPluralName()) ?>"></optgroup>
+                                    <optgroup label="<?= t('Installed %s',
+                                        $mapper->getMappedItemPluralName()) ?>">
                                     <?php foreach ($targetItemList->getMapperInstalledTargetItems() as $targetItem) {
                                         ?>
                                         <option
@@ -98,13 +102,15 @@ foreach ($mappers->getDrivers() as $mapper) {
                                         <?php
                                     }
                                     ?>
+                                    </optgroup>
+
                                     <?php
                                 }
                                 ?>
                                 <?php if (count($targetItemList->getMapperBatchTargetItems())) {
                                     ?>
                                     <optgroup
-                                        label="** <?= t('Batch %s', $mapper->getMappedItemPluralName()) ?>"></optgroup>
+                                        label="<?= t('Batch %s', $mapper->getMappedItemPluralName()) ?>">
                                     <?php foreach ($targetItemList->getMapperBatchTargetItems() as $targetItem) {
                                         ?>
                                         <option
@@ -116,6 +122,7 @@ foreach ($mappers->getDrivers() as $mapper) {
                                         <?php
                                     }
                                     ?>
+                                    </optgroup>
                                     <?php
                                 }
                                 ?>

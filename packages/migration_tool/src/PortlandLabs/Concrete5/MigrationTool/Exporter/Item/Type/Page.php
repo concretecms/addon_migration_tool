@@ -23,6 +23,8 @@ class Page extends SinglePage
     public function getResults(Request $request)
     {
         $pl = new PageList();
+        $site = \Core::make('site')->getActiveSiteForEditing();
+        $pl->setSiteTreeObject($site->getSiteTreeObject());
         $query = $request->query->all();
 
         $keywords = $query['keywords'];

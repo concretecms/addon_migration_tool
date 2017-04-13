@@ -27,10 +27,18 @@ class UserGroup implements MapperInterface
         return 'user_group';
     }
 
-    public function __construct()
+    protected function getGroups()
     {
-        $list = new GroupList();
-        $this->groups = $list->getResults();
+        $cache = \Core::make('cache/request');
+        $item = $cache->getItem('migration/mapper/groups');
+        if (!$item->isMiss()) {
+            $groups = $item->get();
+        } else {
+            $list = new GroupList();
+            $groups = $list->getResults();
+            $cache->save($item->set($groups));
+        }
+        return $groups;
     }
 
     public function getItems(BatchInterface $batch)
@@ -121,7 +129,7 @@ class UserGroup implements MapperInterface
     public function getInstalledTargetItems(BatchInterface $batch)
     {
         $items = array();
-        foreach($this->groups as $group) {
+        foreach($this->getGroups() as $group) {
             $targetItem = new TargetItem($this);
             $targetItem->setItemId($group->getGroupPath());
             $targetItem->setItemName($group->getGroupDisplayName());

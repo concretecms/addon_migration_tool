@@ -2,6 +2,7 @@
 namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\Migration;
 
 use Concrete\Core\Application\EditResponse;
+use Concrete\Core\Page\Controller\DashboardSitePageController;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch;
@@ -9,7 +10,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Exporter\Exporter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class Export extends DashboardPageController
+class Export extends DashboardSitePageController
 {
     public function add_batch()
     {

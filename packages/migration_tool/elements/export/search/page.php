@@ -2,8 +2,10 @@
 defined('C5_EXECUTE') or die(_("Access Denied."));
 $form = Core::make('helper/form');
 $pagetypes = array();
+$site = Core::make('site')->getActiveSiteForEditing();
+$siteType = $site->getType();
 $datetime = Loader::helper('form/date_time')->translate('datetime', $_GET);
-$list = \Concrete\Core\Page\Type\Type::getList();
+$list = \Concrete\Core\Page\Type\Type::getList(false, $siteType);
 $pagetypes = array('' => t('** Choose a page type'));
 foreach ($list as $type) {
     $pagetypes[$type->getPageTypeID()] = $type->getPageTypeDisplayName();

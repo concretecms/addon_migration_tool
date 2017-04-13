@@ -127,6 +127,9 @@ class UserGroup implements MapperInterface
                 $targetItem->setItemName($group->getGroupDisplayName());
                 $items[] = $targetItem;
             }
+            usort($items, function($a, $b) {
+                return strcasecmp($a->getItemName(), $b->getItemName());
+            });
             $cache->save($item->set($items));
         }
         return $items;

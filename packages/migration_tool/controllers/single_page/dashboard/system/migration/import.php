@@ -207,6 +207,9 @@ class Import extends DashboardPageController
 
     public function add_content_to_batch()
     {
+
+        ini_set('max_execution_time', 0);
+
         if (!$this->token->validate('add_content_to_batch')) {
             $this->error->add($this->token->getErrorMessage());
         }
@@ -230,18 +233,7 @@ class Import extends DashboardPageController
                 $this->clearContent($batch);
             }
 
-            foreach ($importer->getContentObjectCollections($_FILES['file']['tmp_name'], $batch) as $collection) {
-                // does this already exist ?
-                $existingCollection = $batch->getObjectCollection($collection->getType());
-                if (is_object($existingCollection)) {
-                    foreach($collection->getRecords() as $record) {
-                        $record->setCollection($existingCollection);
-                        $existingCollection->getRecords()->add($record);
-                    }
-                } else {
-                    $batch->getObjectCollections()->add($collection);
-                }
-            }
+            $importer->addContentObjectCollectionsToBatch($_FILES['file']['tmp_name'], $batch);
 
             $this->entityManager->flush();
 

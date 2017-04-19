@@ -14,5 +14,5 @@ interface FileParserInterface
     /**
      * @param $file
      */
-    public function getContentObjectCollections($file, Batch $batch);
+    public function addContentObjectCollectionsToBatch($file, Batch $batch);
 }

@@ -47,11 +47,10 @@ class WordpressParser implements FileParserInterface
     }
 
     // TODO maybe $file can't be null and we need to reparse the xml inside this function too
-    public function getContentObjectCollections($file = null, Batch $batch)
+    public function addContentObjectCollectionsToBatch($file = null, Batch $batch)
     {
         $manager = \Core::make('migration/manager/importer/wordpress');
 //        $simplexml = simplexml_load_file($file);
-        $collections = array();
 
         foreach ($manager->getDrivers() as $driver) {
             $collection = $driver->getObjectCollection($this->wxr, $this->namespaces);
@@ -59,11 +58,18 @@ class WordpressParser implements FileParserInterface
                 if (!($collection instanceof ObjectCollection)) {
                     throw new \RuntimeException(t('Driver %s getObjectCollection did not return an object of the ObjectCollection type', get_class($driver)));
                 } else {
-                    $collections[] = $collection;
+                    // does this already exist ?
+                    $existingCollection = $batch->getObjectCollection($collection->getType());
+                    if (is_object($existingCollection)) {
+                        foreach($collection->getRecords() as $record) {
+                            $record->setCollection($existingCollection);
+                            $existingCollection->getRecords()->add($record);
+                        }
+                    } else {
+                        $batch->getObjectCollections()->add($collection);
+                    }
                 }
             }
         }
-
-        return $collections;
     }
 }

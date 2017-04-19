@@ -43,7 +43,12 @@ class NormalizePagePathsTask implements TaskInterface
 
        // $entityManager->getConnection()->getConfiguration()->setSQLLogger(new EchoSQLLogger());
 
-        if ($common && count($pages) > 1) {
+        if (count($pages) == 1) {
+            // Then $common equals the part of the path up to the last slug.
+            // So if our only page is /path/to/my/page, then $common = '/path/to/my';
+            $common = substr($pages[0]->getOriginalPath(), 0, strrpos($pages[0]->getOriginalPath(), '/'));
+        }
+        if ($common) {
             $common = '/' . trim($common, '/');
             $contentSearchURL = "/\{ccm:export:page:" . preg_quote($common, '/') . "(.*?)\}/i";
             $contentReplaceURL = "{ccm:export:page:$1}";

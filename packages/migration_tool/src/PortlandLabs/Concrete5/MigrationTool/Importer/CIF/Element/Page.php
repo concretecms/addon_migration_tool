@@ -71,7 +71,14 @@ class Page implements ElementParserInterface
         $page->setUser((string) $node['user']);
         $page->setDescription((string) html_entity_decode($node['description']));
 
-        // Parse attributes
+        $this->parseAttributes($page, $node);
+        $this->parseAreas($page, $node);
+
+        return $page;
+    }
+
+    protected function parseAttributes(\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page $page, \SimpleXMLElement $node)
+    {
         if ($node->attributes->attributekey) {
             $i = 0;
             foreach ($node->attributes->attributekey as $keyNode) {
@@ -83,8 +90,10 @@ class Page implements ElementParserInterface
                 ++$i;
             }
         }
+    }
 
-        // Parse areas
+    protected function parseAreas(\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page $page, \SimpleXMLElement $node)
+    {
         if ($node->area) {
             foreach ($node->area as $areaNode) {
                 $area = $this->parseArea($areaNode);
@@ -92,8 +101,6 @@ class Page implements ElementParserInterface
                 $page->areas->add($area);
             }
         }
-
-        return $page;
     }
 
     protected function parseAttribute($node)

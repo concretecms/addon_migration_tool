@@ -46,7 +46,7 @@ class CIFParser implements FileParserInterface
     {
         $manager = \Core::make('migration/manager/importer/cif');
         $simplexml = simplexml_load_file($file);
-        foreach ($manager->getDrivers() as $driver) {
+        foreach ($manager->getRoutines() as $driver) {
             $collection = $driver->getObjectCollection($simplexml, $batch);
             if ($collection) {
                 if (!($collection instanceof ObjectCollection)) {

@@ -1,7 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF;
 
-use Concrete\Core\Support\Manager as CoreManager;
+use Concrete\Core\Utility\Service\Text;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\AttributeSet;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\AttributeType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\AttributeKey;
@@ -39,229 +39,105 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Tree;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\WorkflowProgressCategory;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\WorkflowType;
 
-defined('C5_EXECUTE') or die("Access Denied.");
-
-class Manager extends CoreManager
+class Manager
 {
-    public function createPageDriver()
-    {
-        return new Page();
-    }
-
-    public function createUserDriver()
-    {
-        return new User();
-    }
-
-    public function createAttributeKeyDriver()
-    {
-        return new AttributeKey();
-    }
-
-    public function createSiteDriver()
-    {
-        return new Site();
-    }
-
-    public function createSinglePageDriver()
-    {
-        return new SinglePage();
-    }
-
-    public function createPageTemplateDriver()
-    {
-        return new PageTemplate();
-    }
-
-    public function createBlockTypeDriver()
-    {
-        return new BlockType();
-    }
-
-    public function createConversationEditorDriver()
-    {
-        return new ConversationEditor();
-    }
-
-    public function createConversationFlagTypeDriver()
-    {
-        return new ConversationFlagType();
-    }
-
-    public function createConversationRatingTypeDriver()
-    {
-        return new ConversationRatingType();
-    }
-
-    public function createAttributeKeyCategoryDriver()
-    {
-        return new AttributeKeyCategory();
-    }
-
-    public function createAttributeTypeDriver()
-    {
-        return new AttributeType();
-    }
-
-    public function createThumbnailTypeDriver()
-    {
-        return new ThumbnailType();
-    }
-
-    public function createBlockTypeSetDriver()
-    {
-        return new BlockTypeSet();
-    }
-
-    public function createPageTypePublishTargetTypeDriver()
-    {
-        return new PageTypePublishTargetType();
-    }
-
-    public function createPageTypeComposerControlTypeDriver()
-    {
-        return new PageTypeComposerControlType();
-    }
-
-    public function createWorkflowTypeDriver()
-    {
-        return new WorkflowType();
-    }
-
-    public function createWorkflowProgressCategoryDriver()
-    {
-        return new WorkflowProgressCategory();
-    }
-
-    public function createBannedWordDriver()
-    {
-        return new BannedWord();
-    }
-
-    public function createSocialLinkDriver()
-    {
-        return new SocialLink();
-    }
-
-    public function createCaptchaDriver()
-    {
-        return new Captcha();
-    }
-
-    public function createThemeDriver()
-    {
-        return new Theme();
-    }
-
-    public function createPermissionKeyCategoryDriver()
-    {
-        return new PermissionKeyCategory();
-    }
-
-    public function createPermissionAccessEntityTypeDriver()
-    {
-        return new PermissionAccessEntityType();
-    }
-
-    public function createJobDriver()
-    {
-        return new Job();
-    }
-
-    public function createJobSetDriver()
-    {
-        return new JobSet();
-    }
-
-    public function createAttributeSetDriver()
-    {
-        return new AttributeSet();
-    }
-
-    public function createPageFeedDriver()
-    {
-        return new PageFeed();
-    }
-
-    public function createPackageDriver()
-    {
-        return new Package();
-    }
-
-    public function createContentEditorSnippetDriver()
-    {
-        return new ContentEditorSnippet();
-    }
-
-    public function createConfigValueDriver()
-    {
-        return new ConfigValue();
-    }
-
-    public function createTreeDriver()
-    {
-        return new Tree();
-    }
-
-    public function createPermissionKeyDriver()
-    {
-        return new PermissionKey();
-    }
-
-    public function createStackDriver()
-    {
-        return new Stack();
-    }
-
-    public function createPageTypeDriver()
-    {
-        return new PageType();
-    }
-
-    public function createGroupDriver()
-    {
-        return new Group();
-    }
+    protected $routines = array();
+    protected $additionalRoutines = array();
+    protected $sortedRoutines;
 
     public function __construct()
     {
-        $this->driver('group');
-        $this->driver('thumbnail_type');
-        $this->driver('banned_word');
-        $this->driver('social_link');
-        $this->driver('permission_key_category');
-        $this->driver('permission_access_entity_type');
-        $this->driver('permission_key');
-        $this->driver('captcha');
-        $this->driver('theme');
-        $this->driver('workflow_type');
-        $this->driver('workflow_progress_category');
-        $this->driver('page_type_publish_target_type');
-        $this->driver('page_type_composer_control_type');
-        $this->driver('attribute_type');
-        $this->driver('attribute_key_category');
-        $this->driver('conversation_editor');
-        $this->driver('conversation_flag_type');
-        $this->driver('conversation_rating_type');
-        $this->driver('attribute_key');
-        $this->driver('attribute_set');
-        $this->driver('user');
-        $this->driver('job');
-        $this->driver('job_set');
-        $this->driver('block_type');
-        $this->driver('block_type_set');
-        $this->driver('stack');
-        $this->driver('single_page');
-        $this->driver('site');
-        $this->driver('page_type');
-        $this->driver('page');
-        $this->driver('page_template');
-        $this->driver('page_feed');
-        $this->driver('package');
-        $this->driver('tree');
-        $this->driver('config_value');
-        $this->driver('content_editor_snippet');
+        $this->registerRoutine(new Group());
+        $this->registerRoutine(new ThumbnailType());
+        $this->registerRoutine(new BannedWord());
+        $this->registerRoutine(new SocialLink());
+        $this->registerRoutine(new PermissionKeyCategory());
+        $this->registerRoutine(new PermissionAccessEntityType());
+        $this->registerRoutine(new PermissionKey());
+        $this->registerRoutine(new Captcha());
+        $this->registerRoutine(new Theme());
+        $this->registerRoutine(new WorkflowType());
+        $this->registerRoutine(new WorkflowProgressCategory());
+        $this->registerRoutine(new PagetypePublishTargetType());
+        $this->registerRoutine(new PageTypeComposerControlType());
+        $this->registerRoutine(new AttributeType());
+        $this->registerRoutine(new AttributeKeyCategory());
+        $this->registerRoutine(new ConversationEditor());
+        $this->registerRoutine(new ConversationFlagType());
+        $this->registerRoutine(new ConversationRatingType());
+        $this->registerRoutine(new AttributeKey());
+        $this->registerRoutine(new AttributeSet());
+        $this->registerRoutine(new User());
+        $this->registerRoutine(new Job());
+        $this->registerRoutine(new JobSet());
+        $this->registerRoutine(new BlockType());
+        $this->registerRoutine(new BlockTypeSet());
+        $this->registerRoutine(new Stack());
+        $this->registerRoutine(new SinglePage());
+        $this->registerRoutine(new Site());
+        $this->registerRoutine(new PageType());
+        $this->registerRoutine(new Page());
+        $this->registerRoutine(new PageTemplate());
+        $this->registerRoutine(new PageFeed());
+        $this->registerRoutine(new Package());
+        $this->registerRoutine(new Tree());
+        $this->registerRoutine(new ConfigValue());
+        $this->registerRoutine(new ContentEditorSnippet());
     }
 
+
+    public function registerRoutine(ElementParserInterface $routine)
+    {
+        $this->routines[] = $routine;
+    }
+
+    public function replaceRoutine(ElementParserInterface $new, ElementParserInterface $replaced)
+    {
+        foreach($this->routines as $key => $value) {
+            if (get_class($replaced) == get_class($value)) {
+                $this->routines[$key] = $new;
+            }
+        }
+    }
+
+    protected function getHandle(ElementParserInterface $routine)
+    {
+        $class = substr(get_class($routine), strrpos(get_class($routine), '\\') + 1);
+        $service = new Text();
+        $handle = $service->handle($class);
+        return $handle;
+    }
+
+    public function addRoutine(ElementParserInterface $routine, $addAfter)
+    {
+        $this->additionalRoutines[$addAfter] = $routine;
+    }
+
+    public function getRoutines()
+    {
+        if (!isset($this->sortedRoutines)) {
+            $sortedRoutines = $this->routines;
+            $replacements = array();
+            foreach($this->additionalRoutines as $addAfter => $routine) {
+                foreach($sortedRoutines as $i => $sortedRoutine) {
+                    $handle = $this->getHandle($sortedRoutine);
+                    if ($handle == $addAfter) {
+                        $replacements[] = array($i, $routine);
+                    }
+                }
+            }
+
+            // This code sucks, but I'm not sure why it wasn't working in the more elegant way.
+
+            foreach($replacements as $replacement) {
+                $position = $replacement[0];
+                $routine = $replacement[1];
+                array_splice($sortedRoutines, $position + 1, 0, [$routine]);
+            }
+
+            $this->sortedRoutines = $sortedRoutines;
+        }
+        return $this->sortedRoutines;
+    }
 
 }

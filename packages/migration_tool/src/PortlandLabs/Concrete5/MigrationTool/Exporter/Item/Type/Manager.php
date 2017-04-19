@@ -112,10 +112,17 @@ class Manager extends CoreManager
         return new User();
     }
 
+    public function createExpressEntityDriver()
+    {
+        return new ExpressEntity();
+    }
+
+
     public function __construct($app)
     {
         parent::__construct($app);
         $this->driver('group');
+        $this->driver('express_entity');
         $this->driver('attribute_key_category');
         $this->driver('conversation_editor');
         $this->driver('conversation_rating_type');

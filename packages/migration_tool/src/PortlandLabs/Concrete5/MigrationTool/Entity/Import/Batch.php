@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
+use Concrete\Core\File\FileList;
 use Concrete\Core\File\Set\Set;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
@@ -224,7 +225,10 @@ class Batch implements ValidatorInterface, BatchInterface
     {
         $fs = $this->getFileSet();
         if (is_object($fs)) {
-            $files = $fs->getFiles();
+            $list = new FileList();
+            $list->filterBySet($fs);
+            $list->sortByFilenameAscending();
+            $files = $list->getResults();
 
             return $files;
         }

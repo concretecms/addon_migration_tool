@@ -32,7 +32,7 @@ class ValidatePagePathTask implements TaskInterface
                 $page = $r->findOneBy(array('batch_path' => $container));
                 if (!is_object($page)) {
                     $action->getTarget()->addMessage(
-                        new Message(t('Container path %s not found in import batch. This page cannot be created until its parent path exists.', $container))
+                        new Message(t('Container path %s not found in import batch. A blank container page will be substituted.', $container), Message::E_WARNING)
                     );
                 }
             }

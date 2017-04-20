@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use Concrete\Core\Page\Type\Type;
+use Concrete\Core\Utility\Service\Text;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
@@ -49,6 +50,34 @@ abstract class AbstractPageAction implements RoutineActionInterface
         $this->page = $r->findOneById($id);
     }
 
+    protected function ensureParentPageExists(Batch $batch, Page $page)
+    {
+        $service = new Text();
+        $path = trim($page->getBatchPath(), '/');
+        $paths = explode('/', $path);
+        $batchParent = $this->getBatchParentPage($batch);
+        $parent = $batchParent;
+        $prefix = '';
+
+        array_pop($paths);
+
+        foreach($paths as $path) {
+            $currentPath = $prefix . $path;
+            $c = \Concrete\Core\Page\Page::getByPath($batchParent->getCollectionPath() . '/' . $currentPath, 'RECENT', $batch->getSite()->getSiteTreeObject());
+            if ($c->isError() && $c->getError() == COLLECTION_NOT_FOUND) {
+                $data = array();
+                $data['handle'] = $path;
+                $data['name'] = $service->unhandle($data['handle']);
+                $data['uID'] = USER_SUPER_ID;
+                $parent = $parent->add(null, $data);
+            } else {
+                $parent = $c;
+            }
+            $prefix = $currentPath . '/';
+        }
+        return $parent;
+    }
+
     public function getTargetItem($batch, $mapper, $subject)
     {
         return TargetItemList::getBatchTargetItem($batch, $mapper, $subject);
@@ -59,15 +88,17 @@ abstract class AbstractPageAction implements RoutineActionInterface
         $page = \Page::getByPath('/!import_batches/' . $batch->getID(), 'RECENT', $batch->getSite()->getSiteTreeObject());
         if (is_object($page) && !$page->isError()) {
             return $page;
+        } else {
+            return $this->addBatchParent($batch);
         }
     }
 
-    protected function addBatchParent(BatchInterface $batch, $path, $name)
+    protected function addBatchParent(BatchInterface $batch)
     {
-        $holder = \Page::getByPath($path, 'RECENT', $batch->getSite()->getSiteTreeObject());
+        $holder = \Page::getByPath('/!import_batches', 'RECENT', $batch->getSite()->getSiteTreeObject());
         $type = Type::getByHandle('import_batch');
         return $holder->add($type, array(
-            'cName' => $name,
+            'cName' => $batch->getID(),
             'pkgID' => \Package::getByHandle('migration_tool')->getPackageID(),
         ));
 

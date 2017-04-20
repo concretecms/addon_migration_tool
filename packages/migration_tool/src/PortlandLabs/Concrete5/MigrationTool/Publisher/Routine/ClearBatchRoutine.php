@@ -12,7 +12,7 @@ class ClearBatchRoutine extends AbstractRoutine
     public function execute(BatchInterface $batch, LoggerInterface $logger)
     {
         // Has the batch already been created? If so, we move to trash.
-        $orphaned = \Page::getByPath('/!import_batches/' . $batch->getID());
+        $orphaned = \Page::getByPath('/!import_batches/' . $batch->getID(), 'RECENT', $batch->getSite());
         if (is_object($orphaned) && !$orphaned->isError()) {
             $orphaned->moveToTrash();
         }

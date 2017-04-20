@@ -18,20 +18,11 @@ class CreateSinglePageStructureRoutineAction extends AbstractPageAction
             $pkg = \Package::getByHandle($page->getPackage());
         }
 
-        if (compat_is_version_8()) {
-            if ($page->getIsGlobal()) {
-                $c = Single::addGlobal($page->getOriginalPath(), $pkg);
-            } else {
-                $siteTree = $batch->getSite()->getSiteTreeObject();
-                $c = Single::createPageInTree($page->getOriginalPath(), $siteTree, $page->getIsAtRoot(), $pkg);
-            }
+        if ($page->getIsGlobal()) {
+            $c = Single::addGlobal($page->getOriginalPath(), $pkg);
         } else {
-            $c = Single::add($page->getOriginalPath(), $pkg);
-            if (is_object($c)) {
-                if ($page->getIsAtRoot()) {
-                    $c->moveToRoot();
-                }
-            }
+            $siteTree = $batch->getSite()->getSiteTreeObject();
+            $c = Single::createPageInTree($page->getOriginalPath(), $siteTree, $page->getIsAtRoot(), $pkg);
         }
 
         if (is_object($c)) {

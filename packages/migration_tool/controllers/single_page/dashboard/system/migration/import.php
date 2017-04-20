@@ -208,8 +208,6 @@ class Import extends DashboardPageController
     public function add_content_to_batch()
     {
 
-        ini_set('max_execution_time', 0);
-
         if (!$this->token->validate('add_content_to_batch')) {
             $this->error->add($this->token->getErrorMessage());
         }

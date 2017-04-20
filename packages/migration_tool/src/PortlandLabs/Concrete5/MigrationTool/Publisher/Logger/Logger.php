@@ -57,12 +57,14 @@ class Logger implements LoggerInterface
         return $this->log;
     }
 
-    public function logMessage(Message $message)
+    public function logMessages($messages)
     {
-        $entry = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Message();
-        $entry->setMessage($message);
-        $entry->setLog($this->log);
-        $this->log->getMessages()->add($entry);
+        foreach($messages as $message) {
+            $entry = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Message();
+            $entry->setMessage($message);
+            $entry->setLog($this->log);
+            $this->log->getMessages()->add($entry);
+        }
         $this->entityManager->persist($this->log);
         $this->entityManager->flush();
     }

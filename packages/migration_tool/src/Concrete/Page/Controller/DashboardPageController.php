@@ -7,6 +7,12 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 class DashboardPageController extends \Concrete\Core\Page\Controller\DashboardPageController
 {
 
+    public function on_start()
+    {
+        ini_set('max_execution_time', 0);
+        parent::on_start();
+    }
+
     /**
      * @param $id
      * @return Batch

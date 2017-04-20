@@ -16,16 +16,6 @@ class CreatePageStructureRoutineAction extends AbstractPageAction
         $logger->logPublishStarted($page);
 
         $batchParent = $this->getBatchParentPage($batch);
-        if (!is_object($batchParent)) {
-            // First, create the top level page for the batch.
-            $batches = \Page::getByPath('/!import_batches', 'RECENT', $batch->getSite()->getSiteTreeObject());
-            $type = Type::getByHandle('import_batch');
-            $batchParent = $batches->add($type, array(
-                'cName' => $batch->getID(),
-                'cHandle' => $batch->getID(),
-                'pkgID' => \Package::getByHandle('migration_tool')->getPackageID(),
-            ));
-        }
 
         $data = array();
 
@@ -57,21 +47,14 @@ class CreatePageStructureRoutineAction extends AbstractPageAction
 
         // TODO exception if parent not found
         if ($page->getBatchPath() != '') {
-            $lastSlash = strrpos($page->getBatchPath(), '/');
-            $parentPath = substr($page->getBatchPath(), 0, $lastSlash);
-            $data['cHandle'] = substr($page->getBatchPath(), $lastSlash + 1);
-            if (!$parentPath) {
-                $parent = $batchParent;
-            } else {
-                $parent = \Page::getByPath('/!import_batches/' . $batch->getID() . $parentPath, 'RECENT',
-                    $batch->getSite()->getSiteTreeObject());
-            }
+            $parent = $this->ensureParentPageExists($batch, $page);
         } else {
             $parent = $batchParent;
         }
 
         $data['name'] = $page->getName();
         $data['cDescription'] = $page->getDescription();
+        $data['cHandle'] = substr($page->getBatchPath(), strrpos($page->getBatchPath(), '/') + 1);
 
         $newPage = $parent->add($type, $data);
         $logger->logPublishComplete($page, $newPage);

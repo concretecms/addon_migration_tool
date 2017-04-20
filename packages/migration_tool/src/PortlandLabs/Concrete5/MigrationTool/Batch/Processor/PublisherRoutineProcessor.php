@@ -42,9 +42,7 @@ class PublisherRoutineProcessor extends ProcessorQueue
         $validator = \Core::make('migration/batch/validator');
         $messages = $validator->validate($this->target->getBatch());
         $formatter = $validator->getFormatter($messages);
-        foreach($formatter->getSortedMessages($messages) as $message) {
-            $logger->logMessage($message);
-        }
+        $logger->logMessages($formatter->getSortedMessages($messages));
 
         $this->target->setLogger($logger);
         parent::process();

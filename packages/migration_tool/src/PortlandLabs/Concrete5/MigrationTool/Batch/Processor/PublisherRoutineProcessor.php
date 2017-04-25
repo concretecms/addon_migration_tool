@@ -15,7 +15,7 @@ class PublisherRoutineProcessor extends ProcessorQueue
 {
     protected $section;
 
-    protected $itemsPerBatch = 50;
+    protected $itemsPerBatch = 20;
 
     public function __construct(TargetInterface $target)
     {

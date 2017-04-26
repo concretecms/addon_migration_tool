@@ -9,7 +9,7 @@ class DashboardPageController extends \Concrete\Core\Page\Controller\DashboardPa
 
     public function on_start()
     {
-        ini_set('max_execution_time', 0);
+        set_time_limit(0);
         parent::on_start();
     }
 

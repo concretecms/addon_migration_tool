@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\Type;
 
+use Concrete\Core\Support\Facade\Facade;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
@@ -24,9 +25,14 @@ defined('C5_EXECUTE') or die("Access Denied.");
  */
 abstract class Attribute implements TransformerInterface
 {
+
+    protected $manager;
+    protected $entityManager;
+
     public function __construct()
     {
         $this->entityManager = \Database::connection()->getEntityManager();
+        $this->manager = Facade::getFacadeApplication()->make('migration/manager/import/attribute/value');
     }
 
     public function getUntransformedEntityById($entityID)
@@ -87,9 +93,8 @@ abstract class Attribute implements TransformerInterface
         }
 
         if (isset($type)) {
-            $manager = \Core::make('migration/manager/import/attribute/value');
             try {
-                $driver = $manager->driver($type);
+                $driver = $this->manager->driver($type);
             } catch (\Exception $e) {
             }
         }

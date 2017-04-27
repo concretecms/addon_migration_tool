@@ -66,6 +66,7 @@ class PresetManager
 
     public function getMatchedTargetItem(MapperInterface $mapper, Batch $batch, ItemInterface $item)
     {
+        /*
         $query = $this->entityManager->createQuery(
             "select ti from PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchPresetTargetItem bpti
             join PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem ti
@@ -74,10 +75,14 @@ class PresetManager
         $query->setParameter('batch', $batch);
         $query->setParameter('source_item_identifier', $item->getIdentifier());
         $query->setParameter('type', $mapper->getHandle());
-        $targetItem = $query->getResult();
-        if (is_object($targetItem[0])) {
-            // We need to return a NEW target item based off of this preset
-            return clone $targetItem[0];
+        */
+        $id = $this->entityManager->getConnection()->fetchColumn("select ti.id from MigrationImportBatchTargetItems bpti inner join MigrationContentMapperTargetItems ti on bpti.target_item_id = ti.id where bpti.type = 'batchpresettargetitem' and bpti.batch_id = ? and ti.item_type = ? and ti.source_item_identifier = ?",
+            array($batch->getId(), $mapper->getHandle(), $item->getIdentifier()), 0);
+        if ($id) {
+            $object = $this->entityManager->find('PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem', $id);
+            if ($object) {
+                return clone $object;
+            }
         }
 
     }

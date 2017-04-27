@@ -21,6 +21,5 @@ abstract class AbstractImporter implements ValueInterface
 
         $this->entityManager->persist($attribute);
         $this->entityManager->remove($entity);
-        $this->entityManager->flush();
     }
 }

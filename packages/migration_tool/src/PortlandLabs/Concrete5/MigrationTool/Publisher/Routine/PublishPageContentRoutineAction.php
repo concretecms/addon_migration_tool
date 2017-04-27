@@ -17,9 +17,11 @@ class PublishPageContentRoutineAction extends AbstractPageAction
         foreach ($page->attributes as $attribute) {
             $ak = $this->getTargetItem($batch, 'page_attribute', $attribute->getAttribute()->getHandle());
             if (is_object($ak)) {
+                $logger->logPublishStarted($attribute);
                 $value = $attribute->getAttribute()->getAttributeValue();
                 $publisher = $value->getPublisher();
                 $publisher->publish($batch, $ak, $concretePage, $value);
+                $logger->logPublishComplete($attribute);
             }
         }
 
@@ -46,9 +48,11 @@ class PublishPageContentRoutineAction extends AbstractPageAction
                 foreach ($area->blocks as $block) {
                     $bt = $this->getTargetItem($batch, 'block_type', $block->getType());
                     if (is_object($bt)) {
+                        $logger->logPublishStarted($block);
                         $value = $block->getBlockValue();
                         $publisher = $value->getPublisher();
                         $b = $publisher->publish($batch, $bt, $concretePage, $areaName, $value);
+                        $logger->logPublishComplete($block, $b);
                         $styleSet = $block->getStyleSet();
                         if (is_object($styleSet)) {
                             $styleSetPublisher = $styleSet->getPublisher();

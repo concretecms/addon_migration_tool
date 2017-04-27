@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 use Concrete\Core\Attribute\Key\Category;
 use Concrete\Core\Attribute\Key\CollectionKey;
 use Concrete\Core\Attribute\Key\SiteKey;
+use Concrete\Core\Support\Facade\Facade;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformableEntityMapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\ShortDescriptionTargetItem;
@@ -18,6 +19,13 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 abstract class Attribute implements MapperInterface, TransformableEntityMapperInterface
 {
+
+    protected $cache;
+
+    public function __construct()
+    {
+        $this->cache = Facade::getFacadeApplication()->make('cache/request');
+    }
 
     abstract public function getAttributeKeyCategoryHandle();
     public function getAttributeItemHandles(BatchInterface $batch)
@@ -117,8 +125,20 @@ abstract class Attribute implements MapperInterface, TransformableEntityMapperIn
 
     public function getTargetItemContentObject(TargetItemInterface $targetItem)
     {
+        $identifier = sprintf('migration/attribute_key/%s/%s', $this->getAttributeKeyCategoryHandle(), $targetItem->getItemID());
+        $item = $this->cache->getItem($identifier);
+        if (!$item->isMiss()) {
+            return $item->get();
+        }
+
+        $item->lock();
         $controller = Category::getByHandle($this->getAttributeKeyCategoryHandle())
             ->getController();
-        return $controller->getAttributeKeyByHandle($targetItem->getItemID());
+        $key = $controller->getAttributeKeyByHandle($targetItem->getItemID());
+
+        $this->cache->save($item->set($key));
+
+        return $key;
+
     }
 }

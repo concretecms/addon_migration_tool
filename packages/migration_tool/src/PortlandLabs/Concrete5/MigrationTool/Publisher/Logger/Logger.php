@@ -11,6 +11,8 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Entry;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Log;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Block;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\PublishCompleteEntry;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\PublishStartedEntry;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\SkippedEntry;
@@ -75,7 +77,11 @@ class Logger implements LoggerInterface
         $log->setUser($user);
         $log->setSite($batch->getSite());
         $log->setBatchId($batch->getId());
-        $log->setBatchName($batch->getName());
+        $name = '';
+        if ($batch->getName()) {
+            $name = $batch->geName();
+        }
+        $log->setBatchName($name);
         $this->entityManager->persist($log);
         $this->entityManager->flush();
         $this->logID = $log->getID();
@@ -113,7 +119,11 @@ class Logger implements LoggerInterface
             $this->entityManager->remove($lastEntry);
             $this->entityManager->flush();
         }
-        $this->logEntry(new PublishCompleteEntry($object->createPublisherLogObject($mixed)));
+        $object = $object->createPublisherLogObject($mixed);
+        if ($object instanceof PageAttribute || $object instanceof Block) {
+            return;
+        }
+        $this->logEntry(new PublishCompleteEntry($object));
     }
 
     public function logSkipped(LoggableInterface $object)

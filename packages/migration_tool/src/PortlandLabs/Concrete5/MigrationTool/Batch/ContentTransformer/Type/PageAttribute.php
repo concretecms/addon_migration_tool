@@ -61,9 +61,8 @@ class PageAttribute extends Attribute
         }
 
         if (isset($type)) {
-            $manager = \Core::make('migration/manager/import/attribute/value');
             try {
-                $driver = $manager->driver($type);
+                $driver = $this->manager->driver($type);
             } catch (\Exception $e) {
             }
         }

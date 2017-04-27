@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\ORM\Mapping as ORM;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 
 /**
  * @ORM\Entity
@@ -8,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="value_type", type="string")
  */
-class AbstractBlock
+class AbstractBlock implements LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="guid")
@@ -190,5 +191,17 @@ class AbstractBlock
     public function setCustomTemplate($custom_template)
     {
         $this->custom_template = $custom_template;
+    }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Block();
+        $object->setType($this->getType());
+        $object->setPage($this->getArea()->getPage()->getName());
+        $object->setArea($this->getArea()->getName());
+        if (is_object($publishedObject)) {
+            $object->setPublishedBlockID($publishedObject->getBlockID());
+        }
+        return $object;
     }
 }

@@ -18,6 +18,5 @@ abstract class AbstractImporter implements BlockInterface
 
         $this->entityManager->persist($block);
         $this->entityManager->remove($entity);
-        $this->entityManager->flush();
     }
 }

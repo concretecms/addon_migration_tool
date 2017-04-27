@@ -1,12 +1,13 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 use Doctrine\ORM\Mapping as ORM;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportPageAttributes")
  */
-class PageAttribute
+class PageAttribute implements LoggableInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="integer")
@@ -63,4 +64,13 @@ class PageAttribute
     {
         $this->page = $page;
     }
+
+    public function createPublisherLogObject($publishedObject = null)
+    {
+        $object = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\PageAttribute();
+        $object->setHandle($this->getAttribute()->getHandle());;
+        $object->setPage($this->getPage()->getName());
+        return $object;
+    }
+
 }

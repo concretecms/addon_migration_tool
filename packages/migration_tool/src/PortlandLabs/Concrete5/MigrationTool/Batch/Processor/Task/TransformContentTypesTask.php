@@ -33,9 +33,12 @@ class TransformContentTypesTask implements TaskInterface
                 $targetItemList = $mappers->createTargetItemList($batch, $mapper);
                 $targetItem = $targetItemList->getSelectedTargetItem($item);
                 if (is_object($targetItem)) {
-                    if (!($targetItem instanceof UnmappedTargetItem || $target instanceof IgnoredTargetItem)) {
-                        $transformer->transform($entity, $mapper, $item, $targetItem, $batch);
+                    if ($targetItem instanceof IgnoredTargetItem || $targetItem instanceof UnmappedTargetItem) {
+                        return;
                     }
+
+                    $transformer->transform($entity, $mapper, $item, $targetItem, $batch);
+                    $em->flush();
                 }
             }
         }

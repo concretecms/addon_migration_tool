@@ -8,6 +8,7 @@ use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Concrete\Core\Page\PageList;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Queue\QueueFactory;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Exporter;
@@ -69,17 +70,9 @@ class Import extends DashboardPageController
             $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
             $batch = $r->findOneById($this->request->request->get('id'));
             if (is_object($batch)) {
-                foreach ($batch->getObjectCollections() as $collection) {
-                    $this->entityManager->remove($collection);
-                }
-                $batch->setObjectCollections(new ArrayCollection());
-                foreach ($batch->getTargetItems() as $targetItem) {
-                    $targetItem->setBatch(null);
-                    $this->entityManager->remove($targetItem);
-                }
-                $this->entityManager->flush();
-                $this->entityManager->remove($batch);
-                $this->entityManager->flush();
+                $service = $this->app->make(BatchService::class);
+                $service->deleteBatch($batch);
+
                 $this->flash('success', t('Batch removed successfully.'));
                 $this->redirect('/dashboard/system/migration');
             }
@@ -126,6 +119,25 @@ class Import extends DashboardPageController
         }
         $this->view();
     }
+
+    public function clear_batch_queues()
+    {
+        if (!$this->token->validate('clear_batch_queues')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+        if (!$this->error->has()) {
+            $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
+            $batch = $r->findOneById($this->request->request->get('id'));
+            if (is_object($batch)) {
+                $service = $this->app->make(BatchService::class);
+                $service->clearQueues($batch);
+                $this->flash('success', t('Batch processes reset successfully.'));
+                $this->redirect('/dashboard/system/migration/import', 'view_batch', $batch->getId());
+            }
+        }
+        $this->view();
+    }
+
 
     public function delete_batch_items()
     {
@@ -275,6 +287,7 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
         if (!$this->error->has()) {
+            $queue = (new QueueFactory())->getMapperQueue($batch);
             $target = new Target($batch);
             $target->returnMappedItems();
             $processor = new TargetItemProcessor($target);
@@ -286,7 +299,7 @@ class Import extends DashboardPageController
                 $obj->totalItems = $processor->getTotalTasks();
                 echo json_encode($obj);
                 exit;
-            } else {
+            } else if ($queue->getQueue()->count() == 0) {
                 $processor->process();
             }
             $totalItems = $processor->getTotalTasks();
@@ -312,6 +325,7 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
         if (!$this->error->has()) {
+            $queue = (new QueueFactory())->getTransformerQueue($batch);
             $target = new Target($batch);
             $target->returnUntransformedItems();
             $processor = new UntransformedItemProcessor($target);
@@ -323,7 +337,7 @@ class Import extends DashboardPageController
                 $obj->totalItems = $processor->getTotalTasks();
                 echo json_encode($obj);
                 exit;
-            } else {
+            } else if ($queue->getQueue()->count() == 0) {
                 $processor->process();
             }
             $totalItems = $processor->getTotalTasks();
@@ -349,8 +363,10 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
         if (!$this->error->has()) {
+            $queue = (new QueueFactory())->getPublisherQueue($batch);
             $target = new PublishTarget($batch);
-            $processor = new PublisherRoutineProcessor($target);
+            $logger = \Core::make(Logger::class);
+            $processor = new PublisherRoutineProcessor($target, $logger);
             if ($_POST['process']) {
                 foreach ($processor->receive() as $task) {
                     $processor->execute($task);
@@ -359,7 +375,7 @@ class Import extends DashboardPageController
                 $obj->totalItems = $processor->getTotalTasks();
                 echo json_encode($obj);
                 exit;
-            } else {
+            } else if ($queue->getQueue()->count() == 0) {
                 $processor->process();
             }
             $totalItems = $processor->getTotalTasks();
@@ -372,16 +388,6 @@ class Import extends DashboardPageController
             return $response;
         }
         $this->view();
-    }
-
-    protected function clearQueues()
-    {
-        $queue = \Concrete\Core\Foundation\Queue\Queue::get('publisher_routine_processor');
-        $queue->deleteQueue();
-        $queue = \Concrete\Core\Foundation\Queue\Queue::get('untransformed_item_processor');
-        $queue->deleteQueue();
-        $queue = \Concrete\Core\Foundation\Queue\Queue::get('target_item_processor');
-        $queue->deleteQueue();
     }
 
     public function view()
@@ -397,7 +403,6 @@ class Import extends DashboardPageController
 
     public function view_batch($id = null)
     {
-        $this->clearQueues();
         $this->requireAsset('migration/view-batch');
         $this->requireAsset('core/app/editable-fields');
         $this->requireAsset('jquery/fileupload');
@@ -430,7 +435,10 @@ class Import extends DashboardPageController
                     $settings[] = $setting;
                 }
             }
+            $service = $this->app->make(BatchService::class);
+            $factory = new QueueFactory();
             $this->set('settings', $settings);
+            $this->set('activeQueue', $factory->getActiveQueue($batch));
             $this->render('/dashboard/system/migration/view_batch');
         } else {
             $this->view();

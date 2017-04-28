@@ -79,7 +79,7 @@ class Logger implements LoggerInterface
         $log->setBatchId($batch->getId());
         $name = '';
         if ($batch->getName()) {
-            $name = $batch->geName();
+            $name = $batch->getName();
         }
         $log->setBatchName($name);
         $this->entityManager->persist($log);
@@ -105,7 +105,13 @@ class Logger implements LoggerInterface
 
     public function logPublishStarted(LoggableInterface $object, $mixed = null)
     {
-        $this->logEntry(new PublishStartedEntry($object->createPublisherLogObject($mixed)));
+        $object = $object->createPublisherLogObject($mixed);
+        if ($object instanceof PageAttribute || $object instanceof Block) {
+            // @TODO change these items into some kind of persistablelogobject generic class
+            // so we don't have to do this type of check
+            return;
+        }
+        $this->logEntry(new PublishStartedEntry($object));
     }
 
     public function logPublishComplete(LoggableInterface $object, $mixed = null)

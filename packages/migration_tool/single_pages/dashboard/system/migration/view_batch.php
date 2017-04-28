@@ -3,54 +3,65 @@ $dh = Core::make('helper/date');
 /* @var \Concrete\Core\Localization\Service\Date $dh */
 ?>
     <div class="ccm-dashboard-header-buttons">
-        <div class="btn-group btn-group-sm" role="group" aria-label="...">
-            <a href="javascript:void(0)" data-dialog="add-to-batch" data-dialog-title="<?= t('Add Content') ?>"
-               class="btn btn-default"><?= t("Add Content to Batch") ?></a>
-            <a href="<?= $view->action('batch_files', $batch->getID()) ?>" class="btn btn-default"><?= t('Files') ?></a>
-            <div class="btn-group btn-group-sm" role="group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    <?= t('Edit') ?>
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="<?= $view->action('map_content', $batch->getId())?>"><?=t('Map Content')?></a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown-header"><?= t('Settings') ?></li>
-                    <li><a href="<?=URL::to('/dashboard/system/migration/import/settings/basics', $batch->getID())?>" class=""><?= t("Basics") ?></a>
-                    <?php foreach($settings as $setting) { ?>
+
+        <?php if ($activeQueue) { ?>
+            <div class="btn-group btn-group">
+                <button class="btn btn-default" onclick="launchActiveQueue()"><?=t('Resume Active Process')?></button>
+                <a href="javascript:void(0)" class="btn btn-danger" data-dialog="clear-batch-queues"
+                   data-dialog-title="<?= t('Reset All Processes') ?>"><?= t("Reset All Processes") ?></a>
+            </div>
+
+        <?php } else {  ?>
+            <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                <a href="javascript:void(0)" data-dialog="add-to-batch" data-dialog-title="<?= t('Add Content') ?>"
+                   class="btn btn-default"><?= t("Add Content to Batch") ?></a>
+                <a href="<?= $view->action('batch_files', $batch->getID()) ?>" class="btn btn-default"><?= t('Files') ?></a>
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <?= t('Edit') ?>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?= $view->action('map_content', $batch->getId())?>"><?=t('Map Content')?></a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header"><?= t('Settings') ?></li>
+                        <li><a href="<?=URL::to('/dashboard/system/migration/import/settings/basics', $batch->getID())?>" class=""><?= t("Basics") ?></a>
+                            <?php foreach($settings as $setting) { ?>
                         <li><a href="<?=URL::to($setting, $batch->getID())?>" class=""><?= t($setting->getCollectionName())?></a>
                             <?php } ?>
-                    <li class="divider"></li>
-                    <li><a href="javascript:void(0)" data-dialog="clear-batch-mappings"
-                           data-dialog-title="<?= t('Clear Batch Mappings') ?>" class=""><?= t("Clear Batch Mappings") ?></a>
-                    <li><a href="javascript:void(0)" data-action="rescan-batch"
-                           data-dialog-title="<?= t('Rescan Batch') ?>" class=""><?= t("Rescan Batch") ?></a>
-                </ul>
-            </div>
-            <div class="btn-group btn-group-sm" role="group">
-                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    <?= t('Delete') ?>
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li class="disabled"><a disabled="disabled" href="javascript:void(0)" data-dialog="delete-batch-items"
-                           data-dialog-title="<?= t('Delete Selected') ?>"><?= t("Delete Selected") ?></a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="javascript:void(0)" data-dialog="clear-batch"
-                           data-dialog-title="<?= t('Clear Batch') ?>" class=""><?= t("Clear Batch") ?></a>
-                    </li>
-                    <li><a href="javascript:void(0)" data-dialog="delete-batch"
-                           data-dialog-title="<?= t('Delete Batch') ?>"><?= t("Delete Batch") ?></a></li>
-                </ul>
+                        <li class="divider"></li>
+                        <li><a href="javascript:void(0)" data-dialog="clear-batch-mappings"
+                               data-dialog-title="<?= t('Clear Batch Mappings') ?>" class=""><?= t("Clear Batch Mappings") ?></a>
+                        <li><a href="javascript:void(0)" data-action="rescan-batch"
+                               data-dialog-title="<?= t('Rescan Batch') ?>" class=""><?= t("Rescan Batch") ?></a>
+                    </ul>
+                </div>
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <?= t('Delete') ?>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="disabled"><a disabled="disabled" href="javascript:void(0)" data-dialog="delete-batch-items"
+                                                data-dialog-title="<?= t('Delete Selected') ?>"><?= t("Delete Selected") ?></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="javascript:void(0)" data-dialog="clear-batch"
+                               data-dialog-title="<?= t('Clear Batch') ?>" class=""><?= t("Clear Batch") ?></a>
+                        </li>
+                        <li><a href="javascript:void(0)" data-dialog="delete-batch"
+                               data-dialog-title="<?= t('Delete Batch') ?>"><?= t("Delete Batch") ?></a></li>
+                    </ul>
+                </div>
+
+                <a href="javascript:void(0)" class="btn btn-primary" data-dialog="create-content"
+                   data-dialog-title="<?= t('Import Batch to Site') ?>" class=""><?= t("Import Batch to Site") ?></a>
+
             </div>
 
-            <a href="javascript:void(0)" class="btn btn-primary" data-dialog="create-content"
-               data-dialog-title="<?= t('Import Batch to Site') ?>" class=""><?= t("Import Batch to Site") ?></a>
-
-        </div>
+        <?php } ?>
     </div>
 
     <div style="display: none">
@@ -132,8 +143,25 @@ $dh = Core::make('helper/date');
         </div>
         </div>
 
+        <div data-dialog-wrapper="clear-batch-queues">
+            <div id="ccm-dialog-clear-batch-queues" class="ccm-ui">
+                <form method="post" action="<?= $view->action('clear_batch_queues') ?>">
+                    <?= Loader::helper("validation/token")->output('clear_batch_queues') ?>
+                    <input type="hidden" name="id" value="<?= $batch->getID() ?>">
+                    <p><?= t('Are you sure you reset all running processes for this batch? If someone else is actively importing content into the site it could affect them.') ?></p>
+                    <div class="dialog-buttons">
+                        <button class="btn btn-default pull-left"
+                                onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
+                        <button class="btn btn-danger pull-right"
+                                onclick="$('#ccm-dialog-clear-batch-queues form').submit()"><?= t('Reset Processes') ?></button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-        <div data-dialog-wrapper="create-content">
+
+
+<div data-dialog-wrapper="create-content">
         <div id="ccm-dialog-create-content" class="ccm-ui">
             <form method="post">
                 <p data-description="create-content"><?= t('Create site content from the contents of this batch?') ?></p>
@@ -200,9 +228,6 @@ $dh = Core::make('helper/date');
     </div>
 
 
-<?php if ($batch) {
-    ?>
-
     <h2><?= t('Batch') ?>
         <small><?= $dh->formatDateTime($batch->getDate(), true) ?></small>
     </h2>
@@ -220,8 +245,11 @@ $dh = Core::make('helper/date');
         <p><?= $site->getSiteName() ?></p>
     <?php } ?>
 
-    <?php Loader::element('batch', array('batch' => $batch), 'migration_tool'); ?>
+<?php if ($activeQueue) { ?>
+    <?php Loader::element('active_queue', array('batch' => $batch, 'queue' => $activeQueue), 'migration_tool'); ?>
 
+<?php } else { ?>
+    <?php Loader::element('batch', array('batch' => $batch), 'migration_tool'); ?>
 <?php } ?>
 
 <script type="text/javascript">

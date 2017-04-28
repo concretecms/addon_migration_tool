@@ -4,8 +4,11 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch;
 use Concrete\Core\Application\Application;
 use Concrete\Core\Entity\Site\Site;
 use Concrete\Core\File\Filesystem;
+use Concrete\Core\Foundation\Queue\Queue;
 use Concrete\Core\Page\Single;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Queue\QueueFactory;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 class BatchService
@@ -22,6 +25,37 @@ class BatchService
         $this->filesystem = $filesystem;
     }
 
+    public function clearQueues(Batch $batch)
+    {
+        $factory = new QueueFactory();
+        if ($queue = $factory->getMapperQueue($batch)) {
+            $queue->deleteQueue();
+        }
+        if ($queue = $factory->getTransformerQueue($batch)) {
+            $queue->deleteQueue();
+        }
+        if ($queue = $factory->getPublisherQueue($batch)) {
+            $queue->deleteQueue();
+        }
+    }
+
+    public function deleteBatch(Batch $batch)
+    {
+        $this->clearQueues($batch);
+        foreach ($batch->getObjectCollections() as $collection) {
+            $this->entityManager->remove($collection);
+        }
+        $batch->setObjectCollections(new ArrayCollection());
+        foreach ($batch->getTargetItems() as $targetItem) {
+            $targetItem->setBatch(null);
+            $this->entityManager->remove($targetItem);
+        }
+        $this->entityManager->flush();
+        $this->entityManager->remove($batch);
+        $this->entityManager->flush();
+
+
+    }
     public function addBatch($name, Site $site = null)
     {
         $batch = new Batch();
@@ -50,4 +84,5 @@ class BatchService
             $c->setAttribute('icon_dashboard', 'fa fa-cubes');
         }
     }
+
 }

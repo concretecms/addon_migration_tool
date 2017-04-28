@@ -20,9 +20,11 @@ class PublishStartedEntryFormatter extends AbstractEntryFormatter
 
     public function getDescriptionElement(LoggableObject $object = null)
     {
-        $formatter = $object->getLogFormatter();
-        $div = new Element('div', $formatter->getPublishStartedDescription($object), ['class' => 'text-warning']);
-        return $div;
+        if ($object) {
+            $formatter = $object->getLogFormatter();
+            $div = new Element('div', $formatter->getPublishStartedDescription($object), ['class' => 'text-warning']);
+            return $div;
+        }
     }
 
 

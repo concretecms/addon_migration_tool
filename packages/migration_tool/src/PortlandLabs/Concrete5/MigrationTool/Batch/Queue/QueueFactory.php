@@ -1,7 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Queue;
 
-use Concrete\Core\Foundation\Queue\Queue;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 class QueueFactory

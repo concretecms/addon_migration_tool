@@ -41,7 +41,7 @@ class Exporter
      */
     public function getReferencedFiles()
     {
-        $regExp = '/\{ccm:export:file:(.*?)\}|\{ccm:export:image:(.*?)\}/i';
+        $regExp = '/\{ccm:export:file:(.*?)\}|\{ccm:export:image:(.*?)\}|\<concrete-picture\s[^>]*?file\s*=\s*[\'"]([^\'"]*?)[\'"][^>]*?>/i';
         $items = array();
         if (preg_match_all(
             $regExp,

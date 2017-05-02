@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter;
 
+use Concrete\Core\File\File;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -34,4 +35,44 @@ class Exporter
 
         return $this->element;
     }
+
+    /**
+     * Loops through all pages and returns files referenced.
+     */
+    public function getReferencedFiles()
+    {
+        $regExp = '/\{ccm:export:file:(.*?)\}|\{ccm:export:image:(.*?)\}/i';
+        $items = array();
+        if (preg_match_all(
+            $regExp,
+            $this->getElement()->asXML(),
+            $matches
+        )
+        ) {
+            if (count($matches)) {
+                for ($i = 1; $i < count($matches); ++$i) {
+                    $results = $matches[$i];
+                    foreach ($results as $reference) {
+                        if ($reference) {
+                            $items[] = $reference;
+                        }
+                    }
+                }
+            }
+        }
+        $files = array();
+        $db = \Database::connection();
+        foreach ($items as $item) {
+            $fID = $db->GetOne('select fID from FileVersions where fvFilename = ?', array($item));
+            if ($fID) {
+                $f = File::getByID($fID);
+                if (is_object($f) && !$f->isError()) {
+                    $files[] = $f;
+                }
+            }
+        }
+
+        return $files;
+    }
+
 }

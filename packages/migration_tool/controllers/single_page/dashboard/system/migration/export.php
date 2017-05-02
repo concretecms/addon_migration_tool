@@ -2,6 +2,7 @@
 namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\Migration;
 
 use Concrete\Core\Application\EditResponse;
+use Concrete\Core\File\File;
 use Concrete\Core\Page\Controller\DashboardSitePageController;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -80,12 +81,71 @@ class Export extends DashboardSitePageController
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch');
         $batch = $r->findOneById($id);
         if (is_object($batch)) {
+            $exporter = new Exporter($batch);
+            $files = $exporter->getReferencedFiles();
+            $this->set('files', $files);
             $this->set('batch', $batch);
             $this->set('pageTitle', t('Export Batch'));
             $this->render('/dashboard/system/migration/finalize_export_batch');
         } else {
             $this->view();
         }
+    }
+
+    public function download_files()
+    {
+        @ini_set('memory_limit', '-1');
+        @set_time_limit(0);
+        $id = $_POST['id'];
+        if ($id) {
+            $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch');
+            $batch = $r->findOneById($id);
+        }
+        if (!is_object($batch)) {
+            $this->error->add(t('Invalid Batch'));
+        }
+        if (!$this->token->validate('download_files')) {
+            $this->error->add($this->token->getErrorMessage());
+        }
+        $fh = \Loader::helper('file');
+        $vh = \Loader::helper('validation/identifier');
+        if (!$this->error->has()) {
+            $temp = sys_get_temp_dir();
+            if (!$temp) {
+                $temp = $fh->getTemporaryDirectory();
+            }
+            $filename = $temp.'/'.$vh->getString().'.zip';
+            $files = array();
+            $filenames = array();
+            foreach ((array) $_POST['batchFileID'] as $fID) {
+                $f = File::getByID(intval($fID));
+                if (!$r) {
+                    continue;
+                }
+                $fp = new \Permissions($f);
+                if ($fp->canRead()) {
+                    $files[] = $f;
+                }
+            }
+            if (empty($files)) {
+                throw new \Exception(t('None of the requested files could be found.'));
+            }
+            if (class_exists('ZipArchive', false)) {
+                $zip = new \ZipArchive();
+                $res = $zip->open($filename, \ZipArchive::CREATE);
+                if ($res !== true) {
+                    throw new \Exception(t('Could not open with ZipArchive::CREATE'));
+                }
+                foreach ($files as $f) {
+                    $zip->addFromString($f->getFilename(), $f->getFileContents());
+                }
+                $zip->close();
+            } else {
+                throw new \Exception(t('You must enable ZipArchive to download files.'));
+            }
+            $fh->forceDownload($filename);
+        }
+        exit;
     }
 
     public function export_batch_xml($id = null)

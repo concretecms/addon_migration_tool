@@ -28,10 +28,10 @@
         });
     </script>
 
-    <form method="post" action="<?=View::url('/dashboard/migration/batches/export', 'download_files')?>">
+    <form method="post" action="<?=$view->action('download_files')?>">
         <input type="hidden" name="id" value="<?=$batch->getID()?>">
         <?=Loader::helper('validation/token')->output('download_files')?>
-        <button style="float: right" disabled class="btn small btn-sm" data-action="download-files" type="submit"><?=t('Download Files')?></button>
+        <button style="float: right" disabled class="btn btn-xs btn-default" data-action="download-files" type="submit"><?=t('Download Files')?></button>
         <h3><?=t('Files')?></h3>
 
         <table class="table table-striped zebra-striped">

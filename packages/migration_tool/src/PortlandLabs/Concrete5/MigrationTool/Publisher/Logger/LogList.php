@@ -9,7 +9,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Log;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class LogList extends EntityItemList
+abstract class LogList extends EntityItemList
 {
 
     protected $entityManager;

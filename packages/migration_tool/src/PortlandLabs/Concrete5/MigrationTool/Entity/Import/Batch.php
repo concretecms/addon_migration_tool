@@ -32,7 +32,7 @@ class Batch implements ValidatorInterface, BatchInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\Site\Site")
-     * @ORM\JoinColumn(name="siteID", referencedColumnName="siteID")
+     * @ORM\JoinColumn(name="siteID", referencedColumnName="siteID", onDelete="CASCADE")
      **/
     protected $site;
 

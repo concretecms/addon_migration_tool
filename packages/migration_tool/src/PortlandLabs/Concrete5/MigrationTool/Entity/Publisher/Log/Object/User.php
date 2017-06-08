@@ -24,7 +24,7 @@ class User extends LoggableObject
 
     /**
      * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\User\User")
-     * @ORM\JoinColumn(name="uID", referencedColumnName="uID")
+     * @ORM\JoinColumn(name="uID", referencedColumnName="uID", onDelete="CASCADE")
      **/
     public $coreUser;
 

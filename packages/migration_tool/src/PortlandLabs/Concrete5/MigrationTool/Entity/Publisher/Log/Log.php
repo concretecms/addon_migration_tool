@@ -49,13 +49,13 @@ class Log
 
     /**
      * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\User\User")
-     * @ORM\JoinColumn(name="uID", referencedColumnName="uID")
+     * @ORM\JoinColumn(name="uID", referencedColumnName="uID", onDelete="CASCADE")
      **/
     protected $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\Site\Site")
-     * @ORM\JoinColumn(name="siteID", referencedColumnName="siteID")
+     * @ORM\JoinColumn(name="siteID", referencedColumnName="siteID", onDelete="CASCADE")
      **/
     protected $site;
 

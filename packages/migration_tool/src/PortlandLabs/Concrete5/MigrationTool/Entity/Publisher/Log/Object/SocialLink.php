@@ -15,7 +15,7 @@ class SocialLink extends LoggableObject
 
     /**
      * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\Sharing\SocialNetwork\Link")
-     * @ORM\JoinColumn(name="slID", referencedColumnName="slID")
+     * @ORM\JoinColumn(name="slID", referencedColumnName="slID", onDelete="CASCADE")
      **/
     protected $link;
 

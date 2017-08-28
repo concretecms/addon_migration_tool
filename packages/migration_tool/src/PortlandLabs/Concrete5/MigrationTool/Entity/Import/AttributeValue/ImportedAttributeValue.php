@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportAttributeImportedValues")
  */
-final class ImportedAttributeValue extends AttributeValue
+class ImportedAttributeValue extends AttributeValue
 {
     /**
      * @ORM\Column(type="text")

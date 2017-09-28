@@ -45,6 +45,7 @@ inner join e.log l where l.id = :log_id and p.cID > 0 and p.original_path = :ori
             );
             $query->setParameter('log_id', $log->getID());
             $query->setParameter('original_path', $cPath);
+            $query->setMaxResults(1);
             $loggedPage = $query->getOneOrNullResult();
             if (is_object($loggedPage)) {
                 return Page::getByID($loggedPage->getPublishedPageID(), 'ACTIVE');

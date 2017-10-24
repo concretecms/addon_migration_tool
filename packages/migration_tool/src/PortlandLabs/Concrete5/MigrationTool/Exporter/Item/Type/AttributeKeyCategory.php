@@ -25,6 +25,15 @@ class AttributeKeyCategory extends AbstractType
                 $cat->addAttribute('handle', $category->getAttributeKeyCategoryHandle());
                 $cat->addAttribute('allow-sets', $category->allowAttributeSets());
                 $cat->addAttribute('package', $category->getPackageHandle());
+                $attributeTypes = $category->getAttributeTypes();
+                if (!$attributeTypes->isEmpty()) {
+                    $xTypes = $cat->addChild('attributetypes');
+                    foreach ($attributeTypes as $attributeType) {
+                        $xType = $xTypes->addChild('attributetype');
+                        $xType->addAttribute('handle', $attributeType->getAttributeTypeHandle());
+                    }
+                }
+                
             }
         }
     }

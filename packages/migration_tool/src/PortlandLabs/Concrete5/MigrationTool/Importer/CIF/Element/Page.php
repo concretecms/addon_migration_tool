@@ -128,7 +128,7 @@ class Page implements ElementParserInterface
             $styleSet = $this->styleSetImporter->import($node->style);
             $block->setStyleSet($styleSet);
         }
-        $value = $this->blockImporter->driver('unmapped')->parse($node);
+        $value = $this->blockImporter->driver($type)->parse($node);
         $block->setBlockValue($value);
 
         return $block;

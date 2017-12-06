@@ -8,7 +8,7 @@
     <form method="get" action="<?=$view->action('add_to_batch', $batch->getID())?>">
     <div class="form-group">
         <?=$form->label('item_type', t('Choose Item Type'))?>
-        <div style="padding-right: 50px; position: relative"">
+        <div style="padding-right: 80px; position: relative"">
         <select name="item_type" class="form-control">
             <option value=""><?=t('** Select Item')?></option>
             <?php foreach ($drivers as $itemType) {

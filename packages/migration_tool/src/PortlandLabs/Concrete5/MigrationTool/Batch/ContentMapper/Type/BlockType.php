@@ -9,6 +9,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformableEntityMapperInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\AreaLayoutBlockValue;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType\BlockComposerFormLayoutSetControl;
 
 defined('C5_EXECUTE') or die("Access Denied.");
@@ -37,11 +38,12 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
             foreach ($page->getAreas() as $area) {
                 foreach ($area->getBlocks() as $block) {
                     $blocks[] = $block;
-                    if ($block->getType() == 'core_area_layout') {
+                    $blockValue = $block->getBlockValue();
+                    if ($blockValue instanceof AreaLayoutBlockValue) {
                         // Note: we REALLY need a way to publish new provider drivers
                         // so that area layout, stack, page type, etc.. can all say they provide
                         // block types, and this routine is a bloated, procedural mess.
-                        $columns = $block->getBlockValue()->getAreaLayout()->getColumns();
+                        $columns = $blockValue->getAreaLayout()->getColumns();
                         foreach ($columns as $column) {
                             $columnBlocks = $column->getBlocks();
                             foreach ($columnBlocks as $columnBlock) {

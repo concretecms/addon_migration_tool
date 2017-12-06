@@ -14,12 +14,14 @@ class ValidateBlockValuesTask implements TaskInterface
         $target = $action->getTarget();
         foreach($blocks as $block) {
             $value = $block->getBlockValue();
-            $validator = $value->getRecordValidator($target->getBatch());
-            if (is_object($validator)) {
-                $r = $validator->validate($value);
-                if (is_object($r)) {
-                    foreach ($r as $message) {
-                        $action->getTarget()->addMessage($message);
+            if ($value) {
+                $validator = $value->getRecordValidator($target->getBatch());
+                if (is_object($validator)) {
+                    $r = $validator->validate($value);
+                    if (is_object($r)) {
+                        foreach ($r as $message) {
+                            $action->getTarget()->addMessage($message);
+                        }
                     }
                 }
             }

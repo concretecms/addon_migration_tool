@@ -9,6 +9,14 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class AttributeKey implements ElementParserInterface
 {
+
+    protected $attributeCategory;
+
+    public function __construct($attributeCategory = null)
+    {
+        $this->attributeCategory = $attributeCategory;
+    }
+
     public function getObjectCollection(\SimpleXMLElement $element, Batch $batch)
     {
         $manager = \Core::make('migration/manager/import/attribute/key');
@@ -21,7 +29,12 @@ class AttributeKey implements ElementParserInterface
                 $key->setHandle((string) $node['handle']);
                 $key->setName((string) $node['name']);
                 $key->setPackage((string) $node['package']);
-                $categoryImporter = $categoryManager->driver((string) $node['category']);
+                if ($this->attributeCategory) {
+                    $category = $this->attributeCategory;
+                } else {
+                    $category = (string) $node['category'];
+                }
+                $categoryImporter = $categoryManager->driver($category);
                 $category = $categoryImporter->getEntity();
                 $categoryImporter->loadFromXml($category, $node);
                 $key->setCategory($category);

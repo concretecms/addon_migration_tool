@@ -26,6 +26,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Site\SiteValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchRecordsTask;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Value\Manager as AttributeValueManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key\Manager as AttributeKeyManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Express\Control\Manager as ExpressControlManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Category\Manager as AttributeCategoryManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ParserManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Permission\AccessEntity\Manager as AccessEntityManager;
@@ -190,6 +191,9 @@ class Controller extends Package
         });
         \Core::bindShared('migration/manager/import/attribute/key', function ($app) {
             return new AttributeKeyManager($app);
+        });
+        \Core::bindShared('migration/manager/import/express/control', function ($app) {
+            return new ExpressControlManager($app);
         });
         \Core::bindShared('migration/manager/import/attribute/category', function ($app) {
             return new AttributeCategoryManager($app);

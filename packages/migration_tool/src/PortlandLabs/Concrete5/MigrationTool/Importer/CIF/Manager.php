@@ -15,6 +15,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ContentEditorSnipp
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationEditor;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationFlagType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationRatingType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ExpressEntity;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Group;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\User;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Job;
@@ -50,6 +51,7 @@ class Manager
         $this->registerRoutine(new Group());
         $this->registerRoutine(new ThumbnailType());
         $this->registerRoutine(new BannedWord());
+        $this->registerRoutine(new ExpressEntity());
         $this->registerRoutine(new SocialLink());
         $this->registerRoutine(new PermissionKeyCategory());
         $this->registerRoutine(new PermissionAccessEntityType());

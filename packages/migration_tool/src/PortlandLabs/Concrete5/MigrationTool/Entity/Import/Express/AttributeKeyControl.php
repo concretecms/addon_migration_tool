@@ -3,7 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Express;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ExpressEntity\Control\AttributeKeyFormatter;
 /**
  * @ORM\Entity
  */
@@ -28,5 +28,9 @@ class AttributeKeyControl extends Control
         $this->attribute_key = $attribute_key;
     }
 
+    public function getFormatter()
+    {
+        return new AttributeKeyFormatter($this);
+    }
 
 }

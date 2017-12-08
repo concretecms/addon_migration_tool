@@ -33,13 +33,73 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $associationsHolderNode->title = t('Associations');
             $associationsHolderNode->children = array();
 
+            $associations = $entity->getAssociations();
+            foreach($associations as $association) {
+                $type = '';
+                switch((string) $association->getType()) {
+                    case 'one_to_many':
+                        $type = t('One-To-Many');
+                        break;
+                    case 'many_to_one':
+                        $type = t('Many-To-One');
+                        break;
+                    case 'one_to_one';
+                        $type = t('One-To-One');
+                        break;
+                    case 'many_to_many':
+                        $type = t('Many-To-Many');
+                        break;
+                }
+                $associationNode = new \stdClass();
+                $associationNode->title = $type;
+                $associationNode->itemvalue = $association->getTargetPropertyName();
+                $associationNode->icon = 'fa fa-list-alt';
+                $associationsHolderNode->children[] = $associationNode;
+            }
+
+            $attributesHolderNode = new \stdClass();
+            $attributesHolderNode->icon = 'fa fa-cog';
+            $attributesHolderNode->title = t('Attribute Keys');
+            $attributesHolderNode->children = array();
+
+            $attributes = $entity->getAttributeKeys();
+            foreach($attributes->getKeys() as $key) {
+                $attributeNode = new \stdClass();
+                $attributeNode->title = $key->getName();
+                $attributeNode->itemvalue = $key->getType();
+                $attributesHolderNode->children[] = $attributeNode;
+            }
+
             $formsHolderNode = new \stdClass();
             $formsHolderNode->icon = 'fa fa-file';
             $formsHolderNode->title = t('Forms');
             $formsHolderNode->children = array();
 
+            $forms = $entity->getForms();
+            foreach($forms as $form) {
+                $formNode = new \stdClass();
+                $formNode->title = $form->getName();
+                $formNode->children = [];
+                foreach($form->getFieldSets() as $set) {
+                    $setNode = new \stdClass();
+                    $setNode->title = t('Field Set');
+                    $setNode->itemvalue = $set->getTitle();
+                    foreach($set->getControls() as $control) {
+                        $controlNode = new \stdClass();
+                        $formatter = $control->getFormatter();
+                        $controlNode->title = $formatter->getControlLabel();
+                        $controlNode->itemvalue = $formatter->getControlTypeText();
+                        $controlNode->icon = $formatter->getIconClass();
+                        $setNode->children[] = $controlNode;
+                    }
+                    $formNode->children[] = $setNode;
+                }
+                $formsHolderNode->children[] = $formNode;
+            }
+
 
             $node->children[] = $associationsHolderNode;
+            $node->children[] = $attributesHolderNode;
             $node->children[] = $formsHolderNode;
 
 

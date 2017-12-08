@@ -120,6 +120,8 @@ abstract class Control
     }
 
 
+    abstract public function getFormatter();
+
 
 
 

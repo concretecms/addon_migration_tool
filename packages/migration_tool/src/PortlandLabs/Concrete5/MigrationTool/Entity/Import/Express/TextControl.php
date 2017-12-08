@@ -3,7 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Express;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ExpressEntity\Control\TextFormatter;
 /**
  * @ORM\Entity
  */
@@ -52,5 +52,9 @@ class TextControl extends Control
         $this->body = $body;
     }
 
+    public function getFormatter()
+    {
+        return new TextFormatter($this);
+    }
 
 }

@@ -8,6 +8,7 @@ use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Concrete\Core\Page\PageList;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ExpressEntry\TreeEntryJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Queue\QueueFactory;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
@@ -601,6 +602,19 @@ class Import extends DashboardPageController
             return new JsonResponse($formatter);
         }
     }
+
+    public function load_batch_express_entry_data()
+    {
+        session_write_close();
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Express\Entry');
+        $page = $r->findOneById($this->request->get('id'));
+        if (is_object($page)) {
+            $formatter = new TreeEntryJsonFormatter($page);
+
+            return new JsonResponse($formatter);
+        }
+    }
+
 
     public function load_batch_site_data()
     {

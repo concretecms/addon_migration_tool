@@ -15,6 +15,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ContentEditorSnipp
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationEditor;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationFlagType;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ConversationRatingType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ExpressEntry;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\ExpressEntity;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\Group;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element\User;
@@ -83,6 +84,7 @@ class Manager
         $this->registerRoutine(new PageFeed());
         $this->registerRoutine(new Package());
         $this->registerRoutine(new Tree());
+        $this->registerRoutine(new ExpressEntry());
         $this->registerRoutine(new ConfigValue());
         $this->registerRoutine(new ContentEditorSnippet());
     }

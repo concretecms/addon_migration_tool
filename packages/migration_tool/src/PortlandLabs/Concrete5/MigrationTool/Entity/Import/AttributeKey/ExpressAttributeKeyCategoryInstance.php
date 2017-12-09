@@ -1,6 +1,8 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
+use Concrete\Core\Attribute\Category\ExpressCategory;
+use Doctrine\ORM\EntityManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKeyCategory\ExpressPublisher;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ExpressAttributeKeyCategoryInstance extends AttributeKeyCategoryInstance
 {
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $entity_handle = '';
+
     public function getHandle()
     {
         return 'express';
@@ -23,4 +30,29 @@ class ExpressAttributeKeyCategoryInstance extends AttributeKeyCategoryInstance
     {
         return new ExpressPublisher();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getEntityHandle()
+    {
+        return $this->entity_handle;
+    }
+
+    /**
+     * @param mixed $entity_handle
+     */
+    public function setEntityHandle($entity_handle)
+    {
+        $this->entity_handle = $entity_handle;
+    }
+
+    public function getAttributeController()
+    {
+        $entity = \Express::getObjectByHandle($this->getEntityHandle());
+        return new ExpressCategory($entity, \Core::make('app'), \Core::make(EntityManager::class));
+    }
+
+
+
 }

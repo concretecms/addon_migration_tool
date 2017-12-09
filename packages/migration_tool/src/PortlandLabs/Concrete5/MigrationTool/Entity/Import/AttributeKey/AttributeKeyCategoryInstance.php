@@ -1,5 +1,6 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
+use Concrete\Core\Attribute\Key\Category;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,5 +64,11 @@ abstract class AttributeKeyCategoryInstance
     public function __toString()
     {
         return $this->getHandle();
+    }
+
+    public function getAttributeController()
+    {
+        return Category::getByHandle($this->getHandle())
+            ->getController();
     }
 }

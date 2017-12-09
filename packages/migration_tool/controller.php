@@ -7,12 +7,14 @@ use Concrete\Core\Page\Type\Type;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Block\CollectionValidator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ExpressEntry\ExpressEntryValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAreasTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAttributesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlocksTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockValuesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateExpressAttributesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePagePathTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTemplatesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTypesTask;
@@ -161,6 +163,13 @@ class Controller extends Package
             }
         });
 
+        \Core::bind('migration/batch/express/entry/validator', function ($app, $batch) {
+            if (isset($batch[0])) {
+                $v = new ExpressEntryValidator($batch[0]);
+                $v->registerTask(new ValidateExpressAttributesTask());
+                return $v;
+            }
+        });
 
         \Core::bindShared('migration/batch/validator', function () {
             $v = new BatchValidator();

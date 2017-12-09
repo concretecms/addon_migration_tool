@@ -37,8 +37,8 @@ class Entity implements PublishableInterface, LoggableInterface
     protected $attributeKeys;
 
     /**
-     * @ORM\Id @ORM\Column(type="guid")
-     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Id
+     * @ORM\Column(type="guid")
      */
     protected $id;
 

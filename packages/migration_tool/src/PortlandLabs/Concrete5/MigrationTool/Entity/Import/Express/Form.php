@@ -11,8 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Form
 {
     /**
-     * @ORM\Id @ORM\Column(type="guid")
-     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Id
+     * @ORM\Column(type="guid")
      */
     protected $id;
 

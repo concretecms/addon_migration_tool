@@ -23,6 +23,23 @@ class TreeEntryJsonFormatter implements \JsonSerializable
         $collection = $entry->getCollection();
         $r = \Package::getByHandle('migration_tool')->getEntityManager()->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
 
+        $batch = $r->findFromCollection($collection);
+        $validator = $collection->getRecordValidator($batch);
+        $messages = $validator->validate($entry);
+        if ($messages->count()) {
+            $messageHolderNode = new \stdClass();
+            $messageHolderNode->icon = $messages->getFormatter()->getCollectionStatusIconClass();
+            $messageHolderNode->title = t('Errors');
+            $messageHolderNode->children = array();
+            foreach ($messages as $m) {
+                $messageNode = new \stdClass();
+                $messageNode->icon = $m->getFormatter()->getIconClass();
+                $messageNode->title = $m->getFormatter()->output();
+                $messageHolderNode->children[] = $messageNode;
+            }
+            $nodes[] = $messageHolderNode;
+        }
+
         if ($entry->getAttributes()->count()) {
             $attributeHolderNode = new \stdClass();
             $attributeHolderNode->icon = 'fa fa-cogs';

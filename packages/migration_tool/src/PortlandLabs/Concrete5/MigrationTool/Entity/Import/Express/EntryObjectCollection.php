@@ -60,6 +60,6 @@ class EntryObjectCollection extends ObjectCollection
 
     public function getRecordValidator(ValidatorInterface $batch)
     {
-        return new Validator($batch);
+        return \Core::make('migration/batch/express/entry/validator', array($batch));
     }
 }

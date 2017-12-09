@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey\ExpressAttributeKeyCategoryInstance;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Express\Control;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Express\EntityAttribute;
@@ -50,6 +51,9 @@ class ExpressEntity implements ElementParserInterface
                 if ($node->attributekeys->attributekey) {
                     $attributeKeyParser = new AttributeKey('express');
                     $attributeKeyCollection = $attributeKeyParser->getObjectCollection($node, $batch);
+                    foreach($attributeKeyCollection->getKeys() as $key) {
+                        $key->getCategory()->setEntityHandle($entity->getHandle());
+                    }
                     $entity->setAttributeKeys($attributeKeyCollection);
                 }
 

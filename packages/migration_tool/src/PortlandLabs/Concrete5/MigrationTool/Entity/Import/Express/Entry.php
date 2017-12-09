@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Express;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\ValidatableAttributesInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\ExpressEntryValidator;
@@ -13,7 +14,7 @@ use Concrete\Core\Entity\Express\Entity as CoreExpressEntity;
  * @ORM\Entity
  * @ORM\Table(name="MigrationImportExpressEntries")
  */
-class Entry implements PublishableInterface, LoggableInterface
+class Entry implements PublishableInterface, LoggableInterface, ValidatableAttributesInterface
 {
 
     /**
@@ -196,6 +197,10 @@ class Entry implements PublishableInterface, LoggableInterface
         $this->importID = $importID;
     }
 
+    public function getAttributeValidatorDriver()
+    {
+        return 'express_attribute';
+    }
 
 
 }

@@ -67,8 +67,15 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
                 $attributeNode = new \stdClass();
                 $attributeNode->title = $key->getName();
                 $attributeNode->itemvalue = $key->getType();
+                $attributeFormatter = $key->getFormatter();
+                $attributeDataNode = $attributeFormatter->getBatchTreeNodeJsonObject();
+                if ($attributeDataNode) {
+                    $attributeNode->children[] = $attributeDataNode;
+                }
                 $attributesHolderNode->children[] = $attributeNode;
             }
+
+
 
             $formsHolderNode = new \stdClass();
             $formsHolderNode->icon = 'fa fa-file';

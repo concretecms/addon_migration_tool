@@ -107,7 +107,9 @@ class Entry implements PublishableInterface, LoggableInterface, ValidatableAttri
     public function createPublisherLogObject($publishedObject = null)
     {
         $entry = new \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\ExpressEntry();
-        //$entry->setName($this->getName());
+        $entry->setComputedName($this->getLabel());
+        $entry->setOriginalId($this->getId());
+        $entry->setPublishedEntry($publishedObject);
         return $entry;
     }
 

@@ -90,7 +90,6 @@ class CreateExpressEntityDataRoutine extends AbstractRoutine
                     }
                 }
             }
-
         }
 
         foreach($entities->getEntities() as $entity) {

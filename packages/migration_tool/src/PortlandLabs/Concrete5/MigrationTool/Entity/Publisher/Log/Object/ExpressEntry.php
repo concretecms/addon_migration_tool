@@ -4,7 +4,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\LoggableObject;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\Object\AttributeKeyCategoryFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\Object\AttributeSetFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\Object\ExpressEntityFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\Object\GroupFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Validator\AttributeKeyCategoryValidator;
@@ -21,6 +20,11 @@ class ExpressEntry extends LoggableObject
      * @ORM\Column(type="string")
      */
     protected $computedName;
+
+    /**
+     * @ORM\Column(type="guid")
+     */
+    protected $original_id;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Concrete\Core\Entity\Express\Entry")
@@ -54,6 +58,24 @@ class ExpressEntry extends LoggableObject
     }
 
     /**
+     * @return mixed
+     */
+    public function getOriginalId()
+    {
+        return $this->original_id;
+    }
+
+    /**
+     * @param mixed $original_id
+     */
+    public function setOriginalId($original_id)
+    {
+        $this->original_id = $original_id;
+    }
+
+
+
+    /**
      * @param mixed $publishedEntry
      */
     public function setPublishedEntry($publishedEntry)
@@ -64,6 +86,6 @@ class ExpressEntry extends LoggableObject
 
     public function getLogFormatter()
     {
-        return new ExpressEntityFormatter();
+        return new \PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Formatter\Object\ExpressEntryFormatter();
     }
 }

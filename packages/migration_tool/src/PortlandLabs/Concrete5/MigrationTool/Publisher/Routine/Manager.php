@@ -207,6 +207,16 @@ class Manager extends CoreManager
         return new CreateExpressEntityDataRoutine();
     }
 
+    public function createCreateExpressEntriesDriver()
+    {
+        return new CreateExpressEntriesRoutine();
+    }
+
+    public function createAssociateExpressEntriesDriver()
+    {
+        return new AssociateExpressEntriesRoutine();
+    }
+
     public function __construct()
     {
         $this->driver('clear_batch');
@@ -237,6 +247,8 @@ class Manager extends CoreManager
         $this->driver('create_express_entities');
         $this->driver('create_express_entity_data');
         $this->driver('create_users');
+        $this->driver('create_express_entries');
+        $this->driver('associate_express_entries');
         $this->driver('create_block_types');
         $this->driver('create_block_type_sets');
         $this->driver('create_page_templates');

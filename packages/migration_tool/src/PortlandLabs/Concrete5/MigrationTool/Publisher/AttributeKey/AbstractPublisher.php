@@ -27,7 +27,7 @@ abstract class AbstractPublisher implements PublisherInterface
         $em->flush();
 
         // Modify the category's search indexer.
-        $category = Category::getByHandle($source->getCategory()->getHandle())->getController();
+        $category = $source->getCategory()->getAttributeController();
         $indexer = $category->getSearchIndexer();
         if (is_object($indexer)) {
             $indexer->updateRepositoryColumns($category, $destination);

@@ -12,6 +12,11 @@ class Manager extends \Concrete\Core\Support\Manager
         return new FileImporter();
     }
 
+    public function createExpressDriver()
+    {
+        return new ExpressImporter();
+    }
+
     public function createCollectionDriver() /* page */
     {
         return new CollectionImporter();

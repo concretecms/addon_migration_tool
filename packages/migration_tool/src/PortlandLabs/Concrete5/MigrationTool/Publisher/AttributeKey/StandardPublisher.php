@@ -12,9 +12,11 @@ class StandardPublisher extends AbstractPublisher
     public function publish(AttributeKey $source, $destination)
     {
         $type = Type::getByHandle($source->getType());
-        $controller = $type->getController();
-        // version 8
-        $settings = $controller->getAttributeKeySettings();
-        return $this->publishAttribute($source, $settings, $destination);
+        if ($type) {
+            $controller = $type->getController();
+            // version 8
+            $settings = $controller->getAttributeKeySettings();
+            return $this->publishAttribute($source, $settings, $destination);
+        }
     }
 }

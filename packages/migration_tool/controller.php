@@ -7,12 +7,14 @@ use Concrete\Core\Page\Type\Type;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Block\CollectionValidator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ExpressEntry\ExpressEntryValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAreasTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAttributesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlocksTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockValuesTask;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateExpressAttributesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePagePathTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTemplatesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTypesTask;
@@ -26,6 +28,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Site\SiteValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchRecordsTask;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Value\Manager as AttributeValueManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key\Manager as AttributeKeyManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Express\Control\Manager as ExpressControlManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Category\Manager as AttributeCategoryManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ParserManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Permission\AccessEntity\Manager as AccessEntityManager;
@@ -44,7 +47,7 @@ class Controller extends Package
 {
     protected $pkgHandle = 'migration_tool';
     protected $appVersionRequired = '8.2.0a1';
-    protected $pkgVersion = '0.8.0';
+    protected $pkgVersion = '0.8.5';
     protected $pkgAutoloaderMapCoreExtensions = true;
     protected $pkgAutoloaderRegistries = array(
         'src/PortlandLabs/Concrete5/MigrationTool' => '\PortlandLabs\Concrete5\MigrationTool',
@@ -160,6 +163,13 @@ class Controller extends Package
             }
         });
 
+        \Core::bind('migration/batch/express/entry/validator', function ($app, $batch) {
+            if (isset($batch[0])) {
+                $v = new ExpressEntryValidator($batch[0]);
+                $v->registerTask(new ValidateExpressAttributesTask());
+                return $v;
+            }
+        });
 
         \Core::bindShared('migration/batch/validator', function () {
             $v = new BatchValidator();
@@ -190,6 +200,9 @@ class Controller extends Package
         });
         \Core::bindShared('migration/manager/import/attribute/key', function ($app) {
             return new AttributeKeyManager($app);
+        });
+        \Core::bindShared('migration/manager/import/express/control', function ($app) {
+            return new ExpressControlManager($app);
         });
         \Core::bindShared('migration/manager/import/attribute/category', function ($app) {
             return new AttributeCategoryManager($app);

@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\ValidatableAttributesInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggableInterface;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\PublishableInterface;

@@ -122,6 +122,7 @@ abstract class Control
 
     abstract public function getFormatter();
 
+    abstract public function getControlPublisher();
 
 
 

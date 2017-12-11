@@ -28,7 +28,8 @@ class ExpressAttributeKeyCategoryInstance extends AttributeKeyCategoryInstance
 
     public function getPublisher()
     {
-        return new ExpressPublisher();
+        $entity = \Express::getObjectByHandle($this->entity_handle);
+        return new ExpressPublisher($entity);
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type;
 
+use Concrete\Core\Attribute\Category\ExpressCategory;
 use Concrete\Core\Attribute\Key\CollectionKey;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentTransformer\TransformableEntityMapperInterface;
@@ -93,6 +94,28 @@ class ExpressAttribute extends Attribute
             }
         }
     }
+
+    public function getInstalledTargetItems(BatchInterface $batch)
+    {
+        $entities = \Express::getEntities();
+        $items = array();
+        foreach($entities as $entity) {
+            $category = $entity->getAttributeKeyCategory();
+            $keys = $category->getList();
+            usort($keys, function ($a, $b) {
+                return strcasecmp($a->getAttributeKeyName(), $b->getAttributeKeyName());
+            });
+            foreach ($keys as $ak) {
+                $item = new TargetItem($this);
+                $item->setItemId($ak->getAttributeKeyHandle());
+                $item->setItemName($ak->getAttributeKeyDisplayName());
+                $items[] = $item;
+            }
+        }
+
+        return $items;
+    }
+
 
     public function getItems(BatchInterface $batch)
     {

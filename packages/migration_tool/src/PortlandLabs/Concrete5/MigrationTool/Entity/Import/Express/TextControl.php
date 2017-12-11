@@ -4,6 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Express;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ExpressEntity\Control\TextFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\ExpressEntity\Control\TextControl as TextControlPublisher;
 /**
  * @ORM\Entity
  */
@@ -57,4 +58,8 @@ class TextControl extends Control
         return new TextFormatter($this);
     }
 
+    public function getControlPublisher()
+    {
+        return new TextControlPublisher();
+    }
 }

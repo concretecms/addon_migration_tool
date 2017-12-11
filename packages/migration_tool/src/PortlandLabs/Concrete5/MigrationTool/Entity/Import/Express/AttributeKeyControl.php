@@ -4,6 +4,8 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Express;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ExpressEntity\Control\AttributeKeyFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\ExpressEntity\Control\AttributeKeyControl as AttributeKeyControlPublisher;
+
 /**
  * @ORM\Entity
  */
@@ -32,5 +34,11 @@ class AttributeKeyControl extends Control
     {
         return new AttributeKeyFormatter($this);
     }
+
+    public function getControlPublisher()
+    {
+        return \Core::make(AttributeKeyControlPublisher::class);
+    }
+
 
 }

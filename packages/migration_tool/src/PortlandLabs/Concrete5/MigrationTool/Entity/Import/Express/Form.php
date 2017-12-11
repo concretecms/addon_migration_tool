@@ -88,7 +88,7 @@ class Form
     }
 
     /**
-     * @return mixed
+     * @return FieldSet
      */
     public function getFieldSets()
     {

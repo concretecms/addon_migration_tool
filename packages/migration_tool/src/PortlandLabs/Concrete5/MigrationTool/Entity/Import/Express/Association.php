@@ -12,7 +12,6 @@ class Association
 {
     /**
      * @ORM\Id @ORM\Column(type="guid")
-     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 
@@ -52,6 +51,14 @@ class Association
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**

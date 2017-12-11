@@ -38,6 +38,7 @@ class ExpressEntity implements ElementParserInterface
                 if ($node->associations->association) {
                     foreach ($node->associations->association as $associationNode) {
                         $association = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Express\Association();
+                        $association->setID((string) $associationNode['id']);
                         $association->setType((string) $associationNode['type']);
                         $association->setTargetEntity((string) $associationNode['target-entity']);
                         $association->setSourceEntity((string) $associationNode['source-entity']);

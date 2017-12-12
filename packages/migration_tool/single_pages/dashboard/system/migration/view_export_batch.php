@@ -13,6 +13,7 @@ $dh = Core::make('helper/date');
 
 <div style="display: none">
 
+    <div data-dialog-wrapper="delete-batch"">
     <div id="ccm-dialog-delete-batch" class="ccm-ui">
         <form method="post" action="<?=$view->action('delete_batch')?>">
             <?=Loader::helper("validation/token")->output('delete_batch')?>
@@ -23,7 +24,7 @@ $dh = Core::make('helper/date');
                 <button class="btn btn-danger pull-right" onclick="$('#ccm-dialog-delete-batch form').submit()"><?=t('Delete Batch')?></button>
             </div>
         </form>
-    </div>
+    </div></div>
 
 </div>
 

@@ -44,6 +44,7 @@ $dh = Core::make('helper/date');
         <tr>
             <th></th>
             <th><?= t('Type') ?></th>
+            <th><?= t('Prefix') ?></th>
             <th style="width: 100%"><?= t('Filename') ?></th>
         </tr>
         </thead>
@@ -53,6 +54,7 @@ $dh = Core::make('helper/date');
             <tr>
                 <td><?= $file->getListingThumbnailImage() ?></td>
                 <td><?= $file->getType() ?></td>
+                <td><?= $file->getPrefix() ?></td>
                 <td><?= $file->getFilename() ?></td>
             </tr>
             <?php

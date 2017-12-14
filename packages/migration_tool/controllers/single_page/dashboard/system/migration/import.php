@@ -481,7 +481,17 @@ class Import extends DashboardPageController
                             $folder = $filesystem->getRootFolder();
                         }
 
-                        $response = $ih->import($_FILES['file']['tmp_name'], $_FILES['file']['name'], $folder);
+                        $filename = $_FILES['file']['name'];
+                        if (preg_match("/([0-9]{12}]*)\_(.*)/", $filename, $matches)) {
+                            // a prefix is already present in the filename.
+                            $fvPrefix = $matches[1];
+                            $fvFilename = $matches[2];
+                        } else {
+                            $fvPrefix = null;
+                            $fvFilename = $filename;
+                        }
+
+                        $response = $ih->import($_FILES['file']['tmp_name'], $fvFilename, $folder, $fvPrefix);
                         if (!($response instanceof \Concrete\Core\File\Version) && !compat_is_version_8()) {
                             throw new \Exception(Importer::getErrorMessage($response));
                         } elseif (!($response instanceof \Concrete\Core\Entity\File\Version) && compat_is_version_8()) {

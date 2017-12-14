@@ -116,7 +116,7 @@ class Export extends DashboardSitePageController
             }
             $filename = $temp.'/'.$vh->getString().'.zip';
             $files = array();
-            $filenames = array();
+            $prefixes = array();
             foreach ((array) $_POST['batchFileID'] as $fID) {
                 $f = File::getByID(intval($fID));
                 if (!$r) {
@@ -125,6 +125,7 @@ class Export extends DashboardSitePageController
                 $fp = new \Permissions($f);
                 if ($fp->canRead()) {
                     $files[] = $f;
+                    $prefixes[] = $f->getPrefix();
                 }
             }
             if (empty($files)) {
@@ -136,8 +137,10 @@ class Export extends DashboardSitePageController
                 if ($res !== true) {
                     throw new \Exception(t('Could not open with ZipArchive::CREATE'));
                 }
-                foreach ($files as $f) {
-                    $zip->addFromString($f->getFilename(), $f->getFileContents());
+                for ($i = 0; $i < count($files); $i++) {
+                    $f = $files[$i];
+                    $prefix = $prefixes[$i];
+                    $zip->addFromString($prefix . '_' . $f->getFilename(), $f->getFileContents());
                 }
                 $zip->close();
             } else {

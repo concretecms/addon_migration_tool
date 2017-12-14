@@ -63,10 +63,12 @@ class Exporter
         $files = array();
         $db = \Database::connection();
         foreach ($items as $item) {
+            $fID = null;
             if (strpos($item, ':') > -1) {
                 list($fvPrefix, $fvFilename) = explode(':', $item);
                 $fID = $db->GetOne('select fID from FileVersions where fvPrefix = ? and fvFilename = ?', array($fvPrefix, $fvFilename));
-            } else {
+            }
+            if (!$fID) {
                 $fID = $db->GetOne('select fID from FileVersions where fvFilename = ?', array($item));
             }
             if ($fID) {

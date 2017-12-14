@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content;
 
+use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\FileItem;
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\ItemInterface;
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\PageFeedItem;
 use Concrete\Core\Backup\ContentImporter\ValueInspector\Item\PageItem;
@@ -24,6 +25,10 @@ class Factory
 
         if ($item instanceof PageTypeItem) {
             $this->validator = new PageTypeItemValidator();
+        }
+
+        if ($item instanceof FileItem) {
+            $this->validator = new FileItemValidator();
         }
 
         if (!$this->validator) {

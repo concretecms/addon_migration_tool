@@ -143,8 +143,9 @@ class ExpressAttribute extends Attribute
 
     public function getTargetItemContentObject(TargetItemInterface $targetItem)
     {
-        list($entityHandle, $attributeHandle) = explode('|', $targetItem->getItemID());
-        $identifier = sprintf('migration/attribute_key/express/%s/%s', $entityHandle , $attributeHandle);
+        $targetAttributeKeyHandle = $targetItem->getItemID();
+        list($entityHandle, $sourceAttributeHandle) = explode('|', $targetItem->getSourceItemIdentifier());
+        $identifier = sprintf('migration/attribute_key/express/%s/%s', $entityHandle , $targetAttributeKeyHandle);
         $item = $this->cache->getItem($identifier);
         if (!$item->isMiss()) {
             return $item->get();
@@ -155,7 +156,7 @@ class ExpressAttribute extends Attribute
         $expressObject = \Express::getObjectByHandle($entityHandle);
         if ($expressObject) {
             $controller = $expressObject->getAttributeKeyCategory();
-            $key = $controller->getAttributeKeyByHandle($attributeHandle);
+            $key = $controller->getAttributeKeyByHandle($targetAttributeKeyHandle);
         }
 
         $this->cache->save($item->set($key));

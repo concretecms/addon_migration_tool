@@ -9,5 +9,6 @@ interface TargetItemInterface
     public function getItemID();
     public function getItemType();
     public function isMapped();
+    public function getSourceItemIdentifier();
     public function matches(TargetItemInterface $targetItem);
 }

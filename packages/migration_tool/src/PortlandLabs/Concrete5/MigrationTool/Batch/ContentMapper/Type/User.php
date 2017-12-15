@@ -7,6 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\ItemInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Provider\UserProviderInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\TargetItemInterface;
 
@@ -27,19 +28,12 @@ class User implements MapperInterface
     public function getItems(BatchInterface $batch)
     {
         $users = array();
-        foreach ($batch->getPages() as $page) {
-            if ($page->getUser() && !in_array($page->getUser(), $users)) {
-                $users[] = $page->getUser();
-            }
-        }
-
-        $pageTypes = $batch->getObjectCollection('page_type');
-        if (is_object($pageTypes)) {
-            foreach ($pageTypes->getTypes() as $type) {
-                $defaults = $type->getDefaultPageCollection();
-                foreach ($defaults->getPages() as $page) {
-                    if ($page->getUser() && !in_array($page->getUser(), $users)) {
-                        $users[] = $page->getUser();
+        $collections = $batch->getObjectCollections();
+        foreach($collections as $collection) {
+            if ($collection instanceof UserProviderInterface) {
+                foreach($collection->getUserNames() as $user) {
+                    if (!in_array($user, $users)) {
+                        $users[] = $user;
                     }
                 }
             }

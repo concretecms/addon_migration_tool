@@ -10,6 +10,8 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 abstract class AbstractTreeJsonFormatter implements \JsonSerializable
 {
+    protected $entityManager;
+
     public function __construct(ObjectCollection $collection)
     {
         $em = \Package::getByHandle('migration_tool')->getEntityManager();
@@ -17,6 +19,7 @@ abstract class AbstractTreeJsonFormatter implements \JsonSerializable
         $this->collection = $collection;
         $this->batch = $r->findFromCollection($collection);
         $this->validator = $collection->getRecordValidator($this->batch);
+        $this->entityManager = $em;
     }
 
     protected function addMessagesNode(\stdClass $node, MessageCollection $messages)

@@ -7,7 +7,7 @@
         <col width="30px"></col>
     </colgroup>
     <thead>
-    <tr> <th><?=t('Entity')?></th>  <th><?=t('Label')?></th> <th><?=t('Label')?></th> <th><input type="checkbox" data-checkbox="toggle-all"></th> </tr>
+    <tr> <th><?=t('Entity')?></th>  <th><?=t('Import ID')?></th> <th><?=t('Label')?></th> <th><input type="checkbox" data-checkbox="toggle-all"></th> </tr>
     </thead>
     <tbody>
     </tbody>

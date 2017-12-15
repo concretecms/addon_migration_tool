@@ -40,6 +40,11 @@ class BlockType implements MapperInterface, TransformableEntityMapperInterface
                     $blocks[] = $block;
                     $blockValue = $block->getBlockValue();
                     if ($blockValue instanceof AreaLayoutBlockValue) {
+                        // UPDATE: We DO have a way to do this. We need to implement BlockProviderInterface
+                        // The same way the user mapper has created a new collection based userproviderinterface.
+                        // it works really well to specify what content types provide users. We need to roll it out to all
+                        // other mappers.
+
                         // Note: we REALLY need a way to publish new provider drivers
                         // so that area layout, stack, page type, etc.. can all say they provide
                         // block types, and this routine is a bloated, procedural mess.

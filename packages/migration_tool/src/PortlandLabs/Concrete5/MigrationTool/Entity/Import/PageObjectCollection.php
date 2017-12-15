@@ -2,6 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Provider\UserProviderInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreeJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  */
-class PageObjectCollection extends ObjectCollection
+class PageObjectCollection extends ObjectCollection implements UserProviderInterface
 {
     /**
      * @ORM\OneToMany(targetEntity="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page", mappedBy="collection", cascade={"persist", "remove"})
@@ -67,5 +68,14 @@ class PageObjectCollection extends ObjectCollection
     public function getRecordValidator(ValidatorInterface $batch)
     {
         return \Core::make('migration/batch/page/validator', array($batch));
+    }
+
+    public function getUserNames()
+    {
+        $users = array();
+        foreach ($this->getPages() as $page) {
+            $users[] = $page->getUser();
+        }
+        return array_unique($users);
     }
 }

@@ -9,6 +9,7 @@ use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Concrete\Core\Page\PageList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ExpressEntry\TreeEntryJsonFormatter;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreeLazyLoadItemProviderInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Queue\QueueFactory;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
@@ -598,6 +599,22 @@ class Import extends DashboardPageController
             $formatter = $collection->getTreeFormatter();
 
             return new JsonResponse($formatter);
+        }
+    }
+
+    public function load_batch_item_data()
+    {
+        session_write_close();
+        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection');
+        $collection = $r->findOneById($this->request->get('collection_id'));
+        if (is_object($collection)) {
+            $formatter = $collection->getTreeFormatter();
+            if (!($formatter instanceof TreeLazyLoadItemProviderInterface)) {
+                throw new \Exception(t('This formatter must be an instance of the TreeLazyLoadItemProviderInterface'));
+            } else {
+                $formatter = $formatter->getItemFormatterByID($this->request->get('id'));
+                return new JsonResponse($formatter);
+            }
         }
     }
 

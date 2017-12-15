@@ -47,7 +47,7 @@ class Controller extends Package
 {
     protected $pkgHandle = 'migration_tool';
     protected $appVersionRequired = '8.2.0a1';
-    protected $pkgVersion = '0.8.5';
+    protected $pkgVersion = '0.8.6';
     protected $pkgAutoloaderMapCoreExtensions = true;
     protected $pkgAutoloaderRegistries = array(
         'src/PortlandLabs/Concrete5/MigrationTool' => '\PortlandLabs\Concrete5\MigrationTool',

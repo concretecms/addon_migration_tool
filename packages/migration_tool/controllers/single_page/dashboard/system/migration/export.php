@@ -58,6 +58,7 @@ class Export extends DashboardSitePageController
         $batches = $r->findAll(array(), array('date' => 'desc'));
         $this->set('batches', $batches);
         $this->set('batchType', 'export');
+        $this->set('sites', $this->app->make('site')->getList());
         $this->set('batchEmptyMessage', t('You have not created any export batches.'));
         $this->render('/dashboard/system/migration/view_batches');
     }

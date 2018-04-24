@@ -156,7 +156,7 @@ foreach ($mappers->getDrivers() as $mapper) {
         $('button[data-action=set-unmapped-to-ignored]').on('click', function() {
             $(this).parent().find('select').each(function() {
                 if ($(this).val() == '0') {
-                    $(this).find('option[value=-1]').prop('selected', true);
+                    $(this).selectize()[0].selectize.setValue('-1')
                 }
             });
         });

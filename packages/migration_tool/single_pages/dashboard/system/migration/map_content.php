@@ -144,24 +144,26 @@ foreach ($mappers->getDrivers() as $mapper) {
                 </div>
             </div>
 
-        <script type="text/javascript">
-            $(function() {
-                $('select[data-selector=target-item]').selectize();
-                $('button[data-action=set-unmapped-to-ignored]').on('click', function() {
-                    $(this).parent().find('select').each(function() {
-                        if ($(this).val() == '0') {
-                            $(this).find('option[value=-1]').prop('selected', true);
-                        }
-                    });
-                });
-            });
-        </script>
-        <?php
-        }
-
+    <?php
     }
 
-if ($empty) { ?>
+}
+?>
+
+<script type="text/javascript">
+    $(function() {
+        $('select[data-selector=target-item]').selectize();
+        $('button[data-action=set-unmapped-to-ignored]').on('click', function() {
+            $(this).parent().find('select').each(function() {
+                if ($(this).val() == '0') {
+                    $(this).find('option[value=-1]').prop('selected', true);
+                }
+            });
+        });
+    });
+</script>
+
+<?php if ($empty) { ?>
     <p><?=t('There are no mappable items found in this batch.')?></p>
 
 <?php } ?>

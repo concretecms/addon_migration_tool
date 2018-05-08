@@ -53,4 +53,8 @@ class Manager extends CoreManager
         return new ImageSliderImporter();
     }
 
+    public function createPageListDriver()
+    {
+        return new PageListImporter();
+    }
 }

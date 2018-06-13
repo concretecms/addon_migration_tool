@@ -1,27 +1,36 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Queue;
 
+use Concrete\Core\Foundation\Queue\QueueService;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 class QueueFactory
 {
 
+    protected $queueService;
+
+    public function __construct(QueueService $queueService)
+    {
+        $this->queueService = $queueService;
+    }
+
+    private function getQueue()
+    {
+        return $this->queueService->get('migration_tool');
+    }
     public function getMapperQueue(Batch $batch)
     {
-        $identifier = sprintf('target-item-processor/%s', $batch->getId());
-        return new MapperQueue($identifier);
+        return $this->getQueue();
     }
 
     public function getTransformerQueue(Batch $batch)
     {
-        $identifier = sprintf('untransformed-item-processor/%s', $batch->getId());
-        return new TransformerQueue($identifier);
+        return $this->getQueue();
     }
 
     public function getPublisherQueue(Batch $batch)
     {
-        $identifier = sprintf('publisher-routine-processor/%s', $batch->getId());
-        return new PublisherQueue($identifier);
+        return $this->getQueue();
     }
 
     public function getActiveQueue(Batch $batch)

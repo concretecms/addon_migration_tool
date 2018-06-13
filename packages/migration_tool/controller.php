@@ -6,6 +6,10 @@ use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\MapContentTypesCommand;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\MapContentTypesCommandHandler;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\TransformContentTypesCommand;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\TransformContentTypesCommandHandler;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Block\CollectionValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ExpressEntry\ExpressEntryValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAreasTask;
@@ -272,6 +276,13 @@ class Controller extends Package
             array('css', 'fancytree/skin/bootstrap'),
             array('css', 'migration/batch-table-tree'),
         ));
+
+        // Commands
+        $locator = $this->app->getCommandBus()->getCommandLocator();
+        $locator->addHandler($this->app->make(MapContentTypesCommandHandler::class), MapContentTypesCommand::class);
+        $locator->addHandler($this->app->make(TransformContentTypesCommandHandler::class), TransformContentTypesCommand::class);
+
+
     }
 
     public function getPackageDescription()

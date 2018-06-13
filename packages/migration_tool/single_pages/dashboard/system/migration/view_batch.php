@@ -284,40 +284,37 @@ $dh = Core::make('helper/date');
                     'value': '<?=Core::make('token')->generate('run_batch_content_normalize_page_paths_task')?>'
                 }
             ],
+            element: $element,
             success: function (r) {
                 $('h4[data-progress-bar-title]').html('<?=t('Mapping Content Types...')?>');
-                ccm_triggerProgressiveOperation(
-                    '<?=$view->action('run_batch_content_map_content_types_task')?>',
-                    [
+                new ConcreteProgressiveOperation({
+                    url: '<?=$view->action('run_batch_content_map_content_types_task')?>',
+                    data: [
                         {'name': 'id', 'value': '<?=$batch->getID()?>'},
                         {
                             'name': 'ccm_token',
                             'value': '<?=Core::make('token')->generate('run_batch_content_map_content_types_task')?>'
                         }
                     ],
-                    '',
-                    function () {
+                    onComplete: function() {
                         $('h4[data-progress-bar-title]').html('<?=t('Transforming Content Types...')?>');
-                        ccm_triggerProgressiveOperation(
-                            '<?=$view->action('run_batch_content_transform_content_types_task')?>',
-                            [
+                        new ConcreteProgressiveOperation({
+                            url: '<?=$view->action('run_batch_content_transform_content_types_task')?>',
+                            data: [
                                 {'name': 'id', 'value': '<?=$batch->getID()?>'},
                                 {
                                     'name': 'ccm_token',
                                     'value': '<?=Core::make('token')->generate('run_batch_content_transform_content_types_task')?>'
                                 }
                             ],
-                            '',
-                            function () {
+                            onComplete: function() {
                                 window.location.reload();
                             },
-                            false,
-                            $element
-                        );
-                    },
-                    false,
-                    $element
-                );
+                            element: $element
+                        });
+
+                    }
+                });
             }
         });
     }
@@ -335,19 +332,20 @@ $dh = Core::make('helper/date');
             $('div[data-progress-bar=create-content]').show();
             $('div[data-progress-bar=create-content] h4').html('<?=t('Publishing Content...')?>');
 
-            ccm_triggerProgressiveOperation(
-                '<?=$view->action('create_content_from_batch')?>',
-                [
+            new ConcreteProgressiveOperation({
+                url: '<?=$view->action('create_content_from_batch')?>',
+                data: [
                     {'name': 'id', 'value': '<?=$batch->getID()?>'},
-                    {'name': 'ccm_token', 'value': '<?=Core::make('token')->generate('create_content_from_batch')?>'}
+                    {
+                        'name': 'ccm_token',
+                        'value': '<?=Core::make('token')->generate('create_content_from_batch')?>'
+                    }
                 ],
-                '',
-                function () {
-                    window.location.reload()
+                onComplete: function() {
+                    window.location.reload();
                 },
-                false,
-                $('div[data-progress-bar-wrapper=create-content]')
-            );
+                element: $('div[data-progress-bar-wrapper=create-content]')
+            });
         });
 
         $('button[data-action=remove-selected-items]').on('click', function (e) {

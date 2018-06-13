@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Queue\QueueFactory;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
+use Concrete\Core\Foundation\Queue\QueueService;
 
 class BatchService
 {
@@ -27,15 +28,17 @@ class BatchService
 
     public function clearQueues(Batch $batch)
     {
-        $factory = new QueueFactory();
+        $factory = $this->application->make(QueueFactory::class);
+        $service = $this->application->make(QueueService::class);
+        $driverFactory = $this->application->make('queue/driver');
         if ($queue = $factory->getMapperQueue($batch)) {
-            $queue->deleteQueue();
+            $driverFactory->removeQueue($queue);
         }
         if ($queue = $factory->getTransformerQueue($batch)) {
-            $queue->deleteQueue();
+            $driverFactory->removeQueue($queue);
         }
         if ($queue = $factory->getPublisherQueue($batch)) {
-            $queue->deleteQueue();
+            $driverFactory->removeQueue($queue);
         }
     }
 

@@ -1,32 +1,23 @@
 <?php
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task;
 
-use Concrete\Core\Foundation\Processor\ActionInterface;
-use Concrete\Core\Foundation\Processor\TaskInterface;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command;
+
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\PresetManager;
-use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 
-defined('C5_EXECUTE') or die("Access Denied.");
-
-class MapContentTypesTask implements TaskInterface
+class MapContentTypesCommandHandler
 {
 
-    public function execute(ActionInterface $action)
+    public function handle(MapContentTypesCommand $command)
     {
-        $target = $action->getTarget();
-        $subject = $action->getSubject();
-        $batch = $target->getBatch();
-
         // Since batch is serialized we do this:
         $em = \Database::connection()->getEntityManager();
-        $batch = $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch')->findOneById($batch->getId());
+        $batch = $em->getRepository('PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch')->findOneById($command->getBatchId());
 
         $mappers = \Core::make('migration/manager/mapping');
-        $mapper = $mappers->driver($subject['mapper']);
+        $mapper = $mappers->driver($command->getMapper());
         $targetItemList = $mappers->createTargetItemList($batch, $mapper);
-        $item = new Item($subject['item']);
+        $item = new Item($command->getItem());
         $selectedTargetItem = $targetItemList->getSelectedTargetItem($item, false);
         if (!is_object($selectedTargetItem)) {
             // We're dealing with a new one that we haven't seen, so we try and assign it.
@@ -47,8 +38,5 @@ class MapContentTypesTask implements TaskInterface
         }
     }
 
-    public function finish(ActionInterface $action)
-    {
-        return;
-    }
+
 }

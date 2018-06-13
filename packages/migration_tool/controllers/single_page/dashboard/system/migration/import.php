@@ -5,11 +5,14 @@ use Concrete\Core\File\Filesystem;
 use Concrete\Core\File\Importer;
 use Concrete\Core\File\Set\Set;
 use Concrete\Core\Foundation\Processor\Processor;
+use Concrete\Core\Foundation\Queue\Response\EnqueueItemsResponse;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Concrete\Core\Page\PageList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ExpressEntry\TreeEntryJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreeLazyLoadItemProviderInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\MapContentTypesCommand;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\TransformContentTypesCommand;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Queue\QueueFactory;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
@@ -289,29 +292,16 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
         if (!$this->error->has()) {
-            $queue = (new QueueFactory())->getMapperQueue($batch);
+            $queue = $this->app->make(QueueFactory::class)->getMapperQueue($batch);
             $target = new Target($batch);
             $target->returnMappedItems();
-            $processor = new TargetItemProcessor($target);
-            if ($_POST['process']) {
-                foreach ($processor->receive() as $task) {
-                    $processor->execute($task);
-                }
-                $obj = new \stdClass();
-                $obj->totalItems = $processor->getTotalTasks();
-                echo json_encode($obj);
-                exit;
-            } else if ($queue->getQueue()->count() == 0) {
-                $processor->process();
+            foreach($target->getItems() as $item) {
+                $command = new MapContentTypesCommand(
+                    $batch->getID(), $item['mapper'], $item['item']
+                );
+                $this->queueCommand($command);
             }
-            $totalItems = $processor->getTotalTasks();
-            ob_start();
-            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2("%d task", "%d tasks", $totalItems)));
-            $response = ob_get_contents();
-            ob_end_clean();
-            $response = new \Concrete\Core\Http\Response($response);
-
-            return $response;
+            return new EnqueueItemsResponse($queue);
         }
         $this->view();
     }
@@ -327,29 +317,17 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
         if (!$this->error->has()) {
-            $queue = (new QueueFactory())->getTransformerQueue($batch);
+            $queue = $this->app->make(QueueFactory::class)->getTransformerQueue($batch);
             $target = new Target($batch);
             $target->returnUntransformedItems();
-            $processor = new UntransformedItemProcessor($target);
-            if ($_POST['process']) {
-                foreach ($processor->receive() as $task) {
-                    $processor->execute($task);
-                }
-                $obj = new \stdClass();
-                $obj->totalItems = $processor->getTotalTasks();
-                echo json_encode($obj);
-                exit;
-            } else if ($queue->getQueue()->count() == 0) {
-                $processor->process();
-            }
-            $totalItems = $processor->getTotalTasks();
-            ob_start();
-            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2("%d task", "%d tasks", $totalItems)));
-            $response = ob_get_contents();
-            ob_end_clean();
-            $response = new \Concrete\Core\Http\Response($response);
 
-            return $response;
+            foreach($target->getItems() as $item) {
+                $command = new TransformContentTypesCommand(
+                    $batch->getID(), $item['entity'], $item['mapper'], $item['transformer']
+                );
+                $this->queueCommand($command);
+            }
+            return new EnqueueItemsResponse($queue);
         }
         $this->view();
     }
@@ -365,7 +343,7 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
         if (!$this->error->has()) {
-            $queue = (new QueueFactory())->getPublisherQueue($batch);
+            $queue = $this->app->make(QueueFactory::class)->getPublisherQueue($batch);
             $target = new PublishTarget($batch);
             $logger = \Core::make(Logger::class);
             $processor = new PublisherRoutineProcessor($target, $logger);
@@ -438,7 +416,7 @@ class Import extends DashboardPageController
                 }
             }
             $service = $this->app->make(BatchService::class);
-            $factory = new QueueFactory();
+            $factory = $this->app->make(QueueFactory::class);
             $this->set('settings', $settings);
             $this->set('activeQueue', $factory->getActiveQueue($batch));
             $this->render('/dashboard/system/migration/view_batch');

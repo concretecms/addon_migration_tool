@@ -117,7 +117,7 @@ class Logger implements LoggerInterface
     public function logPublishComplete(LoggableInterface $object, $mixed = null)
     {
         $lastEntry = $this->log->getEntries()->last();
-        if ($lastEntry && get_class($lastEntry->getObject()) == get_class($object->createPublisherLogObject($mixed))) {
+        if ($lastEntry && is_object($lastEntry->getObject()) && is_object($mixed) && get_class($lastEntry->getObject()) == get_class($object->createPublisherLogObject($mixed))) {
 
             // Remove the "creating item..." message because it's been successful.
 

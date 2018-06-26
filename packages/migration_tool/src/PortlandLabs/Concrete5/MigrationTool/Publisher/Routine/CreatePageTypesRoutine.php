@@ -61,7 +61,7 @@ class CreatePageTypesRoutine extends AbstractRoutine
                         $setControl = $control->addToPageTypeComposerFormLayoutSet($layoutSet, true);
                         $setControl->updateFormLayoutSetControlRequired($controlEntity->getIsRequired());
                         $setControl->updateFormLayoutSetControlCustomTemplate($controlEntity->getCustomTemplate());
-                        $setControl->updateFormLayoutSetControlCustomTemplate($controlEntity->getCustomLabel());
+                        $setControl->updateFormLayoutSetControlCustomLabel($controlEntity->getCustomLabel());
                         $setControl->updateFormLayoutSetControlDescription($controlEntity->getDescription());
                     }
                 }

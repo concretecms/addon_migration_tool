@@ -9,6 +9,8 @@ class PageListImporter extends StandardImporter
     {
         $value = parent::parse($node);
 
+        $text = \Core::make('helper/text');
+
         foreach ($value->getRecords() as $record) {
             $data = $record->getData();
             if (!isset($data['includeDescription'])) {
@@ -16,6 +18,11 @@ class PageListImporter extends StandardImporter
             }
             if (!isset($data['includeName'])) {
                 $data['includeName'] = true;
+            }
+            if (isset($data['rss']) && $data['rss']) {
+                if (!isset($data['rssHandle'])) {
+                    $data['rssHandle'] = $text->urlify($data['rssTitle']);
+                }
             }
             $record->setData($data);
         }

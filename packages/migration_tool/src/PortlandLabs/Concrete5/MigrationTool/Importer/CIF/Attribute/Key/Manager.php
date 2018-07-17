@@ -56,9 +56,9 @@ class Manager extends \Concrete\Core\Support\Manager
             return new TextImporter();
         });
 
-
-        // No, these are not core attributes, but they will be soon, and we need to know
-        // how to deal with their fields on import so we're going to add them to the migration tool
+        $this->extend('email', function () {
+            return new TextImporter();
+        });
 
         $this->extend('page', function () {
             return new PageImporter();

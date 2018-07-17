@@ -14,13 +14,21 @@ class Validator extends AbstractValidator
 {
     public function validate($set)
     {
+        $batch = $this->getBatch();
+        $collectionHandles = [];
+        $collection = $batch->getObjectCollection('block_type');
+        if ($collection) {
+            foreach ($collection->getTypes() as $blockType) {
+                $collectionHandles[] = $blockType->getHandle();
+            }
+        }
         $messages = new MessageCollection();
         $mapper = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType();
         $targetItemList = new TargetItemList($this->getBatch(), $mapper);
         foreach ($set->getTypes() as $type) {
             $item = new Item($type);
             $targetItem = $targetItemList->getSelectedTargetItem($item);
-            if ($targetItem instanceof UnmappedTargetItem) {
+            if ($targetItem instanceof UnmappedTargetItem && !in_array($item->getIdentifier(), $collectionHandles)) {
                 $messages->add(
                     new Message(t('Block type <strong>%s</strong> does not exist.', $item->getIdentifier()), Message::E_WARNING)
                 );

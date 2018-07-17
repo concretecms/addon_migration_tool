@@ -15,6 +15,15 @@ class Validator extends AbstractValidator
 {
     public function validate($set)
     {
+        $batch = $this->getBatch();
+        $collectionHandles = [];
+        $collection = $batch->getObjectCollection('attribute_key');
+        if ($collection) {
+            foreach ($collection->getKeys() as $attributeKey) {
+                $collectionHandles[] = $attributeKey->getHandle();
+            }
+        }
+
         $messages = new MessageCollection();
         $manager = \Core::make('migration/manager/import/attribute/category');
         $mapper = $manager->getAttributeCategoryMapper($set->getCategory());
@@ -22,7 +31,7 @@ class Validator extends AbstractValidator
         foreach ($set->getAttributes() as $attribute) {
             $item = new Item($attribute);
             $targetItem = $targetItemList->getSelectedTargetItem($item);
-            if ($targetItem instanceof UnmappedTargetItem) {
+            if ($targetItem instanceof UnmappedTargetItem && !in_array($item->getIdentifier(), $collectionHandles)) {
                 $messages->add(
                     new Message(t('Attribute <strong>%s</strong> does not exist.', $item->getIdentifier()), Message::E_WARNING)
                 );

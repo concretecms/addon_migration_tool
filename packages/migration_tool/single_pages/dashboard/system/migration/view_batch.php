@@ -289,6 +289,7 @@ $dh = Core::make('helper/date');
                 $('h4[data-progress-bar-title]').html('<?=t('Mapping Content Types...')?>');
                 new ConcreteProgressiveOperation({
                     url: '<?=$view->action('run_batch_content_map_content_types_task')?>',
+                    title: <?=json_encode(t('Mapping Content Items'))?>,
                     data: [
                         {'name': 'id', 'value': '<?=$batch->getID()?>'},
                         {
@@ -296,10 +297,12 @@ $dh = Core::make('helper/date');
                             'value': '<?=Core::make('token')->generate('run_batch_content_map_content_types_task')?>'
                         }
                     ],
+                    element: $element,
                     onComplete: function() {
                         $('h4[data-progress-bar-title]').html('<?=t('Transforming Content Types...')?>');
                         new ConcreteProgressiveOperation({
                             url: '<?=$view->action('run_batch_content_transform_content_types_task')?>',
+                            title: <?=json_encode(t('Transforming Content Items'))?>,
                             data: [
                                 {'name': 'id', 'value': '<?=$batch->getID()?>'},
                                 {

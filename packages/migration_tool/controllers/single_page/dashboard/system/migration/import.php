@@ -346,6 +346,7 @@ class Import extends DashboardPageController
             $queue = $this->app->make(QueueFactory::class)->getPublisherQueue($batch);
             $target = new PublishTarget($batch);
             $logger = \Core::make(Logger::class);
+            /*
             $processor = new PublisherRoutineProcessor($target, $logger);
             if ($_POST['process']) {
                 foreach ($processor->receive() as $task) {
@@ -366,6 +367,9 @@ class Import extends DashboardPageController
             $response = new \Concrete\Core\Http\Response($response);
 
             return $response;
+            */
+
+
         }
         $this->view();
     }

@@ -28,13 +28,6 @@ class PublisherRoutineProcessor
         $this->registerTask(new PublishContentTask());
     }
 
-    public function processWithNoErrors()
-    {
-        $this->startProcess();
-        $this->target->setLogger($this->logger);
-        parent::process();
-    }
-
     protected function startProcess()
     {
         $u = new \User();

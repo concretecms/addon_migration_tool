@@ -14,4 +14,15 @@ abstract class AbstractRoutine implements RoutineInterface, RoutineActionInterfa
     {
         return array($this);
     }
+
+    public function supportsNormalization($data, $format = null)
+    {
+        return $data instanceof RoutineInterface;
+    }
+
+    public function normalize($object, $format = null, array $context = array())
+    {
+        return [];
+    }
+
 }

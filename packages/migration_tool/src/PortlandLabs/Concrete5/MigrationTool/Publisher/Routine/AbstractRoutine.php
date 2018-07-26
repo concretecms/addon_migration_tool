@@ -2,27 +2,19 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggerInterface;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-abstract class AbstractRoutine implements RoutineInterface, RoutineActionInterface
+abstract class AbstractRoutine implements RoutineInterface
 {
-    /**
-     * @return RoutineActionInterface[]
-     */
-    public function getPublisherRoutineActions(BatchInterface $batch)
-    {
-        return array($this);
-    }
 
-    public function supportsNormalization($data, $format = null)
-    {
-        return $data instanceof RoutineInterface;
-    }
+    abstract public function getCommandClass();
 
-    public function normalize($object, $format = null, array $context = array())
+    public function getPublisherCommands(BatchInterface $batch, LoggerInterface $logger)
     {
-        return [];
+        $class = $this->getCommandClass();
+        return [new $class($batch->getId(), $logger->getLog()->getId())];
     }
 
 }

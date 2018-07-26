@@ -6,10 +6,6 @@ use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\MapContentTypesCommand;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\MapContentTypesCommandHandler;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\TransformContentTypesCommand;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\TransformContentTypesCommandHandler;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Block\CollectionValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ExpressEntry\ExpressEntryValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAreasTask;
@@ -34,6 +30,7 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Value\Manager as
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key\Manager as AttributeKeyManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Express\Control\Manager as ExpressControlManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Category\Manager as AttributeCategoryManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CommandRegistrar;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ParserManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Permission\AccessEntity\Manager as AccessEntityManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\PageType\PublishTarget\Manager as PublishTargetManager;
@@ -278,10 +275,8 @@ class Controller extends Package
         ));
 
         // Commands
-        $locator = $this->app->getCommandBus()->getCommandLocator();
-        $locator->addHandler($this->app->make(MapContentTypesCommandHandler::class), MapContentTypesCommand::class);
-        $locator->addHandler($this->app->make(TransformContentTypesCommandHandler::class), TransformContentTypesCommand::class);
-
+        $registrar = new CommandRegistrar($this->app);
+        $registrar->register();
 
     }
 

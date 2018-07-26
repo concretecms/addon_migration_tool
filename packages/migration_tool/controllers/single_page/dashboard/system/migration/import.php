@@ -12,6 +12,7 @@ use Concrete\Core\Page\PageList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ExpressEntry\TreeEntryJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreeLazyLoadItemProviderInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\MapContentTypesCommand;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\PublishBatchCommand;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\TransformContentTypesCommand;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Queue\QueueFactory;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
@@ -343,33 +344,7 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
         if (!$this->error->has()) {
-            $queue = $this->app->make(QueueFactory::class)->getPublisherQueue($batch);
-            $target = new PublishTarget($batch);
-            $logger = \Core::make(Logger::class);
-            /*
-            $processor = new PublisherRoutineProcessor($target, $logger);
-            if ($_POST['process']) {
-                foreach ($processor->receive() as $task) {
-                    $processor->execute($task);
-                }
-                $obj = new \stdClass();
-                $obj->totalItems = $processor->getTotalTasks();
-                echo json_encode($obj);
-                exit;
-            } else if ($queue->getQueue()->count() == 0) {
-                $processor->process();
-            }
-            $totalItems = $processor->getTotalTasks();
-            ob_start();
-            \View::element('progress_bar', array('totalItems' => $totalItems, 'totalItemsSummary' => t2("%d task", "%d tasks", $totalItems)));
-            $response = ob_get_contents();
-            ob_end_clean();
-            $response = new \Concrete\Core\Http\Response($response);
-
-            return $response;
-            */
-
-
+            return $this->executeCommand(new PublishBatchCommand($batch->getId()));
         }
         $this->view();
     }

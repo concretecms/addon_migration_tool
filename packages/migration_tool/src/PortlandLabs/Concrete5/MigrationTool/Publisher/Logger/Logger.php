@@ -52,6 +52,14 @@ class Logger implements LoggerInterface
     }
 
     /**
+     * @param mixed $log
+     */
+    public function setLog($log)
+    {
+        $this->log = $log;
+    }
+
+    /**
      * @return Log
      */
     public function getLog()

@@ -1,0 +1,32 @@
+<?php
+namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Command\Handler;
+
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggerInterface;
+
+defined('C5_EXECUTE') or die("Access Denied.");
+
+class CreatePackagesCommandHandler extends AbstractHandler
+{
+    public function executeCommand(BatchInterface $batch, LoggerInterface $logger)
+    {
+        $packages = $batch->getObjectCollection('package');
+
+        if (!$packages) {
+            return;
+        }
+
+        foreach ($packages->getPackages() as $package) {
+            if (!$package->getPublisherValidator()->skipItem()) {
+                $logger->logPublishStarted($package);
+                $pkg = \Package::getClass($package->getHandle());
+                if (!$pkg->isPackageInstalled()) {
+                    $pkg->install();
+                }
+                $logger->logPublishComplete($package);
+            } else {
+                $logger->logSkipped($package);
+            }
+        }
+    }
+}

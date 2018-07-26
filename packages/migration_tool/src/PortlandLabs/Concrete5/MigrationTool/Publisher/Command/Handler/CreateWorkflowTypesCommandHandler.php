@@ -9,7 +9,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreateWorkflowTypesCommandHandler extends AbstractHandler
 {
-    public function executeCommand(BatchInterface $batch, LoggerInterface $logger)
+    public function execute(BatchInterface $batch, LoggerInterface $logger)
     {
         $types = $batch->getObjectCollection('workflow_type');
 

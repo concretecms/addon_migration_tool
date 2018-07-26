@@ -14,7 +14,7 @@ abstract class PublisherCommand implements QueueableCommand
     public function __construct($batchId, $logId)
     {
         $this->batchId = $batchId;
-        $this->$logId = $logId;
+        $this->logId = $logId;
     }
 
     /**

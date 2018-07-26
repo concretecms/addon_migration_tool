@@ -217,7 +217,7 @@ class Manager extends CoreManager
         return new AssociateExpressEntriesRoutine();
     }
 
-    public function createClosePublisherLogRoutineDriver()
+    public function createClosePublisherLogDriver()
     {
         return new ClosePublisherLogRoutine();
     }
@@ -230,7 +230,6 @@ class Manager extends CoreManager
         $this->driver('create_workflow_types');
         $this->driver('create_content_editor_snippets');
         $this->driver('create_workflow_progress_categories');
-        /*
         $this->driver('create_banned_words');
         $this->driver('create_config_values');
         $this->driver('create_captcha_libraries');
@@ -261,19 +260,21 @@ class Manager extends CoreManager
         $this->driver('create_page_types');
         $this->driver('create_stack_structure');
         $this->driver('create_single_page_structure');
+
         $this->driver('create_page_structure');
+
         // @TODO
         ////$this->driver('create_page_type_targets');
         $this->driver('create_page_feeds');
         // @TODO
         ////$this->driver('publish_page_type_content');
+
         $this->driver('publish_stack_content');
         $this->driver('publish_single_page_content');
         $this->driver('publish_page_content');
 
         $this->driver('create_sites');
-        $this->driver('close_publisher_log_routine');
-        */
+        $this->driver('close_publisher_log');
 
     }
 }

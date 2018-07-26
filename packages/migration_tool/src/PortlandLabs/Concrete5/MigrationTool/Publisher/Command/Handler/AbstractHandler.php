@@ -20,7 +20,7 @@ abstract class AbstractHandler
      * @param Logger $logger
      * @return mixed
      */
-    abstract public function executeCommand(BatchInterface $batch, LoggerInterface $logger);
+    abstract public function execute(BatchInterface $batch, LoggerInterface $logger);
 
     /**
      * @var EntityManager
@@ -37,6 +37,11 @@ abstract class AbstractHandler
      */
     protected $app;
 
+    /**
+     * @var PublisherCommand
+     */
+    protected $command;
+
     public function __construct(Logger $logger, Application $app, EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -52,7 +57,8 @@ abstract class AbstractHandler
         $coreLogger = $this->app->make('log/exceptions');
         $coreLogger->pushHandler(new SystemLogHandler($logger));
 
-        $this->executeCommand($batch, $logger);
+        $this->command = $command;
+        $this->execute($batch, $logger);
 
         $coreLogger->popHandler();
     }

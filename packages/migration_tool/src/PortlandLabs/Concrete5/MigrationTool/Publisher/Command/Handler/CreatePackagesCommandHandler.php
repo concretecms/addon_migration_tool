@@ -8,7 +8,7 @@ defined('C5_EXECUTE') or die("Access Denied.");
 
 class CreatePackagesCommandHandler extends AbstractHandler
 {
-    public function executeCommand(BatchInterface $batch, LoggerInterface $logger)
+    public function execute(BatchInterface $batch, LoggerInterface $logger)
     {
         $packages = $batch->getObjectCollection('package');
 

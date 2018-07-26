@@ -11,7 +11,7 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggerInterface;
 class ClearBatchCommandHandler extends AbstractHandler
 {
 
-    public function executeCommand(BatchInterface $batch, LoggerInterface $logger)
+    public function execute(BatchInterface $batch, LoggerInterface $logger)
     {
         // Has the batch already been created? If so, we move to trash.
         $orphaned = \Page::getByPath('/!import_batches/' . $batch->getId(), 'RECENT', $batch->getSite());

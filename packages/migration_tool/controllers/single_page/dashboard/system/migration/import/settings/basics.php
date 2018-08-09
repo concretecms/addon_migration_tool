@@ -16,7 +16,6 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormat
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Site\TreeSiteJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublisherRoutineProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\TargetItemProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\UntransformedItemProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;

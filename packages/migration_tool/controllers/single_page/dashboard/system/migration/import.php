@@ -4,16 +4,17 @@ namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\
 use Concrete\Core\File\Filesystem;
 use Concrete\Core\File\Importer;
 use Concrete\Core\File\Set\Set;
-use Concrete\Core\Foundation\Processor\Processor;
-use Concrete\Core\Foundation\Queue\Response\EnqueueItemsResponse;
+use Concrete\Core\Foundation\Queue\Batch\Processor;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Concrete\Core\Page\PageList;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Command\TransformContentTypesBatchProcessFactory;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ExpressEntry\TreeEntryJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\TreeLazyLoadItemProviderInterface;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\MapContentTypesCommand;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\PublishBatchCommand;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Command\TransformContentTypesCommand;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Command\MapContentTypesBatchProcessFactory;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Command\PublishBatchCommand;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Command\TransformContentTypesCommand;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Command\NormalizePagePathsCommand;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Queue\QueueFactory;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
@@ -26,8 +27,6 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\User\TreeUserJsonFormat
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublisherRoutineProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublishTarget;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\TargetItemProcessor;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\UntransformedItemProcessor;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
@@ -271,12 +270,9 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
         if (!$this->error->has()) {
-            $target = new Target($batch);
-            $processor = new Processor($target);
-            $processor->registerTask(new NormalizePagePathsTask());
-            $processor->process();
-            $this->entityManager->flush();
 
+            $command = new NormalizePagePathsCommand($batch->getId());
+            $this->executeCommand($command);
             return new JsonResponse($batch);
         }
         $this->view();
@@ -293,16 +289,9 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
         if (!$this->error->has()) {
-            $queue = $this->app->make(QueueFactory::class)->getMapperQueue($batch);
-            $target = new Target($batch);
-            $target->returnMappedItems();
-            foreach($target->getItems() as $item) {
-                $command = new MapContentTypesCommand(
-                    $batch->getID(), $item['mapper'], $item['item']
-                );
-                $this->queueCommand($command);
-            }
-            return new EnqueueItemsResponse($queue);
+            $factory = new MapContentTypesBatchProcessFactory($this->app);
+            $processor = $this->app->make(Processor::class);
+            return $processor->process($factory, $batch);
         }
         $this->view();
     }
@@ -318,17 +307,9 @@ class Import extends DashboardPageController
             $this->error->add(t('Invalid batch.'));
         }
         if (!$this->error->has()) {
-            $queue = $this->app->make(QueueFactory::class)->getTransformerQueue($batch);
-            $target = new Target($batch);
-            $target->returnUntransformedItems();
-
-            foreach($target->getItems() as $item) {
-                $command = new TransformContentTypesCommand(
-                    $batch->getID(), $item['entity'], $item['mapper'], $item['transformer']
-                );
-                $this->queueCommand($command);
-            }
-            return new EnqueueItemsResponse($queue);
+            $factory = new TransformContentTypesBatchProcessFactory($this->app);
+            $processor = $this->app->make(Processor::class);
+            return $processor->process($factory, $batch);
         }
         $this->view();
     }

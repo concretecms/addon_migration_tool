@@ -49,20 +49,6 @@ class Target implements TargetInterface
     {
         $mappers = \Core::make('migration/manager/mapping');
         switch ($this->itemsToReturn) {
-            case self::RETURN_PAGES:
-                return $this->batch->getPages();
-            case self::RETURN_MAPPED_ITEMS:
-                $items = array();
-                foreach ($mappers->getDrivers() as $mapper) {
-                    foreach ($mapper->getItems($this->batch) as $item) {
-                        $r = array();
-                        $r['mapper'] = $mapper->getHandle();
-                        $r['item'] = $item->getIdentifier();
-                        $items[] = $r;
-                    }
-                }
-
-                return $items;
             case self::RETURN_UNTRANSFORMED_ITEMS:
                 $items = array();
                 $transformers = \Core::make('migration/manager/transforms');

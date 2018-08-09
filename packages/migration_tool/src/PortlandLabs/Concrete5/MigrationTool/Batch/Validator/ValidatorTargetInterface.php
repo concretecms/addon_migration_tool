@@ -9,4 +9,5 @@ interface ValidatorTargetInterface extends TargetInterface
 {
     public function addMessage(Message $message);
     public function getMessages();
+    public function getItems();
 }

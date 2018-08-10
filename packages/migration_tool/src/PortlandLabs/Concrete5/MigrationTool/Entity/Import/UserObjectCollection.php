@@ -5,7 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\JobFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\UserFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\User\TreeJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -65,7 +65,7 @@ class UserObjectCollection extends ObjectCollection
         return new TreeJsonFormatter($this);
     }
 
-    public function getRecordValidator(ValidatorInterface $batch)
+    public function getRecordValidator(BatchInterface $batch)
     {
         return \Core::make('migration/batch/user/validator', array($batch));
     }

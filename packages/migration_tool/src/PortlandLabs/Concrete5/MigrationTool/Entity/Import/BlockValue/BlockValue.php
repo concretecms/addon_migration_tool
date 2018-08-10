@@ -1,7 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue;
 use Doctrine\ORM\Mapping as ORM;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 
 /**
  * @ORM\Entity
@@ -50,7 +50,7 @@ abstract class BlockValue
     abstract public function getPublisher();
     abstract public function getInspector();
 
-    public function getRecordValidator(ValidatorInterface $batch)
+    public function getRecordValidator(BatchInterface $batch)
     {
         return false;
     }

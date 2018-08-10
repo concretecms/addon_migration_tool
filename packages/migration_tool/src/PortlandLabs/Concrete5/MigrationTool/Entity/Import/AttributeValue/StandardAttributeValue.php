@@ -6,7 +6,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\StandardValid
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Attribute\StandardInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\StandardPublisher;
 use Doctrine\ORM\Mapping as ORM;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 
 /**
  * @ORM\Entity
@@ -42,7 +42,7 @@ class StandardAttributeValue extends AttributeValue
         return new StandardPublisher();
     }
 
-    public function getRecordValidator(ValidatorInterface $batch)
+    public function getRecordValidator(BatchInterface $batch)
     {
         return new StandardValidator($batch);
     }

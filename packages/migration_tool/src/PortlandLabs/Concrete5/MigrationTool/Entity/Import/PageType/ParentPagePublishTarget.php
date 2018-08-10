@@ -3,7 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageType\ParentPagePublishTargetFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType\ParentPagePublishTargetValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,7 +37,7 @@ class ParentPagePublishTarget extends PublishTarget
         return new ParentPagePublishTargetFormatter($this);
     }
 
-    public function getRecordValidator(ValidatorInterface $batch)
+    public function getRecordValidator(BatchInterface $batch)
     {
         return new ParentPagePublishTargetValidator($batch);
     }

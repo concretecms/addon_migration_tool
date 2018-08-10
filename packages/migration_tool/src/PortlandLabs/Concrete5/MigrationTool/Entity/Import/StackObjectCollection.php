@@ -4,9 +4,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Stack\TreeJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Stack\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Object\StackValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\StackFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 
 /**
  * @ORM\Entity
@@ -56,8 +56,8 @@ class StackObjectCollection extends ObjectCollection
         return new TreeJsonFormatter($this);
     }
 
-    public function getRecordValidator(ValidatorInterface $batch)
+    public function getRecordValidator(BatchInterface $batch)
     {
-        return new Validator($batch);
+        return new StackValidator();
     }
 }

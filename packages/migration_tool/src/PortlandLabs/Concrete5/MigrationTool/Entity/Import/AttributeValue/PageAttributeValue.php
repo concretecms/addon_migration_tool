@@ -5,7 +5,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\StandardForma
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\StandardValidator;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Attribute\StandardInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\ImageFilePublisher;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use Doctrine\ORM\Mapping as ORM;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\PagePublisher;
 
@@ -43,7 +43,7 @@ class PageAttributeValue extends AttributeValue
         return new PagePublisher();
     }
 
-    public function getRecordValidator(ValidatorInterface $batch)
+    public function getRecordValidator(BatchInterface $batch)
     {
         return new StandardValidator($batch);
     }

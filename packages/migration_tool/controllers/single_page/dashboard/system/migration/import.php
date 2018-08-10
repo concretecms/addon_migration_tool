@@ -16,6 +16,8 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Command\PublishBatchCommand;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Command\TransformContentTypesCommand;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Command\NormalizePagePathsCommand;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Queue\QueueFactory;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidatorSubject;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Exporter;
@@ -518,8 +520,9 @@ class Import extends DashboardPageController
             $batch = $r->findOneById($this->request->request->get('id'));
             if (is_object($batch)) {
                 $validator = \Core::make('migration/batch/validator');
-                $messages = $validator->validate($batch);
-                $formatter = $validator->getFormatter($messages);
+                $subject = new BatchValidatorSubject($batch);
+                $result = $validator->validate($subject);
+                $formatter = $validator->getFormatter($result);
                 $data['alertclass'] = $formatter->getAlertClass();
                 $data['message'] = $formatter->getCreateStatusMessage();
                 $data['messages'] = $formatter->getSortedMessages();

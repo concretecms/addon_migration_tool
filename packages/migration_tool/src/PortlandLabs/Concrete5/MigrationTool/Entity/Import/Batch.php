@@ -5,14 +5,13 @@ use Concrete\Core\File\FileList;
 use Concrete\Core\File\Set\Set;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="\PortlandLabs\Concrete5\MigrationTool\Entity\Import\BatchRepository")
  * @ORM\Table(name="MigrationImportBatches")
  */
-class Batch implements ValidatorInterface, BatchInterface
+class Batch implements BatchInterface
 {
     /**
      * @ORM\Id @ORM\Column(type="guid")

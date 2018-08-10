@@ -3,9 +3,9 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeSet\TreeJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeSet\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Object\AttributeSetValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\AttributeSetFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,8 +56,8 @@ class AttributeSetObjectCollection extends ObjectCollection
         return new TreeJsonFormatter($this);
     }
 
-    public function getRecordValidator(ValidatorInterface $batch)
+    public function getRecordValidator(BatchInterface $batch)
     {
-        return new Validator($batch);
+        return new AttributeSetValidator();
     }
 }

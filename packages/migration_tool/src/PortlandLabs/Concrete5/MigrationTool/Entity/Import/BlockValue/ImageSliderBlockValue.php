@@ -7,7 +7,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Block\ImageSliderValida
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Block\StandardInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager;
 use Doctrine\ORM\Mapping as ORM;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 
 /**
  * @ORM\Table(name="MigrationImportImageSliderBlockValues")
@@ -16,7 +16,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 class ImageSliderBlockValue extends StandardBlockValue
 {
 
-    public function getRecordValidator(ValidatorInterface $batch)
+    public function getRecordValidator(BatchInterface $batch)
     {
         return new ImageSliderValidator();
     }

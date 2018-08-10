@@ -4,13 +4,15 @@ namespace Concrete\Package\MigrationTool;
 use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
+use League\Pipeline\Pipeline;
+use League\Pipeline\PipelineBuilder;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Block\CollectionValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ExpressEntry\ExpressEntryValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAreasTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAttributesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlocksTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockTypesTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockValuesTask;
@@ -22,6 +24,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateRefer
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateReferencedStacksTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateUsersTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateBatchRecordsStage;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\Task\ValidateGroupsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\UserValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Site\SiteValidator;
@@ -134,58 +137,58 @@ class Controller extends Package
 
         \Core::bind('migration/batch/page/validator', function ($app, $batch) {
             if (isset($batch[0])) {
-                $v = new Validator($batch[0]);
-                $v->registerTask(new ValidateAttributesTask());
+                $v = new BatchValidator($batch[0]);
+                /*$v->registerTask(new ValidateAttributesTask());
                 $v->registerTask(new ValidatePageTemplatesTask());
                 $v->registerTask(new ValidatePageTypesTask());
                 $v->registerTask(new ValidatePagePathTask());
                 $v->registerTask(new ValidateUsersTask());
                 $v->registerTask(new ValidateBlocksTask());
-                $v->registerTask(new ValidateAreasTask());
-
+                $v->registerTask(new ValidateAreasTask());*/
                 return $v;
             }
         });
 
         \Core::bind('migration/batch/site/validator', function ($app, $batch) {
             if (isset($batch[0])) {
-                $v = new SiteValidator($batch[0]);
-                $v->registerTask(new ValidateAttributesTask());
+                $v = new BatchValidator($batch[0]);
+                //$v = new SiteValidator($batch[0]);
+                //$v->registerTask(new ValidateAttributesTask());
                 return $v;
             }
         });
 
         \Core::bind('migration/batch/user/validator', function ($app, $batch) {
             if (isset($batch[0])) {
-                $v = new UserValidator($batch[0]);
-                $v->registerTask(new ValidateAttributesTask());
-                $v->registerTask(new ValidateGroupsTask());
+                $v = new BatchValidator($batch[0]);
+                //$v->registerTask(new ValidateAttributesTask());
+                //$v->registerTask(new ValidateGroupsTask());
                 return $v;
             }
         });
 
         \Core::bind('migration/batch/express/entry/validator', function ($app, $batch) {
             if (isset($batch[0])) {
-                $v = new ExpressEntryValidator($batch[0]);
-                $v->registerTask(new ValidateExpressAttributesTask());
+                $v = new BatchValidator($batch[0]);
+                //$v->registerTask(new ValidateExpressAttributesTask());
                 return $v;
             }
         });
 
-        \Core::bindShared('migration/batch/validator', function () {
-            $v = new BatchValidator();
-            $v->registerTask(new ValidateBatchRecordsTask());
-
-            return $v;
+        \Core::bindShared('migration/batch/validator', function ($app, $batch) {
+            $validator = new BatchValidator($batch[0]);
+            $validator->addPipelineStage(new ValidateBatchRecordsStage());
+            return $validator;
         });
 
         \Core::bind('migration/batch/block/validator', function ($app, $batch) {
             if (isset($batch[0])) {
-                $v = new CollectionValidator($batch[0]);
+                $validator = new BatchValidator($batch[0]);
+                /*$v = new CollectionValidator($batch[0]);
                 $v->registerTask(new ValidateBlockTypesTask());
                 $v->registerTask(new ValidateReferencedStacksTask());
                 $v->registerTask(new ValidateReferencedContentItemsTask());
-                $v->registerTask(new ValidateBlockValuesTask());
+                $v->registerTask(new ValidateBlockValuesTask());*/
                 return $v;
             }
         });

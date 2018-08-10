@@ -2,9 +2,9 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeKey;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AttributeKey\TopicsFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AttributeKey\TopicsValidator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Object\TopicsAttributeKeyValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\AttributeKey\TopicsPublisher;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -65,9 +65,9 @@ class TopicsAttributeKey extends AttributeKey
         return new TopicsFormatter($this);
     }
 
-    public function getRecordValidator(ValidatorInterface $batch)
+    public function getRecordValidator(BatchInterface $batch)
     {
-        return new TopicsValidator($batch);
+        return new TopicsAttributeKeyValidator();
     }
 
     public function getTypePublisher()

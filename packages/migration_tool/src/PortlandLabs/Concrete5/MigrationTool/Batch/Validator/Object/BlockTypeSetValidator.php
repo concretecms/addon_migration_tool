@@ -1,20 +1,29 @@
 <?php
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BlockTypeSet;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Object;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AbstractValidator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchObjectValidatorSubject;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorResult;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorSubjectInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class Validator extends AbstractValidator
+class BlockTypeSetValidator implements ValidatorInterface
 {
-    public function validate($set)
+    public function validate(ValidatorSubjectInterface $subject)
     {
-        $batch = $this->getBatch();
+        /**
+         * @var $subject BatchObjectValidatorSubject
+         */
+        $batch = $subject->getBatch();
+        $set = $subject->getObject();
+        $result = new ValidatorResult($subject);
         $collectionHandles = [];
         $collection = $batch->getObjectCollection('block_type');
         if ($collection) {
@@ -22,19 +31,18 @@ class Validator extends AbstractValidator
                 $collectionHandles[] = $blockType->getHandle();
             }
         }
-        $messages = new MessageCollection();
         $mapper = new \PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\BlockType();
-        $targetItemList = new TargetItemList($this->getBatch(), $mapper);
+        $targetItemList = new TargetItemList($subject->getBatch(), $mapper);
         foreach ($set->getTypes() as $type) {
             $item = new Item($type);
             $targetItem = $targetItemList->getSelectedTargetItem($item);
             if ($targetItem instanceof UnmappedTargetItem && !in_array($item->getIdentifier(), $collectionHandles)) {
-                $messages->add(
+                $result->getMessages()->add(
                     new Message(t('Block type <strong>%s</strong> does not exist.', $item->getIdentifier()), Message::E_WARNING)
                 );
             }
         }
 
-        return $messages;
+        return $result;
     }
 }

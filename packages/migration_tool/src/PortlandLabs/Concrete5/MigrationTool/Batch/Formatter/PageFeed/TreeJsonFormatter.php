@@ -2,7 +2,6 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageFeed;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\AbstractTreeJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 

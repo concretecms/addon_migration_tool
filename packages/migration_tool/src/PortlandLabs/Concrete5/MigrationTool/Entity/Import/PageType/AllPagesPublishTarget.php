@@ -4,7 +4,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageType\AllPagesPublishTargetFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType\AllPagesPublishTargetValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 
 /**
  * @ORM\Entity
@@ -37,7 +37,7 @@ class AllPagesPublishTarget extends PublishTarget
         return new AllPagesPublishTargetFormatter($this);
     }
 
-    public function getRecordValidator(ValidatorInterface $batch)
+    public function getRecordValidator(BatchInterface $batch)
     {
         return new AllPagesPublishTargetValidator($batch);
     }

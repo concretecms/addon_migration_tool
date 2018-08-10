@@ -1,34 +1,23 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator;
 
-use Concrete\Core\Foundation\Processor\Processor;
-use Concrete\Core\Foundation\Processor\TaskInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 
-defined('C5_EXECUTE') or die("Access Denied.");
-
-class BatchValidator
+class BatchValidator extends AbstractPipelineSupportingValidator
 {
-    protected $tasks = array();
 
-    public function registerTask(TaskInterface $task)
+    /**
+     * @param BatchValidatorSubject $subject
+     * @return BatchValidatorResult|ValidatorResult
+     */
+    protected function getValidatorResult(ValidatorSubjectInterface $subject)
     {
-        $this->tasks[] = $task;
+        return new BatchValidatorResult($subject);
     }
 
-    public function validate(ValidatorInterface $batch)
+    public function getFormatter(ValidatorResultInterface $result)
     {
-        $target = new ValidatorTarget($batch);
-        $processor = new Processor($target);
-        foreach ($this->tasks as $task) {
-            $processor->registerTask($task);
-        }
-        $processor->process();
-
-        return $target->getMessages();
+        return new BatchMessageCollectionFormatter($result->getMessages());
     }
 
-    public function getFormatter(MessageCollection $collection)
-    {
-        return new BatchMessageCollectionFormatter($collection);
-    }
 }

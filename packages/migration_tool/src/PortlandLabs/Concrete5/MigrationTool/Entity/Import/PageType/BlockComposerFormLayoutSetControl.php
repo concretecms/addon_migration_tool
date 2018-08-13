@@ -1,7 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType\BlockComposerFormLayoutSetControlValidator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Object\BlockComposerFormLayoutSetControlValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use Doctrine\ORM\Mapping as ORM;
 

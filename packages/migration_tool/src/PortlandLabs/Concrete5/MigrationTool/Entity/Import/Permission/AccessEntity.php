@@ -3,7 +3,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 use Doctrine\ORM\Mapping as ORM;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\AccessEntityFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\AccessEntityValidator;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Permission\AccessEntityPublisher;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 
@@ -86,7 +85,7 @@ class AccessEntity
 
     public function getRecordValidator(BatchInterface $batch)
     {
-        return new AccessEntityValidator($batch);
+        return false;
     }
 
     public function getPublisher()

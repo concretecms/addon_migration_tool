@@ -3,7 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\Permission;
 use Doctrine\ORM\Mapping as ORM;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PermissionKey\GroupAccessEntityFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey\GroupAccessEntityValidator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Object\GroupAccessEntityValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 
 /**

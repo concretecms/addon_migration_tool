@@ -2,7 +2,7 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Attribute\StandardFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Attribute\StandardValidator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Object\StandardAttributeValidator;
 use PortlandLabs\Concrete5\MigrationTool\Inspector\Attribute\StandardInspector;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Attribute\ImageFilePublisher;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
@@ -44,7 +44,7 @@ class ImageFileAttributeValue extends AttributeValue
 
     public function getRecordValidator(BatchInterface $batch)
     {
-        return new StandardValidator($batch);
+        return new StandardAttributeValidator();
     }
 
     public function getInspector()

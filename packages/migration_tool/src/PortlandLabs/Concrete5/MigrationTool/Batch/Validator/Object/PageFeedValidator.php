@@ -3,27 +3,34 @@ namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Object;
 
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AbstractValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchObjectValidatorSubject;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorResult;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorSubjectInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Content\Factory;
 
-class StackValidator implements ValidatorInterface
+defined('C5_EXECUTE') or die("Access Denied.");
+
+class PageFeedValidator implements ValidatorInterface
 {
+
     public function validate(ValidatorSubjectInterface $subject)
     {
         /**
          * @var $subject BatchObjectValidatorSubject
          */
+        $batch = $subject->getBatch();
+        $feed = $subject->getObject();
         $result = new ValidatorResult($subject);
-        $stack = $subject->getObject();
-        $blocks = $stack->getBlocks();
-        $validator = \Core::make('migration/batch/block/validator');
-        foreach($blocks as $block) {
-            $blockSubject = new BatchObjectValidatorSubject($subject->getBatch(), $block);
-            $blockResult = $validator->validate($blockSubject);
+
+        $items = $feed->getInspector()->getMatchedItems($batch);
+        foreach ($items as $item) {
+            $validatorFactory = new Factory($item);
+            $validator = $validatorFactory->getValidator();
+            if (!$validator->itemExists($item, $batch)) {
+                $validator->addMissingItemMessage($item, $result->getMessages());
+            }
         }
-        $result->getMessages()->addMessages($blockResult->getMessages());
+
         return $result;
     }
 }

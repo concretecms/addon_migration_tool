@@ -22,6 +22,14 @@ class MessageCollection extends ArrayCollection implements \JsonSerializable
         return $result;
     }
 
+    public function add($element)
+    {
+        if (!($element instanceof Message)) {
+            throw new \RuntimeException(t('You may only provide Message objects to the MessageCollection collection.'));
+        }
+        return parent::add($element);
+    }
+
     public function addMessages(MessageCollection $collection = null)
     {
         if (is_object($collection) && count($collection)) {

@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Formatter;
 
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchObjectValidatorSubject;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageCollection;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 
@@ -18,6 +19,13 @@ abstract class AbstractTreeJsonFormatter implements \JsonSerializable
         $this->batch = $r->findFromCollection($collection);
         $this->validator = $collection->getRecordValidator($this->batch);
         $this->entityManager = $em;
+    }
+
+    protected function getValidationMessages($object)
+    {
+        $subject = new BatchObjectValidatorSubject($this->batch, $object);
+        $result = $this->validator->validate($subject);
+        return $result->getMessages();
     }
 
     protected function addMessagesNode(\stdClass $node, MessageCollection $messages)

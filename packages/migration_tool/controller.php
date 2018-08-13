@@ -25,6 +25,11 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateRefer
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateUsersTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateBatchRecordsStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateBlockTypesStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateBlockValuesStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateReferencedContentItemsStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateReferencedStacksStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\StandardValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\Task\ValidateGroupsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\UserValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Site\SiteValidator;
@@ -182,15 +187,12 @@ class Controller extends Package
         });
 
         \Core::bind('migration/batch/block/validator', function ($app, $batch) {
-            if (isset($batch[0])) {
-                $validator = new BatchValidator($batch[0]);
-                /*$v = new CollectionValidator($batch[0]);
-                $v->registerTask(new ValidateBlockTypesTask());
-                $v->registerTask(new ValidateReferencedStacksTask());
-                $v->registerTask(new ValidateReferencedContentItemsTask());
-                $v->registerTask(new ValidateBlockValuesTask());*/
-                return $v;
-            }
+            $validator = new StandardValidator($batch[0]);
+            $validator->addPipelineStage(new ValidateBlockTypesStage());
+            $validator->addPipelineStage(new ValidateReferencedStacksStage());
+            $validator->addPipelineStage(new ValidateReferencedContentItemsStage());
+            $validator->addPipelineStage(new ValidateBlockValuesStage());
+            return $validator;
         });
 
         \Core::bindShared('migration/manager/mapping', function ($app) {

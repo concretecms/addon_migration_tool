@@ -9,6 +9,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchObjectCollectionVa
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchObjectValidatorSubject;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidatorResult;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorResultInterface;
 
 class ValidateBatchRecordsStage implements StageInterface
 {
@@ -26,14 +27,18 @@ class ValidateBatchRecordsStage implements StageInterface
                 if (is_object($validator)) {
                     foreach($collection->getRecords() as $object) {
                         $subject = new BatchObjectValidatorSubject($batch, $object);
-                        $messages = $validator->validate($subject);
-                        foreach ($messages as $message) {
+                        $validatorResult = $validator->validate($subject);
+                        /**
+                         * @var $validatorResult ValidatorResultInterface
+                         */
+                        foreach ($validatorResult->getMessages() as $message) {
                             $validatorMessages->add($message);
                         }
                     }
                 }
             }
         }
+        return $result;
     }
 
 }

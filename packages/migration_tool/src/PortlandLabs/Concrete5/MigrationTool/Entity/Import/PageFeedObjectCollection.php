@@ -3,7 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageFeed\TreeJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageFeed\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Object\PageFeedValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageFeedFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -58,6 +58,6 @@ class PageFeedObjectCollection extends ObjectCollection
 
     public function getRecordValidator(BatchInterface $batch)
     {
-        return new Validator($batch);
+        return new PageFeedValidator();
     }
 }

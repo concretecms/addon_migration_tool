@@ -39,6 +39,6 @@ class AllPagesPublishTarget extends PublishTarget
 
     public function getRecordValidator(BatchInterface $batch)
     {
-        return new AllPagesPublishTargetValidator($batch);
+        return false;
     }
 }

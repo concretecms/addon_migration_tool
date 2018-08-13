@@ -14,7 +14,7 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
         $r = \Database::connection()->getEntityManager()->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
 
         foreach ($this->collection->getStacks() as $stack) {
-            $messages = $this->validator->validate($stack);
+            $messages = $this->getValidationMessages($stack);
             $stackFormatter = $stack->getStackFormatter();
             $formatter = $messages->getFormatter();
             $node = new \stdClass();
@@ -30,9 +30,6 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             $this->addMessagesNode($node, $messages);
             $node->children = [];
 
-            $batch = $r->findFromCollection($this->collection);
-            $validator = $this->collection->getRecordValidator($batch);
-            $messages = $validator->validate($stack);
             if ($messages->count()) {
                 $messageHolderNode = new \stdClass();
                 $messageHolderNode->icon = $messages->getFormatter()->getCollectionStatusIconClass();

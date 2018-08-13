@@ -4,7 +4,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageType;
 use Doctrine\Common\Collections\ArrayCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Provider\UserProviderInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\PageType\TreeJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PageType\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Object\PageTypeValidator;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\ObjectCollection\PageTypeFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
@@ -60,7 +60,7 @@ class PageTypeObjectCollection extends ObjectCollection implements UserProviderI
 
     public function getRecordValidator(BatchInterface $batch)
     {
-        return new Validator($batch);
+        return new PageTypeValidator();
     }
 
     public function getUserNames()

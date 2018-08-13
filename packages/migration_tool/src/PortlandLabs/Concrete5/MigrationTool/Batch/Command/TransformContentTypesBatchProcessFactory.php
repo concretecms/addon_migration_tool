@@ -37,7 +37,7 @@ class TransformContentTypesBatchProcessFactory implements BatchProcessFactoryInt
                 $mapper = new EmptyMapper();
             }
 
-            $untransformed = $transformer->getUntransformedEntityObjects($mapper, $this->batch);
+            $untransformed = $transformer->getUntransformedEntityObjects($mapper, $batch);
             foreach ($untransformed as $entity) {
                 $items[] = array(
                     'entity' => $entity->getID(),

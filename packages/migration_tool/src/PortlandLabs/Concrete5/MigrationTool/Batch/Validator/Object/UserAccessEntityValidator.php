@@ -1,26 +1,31 @@
 <?php
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\PermissionKey;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Object;
 
 use Concrete\Core\User\UserInfo;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\AbstractValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\MessageCollection;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorInterface;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorResult;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorSubjectInterface;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class UserAccessEntityValidator extends AbstractValidator
+class UserAccessEntityValidator implements ValidatorInterface
 {
-    public function validate($entity)
+    public function validate(ValidatorSubjectInterface $subject)
     {
-        $messages = new MessageCollection();
-        if (!$this->userExists($entity->getUserName(), $this->getBatch())) {
-            $messages->add(
+        $batch = $subject->getBatch();
+        $entity = $subject->getObject();
+        $result = new ValidatorResult($subject);
+        if (!$this->userExists($entity->getUserName(), $batch)) {
+            $result->getMessages()->add(
                 new Message(t('User %s does not exist in the site or in the current content batch', $entity->getUserName()))
             );
         }
 
-        return $messages;
+        return $result;
     }
 
     public function userExists($username, $batch)

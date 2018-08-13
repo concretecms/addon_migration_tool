@@ -11,17 +11,17 @@ class BlockTypeSetFormatter extends AbstractStandardFormatter
 
     public function getSkippedDescription(LoggableObject $object)
     {
-        return t('Block type set %s already exists.', $object->getName());
+        return t('Block type set %s already exists.', $object->getHandle());
     }
 
     public function getPublishStartedDescription(LoggableObject $object)
     {
-        return t('Began installing block type set %s.', $object->getName());
+        return t('Began installing block type set %s.', $object->getHandle());
     }
 
     public function getPublishCompleteDescription(LoggableObject $object)
     {
-        return t('Block type set %s installed.', $object->getName());
+        return t('Block type set %s installed.', $object->getHandle());
     }
 
 

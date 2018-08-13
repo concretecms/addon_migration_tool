@@ -1,26 +1,33 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\Task;
 
-use Concrete\Core\Foundation\Processor\ActionInterface;
-use Concrete\Core\Foundation\Processor\TaskInterface;
+use League\Pipeline\StageInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\UserGroup;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Message;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ValidatorResult;
 use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\User;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class ValidateGroupsTask implements TaskInterface
+class ValidateUserGroupsStage implements StageInterface
 {
-    public function execute(ActionInterface $action)
+    /**
+     * @param $result ValidatorResult
+     */
+    public function __invoke($result)
     {
-        // Grab the target item for the page's page type.
-        $subject = $action->getSubject();
-        $target = $action->getTarget();
+        $subject = $result->getSubject();
+        $batch = $subject->getBatch();
+        /**
+         * @var $user User
+         */
+        $user = $subject->getObject();
         $userMapper = new UserGroup();
-        $targetItemList = new TargetItemList($target->getBatch(), $userMapper);
-        foreach ($subject->getGroups() as $group) {
+        $targetItemList = new TargetItemList($batch, $userMapper);
+        foreach ($user->getGroups() as $group) {
             if ($group->getPath()) {
                 $item = new Item($group->getPath());
             } else {
@@ -28,14 +35,11 @@ class ValidateGroupsTask implements TaskInterface
             }
             $targetItem = $targetItemList->getSelectedTargetItem($item);
             if ($targetItem instanceof UnmappedTargetItem) {
-                $action->getTarget()->addMessage(
+                $result->getMessages()->addMessage(
                     new Message(t('Group <strong>%s</strong> does not exist.', $item->getIdentifier()))
                 );
             }
         }
     }
 
-    public function finish(ActionInterface $action)
-    {
-    }
 }

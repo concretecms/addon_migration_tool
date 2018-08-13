@@ -1,9 +1,7 @@
 <?php
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage;
 
-use Concrete\Core\Foundation\Processor\ActionInterface;
-use Concrete\Core\Foundation\Processor\TaskInterface;
-use Concrete\Core\Page\Type\Type;
+use League\Pipeline\StageInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\User;
@@ -12,27 +10,27 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class ValidateUsersTask implements TaskInterface
+class ValidateUsersStage implements StageInterface
 {
-    public function execute(ActionInterface $action)
+    public function __invoke($result)
     {
-        // Grab the target item for the page's page type.
-        $subject = $action->getSubject();
-        $target = $action->getTarget();
-        if ($subject->getUser()) {
+        $subject = $result->getSubject();
+        $batch = $subject->getBatch();
+        $page = $subject->getObject();
+
+        if ($page->getUser()) {
             $mapper = new User();
-            $targetItemList = new TargetItemList($target->getBatch(), $mapper);
-            $item = new Item($subject->getUser());
+            $targetItemList = new TargetItemList($batch, $mapper);
+            $item = new Item($page->getUser());
             $targetItem = $targetItemList->getSelectedTargetItem($item);
             if ($targetItem instanceof UnmappedTargetItem) {
-                $action->getTarget()->addMessage(
+                $result->getMessages()->add(
                     new Message(t('User <strong>%s</strong> does not exist.', $item->getIdentifier()))
                 );
             }
         }
+
+        return $result;
     }
 
-    public function finish(ActionInterface $action)
-    {
-    }
 }

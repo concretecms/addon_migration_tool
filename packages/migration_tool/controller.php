@@ -4,52 +4,40 @@ namespace Concrete\Package\MigrationTool;
 use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
-use League\Pipeline\Pipeline;
-use League\Pipeline\PipelineBuilder;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Block\CollectionValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\ExpressEntry\ExpressEntryValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAreasTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateAttributesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlocksTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockTypesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateBlockValuesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateExpressAttributesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePagePathTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTemplatesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidatePageTypesTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateReferencedContentItemsTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateReferencedStacksTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task\ValidateUsersTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Validator;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateAreasStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateAttributesStage;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateBatchRecordsStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateBlocksStage;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateBlockTypesStage;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateBlockValuesStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateExpressAttributesStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidatePagePathStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidatePageTemplatesStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidatePageTypesStage;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateReferencedContentItemsStage;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateReferencedStacksStage;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateUsersStage;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\StandardValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\Task\ValidateGroupsTask;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\UserValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Site\SiteValidator;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Task\ValidateBatchRecordsTask;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Value\Manager as AttributeValueManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key\Manager as AttributeKeyManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Express\Control\Manager as ExpressControlManager;
+use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\Task\ValidateUserGroupsStage;
+use PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type\Manager as ExporterItemTypeManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Category\Manager as AttributeCategoryManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key\Manager as AttributeKeyManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Value\Manager as AttributeValueManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block\Manager as CIFBlockManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Express\Control\Manager as ExpressControlManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Manager as CIFImportManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\PageType\PublishTarget\Manager as PublishTargetManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Permission\AccessEntity\Manager as AccessEntityManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CommandRegistrar;
 use PortlandLabs\Concrete5\MigrationTool\Importer\ParserManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Permission\AccessEntity\Manager as AccessEntityManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\PageType\PublishTarget\Manager as PublishTargetManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Block\Manager as CIFBlockManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Manager as CIFImportManager;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Manager as WordpressImportManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Block\Manager as WordpressBlockManager;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Manager as WordpressImportManager;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager as BlockPublisherManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspector\InspectionRoutine\BatchPageRoutine;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherManager;
-use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager as BlockPublisherManager;
-use PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type\Manager as ExporterItemTypeManager;
 use SinglePage;
 
 class Controller extends Package
@@ -142,52 +130,51 @@ class Controller extends Package
 
         \Core::bind('migration/batch/page/validator', function ($app, $batch) {
             if (isset($batch[0])) {
-                $v = new BatchValidator($batch[0]);
-                /*$v->registerTask(new ValidateAttributesTask());
-                $v->registerTask(new ValidatePageTemplatesTask());
-                $v->registerTask(new ValidatePageTypesTask());
-                $v->registerTask(new ValidatePagePathTask());
-                $v->registerTask(new ValidateUsersTask());
-                $v->registerTask(new ValidateBlocksTask());
-                $v->registerTask(new ValidateAreasTask());*/
-                return $v;
+                $validator = new StandardValidator($batch[0]);
+                $validator->addPipelineStage(new ValidateAttributesStage());
+                $validator->addPipelineStage(new ValidatePageTemplatesStage());
+                $validator->addPipelineStage(new ValidateAreasStage());
+                $validator->addPipelineStage(new ValidateBlocksStage());
+                $validator->addPipelineStage(new ValidatePageTypesStage());
+                $validator->addPipelineStage(new ValidatePagePathStage());
+                $validator->addPipelineStage(new ValidateUsersStage());
+                return $validator;
             }
         });
 
         \Core::bind('migration/batch/site/validator', function ($app, $batch) {
             if (isset($batch[0])) {
-                $v = new BatchValidator($batch[0]);
-                //$v = new SiteValidator($batch[0]);
-                //$v->registerTask(new ValidateAttributesTask());
-                return $v;
+                $validator = new StandardValidator();
+                $validator->addPipelineStage(new ValidateAttributesStage());
+                return $validator;
             }
         });
 
         \Core::bind('migration/batch/user/validator', function ($app, $batch) {
             if (isset($batch[0])) {
-                $v = new BatchValidator($batch[0]);
-                //$v->registerTask(new ValidateAttributesTask());
-                //$v->registerTask(new ValidateGroupsTask());
-                return $v;
+                $validator = new StandardValidator();
+                $validator->addPipelineStage(new ValidateAttributesStage());
+                $validator->addPipelineStage(new ValidateUserGroupsStage());
+                return $validator;
             }
         });
 
         \Core::bind('migration/batch/express/entry/validator', function ($app, $batch) {
             if (isset($batch[0])) {
-                $v = new BatchValidator($batch[0]);
-                //$v->registerTask(new ValidateExpressAttributesTask());
-                return $v;
+                $validator = new StandardValidator();
+                $validator->addPipelineStage(new ValidateExpressAttributesStage());
+                return $validator;
             }
         });
 
         \Core::bindShared('migration/batch/validator', function ($app, $batch) {
-            $validator = new BatchValidator($batch[0]);
+            $validator = new BatchValidator();
             $validator->addPipelineStage(new ValidateBatchRecordsStage());
             return $validator;
         });
 
         \Core::bind('migration/batch/block/validator', function ($app, $batch) {
-            $validator = new StandardValidator($batch[0]);
+            $validator = new StandardValidator();
             $validator->addPipelineStage(new ValidateBlockTypesStage());
             $validator->addPipelineStage(new ValidateReferencedStacksStage());
             $validator->addPipelineStage(new ValidateReferencedContentItemsStage());

@@ -1,8 +1,7 @@
 <?php
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage;
 
-use Concrete\Core\Foundation\Processor\ActionInterface;
-use Concrete\Core\Foundation\Processor\TaskInterface;
+use League\Pipeline\StageInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\PageTemplate;
@@ -11,27 +10,27 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class ValidatePageTemplatesTask implements TaskInterface
+class ValidatePageTemplatesStage implements StageInterface
 {
-    public function execute(ActionInterface $action)
+    public function __invoke($result)
     {
-        // Grab the target item for the page's page type.
-        $subject = $action->getSubject();
-        $target = $action->getTarget();
-        if ($subject->getTemplate()) {
+        $subject = $result->getSubject();
+        $batch = $subject->getBatch();
+        $page = $subject->getObject();
+
+        if ($page->getTemplate()) {
             $mapper = new PageTemplate();
-            $targetItemList = new TargetItemList($target->getBatch(), $mapper);
-            $item = new Item($subject->getTemplate());
+            $targetItemList = new TargetItemList($batch, $mapper);
+            $item = new Item($page->getTemplate());
             $targetItem = $targetItemList->getSelectedTargetItem($item);
             if ($targetItem instanceof UnmappedTargetItem) {
-                $action->getTarget()->addMessage(
+                $result->getMessages()->addMessage(
                     new Message(t('Page template <strong>%s</strong> does not exist.', $item->getIdentifier()), Message::E_WARNING)
                 );
             }
         }
+
+        return $result;
     }
 
-    public function finish(ActionInterface $action)
-    {
-    }
 }

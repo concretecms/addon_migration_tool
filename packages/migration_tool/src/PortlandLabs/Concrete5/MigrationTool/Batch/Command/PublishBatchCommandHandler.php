@@ -3,19 +3,16 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Batch\Command;
 
 use Concrete\Core\Application\Application;
+use Concrete\Core\Foundation\Queue\Batch\Processor;
 use Concrete\Core\Foundation\Queue\Response\EnqueueItemsResponse;
 use Doctrine\ORM\EntityManager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Queue\QueueFactory;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\Logger;
 
 class PublishBatchCommandHandler
 {
-    /**
-     * @var QueueFactory
-     */
-    protected $queueFactory;
+
 
     /**
      * @var Application
@@ -37,12 +34,17 @@ class PublishBatchCommandHandler
      */
     protected $logger;
 
-    public function __construct(Logger $logger, BatchService $batchService, Application $app, QueueFactory $queueFactory, EntityManager $entityManager)
+    /**
+     * @var Processor
+     */
+    protected $processor;
+
+    public function __construct(Logger $logger, BatchService $batchService, Application $app, Processor $processor, EntityManager $entityManager)
     {
         $this->app = $app;
         $this->batchService = $batchService;
-        $this->queueFactory = $queueFactory;
         $this->entityManager = $entityManager;
+        $this->processor = $processor;
         $this->logger = $logger;
     }
 
@@ -50,7 +52,6 @@ class PublishBatchCommandHandler
     {
         $r = $this->entityManager->getRepository(Batch::class);
         $batch = $r->findOneById($command->getBatchId());
-        $queue = $this->queueFactory->getPublisherQueue($batch);
 
         $u = new \User();
         $user = null;
@@ -61,13 +62,8 @@ class PublishBatchCommandHandler
         $this->batchService->createImportNode($batch->getSite());
         $this->logger->openLog($batch, $user);
 
-        $publishers = $this->app->make('migration/manager/publisher');
-        foreach ($publishers->getDrivers() as $driver) {
-            foreach ($driver->getPublisherCommands($batch, $this->logger) as $command) {
-                $this->app->queueCommand($command);
-            }
-        }
-        return new EnqueueItemsResponse($queue);
+        $factory = new PublishBatchBatchProcessFactory($this->app, $this->logger);
+        return $this->processor->process($factory, $batch);
     }
 
 

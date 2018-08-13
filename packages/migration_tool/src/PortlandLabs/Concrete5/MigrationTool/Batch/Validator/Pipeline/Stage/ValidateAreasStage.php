@@ -1,8 +1,7 @@
 <?php
-namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Page\Task;
+namespace PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage;
 
-use Concrete\Core\Foundation\Processor\ActionInterface;
-use Concrete\Core\Foundation\Processor\TaskInterface;
+use League\Pipeline\StageInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Type\Area;
@@ -11,20 +10,21 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
-class ValidateAreasTask implements TaskInterface
+class ValidateAreasStage implements StageInterface
 {
-    public function execute(ActionInterface $action)
+    public function __invoke($result)
     {
-        // Grab the target item for the page's page type.
-        $subject = $action->getSubject();
-        $target = $action->getTarget();
+        $subject = $result->getSubject();
+        $batch = $subject->getBatch();
+        $page = $subject->getObject();
+
         $areaMapper = new Area();
-        $targetItemList = new TargetItemList($target->getBatch(), $areaMapper);
-        foreach ($subject->getAreas() as $area) {
+        $targetItemList = new TargetItemList($batch, $areaMapper);
+        foreach ($page->getAreas() as $area) {
             $item = new Item($area->getName());
             $targetItem = $targetItemList->getSelectedTargetItem($item);
             if ($targetItem instanceof UnmappedTargetItem) {
-                $template = $subject->getTemplate();
+                $template = $page->getTemplate();
                 // Now, if the page template exists in the batch, there's a chance that the reason the area
                 // doesn't exist in the site is because it's part of the new template. In that case, we should show
                 // an info message so we don't get as many scary red errors.
@@ -35,19 +35,17 @@ class ValidateAreasTask implements TaskInterface
                 }
 
                 if (isset($batchTemplate) && is_object($batchTemplate)) {
-                    $action->getTarget()->addMessage(
+                    $result->getMessages()->add(
                         new Message(t('Area <strong>%s</strong> does not exist in site. If this area is in a new page template this message can be disregarded.', $item->getIdentifier()), Message::E_INFO)
                     );
                 } else {
-                    $action->getTarget()->addMessage(
+                    $result->getMessages()->add(
                         new Message(t('Area <strong>%s</strong> does not exist.', $item->getIdentifier()))
                     );
                 }
             }
         }
+        return $result;
     }
 
-    public function finish(ActionInterface $action)
-    {
-    }
 }

@@ -32,12 +32,9 @@ class Validator implements ValidatorInterface
             $entityValidator = $entity->getRecordValidator($batch);
             if ($entityValidator) {
                 $entitySubject = new BatchObjectValidatorSubject($batch, $entity);
-                $r = $entityValidator->validate($entitySubject);
-                $entityMessages = $entityValidator->validate($entity);
-                if (is_object($entityMessages) && count($entityMessages)) {
-                    foreach ($entityMessages as $message) {
-                        $result->getMessages()->add($message);
-                    }
+                $entityValidatorResult = $entityValidator->validate($entitySubject);
+                foreach ($entityValidatorResult->getMesages() as $message) {
+                    $result->getMessages()->add($message);
                 }
             }
         }

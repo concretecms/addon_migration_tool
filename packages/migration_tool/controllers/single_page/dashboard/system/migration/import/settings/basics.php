@@ -1,26 +1,13 @@
 <?php
 namespace Concrete\Package\MigrationTool\Controller\SinglePage\Dashboard\System\Migration\Import\Settings;
 
-use Concrete\Core\File\Importer;
-use Concrete\Core\File\Set\Set;
-use Concrete\Core\Foundation\Processor\Processor;
 use Concrete\Package\MigrationTool\Controller\Element\Dashboard\Batches\Settings\Header;
 use Concrete\Package\MigrationTool\Page\Controller\DashboardMigrationSettingsController;
-use Concrete\Package\MigrationTool\Page\Controller\DashboardPageController;
-use Doctrine\Common\Collections\ArrayCollection;
-use PortlandLabs\Concrete5\MigrationTool\Batch\BatchService;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Exporter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\PresetManager;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Page\TreePageJsonFormatter;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Formatter\Site\TreeSiteJsonFormatter;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\PublisherRoutineProcessor;
-use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Target;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\Task\NormalizePagePathsTask;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Processor\UntransformedItemProcessor;
-use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
-use PortlandLabs\Concrete5\MigrationTool\Importer\FileParser as Parser;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 

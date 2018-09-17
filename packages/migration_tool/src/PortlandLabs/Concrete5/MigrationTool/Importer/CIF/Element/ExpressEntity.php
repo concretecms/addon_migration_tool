@@ -32,9 +32,14 @@ class ExpressEntity implements ElementParserInterface
                 } else {
                     $entity->setIncludeInPublicList(false);
                 }
+                $supportsCustomDisplayOrder = (string) $node['supports_custom_display_order'];
+                if ($supportsCustomDisplayOrder === '1') {
+                    $entity->setSupportsCustomDisplayOrder(true);
+                } else {
+                    $entity->setSupportsCustomDisplayOrder(false);
+                }
                 $entity->setDefaultEditFormId((string) $node['default_edit_form']);
                 $entity->setDefaultViewFormId((string) $node['default_view_form']);
-
                 if ($node->associations->association) {
                     foreach ($node->associations->association as $associationNode) {
                         $association = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Express\Association();

@@ -284,7 +284,6 @@ $dh = Core::make('helper/date');
                     'value': '<?=Core::make('token')->generate('run_batch_content_normalize_page_paths_task')?>'
                 }
             ],
-            element: $element,
             success: function (r) {
                 $('h4[data-progress-bar-title]').html('<?=t('Mapping Content Types...')?>');
                 new ConcreteProgressiveOperation({

@@ -12,6 +12,13 @@ defined('C5_EXECUTE') or die("Access Denied.");
 class PublishStackContentCommandHandler extends AbstractPageCommandHandler
 {
 
+    public function getPage($id)
+    {
+        $entityManager = \Database::connection()->getEntityManager();
+        $r = $entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\AbstractStack');
+        return $r->findOneById($id);
+    }
+
     public function execute(BatchInterface $batch, LoggerInterface $logger)
     {
         /**

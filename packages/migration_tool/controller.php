@@ -2,8 +2,10 @@
 namespace Concrete\Package\MigrationTool;
 
 use Concrete\Core\Asset\AssetList;
+use Concrete\Core\Foundation\Command\Dispatcher;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Type\Type;
+use League\Tactician\Bernard\Receiver\SeparateBusReceiver;
 use Page;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Manager;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\BatchValidator;
@@ -36,6 +38,9 @@ use PortlandLabs\Concrete5\MigrationTool\Importer\ParserManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Block\Manager as WordpressBlockManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Manager as WordpressImportManager;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Block\Manager as BlockPublisherManager;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Command\Middleware\PublisherExceptionHandlingMiddleware;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Command\PublishCommandBus;
+use PortlandLabs\Concrete5\MigrationTool\Publisher\Command\PublisherCommand;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\ContentImporter\ValueInspector\InspectionRoutine\BatchPageRoutine;
 use PortlandLabs\Concrete5\MigrationTool\Publisher\Routine\Manager as PublisherManager;
 use SinglePage;
@@ -239,6 +244,10 @@ class Controller extends Package
         \Core::bindShared('migration/manager/exporters', function ($app) {
             return new ExporterItemTypeManager($app);
         });
+
+        // Add a custom bus to handle our publish commands
+        $dispatcher = $this->app->getCommandDispatcher();
+        $dispatcher->addBus(new PublishCommandBus($this->app));
 
         $al = AssetList::getInstance();
         $al->register(

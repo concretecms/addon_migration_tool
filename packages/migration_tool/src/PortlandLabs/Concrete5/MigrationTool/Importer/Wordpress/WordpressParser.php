@@ -53,7 +53,7 @@ class WordpressParser implements FileParserInterface
 //        $simplexml = simplexml_load_file($file);
 
         foreach ($manager->getDrivers() as $driver) {
-            $collection = $driver->getObjectCollection($this->wxr, $this->namespaces);
+            $collection = $driver->getObjectCollection($this->wxr, $this->namespaces, $batch);
             if ($collection) {
                 if (!($collection instanceof ObjectCollection)) {
                     throw new \RuntimeException(t('Driver %s getObjectCollection did not return an object of the ObjectCollection type', get_class($driver)));

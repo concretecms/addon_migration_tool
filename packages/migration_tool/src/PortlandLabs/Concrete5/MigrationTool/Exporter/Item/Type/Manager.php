@@ -122,6 +122,16 @@ class Manager extends CoreManager
         return new ExpressEntry();
     }
 
+    public function createSiteDriver()
+    {
+        return $this->app->make(Site::class);
+    }
+
+    public function createSiteTypeDriver()
+    {
+        return $this->app->make(SiteType::class);
+    }
+
     public function __construct($app)
     {
         parent::__construct($app);
@@ -156,5 +166,7 @@ class Manager extends CoreManager
         $this->driver('page_template');
         $this->driver('page');
         $this->driver('theme');
+        $this->driver('site_type');
+        $this->driver('site');
     }
 }

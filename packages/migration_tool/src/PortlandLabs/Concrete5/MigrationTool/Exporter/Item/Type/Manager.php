@@ -166,7 +166,9 @@ class Manager extends CoreManager
         $this->driver('page_template');
         $this->driver('page');
         $this->driver('theme');
-        $this->driver('site_type');
-        $this->driver('site');
+        if (compat_supports_site_types()) {
+            $this->driver('site_type');
+            $this->driver('site');
+        }
     }
 }

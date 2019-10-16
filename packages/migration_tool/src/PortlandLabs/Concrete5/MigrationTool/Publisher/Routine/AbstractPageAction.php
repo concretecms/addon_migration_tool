@@ -1,18 +1,15 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Routine;
 
+use Concrete\Core\Page\Page as CorePage;
 use Concrete\Core\Page\Type\Type;
 use Concrete\Core\Utility\Service\Text;
 use PortlandLabs\Concrete5\MigrationTool\Batch\BatchInterface;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\Item\Item;
-use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\MapperManagerInterface;
 use PortlandLabs\Concrete5\MigrationTool\Batch\ContentMapper\TargetItemList;
-use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\IgnoredTargetItem;
-use PortlandLabs\Concrete5\MigrationTool\Entity\ContentMapper\UnmappedTargetItem;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 abstract class AbstractPageAction implements RoutineActionInterface
 {
@@ -27,7 +24,7 @@ abstract class AbstractPageAction implements RoutineActionInterface
 
     public function __sleep()
     {
-        return array('page_id');
+        return ['page_id'];
     }
 
     public function __wakeup()
@@ -37,7 +34,7 @@ abstract class AbstractPageAction implements RoutineActionInterface
 
     protected function getPageByPath(Batch $batch, $path)
     {
-        return \Page::getByPath('/!import_batches/' . $batch->getID() . $path,
+        return CorePage::getByPath('/!import_batches/' . $batch->getID() . $path,
             'RECENT',
             $batch->getSite()->getSiteTreeObject()
         );
@@ -61,11 +58,11 @@ abstract class AbstractPageAction implements RoutineActionInterface
 
         array_pop($paths);
 
-        foreach($paths as $path) {
+        foreach ($paths as $path) {
             $currentPath = $prefix . $path;
-            $c = \Concrete\Core\Page\Page::getByPath($batchParent->getCollectionPath() . '/' . $currentPath, 'RECENT', $batch->getSite()->getSiteTreeObject());
+            $c = CorePage::getByPath($batchParent->getCollectionPath() . '/' . $currentPath, 'RECENT', $batch->getSite()->getSiteTreeObject());
             if ($c->isError() && $c->getError() == COLLECTION_NOT_FOUND) {
-                $data = array();
+                $data = [];
                 $data['cHandle'] = $path;
                 $data['name'] = $service->unhandle($data['cHandle']);
                 $data['uID'] = USER_SUPER_ID;
@@ -75,6 +72,7 @@ abstract class AbstractPageAction implements RoutineActionInterface
             }
             $prefix = $currentPath . '/';
         }
+
         return $parent;
     }
 
@@ -85,7 +83,7 @@ abstract class AbstractPageAction implements RoutineActionInterface
 
     protected function getBatchParentPage(BatchInterface $batch)
     {
-        $page = \Page::getByPath('/!import_batches/' . $batch->getID(), 'RECENT', $batch->getSite()->getSiteTreeObject());
+        $page = CorePage::getByPath('/!import_batches/' . $batch->getID(), 'RECENT', $batch->getSite()->getSiteTreeObject());
         if (is_object($page) && !$page->isError()) {
             return $page;
         } else {
@@ -95,12 +93,12 @@ abstract class AbstractPageAction implements RoutineActionInterface
 
     protected function addBatchParent(BatchInterface $batch)
     {
-        $holder = \Page::getByPath('/!import_batches', 'RECENT', $batch->getSite()->getSiteTreeObject());
+        $holder = CorePage::getByPath('/!import_batches', 'RECENT', $batch->getSite()->getSiteTreeObject());
         $type = Type::getByHandle('import_batch');
-        return $holder->add($type, array(
+
+        return $holder->add($type, [
             'cName' => $batch->getID(),
             'pkgID' => \Package::getByHandle('migration_tool')->getPackageID(),
-        ));
-
+        ]);
     }
 }

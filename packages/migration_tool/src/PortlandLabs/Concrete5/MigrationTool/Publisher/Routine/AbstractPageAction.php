@@ -66,8 +66,8 @@ abstract class AbstractPageAction implements RoutineActionInterface
             $c = \Concrete\Core\Page\Page::getByPath($batchParent->getCollectionPath() . '/' . $currentPath, 'RECENT', $batch->getSite()->getSiteTreeObject());
             if ($c->isError() && $c->getError() == COLLECTION_NOT_FOUND) {
                 $data = array();
-                $data['handle'] = $path;
-                $data['name'] = $service->unhandle($data['handle']);
+                $data['cHandle'] = $path;
+                $data['name'] = $service->unhandle($data['cHandle']);
                 $data['uID'] = USER_SUPER_ID;
                 $parent = $parent->add(null, $data);
             } else {

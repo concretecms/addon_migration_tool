@@ -332,7 +332,6 @@ class Import extends DashboardPageController
     public function view_batch($id = null)
     {
         $this->requireAsset('migration/view-batch');
-        $this->requireAsset('core/app/editable-fields');
         $this->requireAsset('jquery/fileupload');
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
@@ -375,7 +374,6 @@ class Import extends DashboardPageController
 
     public function batch_files($id = null)
     {
-        $this->requireAsset('core/file-manager');
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
         if (is_object($batch)) {
@@ -614,7 +612,6 @@ class Import extends DashboardPageController
     {
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
-        $this->requireAsset('selectize');
         $mappers = \Core::make('migration/manager/mapping');
         if (is_object($batch)) {
             $this->set('batch', $batch);

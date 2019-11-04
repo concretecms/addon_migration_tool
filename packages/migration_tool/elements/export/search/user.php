@@ -2,9 +2,6 @@
 
 defined('C5_EXECUTE') or die(_("Access Denied."));
 
-$ag = \Concrete\Core\Http\ResponseAssetGroup::get();
-$ag->requireAsset('selectize');
-
 $form = Core::make('helper/form');
 $datetime = Loader::helper('form/date_time')->translate('datetime', $_GET);
 

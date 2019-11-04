@@ -267,9 +267,6 @@ class Controller extends Package
             array(), $this
         );
         $al->registerGroup('migration/view-batch', array(
-            array('javascript', 'jquery'),
-            array('javascript', 'jquery/ui'),
-            array('javascript', 'fancytree'),
             array('javascript', 'migration/batch-table-tree'),
             array('css', 'fancytree/skin/bootstrap'),
             array('css', 'migration/batch-table-tree'),

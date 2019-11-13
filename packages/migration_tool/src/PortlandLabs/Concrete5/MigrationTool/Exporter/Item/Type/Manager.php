@@ -37,6 +37,26 @@ class Manager extends CoreManager
         return new PageTemplate();
     }
 
+    protected function createContainerDriver()
+    {
+        return new Container();
+    }
+
+    protected function createSummaryCategoryDriver()
+    {
+        return new SummaryCategory();
+    }
+
+    protected function createSummaryFieldDriver()
+    {
+        return new SummaryField();
+    }
+
+    protected function createSummaryTemplateDriver()
+    {
+        return new SummaryTemplate();
+    }
+
     protected function createPageTypeDriver()
     {
         return new PageType();
@@ -153,6 +173,10 @@ class Manager extends CoreManager
         $this->driver('job');
         $this->driver('single_page');
         $this->driver('page_type');
+        $this->driver('container');
+        $this->driver('summary_category');
+        $this->driver('summary_field');
+        $this->driver('summary_template');
         $this->driver('page_template');
         $this->driver('page');
         $this->driver('theme');

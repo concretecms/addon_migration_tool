@@ -142,6 +142,17 @@ class Manager extends CoreManager
         return new ExpressEntry();
     }
 
+    public function createSiteDriver()
+    {
+        return $this->app->make(Site::class);
+    }
+
+    public function createSiteTypeDriver()
+    {
+        return $this->app->make(SiteType::class);
+    }
+
+
     public function __construct($app)
     {
         parent::__construct($app);
@@ -158,6 +169,8 @@ class Manager extends CoreManager
         $this->driver('block_type_set');
         $this->driver('attribute_set');
         $this->driver('user');
+        $this->driver('site_type');
+        $this->driver('site');
         /*
         $this->driver('package');
         $this->driver('permission_access_entity_type');

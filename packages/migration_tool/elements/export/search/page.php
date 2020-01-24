@@ -31,3 +31,9 @@ foreach ($list as $type) {
     <label class="control-label"><?=t('Filter by Page Type')?></label>
     <?=$form->select('ptID', $pagetypes)?>
 </div>
+
+<div class="form-group">
+	<div class="checkbox">
+    	<label> <?php echo $form->checkbox('includeSystemPages', 1, $includeSystemPages);  ?><?=t('Include System Pages'); ?></label>
+	</div>
+</div>

@@ -228,8 +228,17 @@ class Import extends DashboardPageController
 
         $importer = \Core::make('migration/manager/importer/parser')->driver($this->request->request('format'));
 
-        if (!is_uploaded_file($_FILES['file']['tmp_name'])) {
-            $this->error->add(t('Invalid XML file.'));
+        $UploadedFile = new \Symfony\Component\HttpFoundation\File\UploadedFile(
+            $_FILES['file']['tmp_name'],
+            $_FILES['file']['name'],
+            $_FILES['file']['type'],
+            $_FILES['file']['size'],
+            $_FILES['file']['error'],
+            true
+        );
+
+        if (!$UploadedFile->isValid()) {
+            $this->error->add($UploadedFile->getErrorMessage());
         } else {
             $importer->validateUploadedFile($_FILES['file'], $this->error);
         }

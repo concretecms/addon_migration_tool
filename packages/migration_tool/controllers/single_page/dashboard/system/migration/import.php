@@ -32,7 +32,6 @@ use PortlandLabs\Concrete5\MigrationTool\Publisher\Logger\LoggerFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Import extends DashboardPageController
 {
@@ -229,17 +228,11 @@ class Import extends DashboardPageController
 
         $importer = \Core::make('migration/manager/importer/parser')->driver($this->request->request('format'));
 
-        $UploadedFile = new UploadedFile(
-            $_FILES['file']['tmp_name'],
-            $_FILES['file']['name'],
-            $_FILES['file']['type'],
-            $_FILES['file']['size'],
-            $_FILES['file']['error'],
-            true
-        );
-
-        if (!$UploadedFile->isValid()) {
-            $this->error->add($UploadedFile->getErrorMessage());
+        $uploadedFile = $this->request->files->get('file');
+        if ($uploadedFile === null) {
+            $this->error->add(t('File not uploaded'));
+        } elseif (!$uploadedFile->isValid()) {
+            $this->error->add($uploadedFile->getErrorMessage());
         } else {
             $importer->validateUploadedFile($_FILES['file'], $this->error);
         }

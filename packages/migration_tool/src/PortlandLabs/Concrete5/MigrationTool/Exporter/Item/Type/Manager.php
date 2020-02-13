@@ -152,7 +152,6 @@ class Manager extends CoreManager
         return $this->app->make(SiteType::class);
     }
 
-
     public function __construct($app)
     {
         parent::__construct($app);
@@ -169,8 +168,6 @@ class Manager extends CoreManager
         $this->driver('block_type_set');
         $this->driver('attribute_set');
         $this->driver('user');
-        $this->driver('site_type');
-        $this->driver('site');
         /*
         $this->driver('package');
         $this->driver('permission_access_entity_type');
@@ -193,5 +190,9 @@ class Manager extends CoreManager
         $this->driver('page_template');
         $this->driver('page');
         $this->driver('theme');
+        if (compat_supports_site_types()) {
+            $this->driver('site_type');
+            $this->driver('site');
+        }
     }
 }

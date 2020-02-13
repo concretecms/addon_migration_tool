@@ -48,7 +48,7 @@ abstract class AbstractPageCommandHandler extends AbstractHandler
             $c = \Concrete\Core\Page\Page::getByPath($batchParent->getCollectionPath() . '/' . $currentPath, 'RECENT', $batch->getSite()->getSiteTreeObject());
             if ($c->isError() && $c->getError() == COLLECTION_NOT_FOUND) {
                 $data = array();
-                $data['handle'] = $path;
+                $data['cHandle'] = $path;
                 $data['name'] = $service->unhandle($data['handle']);
                 $data['uID'] = USER_SUPER_ID;
                 $parent = $parent->add(null, $data);

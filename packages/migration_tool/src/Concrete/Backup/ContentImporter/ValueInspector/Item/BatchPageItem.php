@@ -41,10 +41,10 @@ class BatchPageItem extends PageItem
             $query = $entityManager->createQuery('select p from
 \PortlandLabs\Concrete5\MigrationTool\Entity\Publisher\Log\Object\Page p
 inner join p.entry e
-inner join e.log l where l.id = :log_id and p.cID > 0 and p.original_path = :original_path'
+inner join e.log l where l.id = :log_id and p.cID > 0 and p.batch_path = :batch_path'
             );
             $query->setParameter('log_id', $log->getID());
-            $query->setParameter('original_path', $cPath);
+            $query->setParameter('batch_path', $cPath);
             $query->setMaxResults(1);
             $loggedPage = $query->getOneOrNullResult();
             if (is_object($loggedPage)) {

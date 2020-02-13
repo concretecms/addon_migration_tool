@@ -332,7 +332,7 @@ class Import extends DashboardPageController
     public function view_batch($id = null)
     {
         $this->requireAsset('migration/view-batch');
-        $this->requireAsset('jquery/fileupload');
+//        $this->requireAsset('jquery/fileupload');
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');
         $batch = $r->findOneById($id);
         if (is_object($batch)) {

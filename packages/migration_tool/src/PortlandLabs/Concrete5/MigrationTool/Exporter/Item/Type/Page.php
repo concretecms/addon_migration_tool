@@ -32,6 +32,8 @@ class Page extends SinglePage
         $ptID = $query['ptID'];
         $startingPoint = intval($query['startingPoint']);
         $datetime = \Core::make('helper/form/date_time')->translate('datetime', $query);
+        $includeSystemPages = $query['includeSystemPages'];
+
         $pl->ignorePermissions();
         if ($startingPoint) {
             $parent = \Page::getByID($startingPoint, 'ACTIVE');
@@ -40,13 +42,16 @@ class Page extends SinglePage
         if ($datetime) {
             $pl->filterByPublicDate($datetime, '>=');
         }
-
         if ($ptID) {
             $pl->filterByPageTypeID($ptID);
         }
         if ($keywords) {
             $pl->filterByKeywords($keywords);
         }
+        if($includeSystemPages) {
+            $pl->includeSystemPages();
+        }    
+
         $pl->setItemsPerPage(1000);
         $results = $pl->getResults();
         $items = array();

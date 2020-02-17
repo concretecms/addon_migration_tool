@@ -219,8 +219,11 @@ class Import extends DashboardPageController
 
         $importer = \Core::make('migration/manager/importer/parser')->driver($this->request->request('format'));
 
-        if (!is_uploaded_file($_FILES['file']['tmp_name'])) {
-            $this->error->add(t('Invalid XML file.'));
+        $uploadedFile = $this->request->files->get('file');
+        if ($uploadedFile === null) {
+            $this->error->add(t('File not uploaded'));
+        } elseif (!$uploadedFile->isValid()) {
+            $this->error->add($uploadedFile->getErrorMessage());
         } else {
             $importer->validateUploadedFile($_FILES['file'], $this->error);
         }

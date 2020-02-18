@@ -19,6 +19,9 @@ function MigrationBatchTableTree($table, options) {
         toggleEffect: false,
         source: options.source,
         init: options.init,
+        glyph: {
+            preset: 'awesome5'
+        },
         table: {
             checkboxColumnIdx: null,
             customStatus: false,

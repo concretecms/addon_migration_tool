@@ -75,8 +75,8 @@ $dh = Core::make('helper/date');
             <?php } ?>
         </form>
         <div class="dialog-buttons">
-            <button class="btn btn-default pull-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
-            <button class="btn btn-primary pull-right" onclick="$('#ccm-dialog-add-batch form').submit()"><?=t('Add Batch')?></button>
+            <button class="btn btn-secondary float-left" onclick="jQuery.fn.dialog.closeTop()"><?=t('Cancel')?></button>
+            <button class="btn btn-primary float-right" onclick="$('#ccm-dialog-add-batch form').submit()"><?=t('Add Batch')?></button>
         </div>
     </div>
 </div>

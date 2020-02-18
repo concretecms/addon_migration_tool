@@ -24,6 +24,7 @@ use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\Validate
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\Pipeline\Stage\ValidateUsersStage;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\StandardValidator;
 use PortlandLabs\Concrete5\MigrationTool\Batch\Validator\User\Task\ValidateUserGroupsStage;
+use PortlandLabs\Concrete5\MigrationTool\Event\EventSubscriber;
 use PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type\Manager as ExporterItemTypeManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Category\Manager as AttributeCategoryManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\CIF\Attribute\Key\Manager as AttributeKeyManager;
@@ -250,33 +251,22 @@ class Controller extends Package
         $dispatcher->addBus(new PublishCommandBus($this->app));
 
         $al = AssetList::getInstance();
-        $al->register(
-            'javascript', 'fancytree', 'assets/jquery.fancytree/dist/jquery.fancytree-all.min.js',
-            array('minify' => false, 'combine' => false), $this
-        );
-        $al->register(
-            'css', 'fancytree/skin/bootstrap', 'assets/jquery.fancytree/dist/skin-bootstrap/ui.fancytree.min.css',
-            array('minify' => false, 'combine' => false), $this
-        );
-        $al->register(
-            'javascript', 'migration/batch-table-tree', 'assets/migration/BatchTableTree.js',
-            array(), $this
-        );
-        $al->register(
-            'css', 'migration/batch-table-tree', 'assets/migration/BatchTableTree.css',
-            array(), $this
-        );
-        $al->registerGroup('migration/view-batch', array(
-            array('javascript', 'migration/batch-table-tree'),
-            array('css', 'fancytree/skin/bootstrap'),
-            array('css', 'migration/batch-table-tree'),
+        $al->register('javascript', 'migration_tool/backend', 'assets/js/backend.js', [], $this);
+        $al->register('css', 'migration_tool/backend', 'assets/css/backend.css', [], $this);
+        $al->registerGroup('migration_tool/backend', array(
+            ['javascript', 'migration_tool/backend'],
+            ['css', 'migration_tool/backend'],
         ));
 
         // Commands
         $registrar = new CommandRegistrar($this->app);
         $registrar->register();
 
+        $subscriber = new EventSubscriber($this->app);
+        $dispatcher = $this->app->make('director');
+        $dispatcher->addSubscriber($subscriber);
     }
+    
 
     public function getPackageDescription()
     {

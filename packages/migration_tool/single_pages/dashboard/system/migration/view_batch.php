@@ -6,7 +6,7 @@ $dh = Core::make('helper/date');
 
         <?php if ($activeQueue) { ?>
             <div class="btn-group btn-group">
-                <button class="btn btn-default" onclick="launchActiveQueue()"><?=t('Resume Active Process')?></button>
+                <button class="btn btn-light" onclick="launchActiveQueue()"><?=t('Resume Active Process')?></button>
                 <a href="javascript:void(0)" class="btn btn-danger" data-dialog="clear-batch-queues"
                    data-dialog-title="<?= t('Reset All Processes') ?>"><?= t("Reset All Processes") ?></a>
             </div>
@@ -14,28 +14,28 @@ $dh = Core::make('helper/date');
         <?php } else {  ?>
             <div class="btn-group btn-group-sm" role="group" aria-label="...">
                 <a href="javascript:void(0)" data-dialog="add-to-batch" data-dialog-title="<?= t('Add Content') ?>"
-                   class="btn btn-default"><?= t("Add Content to Batch") ?></a>
-                <a href="<?= $view->action('batch_files', $batch->getID()) ?>" class="btn btn-default"><?= t('Files') ?></a>
+                   class="btn btn-light"><?= t("Add Content to Batch") ?></a>
+                <a href="<?= $view->action('batch_files', $batch->getID()) ?>" class="btn btn-light"><?= t('Files') ?></a>
                 <div class="btn-group btn-group-sm" role="group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                    <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                         <?= t('Edit') ?>
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="<?= $view->action('map_content', $batch->getId())?>"><?=t('Map Content')?></a></li>
-                        <li class="divider"></li>
-                        <li class="dropdown-header"><?= t('Settings') ?></li>
-                        <li><a href="<?=URL::to('/dashboard/system/migration/import/settings/basics', $batch->getID())?>" class=""><?= t("Basics") ?></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?= $view->action('map_content', $batch->getId())?>"><?=t('Map Content')?></a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-header"><?= t('Settings') ?></div>
+                        <a class="dropdown-item" href="<?=URL::to('/dashboard/system/migration/import/settings/basics', $batch->getID())?>" class=""><?= t("Basics") ?></a>
                             <?php foreach($settings as $setting) { ?>
-                        <li><a href="<?=URL::to($setting, $batch->getID())?>" class=""><?= t($setting->getCollectionName())?></a>
+                        <a class="dropdown-item" href="<?=URL::to($setting, $batch->getID())?>" class=""><?= t($setting->getCollectionName())?></a>
                             <?php } ?>
-                        <li class="divider"></li>
-                        <li><a href="javascript:void(0)" data-dialog="clear-batch-mappings"
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="javascript:void(0)" data-dialog="clear-batch-mappings"
                                data-dialog-title="<?= t('Clear Batch Mappings') ?>" class=""><?= t("Clear Batch Mappings") ?></a>
-                        <li><a href="javascript:void(0)" data-action="rescan-batch"
+                        <a class="dropdown-item" href="javascript:void(0)" data-action="rescan-batch"
                                data-dialog-title="<?= t('Rescan Batch') ?>" class=""><?= t("Rescan Batch") ?></a>
-                    </ul>
+                    </div>
                 </div>
                 <div class="btn-group btn-group-sm" role="group">
                     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
@@ -43,17 +43,15 @@ $dh = Core::make('helper/date');
                         <?= t('Delete') ?>
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu">
-                        <li class="disabled"><a disabled="disabled" href="javascript:void(0)" data-dialog="delete-batch-items"
+                    <div class="dropdown-menu">
+                        <a class="disabled dropdown-item" href="javascript:void(0)" data-dialog="delete-batch-items"
                                                 data-dialog-title="<?= t('Delete Selected') ?>"><?= t("Delete Selected") ?></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="javascript:void(0)" data-dialog="clear-batch"
+                        <div class="dropdown-divider"></div>
+                        <a href="javascript:void(0)" class="dropdown-item" data-dialog="clear-batch"
                                data-dialog-title="<?= t('Clear Batch') ?>" class=""><?= t("Clear Batch") ?></a>
-                        </li>
-                        <li><a href="javascript:void(0)" data-dialog="delete-batch"
-                               data-dialog-title="<?= t('Delete Batch') ?>"><?= t("Delete Batch") ?></a></li>
-                    </ul>
+                        <a class="dropdown-item" href="javascript:void(0)" data-dialog="delete-batch"
+                               data-dialog-title="<?= t('Delete Batch') ?>"><?= t("Delete Batch") ?></a>
+                    </div>
                 </div>
 
                 <a href="javascript:void(0)" class="btn btn-primary" data-dialog="create-content"
@@ -84,9 +82,9 @@ $dh = Core::make('helper/date');
                 <input type="hidden" name="id" value="<?= $batch->getID() ?>">
                 <p><?= t('Are you sure you want to delete this import batch? This cannot be undone.') ?></p>
                 <div class="dialog-buttons">
-                    <button class="btn btn-default pull-left"
+                    <button class="btn btn-light float-left"
                             onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
-                    <button class="btn btn-danger pull-right"
+                    <button class="btn btn-danger float-right"
                             onclick="$('#ccm-dialog-delete-batch form').submit()"><?= t('Delete Batch') ?></button>
                 </div>
             </form>
@@ -101,9 +99,9 @@ $dh = Core::make('helper/date');
                 <input type="hidden" name="id" value="<?= $batch->getID() ?>">
                 <p><?= t('Are you sure you remove all content from this import batch? This cannot be undone.') ?></p>
                 <div class="dialog-buttons">
-                    <button class="btn btn-default pull-left"
+                    <button class="btn btn-light float-left"
                             onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
-                    <button class="btn btn-danger pull-right"
+                    <button class="btn btn-danger float-right"
                             onclick="$('#ccm-dialog-clear-batch form').submit()"><?= t('Clear Batch') ?></button>
                 </div>
             </form>
@@ -117,9 +115,9 @@ $dh = Core::make('helper/date');
                 <input type="hidden" name="id" value="<?= $batch->getID() ?>">
                 <p><?= t('Are you sure you remove selected content from this import batch? This cannot be undone.') ?></p>
                 <div class="dialog-buttons">
-                    <button class="btn btn-default pull-left"
+                    <button class="btn btn-light float-left"
                             onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
-                    <button class="btn btn-danger pull-right"
+                    <button class="btn btn-danger float-right"
                             data-action="remove-selected-items"><?= t('Delete Selected') ?></button>
                 </div>
             </form>
@@ -134,9 +132,9 @@ $dh = Core::make('helper/date');
                 <input type="hidden" name="id" value="<?= $batch->getID() ?>">
                 <p><?= t('Are you sure you reset all mapped content items for this batch? Any presets you have uploaded will not be removed.') ?></p>
                 <div class="dialog-buttons">
-                    <button class="btn btn-default pull-left"
+                    <button class="btn btn-light float-left"
                             onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
-                    <button class="btn btn-danger pull-right"
+                    <button class="btn btn-danger float-right"
                             onclick="$('#ccm-dialog-clear-batch-mappings form').submit()"><?= t('Clear Batch Mappings') ?></button>
                 </div>
             </form>
@@ -150,9 +148,9 @@ $dh = Core::make('helper/date');
                     <input type="hidden" name="id" value="<?= $batch->getID() ?>">
                     <p><?= t('Are you sure you reset all running processes for this batch? If someone else is actively importing content into the site it could affect them.') ?></p>
                     <div class="dialog-buttons">
-                        <button class="btn btn-default pull-left"
+                        <button class="btn btn-light float-left"
                                 onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
-                        <button class="btn btn-danger pull-right"
+                        <button class="btn btn-danger float-right"
                                 onclick="$('#ccm-dialog-clear-batch-queues form').submit()"><?= t('Reset Processes') ?></button>
                     </div>
                 </form>
@@ -175,9 +173,9 @@ $dh = Core::make('helper/date');
                 </div>
 
                 <div class="dialog-buttons">
-                    <button class="btn btn-default pull-left"
+                    <button class="btn btn-light float-left"
                             onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
-                    <button class="btn btn-primary pull-right"
+                    <button class="btn btn-primary float-right"
                             data-action="publish-content"><?= t('Publish Batch') ?></button>
                 </div>
             </form>
@@ -219,9 +217,9 @@ $dh = Core::make('helper/date');
                 </div>
             </form>
             <div class="dialog-buttons">
-                <button class="btn btn-default pull-left"
+                <button class="btn btn-secondary float-left"
                         onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
-                <button class="btn btn-primary pull-right" data-action="add-content"><?= t('Add Content') ?></button>
+                <button class="btn btn-primary float-right" data-action="add-content"><?= t('Add Content') ?></button>
             </div>
         </div>
         </div>

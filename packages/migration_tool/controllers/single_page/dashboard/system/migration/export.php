@@ -65,7 +65,6 @@ class Export extends DashboardSitePageController
 
     public function view_batch($id = null)
     {
-        $this->requireAsset('migration/view-batch');
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch');
         $batch = $r->findOneById($id);
         if (is_object($batch)) {
@@ -270,7 +269,6 @@ class Export extends DashboardSitePageController
 
     public function add_to_batch($id = null)
     {
-        $this->requireAsset('migration/view-batch');
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Export\Batch');
         $batch = $r->findOneById($id);
         if (is_object($batch)) {

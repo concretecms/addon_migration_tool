@@ -7,3 +7,5 @@ __MACOSX
 .*swp
 .*swo
 /web
+package-lock.json
+node_modules

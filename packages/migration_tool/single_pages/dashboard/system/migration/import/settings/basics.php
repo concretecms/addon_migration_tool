@@ -7,8 +7,8 @@ $dh = Core::make('helper/date');
 
     <div class="ccm-dashboard-form-actions-wrapper">
         <div class="ccm-dashboard-form-actions">
-            <a href="<?=$view->url('/dashboard/system/migration/import', 'view_batch', $batch->getID())?>" class="btn btn-default"><?=t('Cancel')?></a>
-            <button class="pull-right btn btn-primary" type="submit"><?=t('Save')?></button>
+            <a href="<?=$view->url('/dashboard/system/migration/import', 'view_batch', $batch->getID())?>" class="btn btn-secondary float-left"><?=t('Cancel')?></a>
+            <button class="float-right btn btn-primary" type="submit"><?=t('Save')?></button>
         </div>
     </div>
 
@@ -37,8 +37,8 @@ $dh = Core::make('helper/date');
 <fieldset>
     <legend><?=t('Mapping Definitions')?></legend>
     <div class="form-group">
-        <label class="control-label launch-tooltip" title="<?=t('Downloads all the current mappings as an XML file. This file can then be reused across multiple batches to save time.')?>"><?=t('Download Mappings')?></label>
-        <div><button type="submit" name="download_mappings" value="1" class="btn btn-default"><?=t('Download Current Definitions')?></div>
+        <div><button type="submit" name="download_mappings" value="1" class="btn btn-secondary btn-sm"><?=t('Download Current Definitions')?></div>
+        <div class="form-text text-muted"><?=t('Downloads all the current mappings as an XML file. This file can then be reused across multiple batches to save time.')?></div>
     </div>
 
 
@@ -50,6 +50,7 @@ $dh = Core::make('helper/date');
             <div class="alert alert-info"><?=t2('You have uploaded a preset mapping file containing %s preset', 'You have uploaded a preset mapping file containing %s presets', count($presetMappings))?>
                 <button class="btn btn-xs btn-default pull-right" type="submit" name="delete_mapping_presets" value="1"><?=t('Clear Presets')?></button>
             </div>
+            
         <?php } else { ?>
             <?=$form->file('mappingFile')?>
 

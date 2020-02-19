@@ -1,0 +1,20 @@
+table.migration-table {
+  tr.migration-node-main {
+    .fancytree-node {
+      width: 300px !important;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  tr.migration-item-skipped {
+    td, span.fancytree-title {
+      color: #ddd !important;
+      text-decoration: line-through !important;
+    }
+  }
+  
+  .launch-tooltip {
+    margin-left: 5px;
+  }
+}

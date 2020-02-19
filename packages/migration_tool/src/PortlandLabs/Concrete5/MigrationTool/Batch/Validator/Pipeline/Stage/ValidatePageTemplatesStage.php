@@ -24,7 +24,7 @@ class ValidatePageTemplatesStage implements StageInterface
             $item = new Item($page->getTemplate());
             $targetItem = $targetItemList->getSelectedTargetItem($item);
             if ($targetItem instanceof UnmappedTargetItem) {
-                $result->getMessages()->addMessage(
+                $result->getMessages()->add(
                     new Message(t('Page template <strong>%s</strong> does not exist.', $item->getIdentifier()), Message::E_WARNING)
                 );
             }

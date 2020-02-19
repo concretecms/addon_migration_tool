@@ -3,7 +3,7 @@ $dh = Core::make('helper/date');
 /* @var \Concrete\Core\Localization\Service\Date $dh */
 ?>
     <div class="ccm-dashboard-header-buttons">
-        <a href="<?= $view->action('view_batch', $batch->getID()) ?>" class="btn btn-default"><i
+        <a href="<?= $view->action('view_batch', $batch->getID()) ?>" class="btn btn-secondary"><i
                 class="fa fa-angle-double-left"></i> <?= t('Back to Batch') ?></a>
     </div>
 
@@ -32,7 +32,7 @@ foreach ($mappers->getDrivers() as $mapper) {
 
         <div>
 
-        <button class="btn btn-default btn-sm pull-right" data-action="set-unmapped-to-ignored" type="button"><?=t("Set Un-Mapped to Ignored")?></button>
+        <button class="btn btn-light btn-sm float-right" data-action="set-unmapped-to-ignored" type="button"><?=t("Set Un-Mapped to Ignored")?></button>
 
         <h4><?= $mapper->getMappedItemPluralName() ?></h4>
 
@@ -139,8 +139,8 @@ foreach ($mappers->getDrivers() as $mapper) {
             <div class="ccm-dashboard-form-actions-wrapper">
                 <div class="ccm-dashboard-form-actions">
                     <a href="<?= $view->action('view_batch', $batch->getID()) ?>"
-                       class="btn btn-default"><?= t('Cancel') ?></a>
-                    <button class="pull-right btn btn-primary" type="submit"><?= t('Save') ?></button>
+                       class="btn float-left btn-secondary"><?= t('Cancel') ?></a>
+                    <button class="float-right btn btn-primary" type="submit"><?= t('Save') ?></button>
                 </div>
             </div>
 

@@ -17,12 +17,6 @@
     $(function() {
         $("[data-migration-tree=<?=$identifier?>]").migrationBatchTableTree({
             columnKey: 'page',
-            init: function() {
-                $('[data-editable-property=path]').editable({
-                    container: '#ccm-dashboard-content',
-                    url: '<?=$view->action('update_page_path')?>'
-                });
-            },
             lazyLoad: function(event, data) {
                 data.result = {
                     url: '<?=$view->action('load_batch_page_data')?>',

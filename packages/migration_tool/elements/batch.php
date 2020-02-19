@@ -21,7 +21,7 @@
                     if (r.alertclass && r.message) {
                         $('#migration-batch-status').removeClass().addClass('alert ' + r.alertclass);
                         $('#migration-batch-status').text(r.message);
-                        var tab = $('#ccm-tab-content-errors');
+                        var tab = $('#errors');
                         if (r.messages && r.messages.length) {
                             var html = '<ul id="ccm-migration-batch-bulk-errors" class="list-unstyled">';
                             for (i = 0; i < r.messages.length; i++) {
@@ -54,9 +54,9 @@
             $('table.migration-table').on('change', 'input[data-checkbox=select-item]', function() {
                 var checkboxes = $('input[data-checkbox=select-item]:checked').length;
                 if (checkboxes > 0) {
-                    $('a[data-dialog=delete-batch-items]').removeAttr('disabled').parent().removeClass('disabled');
+                    $('a[data-dialog=delete-batch-items]').removeClass('disabled');
                 } else {
-                    $('a[data-dialog=delete-batch-items]').attr('disabled', 'disabled').parent().addClass('disabled');
+                    $('a[data-dialog=delete-batch-items]').addClass('disabled');
                 }
             });
         });
@@ -67,32 +67,34 @@
         array('errors', t('Errors')),
     ))?>
 
+    <div class="tab-content mt-3">
+        <div class="tab-pane active" id="batch-content">
+            <?php foreach ($batch->getObjectCollections() as $collection) {
+                if ($collection->hasRecords()) {
+                    $formatter = $collection->getFormatter();
+                    ?>
 
-    <div class="ccm-tab-content" id="ccm-tab-content-batch-content">
+                    <h3><?=$formatter->getPluralDisplayName()?></h3>
+                    <?php echo $formatter->displayObjectCollection()?>
+                    <?php
 
-        <?php foreach ($batch->getObjectCollections() as $collection) {
-    if ($collection->hasRecords()) {
-        $formatter = $collection->getFormatter();
-        ?>
-
-                <h3><?=$formatter->getPluralDisplayName()?></h3>
-                <?php echo $formatter->displayObjectCollection()?>
+                }
+                ?>
                 <?php
 
-    }
-    ?>
-            <?php
+            }
+            ?>
+        </div>
 
-}
-    ?>
+        <div class="tab-pane" id="errors">
+            <i class="fa fa-spin fa-refresh"></i>
+            <?=t('Loading Errors...')?>
+        </div>
+
+
 
     </div>
-
-    <div class="ccm-tab-content" id="ccm-tab-content-errors">
-        <i class="fa fa-spin fa-refresh"></i>
-        <?=t('Loading Errors...')?>
-    </div>
-
+    
 
     <?php
 

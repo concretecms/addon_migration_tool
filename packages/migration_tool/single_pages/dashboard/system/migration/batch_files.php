@@ -3,7 +3,7 @@ $dh = Core::make('helper/date');
 /* @var \Concrete\Core\Localization\Service\Date $dh */
 ?>
 <div class="ccm-dashboard-header-buttons btn-group">
-    <a href="<?= $view->action('view_batch', $batch->getID()) ?>" class="btn btn-default"><i
+    <a href="<?= $view->action('view_batch', $batch->getID()) ?>" class="btn btn-secondary"><i
             class="fa fa-angle-double-left"></i> <?= t('Back to Batch') ?></a>
     <button data-dialog="delete-files" type="button" data-dialog-title="<?= t('Delete Files') ?>"
             class="btn btn-danger"><?= t('Delete Files') ?></button>
@@ -21,9 +21,9 @@ $dh = Core::make('helper/date');
             <input type="hidden" name="id" value="<?= $batch->getID() ?>">
             <p><?= t('Are you sure you remove all the files from this batch? They will be deleted from the entire concrete5 site. This cannot be undone.') ?></p>
             <div class="dialog-buttons">
-                <button class="btn btn-default pull-left"
+                <button class="btn btn-secondary float-left"
                         onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
-                <button class="btn btn-danger pull-right"
+                <button class="btn btn-danger float-right"
                         onclick="$('#ccm-dialog-delete-files form').submit()"><?= t('Clear Batch') ?></button>
             </div>
         </form>
@@ -101,7 +101,7 @@ $dh = Core::make('helper/date');
                 }
             },
             start: function () {
-                $uploader.find('span').html('<?=t('Uploading')?> <i class="fa fa-spin fa-refresh"></i>');
+                $uploader.find('span').html('<?=t('Uploading')?> <i class="fas fa-spin fa-sync-alt"></i>');
                 $uploader.addClass('disabled');
                 errors = [];
             },

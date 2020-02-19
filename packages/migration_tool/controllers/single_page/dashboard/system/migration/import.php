@@ -593,22 +593,6 @@ class Import extends DashboardPageController
         }
     }
 
-
-
-    public function update_page_path()
-    {
-        session_write_close();
-        $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page');
-        $page = $r->findOneById($this->request->get('pk'));
-        if (is_object($page)) {
-            $page->setBatchPath($this->request->request('value'));
-            $this->entityManager->persist($page);
-            $this->entityManager->flush();
-
-            return new JsonResponse($page);
-        }
-    }
-
     public function map_content($id = null)
     {
         $r = $this->entityManager->getRepository('\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch');

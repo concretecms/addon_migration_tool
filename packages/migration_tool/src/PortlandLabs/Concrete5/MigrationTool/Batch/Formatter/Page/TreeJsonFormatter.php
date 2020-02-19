@@ -26,7 +26,7 @@ class TreeJsonFormatter extends AbstractTreeJsonFormatter
             }
 
             $node->id = $page->getId();
-            $node->pagePath = '<a href="#" data-editable-property="path" data-type="text" data-pk="' . $page->getID() . '" data-title="' . t('Page Path') . '">' . $page->getBatchPath() . '</a>';
+            $node->pagePath =  $page->getBatchPath();
             $node->pageType = $page->getType();
             $node->pageTemplate = $page->getTemplate();
             if (!$skipItem) {

@@ -24,7 +24,7 @@ function MigrationBatchTableTree($table, options) {
         },
         table: {
             checkboxColumnIdx: null,
-            customStatus: false,
+            renderStatusColumns: false,
             indentation: 16,         // indent every node level by 16px
             nodeColumnIdx: 0
         },

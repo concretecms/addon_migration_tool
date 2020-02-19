@@ -97,7 +97,7 @@ $dh = Core::make('helper/date');
             <form method="post" action="<?= $view->action('clear_batch') ?>">
                 <?= Loader::helper("validation/token")->output('clear_batch') ?>
                 <input type="hidden" name="id" value="<?= $batch->getID() ?>">
-                <p><?= t('Are you sure you remove all content from this import batch? This cannot be undone.') ?></p>
+                <p><?= t('Are you sure you want to remove all content from this import batch? This cannot be undone.') ?></p>
                 <div class="dialog-buttons">
                     <button class="btn btn-light float-left"
                             onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
@@ -113,7 +113,7 @@ $dh = Core::make('helper/date');
             <form method="post" action="<?= $view->action('delete_batch_items') ?>">
                 <?= Loader::helper("validation/token")->output('delete_batch_items') ?>
                 <input type="hidden" name="id" value="<?= $batch->getID() ?>">
-                <p><?= t('Are you sure you remove selected content from this import batch? This cannot be undone.') ?></p>
+                <p><?= t('Are you sure you want to remove the selected content from this import batch? This cannot be undone.') ?></p>
                 <div class="dialog-buttons">
                     <button class="btn btn-light float-left"
                             onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
@@ -132,7 +132,7 @@ $dh = Core::make('helper/date');
                 <input type="hidden" name="id" value="<?= $batch->getID() ?>">
                 <p><?= t('Are you sure you reset all mapped content items for this batch? Any presets you have uploaded will not be removed.') ?></p>
                 <div class="dialog-buttons">
-                    <button class="btn btn-light float-left"
+                    <button class="btn btn-secondary float-left"
                             onclick="jQuery.fn.dialog.closeTop()"><?= t('Cancel') ?></button>
                     <button class="btn btn-danger float-right"
                             onclick="$('#ccm-dialog-clear-batch-mappings form').submit()"><?= t('Clear Batch Mappings') ?></button>
@@ -393,10 +393,6 @@ $dh = Core::make('helper/date');
 </script>
 
 <style type="text/css">
-    div#ccm-tab-content-batch-content {
-        padding-top: 0px;
-    }
-
     #ccm-migration-batch-bulk-errors li {
         position: relative;
         padding-left: 35px

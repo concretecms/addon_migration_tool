@@ -201,7 +201,7 @@ class Page implements ElementParserInterface
         return (string) $dc->creator;
     }
 
-    private function parseArea($node)
+    private function parseArea(\SimpleXMLElement $node)
     {
         $area = new Area();
         $area->setName('Main');
@@ -213,7 +213,7 @@ class Page implements ElementParserInterface
         return $area;
     }
 
-    private function parseBlocks($node)
+    private function parseBlocks(\SimpleXMLElement $node)
     {
         // TODO parse content, detect other blocks and create them
         $block = new Block();

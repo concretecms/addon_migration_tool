@@ -91,10 +91,11 @@ class Page implements ElementParserInterface
     protected function parsePage($node)
     {
         $pageType = $this->getPageType($node);
+        $wp = $node->children($this->namespaces['wp']);
 
         $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();
         $page->setName((string) html_entity_decode($node->title));
-        $page->setPublicDate((string) $node->xpath('wp:post_date_gmt')[0]);
+        $page->setPublicDate((string) $wp->post_date);
         $page->setDescription((string) html_entity_decode($node->description));
         $page->setType($pageType);
         $page->setTemplate('blank');

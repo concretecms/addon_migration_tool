@@ -3,7 +3,7 @@ namespace PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress;
 
 use Concrete\Core\Support\Manager as CoreManager;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Element\Page;
-use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Element\PageType;
+use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Element\User;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
@@ -14,13 +14,14 @@ class Manager extends CoreManager
         return new Page();
     }
 
-    public function createPageTypeDriver()
+    public function createUserDriver()
     {
-        return new PageType();
+        return new User();
     }
 
     public function __construct()
     {
         $this->driver('page');
+        $this->driver('user');
     }
 }

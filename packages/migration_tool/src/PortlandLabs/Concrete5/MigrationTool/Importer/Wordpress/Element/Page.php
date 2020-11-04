@@ -1,4 +1,5 @@
 <?php
+
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
@@ -12,7 +13,7 @@ use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Sanitizer\PagePathSanitizer;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\ElementParserInterface;
 
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 class Page implements ElementParserInterface
 {
@@ -31,7 +32,7 @@ class Page implements ElementParserInterface
         $this->namespaces = $namespaces;
 
         $base_url = $element->xpath('/rss/channel/wp:base_site_url');
-        $base_url = (string) trim(isset( $base_url[0] ) ? $base_url[0] : '');
+        $base_url = (string) trim(isset($base_url[0]) ? $base_url[0] : '');
 
         $base_blog_url = $element->xpath('/rss/channel/wp:base_blog_url');
         if ($base_blog_url) {
@@ -47,7 +48,7 @@ class Page implements ElementParserInterface
         }
 
         // Order pages by its path so parent pages are created first
-        usort($pages, array($this, 'comparePath'));
+        usort($pages, [$this, 'comparePath']);
 
         $i = 0;
         foreach ($pages as $page) {
@@ -65,7 +66,7 @@ class Page implements ElementParserInterface
 
     public function getPageNodes()
     {
-        $pages = array();
+        $pages = [];
         foreach ($this->simplexml->channel->item as $item) {
             $pageType = $this->getPageType($item);
             if ($pageType == 'page' || $pageType == 'blog_entry') {
@@ -74,29 +75,6 @@ class Page implements ElementParserInterface
         }
 
         return $pages;
-    }
-
-    private function getItemType(\SimpleXMLElement $node)
-    {
-        $wp = $node->children($this->namespaces['wp']);
-
-        return (string) $wp->post_type;
-    }
-
-    private function getPageType($node)
-    {
-        $itemType = $this->getItemType($node);
-
-        switch ($itemType) {
-            case 'post':
-                $pageType = 'blog_entry';
-                break;
-            case 'page':
-                $pageType = 'page';
-                break;
-        }
-
-        return isset($pageType) ? $pageType : $itemType;
     }
 
     protected function parsePage($node)
@@ -124,6 +102,29 @@ class Page implements ElementParserInterface
         $page->areas->add($area);
 
         return $page;
+    }
+
+    private function getItemType(\SimpleXMLElement $node)
+    {
+        $wp = $node->children($this->namespaces['wp']);
+
+        return (string) $wp->post_type;
+    }
+
+    private function getPageType($node)
+    {
+        $itemType = $this->getItemType($node);
+
+        switch ($itemType) {
+            case 'post':
+                $pageType = 'blog_entry';
+                break;
+            case 'page':
+                $pageType = 'page';
+                break;
+        }
+
+        return isset($pageType) ? $pageType : $itemType;
     }
 
     private function createOriginalPath($node)
@@ -167,11 +168,11 @@ class Page implements ElementParserInterface
 
     private function createParentPages()
     {
-        $pages = array();
-        $parentPages = array(
+        $pages = [];
+        $parentPages = [
             'posts' => 'Posts',
             'pages' => 'Pages',
-        );
+        ];
 
         foreach ($parentPages as $parentPagePath => $parentPageName) {
             $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page();

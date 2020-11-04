@@ -2,7 +2,12 @@
 namespace PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\Element;
 
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Area;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Attribute;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\SelectAttributeValue;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\StandardAttributeValue;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\AttributeValue\TopicsAttributeValue;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Block;
+use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageAttribute;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\PageObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Sanitizer\PagePathSanitizer;
 use PortlandLabs\Concrete5\MigrationTool\Importer\Wordpress\ElementParserInterface;
@@ -97,9 +102,10 @@ class Page implements ElementParserInterface
         $page->setOriginalPath($this->createOriginalPath($node));
         $page->setBatchPath($this->createBatchPath($page->getOriginalPath(), $pageType));
 
-//        $page->setUser($this->getUser($node));
-        // TODO remove temporary user assignment
-        $page->setUser('admin');
+        $page->setUser($this->getUser($node));
+
+        $this->parseCategories($page, $node);
+        $this->parsePostmeta($page, $node);
 
         $area = $this->parseArea($node);
         $area->setPage($page);
@@ -169,7 +175,7 @@ class Page implements ElementParserInterface
 
     private function getUser(\SimpleXMLElement $node)
     {
-        $dc = $node->children('http://purl.org/dc/elements/1.1/');
+        $dc = $node->children($this->namespaces['dc']);
 
         return (string) $dc->creator;
     }
@@ -197,5 +203,65 @@ class Page implements ElementParserInterface
         $block->setPosition(1);
 
         return $block;
+    }
+
+    private function parseCategories(\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page $page, \SimpleXMLElement $node)
+    {
+        $categories = [];
+        $tags = [];
+        foreach ($node->category as $c) {
+            $att = $c->attributes();
+            if (isset($att['domain'])) {
+                $domain = (string) $att['domain'];
+                switch ($domain) {
+                    case 'category':
+                        $categories[] = '/' . $c;
+                        break;
+                    case 'post_tag':
+                        $tags[] = (string) $c;
+                        break;
+                }
+            }
+        }
+
+        if (count($categories) > 0) {
+            $attribute = new Attribute();
+            $attribute->setHandle('blog_entry_topics');
+            $value = new TopicsAttributeValue();
+            $value->setValue($categories);
+            $attribute->setAttributeValue($value);
+            $pageAttribute = new PageAttribute();
+            $pageAttribute->setAttribute($attribute);
+            $pageAttribute->setPage($page);
+            $page->attributes->add($pageAttribute);
+        }
+
+        if (count($tags) > 0) {
+            $attribute = new Attribute();
+            $attribute->setHandle('tags');
+            $value = new SelectAttributeValue();
+            $value->setValue($tags);
+            $attribute->setAttributeValue($value);
+            $pageAttribute = new PageAttribute();
+            $pageAttribute->setAttribute($attribute);
+            $pageAttribute->setPage($page);
+            $page->attributes->add($pageAttribute);
+        }
+    }
+
+    private function parsePostmeta(\PortlandLabs\Concrete5\MigrationTool\Entity\Import\Page $page, \SimpleXMLElement $node)
+    {
+        $wp = $node->children($this->namespaces['wp']);
+        foreach ($wp->postmeta as $meta) {
+            $attribute = new Attribute();
+            $attribute->setHandle((string) $meta->meta_key);
+            $value = new StandardAttributeValue();
+            $value->setValue((string) $meta->meta_value);
+            $attribute->setAttributeValue($value);
+            $pageAttribute = new PageAttribute();
+            $pageAttribute->setAttribute($attribute);
+            $pageAttribute->setPage($page);
+            $page->attributes->add($pageAttribute);
+        }
     }
 }

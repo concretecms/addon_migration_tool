@@ -18,6 +18,7 @@ class Page implements ElementParserInterface
 {
     private $simplexml;
     private $namespaces;
+    private $base_blog_url;
 
     public function __construct()
     {
@@ -28,6 +29,16 @@ class Page implements ElementParserInterface
     {
         $this->simplexml = $element;
         $this->namespaces = $namespaces;
+
+        $base_url = $element->xpath('/rss/channel/wp:base_site_url');
+        $base_url = (string) trim(isset( $base_url[0] ) ? $base_url[0] : '');
+
+        $base_blog_url = $element->xpath('/rss/channel/wp:base_blog_url');
+        if ($base_blog_url) {
+            $this->base_blog_url = (string) trim($base_blog_url[0]);
+        } else {
+            $this->base_blog_url = $base_url;
+        }
 
         $collection = new PageObjectCollection();
         $pages = $this->createParentPages();
@@ -118,6 +129,15 @@ class Page implements ElementParserInterface
     private function createOriginalPath($node)
     {
         $path = parse_url($node->link, PHP_URL_PATH);
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+        if (substr($path, -strlen($ext)) === $ext) {
+            $path = substr($path, 0, strlen($path) - strlen($ext) - 1);
+        }
+
+        $blogPath = parse_url($this->base_blog_url, PHP_URL_PATH);
+        if (strpos($path, $blogPath) === 0) {
+            $path = substr($path, strlen($blogPath));
+        }
         $path = rtrim($path, '/');
 
         if (!$path) {

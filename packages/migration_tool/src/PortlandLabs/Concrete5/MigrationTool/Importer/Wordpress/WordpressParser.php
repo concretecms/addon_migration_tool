@@ -37,7 +37,7 @@ class WordpressParser implements FileParserInterface
         $XMLErrors = libxml_get_errors();
 
         foreach ($XMLErrors as $XMLError) {
-            $error->add(t('XML format error. ' . $XMLError->message));
+            $error->add(t('XML format error with message "%s: %s" on line %d', $XMLError->code, $XMLError->message, $XMLError->line));
         }
 
         if ($this->wxr) {

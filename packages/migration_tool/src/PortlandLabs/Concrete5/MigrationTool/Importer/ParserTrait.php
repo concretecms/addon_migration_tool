@@ -18,7 +18,7 @@ trait ParserTrait
         $content = file_get_contents($file);
         $content = $this->prepareXmlString($content);
 
-        return simplexml_load_string($content);
+        return simplexml_load_string($content, 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
     }
 
     /**

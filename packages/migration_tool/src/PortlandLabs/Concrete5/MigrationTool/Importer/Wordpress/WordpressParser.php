@@ -5,11 +5,14 @@ use Concrete\Core\Error\Error;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParserInterface;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ParserTrait;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class WordpressParser implements FileParserInterface
 {
+    use ParserTrait;
+
     private $wxr;
     private $namespaces = array();
 
@@ -30,11 +33,11 @@ class WordpressParser implements FileParserInterface
         }
 
         libxml_use_internal_errors(true);
-        $this->wxr = simplexml_load_file($file['tmp_name']);
+        $this->wxr = $this->getXmlContent($file['tmp_name']);
         $XMLErrors = libxml_get_errors();
 
         foreach ($XMLErrors as $XMLError) {
-            $error->add(t('XML format error. ' . $XMLError->message));
+            $error->add(t('XML format error with message "%s: %s" on line %d', $XMLError->code, $XMLError->message, $XMLError->line));
         }
 
         if ($this->wxr) {
@@ -46,14 +49,13 @@ class WordpressParser implements FileParserInterface
         }
     }
 
-    // TODO maybe $file can't be null and we need to reparse the xml inside this function too
-    public function addContentObjectCollectionsToBatch($file = null, Batch $batch)
+    public function addContentObjectCollectionsToBatch($file, Batch $batch)
     {
         $manager = \Core::make('migration/manager/importer/wordpress');
-//        $simplexml = simplexml_load_file($file);
+        $simplexml = $this->getXmlContent($file);
 
         foreach ($manager->getDrivers() as $driver) {
-            $collection = $driver->getObjectCollection($this->wxr, $this->namespaces);
+            $collection = $driver->getObjectCollection($simplexml, $this->namespaces);
             if ($collection) {
                 if (!($collection instanceof ObjectCollection)) {
                     throw new \RuntimeException(t('Driver %s getObjectCollection did not return an object of the ObjectCollection type', get_class($driver)));

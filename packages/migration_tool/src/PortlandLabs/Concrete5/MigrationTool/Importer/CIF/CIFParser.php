@@ -4,11 +4,14 @@ namespace PortlandLabs\Concrete5\MigrationTool\Importer\CIF;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\ObjectCollection;
 use PortlandLabs\Concrete5\MigrationTool\Importer\FileParserInterface;
+use PortlandLabs\Concrete5\MigrationTool\Importer\ParserTrait;
 
 defined('C5_EXECUTE') or die("Access Denied.");
 
 class CIFParser implements FileParserInterface
 {
+    use ParserTrait;
+
     public function getDriver()
     {
         return 'concrete5';
@@ -26,7 +29,7 @@ class CIFParser implements FileParserInterface
         }
 
         libxml_use_internal_errors(true);
-        $this->wxr = simplexml_load_file($file['tmp_name']);
+        $this->wxr = $this->getXmlContent($file['tmp_name']);
         $XMLErrors = libxml_get_errors();
 
         foreach ($XMLErrors as $XMLError) {
@@ -45,7 +48,8 @@ class CIFParser implements FileParserInterface
     public function addContentObjectCollectionsToBatch($file, Batch $batch)
     {
         $manager = \Core::make('migration/manager/importer/cif');
-        $simplexml = simplexml_load_file($file);
+        $simplexml = $this->getXmlContent($file);
+
         foreach ($manager->getRoutines() as $driver) {
             $collection = $driver->getObjectCollection($simplexml, $batch);
             if ($collection) {

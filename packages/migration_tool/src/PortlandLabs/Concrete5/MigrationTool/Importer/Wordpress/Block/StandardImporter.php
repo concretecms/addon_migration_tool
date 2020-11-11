@@ -14,10 +14,29 @@ class StandardImporter implements ImporterInterface
         return new StandardBlockValue();
     }
 
+    /**
+     * Parse post content of WordPress then make block data record for content block.
+     * WordPress content doesn't have paragraph elements.
+     * You can replace double line breaks with paragraph by including `wp-includes/formatting.php` .
+     *
+     * @see https://developer.wordpress.org/reference/functions/wpautop/
+     *
+     * @example
+     * ```
+     * // application/bootstrap/autoload.php
+     * if (!function_exists('wpautop')) {
+     *     include '/path/to/WordPress/wp-includes/formatting.php';
+     * }
+     * ```
+     */
     public function parse(\SimpleXMLElement $node)
     {
         $content = $node->children('http://purl.org/rss/1.0/modules/content/');
-        $recordData = array('content' => (string) $content->encoded);
+        $encoded = (string) $content->encoded;
+        if (function_exists('wpautop')) {
+            $encoded = wpautop($encoded);
+        }
+        $recordData = array('content' => $encoded);
 
         $value = $this->createBlockValueObject();
 

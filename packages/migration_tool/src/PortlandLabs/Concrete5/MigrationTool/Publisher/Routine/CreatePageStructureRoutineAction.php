@@ -56,7 +56,7 @@ class CreatePageStructureRoutineAction extends AbstractPageAction
         $data['cDescription'] = $page->getDescription();
         $data['cHandle'] = substr($page->getBatchPath(), strrpos($page->getBatchPath(), '/') + 1);
 
-        $newPage = $parent->add($type, $data);
+        $newPage = $parent->add($type, $data, is_object($template) ? $template : false);
         $logger->logPublishComplete($page, $newPage);
     }
 }

@@ -1,7 +1,10 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Block;
 
+use Concrete\Core\Database\Connection\Connection;
 use Concrete\Core\Legacy\BlockRecord;
+use Concrete\Core\Support\Facade\Application;
+use Doctrine\DBAL\Types\Type;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue;
 use Concrete\Core\Page\Page;
@@ -35,13 +38,30 @@ class StandardPublisher implements PublisherInterface
             }
             // Now we import the OTHER records.
             if ($b) {
+                $app = Application::getFacadeApplication();
+                /** @var Connection $connection */
+                $connection = $app->make(Connection::class);
+                $sm = $connection->getSchemaManager();
                 foreach ($records as $record) {
                     if (strcasecmp($record->getTable(), $bt->getController()->getBlockTypeDatabaseTable()) != 0) {
+                        $columns = $sm->listTableColumns($record->getTable());
                         $aar = new BlockRecord($record->getTable());
                         $aar->bID = $b->getBlockID();
                         foreach ($record->getData() as $key => $value) {
                             $result = $inspector->inspect($value);
-                            $aar->{$key} = $result->getReplacedValue();
+                            $value = $result->getReplacedValue();
+                            foreach ($columns as $column) {
+                                if ($column->getName() === $key) {
+                                    if ($column->getType()->getName() === Type::INTEGER) {
+                                        if ($column->getNotnull()) {
+                                            $value = (int) $value;
+                                        } else {
+                                            $value = $value === null ? null : (int) $value;
+                                        }
+                                    }
+                                }
+                            }
+                            $aar->{$key} = $value;
                         }
                         $aar->Save();
                     }

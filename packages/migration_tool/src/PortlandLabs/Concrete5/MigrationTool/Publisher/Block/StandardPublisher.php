@@ -3,7 +3,6 @@ namespace PortlandLabs\Concrete5\MigrationTool\Publisher\Block;
 
 use Concrete\Core\Database\Connection\Connection;
 use Concrete\Core\Legacy\BlockRecord;
-use Concrete\Core\Support\Facade\Application;
 use Doctrine\DBAL\Types\Type;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\Batch;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Import\BlockValue\BlockValue;

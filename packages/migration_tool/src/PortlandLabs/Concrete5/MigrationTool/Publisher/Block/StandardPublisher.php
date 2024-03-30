@@ -60,7 +60,7 @@ class StandardPublisher implements PublisherInterface
                                     continue;
                                 }
 
-                                $value = ($column->getNotnull() || $column !== null) ? (int) $value : null;
+                                $value = ($column->getNotnull() || $value !== null) ? (int) $value : null;
                             }
                             $aar->{$key} = $value;
                         }

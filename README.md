@@ -43,7 +43,9 @@ and revised until all content is imported correctly. This makes the
 process repeatable and facilitates a final import after this
 trial-and-error process.
 
-
+More detailed instructions and advice can be found in the [Migration
+Tool
+Tutorial](https://documentation.concretecms.org/tutorials/using-concrete-migration-tool-addon).
 
 # Exporting Content
 

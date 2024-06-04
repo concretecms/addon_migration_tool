@@ -92,7 +92,7 @@ class ImageSliderPublisher implements PublisherInterface
             return $b;
 
         } else {
-            $publisher = new StandardPublisher();
+            $publisher = \Core::make(StandardPublisher::class);
             return $publisher->publish($batch, $bt, $page, $area, $value);
         }
     }

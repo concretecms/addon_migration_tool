@@ -24,7 +24,7 @@ class Manager extends CoreManager
 
     public function createStandardDriver()
     {
-        return new StandardPublisher();
+        return $this->app->make(StandardPublisher::class);
     }
 
     public function __construct($app)

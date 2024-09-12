@@ -15,7 +15,7 @@ class ThemeGridAreaLayoutColumn extends AreaLayoutColumn
     /**
      * @ORM\Column(type="integer")
      */
-    protected $offset = 0;
+    protected $gridOffset = 0;
 
     /**
      * @return mixed
@@ -38,7 +38,7 @@ class ThemeGridAreaLayoutColumn extends AreaLayoutColumn
      */
     public function getOffset()
     {
-        return $this->offset;
+        return $this->gridOffset;
     }
 
     /**
@@ -46,6 +46,6 @@ class ThemeGridAreaLayoutColumn extends AreaLayoutColumn
      */
     public function setOffset($offset)
     {
-        $this->offset = $offset;
+        $this->gridOffset = $offset;
     }
 }

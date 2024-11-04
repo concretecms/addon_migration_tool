@@ -33,7 +33,7 @@ class SinglePage extends AbstractType
         $c = \Page::getByID($exportItem->getItemIdentifier());
 
         return array(
-            $c->getCollectionPath(),
+            $c->getCollectionPath() ?: '/',
             $c->getCollectionName(),
         );
     }

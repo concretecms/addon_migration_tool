@@ -25,7 +25,6 @@ class Page extends SinglePage
         $pl = new PageList();
         $site = \Core::make('site')->getActiveSiteForEditing();
         $pl->setSiteTreeObject($site->getSiteTreeObject());
-        $pl->includeSystemPages();
         $query = $request->query->all();
 
         $keywords = $query['keywords'];

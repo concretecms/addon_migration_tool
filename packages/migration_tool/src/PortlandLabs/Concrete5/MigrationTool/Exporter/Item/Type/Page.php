@@ -23,8 +23,6 @@ class Page extends SinglePage
     public function getResults(Request $request)
     {
         $pl = new PageList();
-        $site = \Core::make('site')->getActiveSiteForEditing();
-        $pl->setSiteTreeObject($site->getSiteTreeObject());
         $query = $request->query->all();
 
         $keywords = $query['keywords'];
@@ -37,7 +35,11 @@ class Page extends SinglePage
         if ($startingPoint) {
             $parent = \Page::getByID($startingPoint, 'ACTIVE');
             $pl->filterByPath($parent->getCollectionPath());
+            $siteTree = $parent->getSiteTreeObject();
+        } else {
+            $siteTree = \Core::make('site')->getActiveSiteForEditing()->getSiteTreeObject();
         }
+        $pl->setSiteTreeObject($siteTree);
         if ($datetime) {
             $pl->filterByPublicDate($datetime, '>=');
         }

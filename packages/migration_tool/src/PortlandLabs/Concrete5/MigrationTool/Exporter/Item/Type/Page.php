@@ -1,6 +1,7 @@
 <?php
 namespace PortlandLabs\Concrete5\MigrationTool\Exporter\Item\Type;
 
+use Concrete\Core\Database\Connection\Connection;
 use Concrete\Core\Page\PageList;
 use PortlandLabs\Concrete5\MigrationTool\Entity\Export\ObjectCollection;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +39,7 @@ class Page extends SinglePage
             $siteTree = $parent->getSiteTreeObject();
         } else {
             $siteTree = \Core::make('site')->getActiveSiteForEditing()->getSiteTreeObject();
+            $parent = null;
         }
         $pl->setSiteTreeObject($siteTree);
         if ($datetime) {
@@ -51,8 +53,7 @@ class Page extends SinglePage
         }
         if($includeSystemPages) {
             $pl->includeSystemPages();
-        }    
-        $pl->includeAliases();
+        }
         $pl->setItemsPerPage(1000);
         $results = $pl->getResults();
         $items = array();
@@ -66,6 +67,13 @@ class Page extends SinglePage
             $item->setItemId($c->getCollectionID());
             $items[] = $item;
         }
+        if ($query->get('includeExternalLinks')) {
+            foreach ($this->listExternalLinks($keywords, $parent) as $cID) {
+                $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\Page();
+                $item->setItemId($cID);
+                $items[] = $item;
+            }
+        }
 
         return $items;
     }
@@ -78,5 +86,45 @@ class Page extends SinglePage
     public function getPluralDisplayName()
     {
         return t('Pages');
+    }
+
+    /**
+     * @param string $keywords
+     * @param \Concrete\Core\Page\Page|null $parent
+     *
+     * @return \Generator<int>
+     */
+    private function listExternalLinks($keywords, $parent = null)
+    {
+        $cn = \Core::make(Connection::class);
+        /* @var Connection $cn */
+        $qb = $cn->createQueryBuilder();
+        $qb
+            ->select('p.cID')
+            ->from('Pages', 'p')
+            ->andWhere("p.cPointerExternalLink IS NOT NULL AND p.cPointerExternalLink <> ''")
+        ;
+        $keywords = trim((string) $keywords);
+        if ($keywords !== '') {
+            $qb
+                ->innerJoin('p', 'CollectionVersions', 'cv', 'p.cID = cv.cID')
+                ->andWhere('cv.cvID = (SELECT MAX(cvID) FROM CollectionVersions WHERE cID = cv.cID)')
+                ->andWhere('cv.cvName LIKE :keywords')
+                ->setParameter('keywords', "%{$keywords}%")
+            ;
+        }
+        $pathPrefix = $parent === null ? '' : ($parent->getCollectionPath() . '/');
+        $rs = $qb->execute();
+        while (($cID = $rs->fetchColumn()) !== false) {
+            $cID = (int) $cID;
+            if ($pathPrefix !== '') {
+                $externalLink = \Page::getByID($cID, 'RECENT');
+                $externalLinkPath = $externalLink->generatePagePath();
+                if (strpos($externalLinkPath, $pathPrefix) !== 0) {
+                    continue;
+                }
+            }
+            yield $cID;
+        }
     }
 }

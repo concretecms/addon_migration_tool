@@ -31,9 +31,13 @@ class SinglePage extends AbstractType
     public function getResultColumns(ExportItem $exportItem)
     {
         $c = \Page::getByID($exportItem->getItemIdentifier());
-
+        if ($c->isExternalLink()) {
+            $path = $c->generatePagePath();
+        } else {
+            $path = $c->getCollectionPath() ?: '/';
+        }
         return array(
-            $c->getCollectionPath() ?: '/',
+            $path,
             $c->getCollectionName(),
         );
     }

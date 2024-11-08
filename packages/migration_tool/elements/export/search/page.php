@@ -34,6 +34,9 @@ foreach ($list as $type) {
 
 <div class="form-group">
 	<div class="checkbox">
-    	<label> <?php echo $form->checkbox('includeSystemPages', 1, $includeSystemPages);  ?><?=t('Include System Pages'); ?></label>
+    	<label> <?php echo $form->checkbox('includeSystemPages', 1, !empty($includeSystemPages));  ?><?=t('Include System Pages'); ?></label>
 	</div>
+    <div class="checkbox">
+        <label> <?= $form->checkbox('includeExternalLinks', 1, !empty($includeExternalLinks)) ?><?=t('Include External Links'); ?></label>
+    </div>
 </div>

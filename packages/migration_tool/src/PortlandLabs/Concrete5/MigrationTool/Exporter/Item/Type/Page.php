@@ -23,13 +23,13 @@ class Page extends SinglePage
     public function getResults(Request $request)
     {
         $pl = new PageList();
-        $query = $request->query->all();
+        $query = $request->query;
 
-        $keywords = $query['keywords'];
-        $ptID = $query['ptID'];
-        $startingPoint = intval($query['startingPoint']);
-        $datetime = \Core::make('helper/form/date_time')->translate('datetime', $query);
-        $includeSystemPages = $query['includeSystemPages'];
+        $keywords = $query->get('keywords');
+        $ptID = $query->get('ptID');
+        $startingPoint = (int) $query->get('startingPoint');
+        $datetime = \Core::make('helper/form/date_time')->translate('datetime', $query->all());
+        $includeSystemPages = $query->get('includeSystemPages');
 
         $pl->ignorePermissions();
         if ($startingPoint) {
@@ -52,7 +52,7 @@ class Page extends SinglePage
         if($includeSystemPages) {
             $pl->includeSystemPages();
         }    
-
+        $pl->includeAliases();
         $pl->setItemsPerPage(1000);
         $results = $pl->getResults();
         $items = array();

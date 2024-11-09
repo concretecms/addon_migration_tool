@@ -32,13 +32,18 @@ class SinglePage extends AbstractType
     {
         $c = \Page::getByID($exportItem->getItemIdentifier());
         if ($c->isExternalLink()) {
-            $path = $c->generatePagePath();
+            $path = h($c->generatePagePath());
+            $path .= ' <i class="fa fa-external-link"></i> ' . h($c->getCollectionPointerExternalLink());
         } else {
-            $path = $c->getCollectionPath() ?: '/';
+            $path = h($c->getCollectionPath() ?: '/');
+            if ($c->isAliasPage()) {
+                $originalPage = \Page::getByID($c->getCollectionID());
+                $path .= ' <i class="fa fa-sign-in"></i> ' . h($originalPage->getCollectionPath());
+            }
         }
         return array(
             $path,
-            $c->getCollectionName(),
+            h($c->getCollectionName()),
         );
     }
 

@@ -39,4 +39,7 @@ foreach ($list as $type) {
     <div class="checkbox">
         <label> <?= $form->checkbox('includeExternalLinks', 1, !empty($includeExternalLinks)) ?><?=t('Include External Links'); ?></label>
     </div>
+    <div class="checkbox">
+        <label> <?= $form->checkbox('includeAliases', 1, !empty($includeAliases)) ?><?=t('Include Page Aliases'); ?></label>
+    </div>
 </div>

@@ -49,7 +49,7 @@ class SinglePage extends AbstractType
             $c = \Page::getByID($id);
             if (is_object($c) && !$c->isError()) {
                 $page = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\SinglePage();
-                $page->setItemId($c->getCollectionID());
+                $page->setItemId($c->getCollectionPointerOriginalID() ?: $c->getCollectionID());
                 $items[] = $page;
             }
         }

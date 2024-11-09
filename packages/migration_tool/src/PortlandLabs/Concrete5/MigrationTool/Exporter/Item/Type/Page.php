@@ -31,6 +31,7 @@ class Page extends SinglePage
         $startingPoint = (int) $query->get('startingPoint');
         $datetime = \Core::make('helper/form/date_time')->translate('datetime', $query->all());
         $includeSystemPages = $query->get('includeSystemPages');
+        $includeAliases = $query->get('includeAliases');
 
         $pl->ignorePermissions();
         if ($startingPoint) {
@@ -51,8 +52,11 @@ class Page extends SinglePage
         if ($keywords) {
             $pl->filterByKeywords($keywords);
         }
-        if($includeSystemPages) {
+        if ($includeSystemPages) {
             $pl->includeSystemPages();
+        }
+        if ($includeAliases) {
+            $pl->includeAliases();
         }
         $pl->setItemsPerPage(1000);
         $results = $pl->getResults();
@@ -64,7 +68,8 @@ class Page extends SinglePage
         }
         foreach ($results as $c) {
             $item = new \PortlandLabs\Concrete5\MigrationTool\Entity\Export\Page();
-            $item->setItemId($c->getCollectionID());
+            $cID = $includeAliases ? $c->getCollectionPointerOriginalID() : 0;
+            $item->setItemId($cID ?: $c->getCollectionID());
             $items[] = $item;
         }
         if ($query->get('includeExternalLinks')) {
